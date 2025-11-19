@@ -3,6 +3,7 @@
 [![CI Status](https://github.com/victorvelazquez/ai-bootstrap/actions/workflows/nodejs.yml/badge.svg?branch=main)](https://github.com/victorvelazquez/ai-bootstrap/actions/workflows/nodejs.yml)
 
 ## English
+
 Transform your idea into a production-ready, AI-documented backend in minutes.
 
 AI Bootstrap is an interactive CLI that generates 13 professional documents for backend projects, guiding users (or AI agents) through 7 key phases: business, architecture, security, standards, testing, and operations. Compatible with Claude, Copilot, Cursor, Gemini, and any AI assistant.
@@ -14,6 +15,7 @@ AI Bootstrap is an interactive CLI that generates 13 professional documents for 
 - ⏱️ Save 10-20 hours per project
 
 Quick Start:
+
 ```bash
 npm install -g ai-bootstrap
 ai-bootstrap init .
@@ -22,6 +24,7 @@ ai-bootstrap init .
 ---
 
 ## Español
+
 Transforma tu idea en un backend listo para producción y documentado para IA en minutos.
 
 AI Bootstrap es un CLI interactivo que genera 13 documentos profesionales para proyectos backend, guiando al usuario (o agente AI) por 7 fases clave: negocio, arquitectura, seguridad, estándares, testing y operaciones. Compatible con Claude, Copilot, Cursor, Gemini y cualquier asistente AI.
@@ -33,6 +36,28 @@ AI Bootstrap es un CLI interactivo que genera 13 documentos profesionales para p
 - ⏱️ Ahorra 10-20 horas por proyecto
 
 Guía rápida:
+
+```bash
+npm install -g ai-bootstrap
+ai-bootstrap init .
+```
+
+---
+
+## Português
+
+Transforme sua ideia em um backend pronto para produção e documentado para IA em minutos.
+
+AI Bootstrap é uma CLI interativa que gera 13 documentos profissionais para projetos backend, guiando o usuário (ou agente de IA) por 7 fases-chave: negócios, arquitetura, segurança, padrões, testes e operações. Compatível com Claude, Copilot, Cursor, Gemini e qualquer assistente de IA.
+
+- 🚀 Documentação completa e interconectada
+- 🤖 Suporte multi-IA e comandos slash
+- ⚡ Instalação e uso em 2 passos
+- 🛡️ Qualidade, segurança e melhores práticas garantidas
+- ⏱️ Economize 10-20 horas por projeto
+
+Guia rápido:
+
 ```bash
 npm install -g ai-bootstrap
 ai-bootstrap init .
