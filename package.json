@@ -36,12 +36,12 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "chalk": "^5.3.0",
+    "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "ejs": "^3.1.10",
     "fs-extra": "^11.2.0",
     "inquirer": "^8.2.6",
-    "ora": "^7.0.1"
+    "ora": "^5.4.1"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
