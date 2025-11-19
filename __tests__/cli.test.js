@@ -34,7 +34,12 @@ describe('ai-bootstrap CLI', () => {
   });
 
   it('initializes the bootstrap structure when an AI tool is supplied', () => {
-    execFileSync('node', [CLI_PATH, 'init', tempDir, '--ai', 'copilot'], {
+    execFileSync('node', [
+      CLI_PATH, 'init', tempDir, 
+      '--ai', 'copilot',
+      '--name', 'Test Project',
+      '--description', 'Test Description'
+    ], {
       cwd: PROJECT_ROOT,
       stdio: 'pipe'
     });
@@ -49,7 +54,12 @@ describe('ai-bootstrap CLI', () => {
   });
 
   it('reports initialized status via the check command', () => {
-    execFileSync('node', [CLI_PATH, 'init', tempDir, '--ai', 'claude'], {
+    execFileSync('node', [
+      CLI_PATH, 'init', tempDir, 
+      '--ai', 'claude',
+      '--name', 'Test Project',
+      '--description', 'Test Description'
+    ], {
       cwd: PROJECT_ROOT,
       stdio: 'pipe'
     });

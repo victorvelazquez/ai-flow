@@ -242,7 +242,7 @@ async function copyScripts(targetPath: string): Promise<void> {
   }
 }
 
-async function initializeProject(targetPath: string, aiTool?: string): Promise<void> {
+async function initializeProject(targetPath: string, aiTool?: string, projectName?: string, projectDescription?: string): Promise<void> {
   try {
     // Check if already initialized
     const isInitialized = await checkIfInitialized(targetPath);
@@ -265,27 +265,36 @@ async function initializeProject(targetPath: string, aiTool?: string): Promise<v
     // Select AI tools
     const aiTools = await selectAITool(aiTool);
 
-    // Pedir datos mínimos del proyecto
-    const { projectName, projectDescription } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'projectName',
-        message: 'Nombre del proyecto:',
-        default: 'Mi Proyecto AI'
-      },
-      {
-        type: 'input',
-        name: 'projectDescription',
-        message: 'Descripción breve:',
-        default: 'Proyecto inicializado con AI Bootstrap'
-      }
-    ]);
+    // Pedir datos mínimos del proyecto solo si no fueron proporcionados
+    let finalProjectName = projectName;
+    let finalProjectDescription = projectDescription;
+    
+    if (!finalProjectName || !finalProjectDescription) {
+      const answers = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'projectName',
+          message: 'Nombre del proyecto:',
+          default: 'Mi Proyecto AI',
+          when: !finalProjectName
+        },
+        {
+          type: 'input',
+          name: 'projectDescription',
+          message: 'Descripción breve:',
+          default: 'Proyecto inicializado con AI Bootstrap',
+          when: !finalProjectDescription
+        }
+      ]);
+      finalProjectName = finalProjectName || answers.projectName;
+      finalProjectDescription = finalProjectDescription || answers.projectDescription;
+    }
 
     console.log(chalk.cyan('\n📦 Initializing AI Bootstrap...\n'));
 
     // Create structure
     await createBootstrapStructure(targetPath, aiTools);
-    await renderTemplates(targetPath, { name: projectName, description: projectDescription });
+    await renderTemplates(targetPath, { name: finalProjectName!, description: finalProjectDescription! });
     await copyPrompts(targetPath);
     await copyScripts(targetPath);
     await setupSlashCommands(targetPath, aiTools);
@@ -339,9 +348,11 @@ program
   .description('Initialize AI Bootstrap in current directory')
   .argument('[path]', 'Target directory (defaults to current directory)', '.')
   .option('--ai <tool>', 'AI tool to use (claude, cursor, copilot, gemini, all)')
-  .action(async (targetPath: string, options: { ai?: string }) => {
+  .option('--name <name>', 'Project name (skip interactive prompt)')
+  .option('--description <desc>', 'Project description (skip interactive prompt)')
+  .action(async (targetPath: string, options: { ai?: string; name?: string; description?: string }) => {
     const absolutePath = path.resolve(targetPath);
-    await initializeProject(absolutePath, options.ai);
+    await initializeProject(absolutePath, options.ai, options.name, options.description);
   });
 
 program

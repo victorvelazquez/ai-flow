@@ -6,13 +6,11 @@
 
 ## Workflow Steps
 
-For each step, confirm if you want to execute it (y/n):
+Execute each step sequentially. After each step, ask the user if they want to continue to the next one.
 
-### 1. Lint & Fix
+### Step 1: Lint & Fix 🔍
 
 Run automatic linting and fix style/code errors.
-
-**Prompt:** "Run lint & fix? (y/n)"
 
 **Actions:**
 
@@ -20,13 +18,13 @@ Run automatic linting and fix style/code errors.
 - Auto-fix correctable issues
 - Report remaining warnings/errors
 
+**After completion, ask:** "Continue to Docs Update & Maintenance?"
+
 ---
 
-### 2. Docs Update & Maintenance
+### Step 2: Docs Update & Maintenance 📚
 
 Update main documentation and review for outdated/incomplete sections.
-
-**Prompt:** "Update and review documentation? (y/n)"
 
 **Actions:**
 
@@ -35,13 +33,13 @@ Update main documentation and review for outdated/incomplete sections.
 - Suggest improvements for incomplete sections
 - Verify links and examples are current
 
+**After completion, ask:** "Continue to Dependency Validation?"
+
 ---
 
-### 3. Dependency Validation
+### Step 3: Dependency Validation 📦
 
 Check for outdated or vulnerable dependencies and suggest updates.
-
-**Prompt:** "Validate dependencies? (y/n)"
 
 **Actions:**
 
@@ -50,13 +48,13 @@ Check for outdated or vulnerable dependencies and suggest updates.
 - Suggest safe updates for dependencies
 - Flag breaking changes or major version updates
 
+**After completion, ask:** "Continue to Security Checklist?"
+
 ---
 
-### 4. Security Checklist
+### Step 4: Security Checklist 🔐
 
 Run a mini security audit (input validation, secrets, permissions, etc.).
-
-**Prompt:** "Run security checklist? (y/n)"
 
 **Actions:**
 
@@ -66,13 +64,13 @@ Run a mini security audit (input validation, secrets, permissions, etc.).
 - Scan for common vulnerabilities (SQL injection, XSS, etc.)
 - Validate environment variable usage
 
+**After completion, ask:** "Continue to Run Tests?"
+
 ---
 
-### 5. Run Tests
+### Step 5: Run Tests 🧪
 
 Execute all tests and show coverage report.
-
-**Prompt:** "Run all tests? (y/n)"
 
 **Actions:**
 
@@ -81,13 +79,13 @@ Execute all tests and show coverage report.
 - Highlight failed tests or low coverage areas
 - Suggest additional test cases if needed
 
+**After completion, ask:** "Continue to Conventional Commit?"
+
 ---
 
-### 6. Conventional Commit
+### Step 6: Conventional Commit 💾
 
 Make an automatic commit with a conventional message based on changes.
-
-**Prompt:** "Commit changes with conventional message? (y/n)"
 
 **Actions:**
 
@@ -96,19 +94,21 @@ Make an automatic commit with a conventional message based on changes.
 - Stage and commit changes
 - Show commit message for review
 
+**After completion, ask:** "Continue to Summary & PR Suggestion?"
+
 ---
 
-### 7. Summary & Pull Request Suggestion
+### Step 7: Summary & Pull Request Suggestion 📊
 
 Show summary of changes and actions performed.
 
 **Final Output:**
 
-- List all executed steps
-- Summary of files modified
-- Test results and coverage stats
-- Security and dependency check results
-- Commit hash (if committed)
+- ✅ List all executed steps
+- 📊 Summary of files modified
+- 🧪 Test results and coverage stats
+- 🔐 Security and dependency check results
+- 💾 Commit hash (if committed)
 
 **Pull Request Suggestion:**
 If changes were made, suggest:  

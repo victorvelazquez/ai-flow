@@ -12,26 +12,24 @@ You are Claude Code guiding the user through a comprehensive quality review befo
 
 ## Workflow Steps
 
-Execute each step sequentially, asking for confirmation before proceeding:
+Execute each step sequentially. After each step, ask the user if they want to continue to the next one.
 
-### 1. Lint & Fix
+### Step 1: Lint & Fix 🔍
 
-**Prompt:** "🔍 Run lint & fix to clean up code style? (y/n)"
-
-If yes:
+**Actions:**
 
 - Run the project's linting tool
 - Auto-fix correctable issues
 - Report remaining warnings/errors
 - Show summary of fixes applied
 
+**After completion, ask:** "Continue to Docs Update & Maintenance?"
+
 ---
 
-### 2. Docs Update & Maintenance
+### Step 2: Docs Update & Maintenance 📚
 
-**Prompt:** "📚 Update and review documentation? (y/n)"
-
-If yes:
+**Actions:**
 
 - Scan for outdated documentation references
 - Update README, AGENT.md, and related docs with recent changes
@@ -39,13 +37,13 @@ If yes:
 - Verify links and examples are current
 - Check for broken references
 
+**After completion, ask:** "Continue to Dependency Validation?"
+
 ---
 
-### 3. Dependency Validation
+### Step 3: Dependency Validation 📦
 
-**Prompt:** "📦 Validate dependencies for updates and vulnerabilities? (y/n)"
-
-If yes:
+**Actions:**
 
 - Check for outdated dependencies
 - Run security audit
@@ -53,13 +51,13 @@ If yes:
 - Flag breaking changes or major version updates
 - Report any vulnerabilities found
 
+**After completion, ask:** "Continue to Security Checklist?"
+
 ---
 
-### 4. Security Checklist
+### Step 4: Security Checklist 🔐
 
-**Prompt:** "🔐 Run security checklist? (y/n)"
-
-If yes:
+**Actions:**
 
 - Verify no hardcoded secrets or API keys in code
 - Check input validation on user-facing functions
@@ -68,13 +66,13 @@ If yes:
 - Validate environment variable usage
 - Check for sensitive data in logs
 
+**After completion, ask:** "Continue to Run Tests?"
+
 ---
 
-### 5. Run Tests
+### Step 5: Run Tests 🧪
 
-**Prompt:** "🧪 Run all tests and generate coverage report? (y/n)"
-
-If yes:
+**Actions:**
 
 - Execute full test suite
 - Generate coverage report
@@ -82,13 +80,13 @@ If yes:
 - Suggest additional test cases if needed
 - Verify minimum coverage threshold is met
 
+**After completion, ask:** "Continue to Conventional Commit?"
+
 ---
 
-### 6. Conventional Commit
+### Step 6: Conventional Commit 💾
 
-**Prompt:** "💾 Commit changes with conventional message? (y/n)"
-
-If yes:
+**Actions:**
 
 - Analyze changed files
 - Generate conventional commit message (feat, fix, docs, chore, etc.)
@@ -96,9 +94,11 @@ If yes:
 - Stage and commit changes
 - Display commit hash
 
+**After completion, ask:** "Continue to Summary & PR Suggestion?"
+
 ---
 
-### 7. Summary & Pull Request Suggestion
+### Step 7: Summary & Pull Request Suggestion 📊
 
 **Final Output:**
 
