@@ -1,9 +1,0 @@
-{
-  "version": "1.0.0",
-  "aiTools": [
-    "claude"
-  ],
-  "createdAt": "2025-11-22T12:45:58.441Z",
-  "backend": true,
-  "frontend": false
-}
