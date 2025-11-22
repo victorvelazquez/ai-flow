@@ -20,29 +20,29 @@ interface AIToolChoice {
 
 const AI_TOOLS: AIToolChoice[] = [
   {
-    name: '🤖 Claude Code (Recommended)',
+    name: 'Claude',
     value: 'claude',
-    description: 'Anthropic Claude - Best for comprehensive development with plan mode'
+    description: ''
   },
   {
-    name: '✨ Cursor',
+    name: 'Cursor',
     value: 'cursor',
-    description: 'AI-powered code editor - Popular for fast iteration'
+    description: ''
   },
   {
-    name: '🐙 GitHub Copilot',
+    name: 'GitHub Copilot',
     value: 'copilot',
-    description: 'GitHub native AI assistant - Great for existing GitHub workflows'
+    description: ''
   },
   {
-    name: '🔮 Gemini',
+    name: 'Gemini',
     value: 'gemini',
-    description: 'Google Gemini - Good for multi-modal tasks'
+    description: ''
   },
   {
-    name: '🌐 All (AI-Agnostic)',
+    name: 'All AI Tools',
     value: 'all',
-    description: 'Set up for all AI tools - Maximum compatibility'
+    description: ''
   }
 ];
 
@@ -59,18 +59,14 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
       : [providedTool];
   }
 
-  console.log(chalk.cyan('\n🚀 AI Bootstrap - Interactive Project Setup\n'));
-  console.log(chalk.white('Select your primary AI development tool:\n'));
-
   const { selectedTool } = await inquirer.prompt([
     {
       type: 'list',
       name: 'selectedTool',
-      message: 'Which AI tool will you use?',
+      message: 'Select AI tool:',
       choices: AI_TOOLS.map(tool => ({
-        name: `${tool.name}\n   ${chalk.gray(tool.description)}`,
-        value: tool.value,
-        short: tool.name
+        name: tool.name,
+        value: tool.value
       })),
       pageSize: 10
     }
