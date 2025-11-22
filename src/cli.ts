@@ -20,18 +20,18 @@ interface AIToolChoice {
 
 const AI_TOOLS: AIToolChoice[] = [
   {
-    name: 'Claude',
+    name: 'GitHub Copilot',
+    value: 'copilot',
+    description: ''
+  },
+  {
+    name: 'Claude Code',
     value: 'claude',
     description: ''
   },
   {
     name: 'Cursor',
     value: 'cursor',
-    description: ''
-  },
-  {
-    name: 'GitHub Copilot',
-    value: 'copilot',
     description: ''
   },
   {
@@ -59,13 +59,36 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
       : [providedTool];
   }
 
+  // Display banner
+  console.log('\n');
+  console.log(chalk.cyan('    ╔═══════════════════════════════════════════════════════════════════╗'));
+  console.log(chalk.cyan('    ║') + '                                                                   ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + chalk.bold.cyan('          █████╗ ██╗    ██████╗  ██████╗  ██████╗ ████████╗') + '        ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + chalk.bold.cyan('         ██╔══██╗██║    ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝') + '        ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + chalk.bold.cyan('         ███████║██║    ██████╔╝██║   ██║██║   ██║   ██║') + '           ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + chalk.bold.cyan('         ██╔══██║██║    ██╔══██╗██║   ██║██║   ██║   ██║') + '           ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + chalk.bold.cyan('         ██║  ██║██║    ██████╔╝╚██████╔╝╚██████╔╝   ██║') + '           ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + chalk.cyan('         ╚═╝  ╚═╝╚═╝    ╚═════╝  ╚═════╝  ╚═════╝    ╚═╝') + '           ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + '                                                                   ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + '               ' + chalk.white('✨ AI-Ready Documentation in Minutes') + '                ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ║') + '                                                                   ' + chalk.cyan('║'));
+  console.log(chalk.cyan('    ╚═══════════════════════════════════════════════════════════════════╝'));
+  console.log('\n');
+  console.log(chalk.white('    📂 Project Setup'));
+  console.log(chalk.gray('    ────────────────────────────────────────────────────────────────────'));
+  console.log(chalk.gray(`    Working Directory: ${process.cwd()}`));
+  console.log(chalk.gray('    Version: 1.0.1'));
+  console.log('\n');
+  console.log(chalk.white('    🤖 Select your AI development tool:'));
+  console.log(chalk.gray('    ────────────────────────────────────────────────────────────────────'));
+
   const { selectedTool } = await inquirer.prompt([
     {
       type: 'list',
       name: 'selectedTool',
-      message: 'Select AI tool:',
+      message: '\u200B', // invisible char para ocultar el ?
       choices: AI_TOOLS.map(tool => ({
-        name: tool.name,
+        name: '    ' + tool.name, // 4 espacios para alinear
         value: tool.value
       })),
       pageSize: 10

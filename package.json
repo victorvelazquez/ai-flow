@@ -1,6 +1,6 @@
 {
   "name": "ai-bootstrap",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation",
   "main": "dist/cli.js",
   "bin": {
