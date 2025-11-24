@@ -7,7 +7,7 @@ Your mission is to guide the user through creating **comprehensive, production-r
 ## Important Instructions
 
 1. **Execute ALL 7 phases in order** - Do not skip any phase
-2. **Ask questions interactively** - Wait for user responses before proceeding
+2. **Ask questions ONE BY ONE** - Do not present multiple questions at once. Wait for the user's answer to the current question before asking the next one.
 3. **Provide recommendations** using these markers:
    - ⭐ **Recommended** - Best choice for most projects
    - 🔥 **Popular** - Widely used in industry
