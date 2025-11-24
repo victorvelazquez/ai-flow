@@ -77,7 +77,7 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
   console.log(chalk.white('    📂 Project Setup'));
   console.log(chalk.gray('    ────────────────────────────────────────────────────────────────────'));
   console.log(chalk.gray(`    Working Directory: ${process.cwd()}`));
-  console.log(chalk.gray('    Version: 1.0.2'));
+  console.log(chalk.gray('    Version: 1.0.3'));
   console.log('\n');
   console.log(chalk.white('    🤖 Select your AI development tool:'));
   console.log(chalk.gray('    ────────────────────────────────────────────────────────────────────'));
@@ -120,7 +120,7 @@ async function createBootstrapStructure(targetPath: string, aiTools: string[]): 
 
     // Create config file
     const config = {
-      version: '1.0.2',
+      version: '1.0.3',
       aiTools: aiTools,
       createdAt: new Date().toISOString(),
       backend: true,
@@ -255,32 +255,6 @@ async function setupSlashCommands(targetPath: string, aiTools: string[]): Promis
   }
 }
 
-async function copyScripts(targetPath: string): Promise<void> {
-  const spinner = ora('Copying setup scripts...').start();
-
-  try {
-    const scriptsSource = path.join(ROOT_DIR, 'scripts');
-    const scriptsTarget = path.join(targetPath, '.ai-bootstrap', 'scripts');
-
-    await fs.copy(scriptsSource, scriptsTarget);
-
-    // Make scripts executable on Unix-like systems
-    if (process.platform !== 'win32') {
-      const files = await fs.readdir(scriptsTarget);
-      for (const file of files) {
-        if (file.endsWith('.sh')) {
-          await fs.chmod(path.join(scriptsTarget, file), 0o755);
-        }
-      }
-    }
-
-    spinner.succeed('Setup scripts copied');
-  } catch (error) {
-    spinner.fail('Failed to copy scripts');
-    throw error;
-  }
-}
-
 async function initializeProject(targetPath: string, aiTool?: string, projectName?: string, projectDescription?: string): Promise<void> {
   try {
     // Check if already initialized
@@ -335,7 +309,6 @@ async function initializeProject(targetPath: string, aiTool?: string, projectNam
     await createBootstrapStructure(targetPath, aiTools);
     await renderTemplates(targetPath, { name: finalProjectName!, description: finalProjectDescription! });
     await copyPrompts(targetPath);
-    await copyScripts(targetPath);
     await setupSlashCommands(targetPath, aiTools);
 
     // Success message
@@ -380,7 +353,7 @@ async function initializeProject(targetPath: string, aiTool?: string, projectNam
 program
   .name('ai-bootstrap')
   .description('Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation')
-  .version('1.0.2');
+  .version('1.0.3');
 
 program
   .command('init')
