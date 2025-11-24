@@ -2,23 +2,15 @@
 
 Execute Phase 1 of the documentation generation: Business context and project scope.
 
-
 ## Instructions for the AI Assistant
 
-Read Phase 1 from `.ai-bootstrap/prompts/backend.md` and execute the Discovery & Business questionnaire, regardless of the AI tool.
+Read **Phase 1: Discovery & Business** from `.ai-bootstrap/prompts/backend.md` and execute the questionnaire, regardless of the AI tool.
 
 **Time Estimate:** 15-20 minutes
 
 **Phase Objective:** Understand the business context, problem domain, and project scope.
 
-**Questions to Ask:**
-1. Project Overview
-2. Project Name & Description
-3. Target Users
-4. Business Objectives
-5. Scope Definition (In/Out of scope)
-6. Constraints
-7. Success Metrics
+**IMPORTANT: Ask questions ONE BY ONE. Wait for the user's answer before asking the next question.**
 
 **After Completion:**
 - Summarize all gathered information
@@ -28,4 +20,3 @@ Read Phase 1 from `.ai-bootstrap/prompts/backend.md` and execute the Discovery &
 ---
 
 **BEGIN PHASE 1 QUESTIONNAIRE**
-

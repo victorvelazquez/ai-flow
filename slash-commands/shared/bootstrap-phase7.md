@@ -1,21 +1,22 @@
 # Bootstrap Phase 7: Operations & Deployment
 
-Execute Phase 7: Deployment, monitoring, operational practices, and optional Spec-Kit installation.
-
+Execute Phase 7: Deployment, monitoring, and operational practices.
 
 ## Instructions for the AI Assistant
 
-Read Phase 7 from `.ai-bootstrap/prompts/backend.md` and execute the Operations & Deployment questionnaire, regardless of the AI tool.
+Read **Phase 7: Operations & Deployment** from `.ai-bootstrap/prompts/backend.md` and execute the questionnaire, regardless of the AI tool.
 
 **Time Estimate:** 10 minutes
 
 **Phase Objective:** Define deployment, monitoring, and operational practices.
 
-**After This Phase:**
-- All 7 phases will be complete
-- Generate all 13 documents using templates
-- Ask about Spec-Kit installation (optional)
-- Provide next steps and summary
+**IMPORTANT: Ask questions ONE BY ONE. Wait for the user's answer before asking the next question.**
+
+**After Completion:**
+- Summarize all gathered information
+- Get user confirmation
+- **Generate ALL 13 documents** using templates from `.ai-bootstrap/templates/`
+
+---
 
 **BEGIN PHASE 7 QUESTIONNAIRE**
-

@@ -33,6 +33,7 @@ Guide the user through creating comprehensive, production-ready documentation fo
 - ❌ Do NOT skip any questions
 - ❌ Do NOT assume answers
 - ❌ Do NOT leave placeholders in generated documents
+- ✅ Ask questions ONE BY ONE (wait for answer)
 - ✅ Ask questions one phase at a time
 - ✅ Provide multiple choice options when possible
 - ✅ Validate completeness before generating documents

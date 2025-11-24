@@ -2,7 +2,6 @@
 
 Execute the complete pre-PR quality checklist for this project.
 
-
 ## Instructions for the AI Assistant
 
 You are an AI assistant guiding the user through a comprehensive quality review before creating a pull request, regardless of the tool.
@@ -13,7 +12,10 @@ You are an AI assistant guiding the user through a comprehensive quality review 
 
 ## Workflow Steps
 
-Execute each step sequentially. After each step, ask the user if they want to continue to the next one.
+Execute each step sequentially. After each step, ask the user to confirm:
+
+- Enter **Y** (yes) to continue to the next step
+- Enter **N** (not) to skip this step and continue the workflow
 
 ### Step 1: Lint & Fix 🔍
 
@@ -24,7 +26,9 @@ Execute each step sequentially. After each step, ask the user if they want to co
 - Report remaining warnings/errors
 - Show summary of fixes applied
 
-**After completion, ask:** "Continue to Docs Update & Maintenance?"
+**After completion, ask:**
+
+- Continue to Docs Update & Maintenance? (Y/N)
 
 ---
 
@@ -38,7 +42,9 @@ Execute each step sequentially. After each step, ask the user if they want to co
 - Verify links and examples are current
 - Check for broken references
 
-**After completion, ask:** "Continue to Dependency Validation?"
+**After completion, ask:**
+
+- Continue to Dependency Validation? (Y/N)
 
 ---
 
@@ -52,7 +58,9 @@ Execute each step sequentially. After each step, ask the user if they want to co
 - Flag breaking changes or major version updates
 - Report any vulnerabilities found
 
-**After completion, ask:** "Continue to Security Checklist?"
+**After completion, ask:**
+
+- Continue to Security Checklist? (Y/N)
 
 ---
 
@@ -67,7 +75,9 @@ Execute each step sequentially. After each step, ask the user if they want to co
 - Validate environment variable usage
 - Check for sensitive data in logs
 
-**After completion, ask:** "Continue to Run Tests?"
+**After completion, ask:**
+
+- Continue to Run Tests? (Y/N)
 
 ---
 
@@ -84,7 +94,9 @@ Execute each step sequentially. After each step, ask the user if they want to co
 - Suggest additional test cases if needed
 - Verify minimum coverage threshold is met
 
-**After completion, ask:** "Continue to Conventional Commit?"
+**After completion, ask:**
+
+- Continue to Conventional Commit? (Y/N)
 
 ---
 
@@ -92,17 +104,39 @@ Execute each step sequentially. After each step, ask the user if they want to co
 
 **Actions:**
 
-- Analyze changed files
-- Generate conventional commit message (feat, fix, docs, chore, etc.)
-- Show proposed commit message for review
-- Stage and commit changes
-- Display commit hash
+- Analyze changed files and group them by type of change:
+  - `feat:` for new features
+  - `fix:` for bug fixes
+  - `docs:` for documentation changes
+  - `chore:` for maintenance tasks
+- Generate a conventional commit for each group of related changes
+- Show the proposed commit messages for review
+- Stage and commit each group
+- Show the hashes of the created commits
 
-**After completion, ask:** "Continue to Summary & PR Suggestion?"
+**After completion, ask:**
+
+- Continue to Push to Remote? (Y/N)
 
 ---
 
-### Step 7: Summary & Pull Request Suggestion 📊
+### Step 7: Push to Remote 🚀
+
+Push all committed changes to the remote repository.
+
+**Command:**
+
+```bash
+git push
+```
+
+**After completion, ask:**
+
+- Show summary of results? (Y/N)
+
+---
+
+### Step 8: Summary 📊
 
 **Final Output:**
 
@@ -110,16 +144,16 @@ Execute each step sequentially. After each step, ask the user if they want to co
 - 📊 Summary of files modified
 - 🧪 Test results and coverage stats
 - 🔐 Security and dependency check results
-- 💾 Commit hash (if committed)
+- 💾 Commits created (one for each group of related changes)
 
-**Pull Request Suggestion:**
+**Optional:**
 If all checks passed:
-"✅ All quality checks passed! Ready to create a pull request."
+"✅ All quality checks passed! You can now create a pull request if desired."
 
-Suggest next steps:
+Suggested next steps (optional):
 
 - Review changes one final time
-- Create PR with descriptive title and body
+- Create a PR with a descriptive title and body (if your workflow requires it)
 - Link related issues
 - Request reviewers
 
@@ -138,4 +172,3 @@ Suggest next steps:
 **Time Estimate:** 10-20 minutes depending on project size
 
 **BEGIN PRE-PR CHECK NOW**
-

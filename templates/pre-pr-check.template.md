@@ -1,30 +1,40 @@
+
 # /pre-pr-check — Final Quality Review Before Pull Request
 
 > Use this prompt to ensure code and documentation quality before creating a pull request in **{{PROJECT_NAME}}**.
 
 ---
 
+## Instructions for the AI Assistant
+
+You are an AI assistant guiding the user through a comprehensive quality review before creating a pull request, regardless of the tool.
+
+**Objective:** Ensure code quality, documentation accuracy, security, and test coverage before merging changes.
+
+---
+
 ## Workflow Steps
 
-Execute each step sequentially. After each step, ask the user if they want to continue to the next one.
+Execute each step sequentially. After each step, ask the user to confirm:
+
+- Enter **Y** (yes) to continue to the next step
+- Enter **N** (not) to skip this step and continue the workflow
 
 ### Step 1: Lint & Fix 🔍
-
-Run automatic linting and fix style/code errors.
 
 **Actions:**
 
 - Execute linting tool (ESLint, Prettier, etc.)
 - Auto-fix correctable issues
 - Report remaining warnings/errors
+- Show summary of fixes applied
 
-**After completion, ask:** "Continue to Docs Update & Maintenance?"
+**After completion, ask:**
+- Continue to Docs Update & Maintenance? (Y/N)
 
 ---
 
 ### Step 2: Docs Update & Maintenance 📚
-
-Update main documentation and review for outdated/incomplete sections.
 
 **Actions:**
 
@@ -32,14 +42,14 @@ Update main documentation and review for outdated/incomplete sections.
 - Update README, AGENT.md, and related docs with recent changes
 - Suggest improvements for incomplete sections
 - Verify links and examples are current
+- Check for broken references
 
-**After completion, ask:** "Continue to Dependency Validation?"
+**After completion, ask:**
+- Continue to Dependency Validation? (Y/N)
 
 ---
 
 ### Step 3: Dependency Validation 📦
-
-Check for outdated or vulnerable dependencies and suggest updates.
 
 **Actions:**
 
@@ -47,14 +57,14 @@ Check for outdated or vulnerable dependencies and suggest updates.
 - Check for security vulnerabilities (`npm audit`)
 - Suggest safe updates for dependencies
 - Flag breaking changes or major version updates
+- Report any vulnerabilities found
 
-**After completion, ask:** "Continue to Security Checklist?"
+**After completion, ask:**
+- Continue to Security Checklist? (Y/N)
 
 ---
 
 ### Step 4: Security Checklist 🔐
-
-Run a mini security audit (input validation, secrets, permissions, etc.).
 
 **Actions:**
 
@@ -63,14 +73,14 @@ Run a mini security audit (input validation, secrets, permissions, etc.).
 - Review authentication/authorization implementations
 - Scan for common vulnerabilities (SQL injection, XSS, etc.)
 - Validate environment variable usage
+- Check for sensitive data in logs
 
-**After completion, ask:** "Continue to Run Tests?"
+**After completion, ask:**
+- Continue to Run Tests? (Y/N)
 
 ---
 
 ### Step 5: Run Tests 🧪
-
-Execute all test suites and show coverage report.
 
 **Actions:**
 
@@ -81,36 +91,55 @@ Execute all test suites and show coverage report.
 - Generate comprehensive coverage report
 - Highlight failed tests or low coverage areas
 - Suggest additional test cases if needed
-- Verify minimum coverage thresholds are met
+- Verify minimum coverage threshold is met
 
 **Test Commands (adapt to your project):**
 ```bash
 npm run test:unit          # Unit tests
 npm run test:integration   # Integration tests
-npm run test:e2e          # E2E tests
-npm test                  # All tests
+npm run test:e2e           # E2E tests
+npm test                   # All tests
 ```
 
-**After completion, ask:** "Continue to Conventional Commit?"
+**After completion, ask:**
+- Continue to Conventional Commit? (Y/N)
 
 ---
 
 ### Step 6: Conventional Commit 💾
 
-Make an automatic commit with a conventional message based on changes.
-
 **Actions:**
 
-- Analyze changed files
-- Generate conventional commit message (feat, fix, docs, chore, etc.)
-- Stage and commit changes
-- Show commit message for review
+- Analyze changed files and group them by type of change:
+	- `feat:` for new features
+	- `fix:` for bug fixes
+	- `docs:` for documentation changes
+	- `chore:` for maintenance tasks
+- Generate a conventional commit for each group of related changes
+- Show the proposed commit messages for review
+- Stage and commit each group
+- Show the hashes of the created commits
 
-**After completion, ask:** "Continue to Summary & PR Suggestion?"
+**After completion, ask:**
+- Continue to Push to Remote? (Y/N)
 
 ---
 
-### Step 7: Summary & Pull Request Suggestion 📊
+### Step 7: Push to Remote 🚀
+
+Push all committed changes to the remote repository.
+
+**Command:**
+```bash
+git push
+```
+
+**After completion, ask:**
+- Show summary of results? (Y/N)
+
+---
+
+### Step 8: Summary & Pull Request Suggestion 📊
 
 Show summary of changes and actions performed.
 
@@ -120,11 +149,27 @@ Show summary of changes and actions performed.
 - 📊 Summary of files modified
 - 🧪 Test results and coverage stats
 - 🔐 Security and dependency check results
-- 💾 Commit hash (if committed)
+- 💾 Commits created (one for each group of related changes)
 
 **Pull Request Suggestion:**
-If changes were made, suggest:  
+If all checks passed:
 "✅ All quality checks passed! Ready to create a pull request to share improvements with the team/community."
+
+Suggested next steps (optional):
+- Review changes one final time
+- Create a PR with a descriptive title and body (if your workflow requires it)
+- Link related issues
+- Request reviewers
+
+---
+
+## Critical Requirements
+
+- ❌ Do NOT skip any requested checks
+- ❌ Do NOT proceed to next step without user confirmation
+- ✅ Provide clear, actionable feedback for each step
+- ✅ Stop immediately if critical issues are found
+- ✅ Ask for guidance if unsure about fixes
 
 ---
 
