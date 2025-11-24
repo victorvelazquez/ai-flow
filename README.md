@@ -14,7 +14,6 @@ AI Bootstrap is an interactive CLI that generates 13 professional documents for 
 - 🛡️ Quality, security, and best practices by default
 - ⏱️ Save 10-20 hours per project
 
-
 Quick Start:
 
 ```bash
@@ -39,7 +38,6 @@ AI Bootstrap es un CLI interactivo que genera 13 documentos profesionales para p
 - 🛡️ Calidad, seguridad y buenas prácticas garantizadas
 - ⏱️ Ahorra 10-20 horas por proyecto
 
-
 Guía rápida:
 
 ```bash
@@ -63,7 +61,6 @@ AI Bootstrap é uma CLI interativa que gera 13 documentos profissionais para pro
 - ⚡ Instalação e uso em 2 passos
 - 🛡️ Qualidade, segurança e melhores práticas garantidas
 - ⏱️ Economize 10-20 horas por projeto
-
 
 Guia rápido:
 
