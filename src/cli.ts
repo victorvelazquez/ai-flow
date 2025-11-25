@@ -76,8 +76,8 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
   console.log('\n');
   console.log(chalk.white('    📂 Project Setup'));
   console.log(chalk.gray('    ────────────────────────────────────────────────────────────────────'));
-  console.log(chalk.gray(`    Working Directory: ${process.cwd()}`));
-  console.log(chalk.gray('    Version: 1.0.4'));
+  console.log(chalk.gray('    Working Directory: ${process.cwd()}'));
+  console.log(chalk.gray('    Version: 1.0.5'));
   console.log('\n');
   console.log(chalk.white('    🤖 Select your AI development tool:'));
   console.log(chalk.gray('    ────────────────────────────────────────────────────────────────────'));
@@ -120,7 +120,7 @@ async function createBootstrapStructure(targetPath: string, aiTools: string[]): 
 
     // Create config file
     const config = {
-      version: '1.0.4',
+      version: '1.0.5',
       aiTools: aiTools,
       createdAt: new Date().toISOString(),
       backend: true,
@@ -353,7 +353,7 @@ async function initializeProject(targetPath: string, aiTool?: string, projectNam
 program
   .name('ai-bootstrap')
   .description('Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation')
-  .version('1.0.4');
+  .version('1.0.5');
 
 program
   .command('init')
