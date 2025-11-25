@@ -254,6 +254,42 @@ If corrections needed, specify which section.
 
 ---
 
+### 📄 Generate Phase 1 Documents
+
+Once confirmed, generate:
+
+**1. `project-brief.md`**
+- Use template: `.ai-bootstrap/templates/project-brief.template.md`
+- Fill with all Phase 1 information
+- Write to project root
+
+```
+✅ Generated: project-brief.md
+
+📝 Please review this document. Do you need to make any corrections?
+
+A) ✅ Looks perfect, continue to Phase 2
+B) 📝 I'll edit it now (I'll wait)
+C) 🔄 Regenerate with changes (tell me what to modify)
+```
+
+**If user selects B:**
+```
+Perfect. Please edit project-brief.md and type "ready" when you're done.
+I'll re-read the file to update my context before continuing.
+```
+
+Then execute: `read_file('project-brief.md')` to refresh context.
+
+**If user selects C:**
+Ask what needs to be changed and regenerate the document.
+
+---
+
+**Proceed to Phase 2 only after document is validated.**
+
+---
+
 ## PHASE 2: Data Architecture (15-20 min)
 
 > **Order for this phase:** 2.1 → 2.2 → 2.3 → 2.4 → 2.5 → 2.6 → 2.7
@@ -2405,45 +2441,110 @@ Is this correct? (Yes/No)
 
 ---
 
-## FINAL STEP: Generate All Documents
+## FINAL STEP: Generate Remaining Documents & Tool Configs
 
-After completing all 7 phases and confirming all information is correct:
+### ⏸️ CHECKPOINT: Final Document Review
 
 ```
+⏸️ CHECKPOINT: Review Generated Documents
 
-🎉 EXCELLENT! All information collected.
+We have successfully generated the following documents across all phases:
 
-Now generating 15 documents:
+✅ project-brief.md (Phase 1)
+✅ docs/data-model.md (Phase 2)  
+✅ docs/architecture.md (Phase 3)
+✅ ai-instructions.md (Phase 3)
+✅ specs/security.md (Phase 4)
+✅ docs/code-standards.md (Phase 5)
+✅ docs/testing.md (Phase 6)
+✅ docs/operations.md (Phase 7)
+✅ specs/configuration.md (Phase 7)
+✅ .env.example (Phase 7)
 
-1. AGENT.md - Universal AI configuration
-2. ai-instructions.md - AI rules and workflow
-3. project-brief.md - Business context
-4. README.md - Project overview
-5. docs/architecture.md - System architecture
-6. docs/data-model.md - Detailed entity catalog
-7. docs/code-standards.md - Code quality rules
-8. docs/testing.md - Testing strategy
-9. docs/operations.md - Deployment and ops
-10. docs/business-flows.md - Business process flows and diagrams
-11. docs/api.md - API endpoints and conventions reference
-12. docs/contributing.md - Contribution guidelines
-13. specs/security.md - Security policies
-14. specs/configuration.md - Environment config
-15. .env.example - Environment variables template
+Before generating the final documents (AGENT.md, README.md, API docs, etc.),
+do you want to review or edit any of these documents?
+
+A) ✅ All documents are correct, proceed with final generation
+B) 📝 I need to review/edit some documents (I'll wait)
+```
+
+**If user selects B:**
+```
+Perfect. Please review and edit any documents you need to change.
+When you're done, type "ready" and I'll re-read ALL documents
+to ensure the final generation uses the most up-to-date information.
+```
+
+Then execute `read_file()` for ALL previously generated documents.
+
+---
+
+### 📖 Loading Complete Context for Final Generation
+
+```
+📖 Re-reading all generated documents to ensure accuracy...
+
+✅ Re-reading project-brief.md
+✅ Re-reading docs/data-model.md
+✅ Re-reading docs/architecture.md
+✅ Re-reading ai-instructions.md
+✅ Re-reading specs/security.md
+✅ Re-reading docs/code-standards.md
+✅ Re-reading docs/testing.md
+✅ Re-reading docs/operations.md
+✅ Re-reading specs/configuration.md
+✅ Re-reading .env.example
+
+✅ Context fully loaded and updated!
+
+🎉 Now generating final 5 documents:
+
+1. docs/business-flows.md - Business process flows and diagrams
+2. docs/api.md - API endpoints and conventions reference
+3. docs/contributing.md - Contribution guidelines
+4. README.md - Project overview (requires all previous context)
+5. AGENT.md - Universal AI configuration (aggregates all docs)
+
+Plus tool-specific configurations:
+- .clauderules (if Claude selected)
+- .cursorrules (if Cursor selected)
+- .github/copilot-instructions.md (if Copilot selected)
 
 Generating...
-
 ```
 
-### Generation Instructions
+### Generation Instructions for Final Documents
 
-For EACH document, use the templates in `.ai-bootstrap/templates/` and fill them with information from the 7 phases:
+For EACH final document:
 
-1. **Locate the source template** inside `.ai-bootstrap/templates/`, mirroring the destination path. Examples: `AGENT.template.md`, `docs/data-model.template.md`, `.env.example.template`.
-2. **Replace placeholders** with actual values from phases
-3. **Expand sections** with detailed information gathered
-4. **Write document** to project root or appropriate subfolder
-5. **Validate completeness** - Ensure no placeholders remain
+**1. `docs/business-flows.md`**
+- Use template: `.ai-bootstrap/templates/docs/business-flows.template.md`
+- Fill with business flows from Phase 1
+- Generate mermaid diagrams for each flow
+
+**2. `docs/api.md`**
+- Use template: `.ai-bootstrap/templates/docs/api.template.md`
+- Auto-generate CRUD endpoints for each entity from Phase 2
+- Apply API conventions from Phase 3 (question 3.5)
+- Include authentication, pagination, error formats
+
+**3. `docs/contributing.md`**
+- Use template: `.ai-bootstrap/templates/docs/contributing.template.md`
+- Fill with git workflow, commit format from Phase 5
+- Include setup instructions from Phase 3 & 7
+
+**4. `README.md`**
+- Use template: `.ai-bootstrap/templates/README.template.md`
+- **CRITICAL:** This aggregates info from ALL phases
+- Re-read ALL previously generated docs before filling
+- Include quick start, tech stack, deployment info
+
+**5. `AGENT.md`**
+- Use template: `.ai-bootstrap/templates/AGENT.template.md`
+- **CRITICAL:** This is the master index
+- Lists ALL 15 documents with descriptions
+- Includes quick reference to tech stack and critical rules
+- Re-read ALL previously generated docs to ensure accuracy
 
 ### Special Documents
 
@@ -2478,21 +2579,40 @@ nest new . --skip-git --package-manager npm
 ✅ AI Bootstrap Complete!
 
 Generated 15 documents successfully:
-- AGENT.md
-- ai-instructions.md
-- project-brief.md
-- README.md
-- docs/architecture.md
-- docs/data-model.md
-- docs/code-standards.md
-- docs/testing.md
-- docs/operations.md
-- docs/business-flows.md
-- docs/api.md
-- docs/contributing.md
-- specs/security.md
-- specs/configuration.md
-- .env.example
+
+Phase 1:
+✅ project-brief.md
+
+Phase 2:
+✅ docs/data-model.md
+
+Phase 3:
+✅ docs/architecture.md
+✅ ai-instructions.md
+
+Phase 4:
+✅ specs/security.md
+
+Phase 5:
+✅ docs/code-standards.md
+
+Phase 6:
+✅ docs/testing.md
+
+Phase 7:
+✅ docs/operations.md
+✅ specs/configuration.md
+✅ .env.example
+
+Final Generation:
+✅ docs/business-flows.md
+✅ docs/api.md
+✅ docs/contributing.md
+✅ README.md
+✅ AGENT.md
+
+Tool-specific configs:
+✅ [Selected tool configs generated]
 
 Next steps:
 1. Review all generated documents
@@ -2527,7 +2647,11 @@ When executing this master prompt:
 - [ ] Offer multiple choice where applicable
 - [ ] Summarize each phase for confirmation
 - [ ] Collect ALL required information
-- [ ] Generate ALL 15 documents
+- [ ] Generate documents **incrementally** after each phase
+- [ ] Ask for user validation after each document generation
+- [ ] Re-read generated documents at start of each new phase
+- [ ] Perform final checkpoint before generating AGENT.md and README.md
+- [ ] Re-read ALL documents before final generation to ensure accuracy
 - [ ] Use templates from `.ai-bootstrap/templates/`
 - [ ] Create tool-specific configs based on AI selection
 - [ ] Validate no placeholders remain
@@ -2537,7 +2661,10 @@ When executing this master prompt:
 
 - ❌ Skip questions or phases
 - ❌ Assume answers without asking
-- ❌ Generate documents with incomplete information
+- ❌ Generate ALL documents at the end (generate incrementally!)
+- ❌ Skip document validation after generation
+- ❌ Forget to re-read documents before using their info
+- ❌ Generate final documents without re-reading all previous docs
 - ❌ Leave placeholder text in final documents
 - ❌ Rush through the process
 
