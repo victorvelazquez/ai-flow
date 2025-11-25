@@ -83,7 +83,8 @@ AI Bootstrap is an interactive CLI tool that generates **15 comprehensive docume
 
 **The Problem:** Starting a new backend project requires hours of documentation setup. Existing projects often lack proper AI-ready documentation. Without proper docs, AI assistants work inefficiently and make inconsistent decisions.
 
-**The Solution:** 
+**The Solution:**
+
 - **New Projects:** AI Bootstrap asks you the right questions and generates professional documentation from scratch.
 - **Existing Projects:** AI Bootstrap analyzes your code, README, and configs to pre-populate answers, saving 50-60% of time.
 
@@ -166,6 +167,7 @@ Read .ai-bootstrap/prompts/backend.md and execute the 7-phase questionnaire
 
 **For Existing Projects:**
 The AI will first analyze your project (Phase 0) and pre-populate answers from:
+
 - AI instruction files (copilot-instructions.md, .clauderules, AGENT.md, etc.)
 - README.md, package.json, and code structure
 - Detected frameworks, entities, and dependencies
@@ -321,6 +323,7 @@ After initialization, you can use these commands in your AI tool:
 ### 1. Smart Context Detection (Phase 0)
 
 For existing projects, AI Bootstrap automatically:
+
 - Detects AI instruction files (copilot-instructions.md, .clauderules, .cursorrules, AGENT.md, etc.)
 - Analyzes README.md, package.json, and project structure
 - Identifies framework, language, database, and entities from code
@@ -357,6 +360,7 @@ Each AI tool gets its specific config (`.clauderules`, `.cursorrules`, etc.) tha
 ### AI Bootstrap Approach (✅ With AI Bootstrap)
 
 **New Projects:**
+
 - ⏱️ 90-120 minutes interactive setup
 - 📚 15 interconnected professional documents
 - 🤖 AI assistants work with full context
@@ -364,6 +368,7 @@ Each AI tool gets its specific config (`.clauderules`, `.cursorrules`, etc.) tha
 - ✅ Fewer bugs, faster development
 
 **Existing Projects:**
+
 - ⏱️ 35-70 minutes (50-60% faster with smart detection!)
 - 📚 Same 15 professional documents
 - 🔍 Automatic analysis of existing code/docs
@@ -373,6 +378,7 @@ Each AI tool gets its specific config (`.clauderules`, `.cursorrules`, etc.) tha
 ### ROI Calculation
 
 **New Projects:**
+
 - **Investment:** 2 hours (one-time)
 - **Savings per feature:** 30-60 minutes
 - **Break-even:** After 2-4 features
@@ -380,6 +386,7 @@ Each AI tool gets its specific config (`.clauderules`, `.cursorrules`, etc.) tha
 - **Entire project:** Save 20-50+ hours
 
 **Existing Projects:**
+
 - **Investment:** 1 hour (one-time)
 - **Immediate benefit:** Professional AI-ready documentation
 - **Ongoing savings:** Same as new projects (10-20 hours)
@@ -467,8 +474,8 @@ ai-bootstrap check
 ### Perfect For
 
 - ✅ Backend developers starting new projects
-- ✅ **Teams with existing codebases needing AI-ready documentation**
-- ✅ **Legacy projects lacking proper documentation**
+- ✅ Teams with existing codebases needing AI-ready documentation
+- ✅ Legacy projects lacking proper documentation
 - ✅ Teams adopting AI-assisted development
 - ✅ Projects requiring comprehensive documentation
 - ✅ Developers who want to learn best practices
