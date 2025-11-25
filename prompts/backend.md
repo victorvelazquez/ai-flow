@@ -15,7 +15,152 @@ Your mission is to guide the user through creating **comprehensive, production-r
    - 🏆 **Enterprise** - Best for large-scale projects
 4. **Use multiple choice when possible** - Give 3-4 options (A, B, C, D)
 5. **Validate completeness** - Ensure all critical information is gathered
-6. **Generate documents at the end** - After all phases complete, generate all 15 documents
+6. **Generate documents incrementally** - After each phase, generate corresponding documents with validation
+
+---
+
+## PHASE 0: Context Discovery (Optional - Existing Projects)
+
+> **This phase is ONLY for existing projects that already have code/documentation.**  
+> **If starting a new project from scratch, skip directly to Phase 1.**
+
+### Objective
+
+Analyze existing project files to pre-populate answers and minimize redundant questions.
+
+### 0.1 Detect Project Type
+
+```
+🔍 Analyzing project structure...
+
+Let me check if this is an existing project or a new one.
+```
+
+**Actions to perform:**
+
+1. Search for AI instruction files (in order of priority):
+
+   - `copilot-instructions.md` or `.github/copilot-instructions.md` (GitHub Copilot)
+   - `.clauderules` or `CLAUDE.md` (Claude)
+   - `.cursorrules` or `cursor.md` (Cursor)
+   - `.geminirules` or `GEMINI.md` (Gemini)
+   - `.clinerules` (Cline)
+   - `.windsurfrules` (Windsurf)
+   - `AGENT.md` (Universal/Generic)
+   - `ai-instructions.md` (Generic)
+
+2. Search for project documentation:
+
+   - `README.md`
+   - `package.json` / `pyproject.toml` / `pom.xml` / `go.mod` / `Cargo.toml`
+   - `docs/` folder (architecture.md, api.md, etc.)
+
+3. Search for source code patterns:
+   - `src/` or `app/` folder structure
+   - Framework detection (NestJS, Express, FastAPI, Django, Spring Boot, etc.)
+   - Database configs (Prisma schema, TypeORM entities, SQLAlchemy models, etc.)
+
+### 0.2 Present Detection Results
+
+```
+📊 PROJECT ANALYSIS RESULTS:
+
+✅ Detected Files:
+- [List of AI instruction files found]
+- [List of documentation files found]
+- [List of config files found]
+
+🔍 Inferred Information:
+- Project Name: [from package.json or README]
+- Description: [from README or package description]
+- Framework: [detected framework]
+- Language: [detected language and version]
+- Database: [detected from configs]
+- Entities: [detected from code/schemas]
+- API Endpoints: [detected from routes/controllers]
+
+❓ Missing Information:
+- [List of questions that still need answers]
+
+---
+
+Would you like to:
+
+A) ✅ Use detected information and only answer missing questions
+B) 🔄 Start fresh questionnaire (ignore existing files)
+C) 📝 Review and edit detected information before proceeding
+
+Your choice: __
+```
+
+### 0.3 Load Existing Context
+
+**If user selects A (Use detected information):**
+
+```
+✅ Loading existing project context...
+
+I'll use the information I found and only ask about what's missing.
+We'll go through phases 1-7, but I'll skip questions I already have answers for.
+
+📋 PRE-POPULATED INFORMATION:
+
+Phase 1 (Business):
+✅ Project Name: [name]
+✅ Description: [description]
+❓ Business Objectives: [NEED TO ASK]
+❓ Target Users: [NEED TO ASK]
+...
+
+Phase 2 (Data):
+✅ Database: [PostgreSQL/MySQL/etc.]
+✅ Entities: [User, Product, Order, etc.]
+❓ Relationships: [NEED TO ASK]
+...
+
+Phase 3 (Architecture):
+✅ Framework: [NestJS/FastAPI/etc.]
+✅ Language: [TypeScript 5.3/Python 3.11/etc.]
+✅ Dependencies: [Prisma, class-validator, etc.]
+❓ Caching Strategy: [NEED TO ASK]
+...
+
+[Continue for all phases...]
+
+Ready to start? I'll begin with Phase 1 and skip questions I already have answers for.
+
+Type 'yes' to continue.
+```
+
+**If user selects B (Start fresh):**
+
+```
+✅ Starting fresh questionnaire.
+
+I'll ignore existing files and ask all questions as if this were a new project.
+Proceed directly to Phase 1.
+```
+
+**If user selects C (Review detected info):**
+
+```
+📝 Here's what I detected. Please correct any mistakes:
+
+[Present each detected field with option to edit]
+
+Project Name: [name] - Correct? (Y/N) If no, provide correct value: __
+Description: [description] - Correct? (Y/N) If no, provide correct value: __
+Framework: [framework] - Correct? (Y/N) If no, provide correct value: __
+...
+
+[After user reviews all fields]
+
+✅ Updated information saved. Proceeding to Phase 1 with corrected data.
+```
+
+---
+
+**After Phase 0 completes, proceed to Phase 1 with pre-populated answers where available.**
 
 ---
 
@@ -23,9 +168,19 @@ Your mission is to guide the user through creating **comprehensive, production-r
 
 > **Order for this phase:** 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 → 1.7 → 1.8
 
+> **📌 Note:** If Phase 0 was executed, some questions may already be answered. Skip those and only ask what's missing.
+
 **1.1 Project Name & Description**
 
 ```
+[If detected from Phase 0, show:]
+✅ Project Name: [detected name]
+✅ Description: [detected description]
+
+Is this correct? (Y/N)
+If no, please provide correct values.
+
+[If NOT detected, ask:]
 What is the project name?
 
 Provide a short description (1 sentence) for README and package.json
@@ -296,6 +451,8 @@ Ask what needs to be changed and regenerate the document.
 
 > **Order for this phase:** 2.1 → 2.2 → 2.3 → 2.4 → 2.5 → 2.6 → 2.7
 
+> **📌 Note:** If Phase 0 detected database/entities from code, those will be pre-filled. Review and confirm.
+
 ### Objective
 
 Design the database model, entities, and relationships.
@@ -303,6 +460,15 @@ Design the database model, entities, and relationships.
 **2.1 Database Type**
 
 ```
+[If detected from Phase 0, show:]
+✅ Database Detected: [PostgreSQL/MySQL/MongoDB/etc.]
+✅ Version: [version if found]
+✅ ORM/Client: [Prisma/TypeORM/Sequelize/SQLAlchemy/etc.]
+
+Is this correct? (Y/N)
+If no, please provide correct database type.
+
+[If NOT detected, ask:]
 What type of database will you use? (Can select multiple)
 
 A) ⭐ PostgreSQL - Recommended for most backends (ACID, relational, JSON support)
@@ -317,6 +483,17 @@ Why this choice?
 **2.2 Core Data Entities**
 
 ```
+[If detected from Phase 0, show:]
+✅ Entities Detected from Code:
+- [User] - [description if inferred from code]
+- [Product] - [description]
+- [Order] - [description]
+- [etc.]
+
+Are these correct? (Y/N)
+Do you need to add more entities? (Y/N)
+
+[If NOT detected OR user wants to add more, show:]
 Based on your system type (from Phase 1, question 1.5), here are common entities:
 
 🛒 E-commerce typical entities:
@@ -554,6 +731,8 @@ Then execute: `read_file('docs/data-model.md')` to refresh context.
 
 > **Order for this phase:** 3.1 → 3.2 → 3.3 → 3.4 → 3.5 → 3.6 → 3.7 → 3.8 → 3.9 → 3.10
 
+> **📌 Note:** If Phase 0 detected framework/language/dependencies, those will be pre-filled. Review and confirm.
+
 ### Objective
 
 Define the technical stack, architecture patterns, and system design.
@@ -563,6 +742,15 @@ Define the technical stack, architecture patterns, and system design.
 **3.1 Backend Framework**
 
 ```
+[If detected from Phase 0, show:]
+✅ Framework Detected: [NestJS/FastAPI/Spring Boot/etc.]
+✅ Language: [TypeScript 5.3/Python 3.11/Java 21/etc.]
+✅ Runtime: [Node 20/Python 3.11/JVM 21/etc.]
+
+Is this correct? (Y/N)
+If no, please specify the correct framework and language.
+
+[If NOT detected, ask:]
 Which backend framework will you use?
 
 Node.js (JavaScript):
@@ -2197,6 +2385,7 @@ Is this correct? (Yes/No)
 ### 📄 Generate Phase 6 Documents
 
 **Before starting generation:**
+
 ```
 📖 Loading context from previous phases...
 ✅ Re-reading docs/code-standards.md
@@ -2206,6 +2395,7 @@ Is this correct? (Yes/No)
 Once confirmed, generate:
 
 **1. `docs/testing.md`**
+
 - Use template: `.ai-bootstrap/templates/docs/testing.template.md`
 - Fill with testing strategy, tools, coverage targets, automation
 
@@ -2220,6 +2410,7 @@ C) 🔄 Regenerate with changes (tell me what to modify)
 ```
 
 **If user selects B:**
+
 ```
 Perfect. Please edit the document and type "ready" when you're done.
 I'll re-read all files to update my context before continuing.
@@ -2665,6 +2856,7 @@ Is this correct? (Yes/No)
 ### 📄 Generate Phase 7 Documents
 
 **Before starting generation:**
+
 ```
 📖 Loading context from previous phases...
 ✅ Re-reading docs/testing.md
@@ -2674,14 +2866,17 @@ Is this correct? (Yes/No)
 Once confirmed, generate:
 
 **1. `docs/operations.md`**
+
 - Use template: `.ai-bootstrap/templates/docs/operations.template.md`
 - Fill with deployment, monitoring, alerting, backup, scaling
 
 **2. `specs/configuration.md`**
+
 - Use template: `.ai-bootstrap/templates/specs/configuration.template.md`
 - Fill with environment variables, secrets management, feature flags
 
 **3. `.env.example`**
+
 - List all environment variables needed
 - Include comments explaining each variable
 
@@ -2698,6 +2893,7 @@ C) 🔄 Regenerate with changes (tell me what to modify)
 ```
 
 **If user selects B:**
+
 ```
 Perfect. Please edit the documents and type "ready" when you're done.
 I'll re-read all files to update my context before continuing.
@@ -2913,9 +3109,22 @@ Happy building! 🎉
 
 When executing this master prompt:
 
+**PHASE 0 (Existing Projects Only):**
+
+- [ ] Check if project has existing code/documentation
+- [ ] Search for AI instruction files (copilot-instructions.md, .clauderules, .cursorrules, AGENT.md, etc.)
+- [ ] Search for README.md, package.json, and config files
+- [ ] Analyze source code structure to detect framework, language, entities
+- [ ] Present detected information summary to user
+- [ ] Let user choose: A) Use detected info, B) Start fresh, C) Review/edit detected info
+- [ ] Pre-populate answers based on detected information
+- [ ] Mark questions that still need answers
+
+**PHASES 1-7 (All Projects):**
+
 - [ ] Execute phases 1-7 in exact order
-- [ ] Ask ALL questions in each phase (don't skip)
-- [ ] Ask questions ONE BY ONE (wait for answer)
+- [ ] **SKIP questions already answered** from Phase 0 detection (existing projects)
+- [ ] Ask remaining questions ONE BY ONE (wait for answer)
 - [ ] Wait for user response before proceeding
 - [ ] Provide recommendations (⭐🔥⚡🏆)
 - [ ] Offer multiple choice where applicable
@@ -2933,8 +3142,11 @@ When executing this master prompt:
 
 **DO NOT:**
 
+- ❌ Skip Phase 0 detection for existing projects
+- ❌ Ask questions already answered by detected files
+- ❌ Ignore existing AI instruction files
 - ❌ Skip questions or phases
-- ❌ Assume answers without asking
+- ❌ Assume answers without asking (when info is not detected)
 - ❌ Generate ALL documents at the end (generate incrementally!)
 - ❌ Skip document validation after generation
 - ❌ Forget to re-read documents before using their info
@@ -2943,6 +3155,8 @@ When executing this master prompt:
 - ❌ Rush through the process
 
 **ESTIMATED TIME:**
+
+**New Projects:**
 
 - Phase 1: 15-20 min
 - Phase 2: 15-20 min
@@ -2953,8 +3167,26 @@ When executing this master prompt:
 - Phase 7: 10 min
 - **Total: 90-120 minutes**
 
+**Existing Projects (with Phase 0 detection):**
+
+- Phase 0: 5-10 min (detection + review)
+- Phases 1-7: 30-60 min (only missing questions)
+- **Total: 35-70 minutes** (50-60% time saved!)
+
 This is an investment that will save 10-20 hours over the project lifecycle.
 
 ---
 
-**BEGIN PHASE 1 when user runs `/bootstrap`**
+**EXECUTION FLOW:**
+
+1. **START:** User runs `/bootstrap`
+2. **DETECT:** Check for existing project files (Phase 0)
+   - If existing files found → Run Phase 0 detection
+   - If no files found → Skip to Phase 1
+3. **EXECUTE:** Run Phases 1-7 with pre-populated answers (if any)
+4. **GENERATE:** Create documents incrementally with validation
+5. **COMPLETE:** Final checkpoint and remaining documents
+
+---
+
+**BEGIN EXECUTION when user runs `/bootstrap`**
