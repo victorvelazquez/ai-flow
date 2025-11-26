@@ -137,13 +137,13 @@ async function createBootstrapStructure(targetPath: string, aiTools: string[]): 
 }
 
 async function renderTemplates(targetPath: string, projectData: { name: string; description: string }): Promise<void> {
-  const spinner = ora('Generando documentación desde templates...').start();
+  const spinner = ora('Generating documentation from templates...').start();
   try {
     const templatesSource = path.join(ROOT_DIR, 'templates');
     const templatesTarget = path.join(targetPath, '.ai-bootstrap', 'templates');
     await fs.ensureDir(templatesTarget);
 
-    // Buscar todos los .template.md en templates y subcarpetas
+    // Find all .template.md files in templates and subfolders
     const walk = async (dir: string): Promise<string[]> => {
       let files: string[] = [];
       for (const entry of await fs.readdir(dir)) {
@@ -164,7 +164,7 @@ async function renderTemplates(targetPath: string, projectData: { name: string; 
       const destPath = path.join(templatesTarget, relPath);
       await fs.ensureDir(path.dirname(destPath));
       const templateContent = await fs.readFile(templateFile, 'utf8');
-      // Renderizar con EJS, dejando {{PLACEHOLDER}} para todo lo que no sea name/description
+      // Render with EJS, leaving {{PLACEHOLDER}} for everything except name/description
       const rendered = ejs.render(templateContent, {
         PROJECT_NAME: projectData.name,
         PROJECT_DESCRIPTION: projectData.description,
@@ -172,9 +172,9 @@ async function renderTemplates(targetPath: string, projectData: { name: string; 
       }, { delimiter: '?' });
       await fs.writeFile(destPath, rendered, 'utf8');
     }
-    spinner.succeed('Documentación generada desde templates');
+    spinner.succeed('Documentation generated from templates');
   } catch (error) {
-    spinner.fail('Error al generar documentación');
+    spinner.fail('Failed to generate documentation');
     throw error;
   }
 }
@@ -204,7 +204,7 @@ async function setupSlashCommands(targetPath: string, aiTools: string[]): Promis
 
     for (const tool of aiTools) {
       if (tool === 'copilot') {
-        // Copilot: prompts en .github/prompts con sufijo .prompt.md
+        // Copilot: prompts in .github/prompts with .prompt.md suffix
         const promptsTarget = path.join(targetPath, '.github', 'prompts');
         await fs.ensureDir(promptsTarget);
         for (const file of files) {
@@ -278,29 +278,26 @@ async function initializeProject(targetPath: string, aiTool?: string, projectNam
     // Select AI tools
     const aiTools = await selectAITool(aiTool);
 
-    // Pedir datos mínimos del proyecto solo si no fueron proporcionados
+    // Infer project name from directory
+    const inferredName = path.basename(targetPath)
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
+    // Request minimal project data only if not provided
     let finalProjectName = projectName;
-    let finalProjectDescription = projectDescription;
-    
-    if (!finalProjectName || !finalProjectDescription) {
+    let finalProjectDescription = projectDescription || 'TBD - Run /bootstrap to define';
+
+    if (!finalProjectName) {
       const answers = await inquirer.prompt([
         {
           type: 'input',
           name: 'projectName',
-          message: 'Nombre del proyecto:',
-          default: 'Mi Proyecto AI',
-          when: !finalProjectName
-        },
-        {
-          type: 'input',
-          name: 'projectDescription',
-          message: 'Descripción breve:',
-          default: 'Proyecto inicializado con AI Bootstrap',
-          when: !finalProjectDescription
+          message: 'Project name (you can refine it in /bootstrap):',
+          default: inferredName
         }
       ]);
-      finalProjectName = finalProjectName || answers.projectName;
-      finalProjectDescription = finalProjectDescription || answers.projectDescription;
+      finalProjectName = answers.projectName;
     }
 
     console.log(chalk.cyan('\n📦 Initializing AI Bootstrap...\n'));
