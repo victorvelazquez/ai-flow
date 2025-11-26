@@ -8,14 +8,26 @@ Your mission is to guide the user through creating **comprehensive, production-r
 
 1. **Execute ALL 7 phases in order** - Do not skip any phase
 2. **Ask questions ONE BY ONE** - Do not present multiple questions at once. Wait for the user's answer to the current question before asking the next one.
-3. **Provide recommendations** using these markers:
+3. **Show progress indicator before EVERY question** - Use this format:
+   ```
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   📋 Phase [N]: [Phase Name]  |  Question [X]/[Total]  |  Phase Progress: [%]%
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ```
+   Example for Phase 1, Question 3 of 8:
+   ```
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   📋 Phase 1: Discovery & Business  |  Question 3/8  |  Phase Progress: 37%
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ```
+4. **Provide recommendations** using these markers:
    - ⭐ **Recommended** - Best choice for most projects
    - 🔥 **Popular** - Widely used in industry
    - ⚡ **Modern** - Cutting-edge, newer approach
    - 🏆 **Enterprise** - Best for large-scale projects
-4. **Use multiple choice when possible** - Give 3-4 options (A, B, C, D)
-5. **Validate completeness** - Ensure all critical information is gathered
-6. **Generate documents incrementally** - After each phase, generate corresponding documents with validation
+5. **Use multiple choice when possible** - Give 3-4 options (A, B, C, D)
+6. **Validate completeness** - Ensure all critical information is gathered
+7. **Generate documents incrementally** - After each phase, generate corresponding documents with validation
 
 ---
 
@@ -896,8 +908,24 @@ Please answer the following questions to define the global API conventions (thes
   - Filters: [id, name, date, etc.]
   - Sorting: [field, asc/desc]
 
+5. How will filters be passed for GET list endpoints?
+  A) ⭐ Query parameters (recommended for simple filters)
+     Example: GET /users?name=John&status=active&page=1&limit=10
+  
+  B) POST /search endpoint with body (for complex filters)
+     Example: POST /users/search
+     Body: { "filters": { "name": "John", "status": "active" }, "page": 1, "limit": 10 }
+  
+  C) Both (query params for simple, POST /search for complex)
+
+6. For POST/PUT/PATCH endpoints, will you use DTOs for request validation?
+  A) ⭐ Yes, strict DTOs with validation (recommended)
+  B) Accept raw JSON without strict schema
+  
+  If yes, validation library: [from Phase 3.6 - class-validator, Zod, Pydantic, Joi]
+
 **C) Error and Response Structure**
-5. What error response format will be used?
+7. What error response format will be used?
   A) Standard JSON:
   ```json
   {
@@ -909,16 +937,16 @@ Please answer the following questions to define the global API conventions (thes
 
   B) Other (specify)
 
-6. Which fields will be included in the default successful response?
+8. Which fields will be included in the default successful response?
   - data, meta (pagination), links, etc.
 
 **D) Relationships and Expansions**
-7. Allow expanding relationships (include/expand)?
+9. Allow expanding relationships (include/expand)?
   A) ⭐ Yes, support `include` parameter (recommended)
   B) No, flat data only
 
 **E) Custom Endpoint Example**
-8. If you want to customize an endpoint (e.g., add special logic, validations, or unique parameters), describe the case here:
+10. If you want to customize an endpoint (e.g., add special logic, validations, or unique parameters), describe the case here:
 
 - [Brief description, example endpoint, parameters, special logic]
 
@@ -1150,6 +1178,7 @@ Once confirmed, generate:
 - Use template: `.ai-bootstrap/templates/ai-instructions.template.md`
 - Fill with tech stack, framework, language, key dependencies
 - Include NEVER/ALWAYS rules specific to chosen stack
+- Generate idiomatic code examples for Controller, Service, Repository, DTO and Module placeholders, strictly following the selected Architecture Pattern (e.g., if Hexagonal, show Ports & Adapters).
 
 ```
 ✅ Generated: docs/architecture.md
@@ -1179,7 +1208,7 @@ Then execute: `read_file()` for both documents to refresh context.
 
 ## PHASE 4: Security & Authentication (15-20 min)
 
-> **Order for this phase:** 4.1 → 4.2 → 4.3 → 4.4 → 4.5 → 4.6 → 4.7 → 4.8 → 4.9 → 4.10
+> **Order for this phase:** 4.1 → 4.2 → 4.3 → 4.4 → 4.5 → 4.6 → 4.7 → 4.8 → 4.9 → 4.10 → 4.11
 
 ### Objective
 
@@ -1448,6 +1477,68 @@ Log retention: __ days (recommended: 90+ days)
 Log storage: [Database / File system / External service (CloudWatch, Datadog)]
 ```
 
+**4.11 Input Validation & Sanitization**
+
+```
+Input validation strategy:
+
+A) ⭐ Strict validation with DTOs/Schemas (Recommended)
+   - Use validation library: [class-validator/Zod/Pydantic/Joi from Phase 3.6]
+   - Reject unknown fields: [yes/no]
+   - Type coercion: [strict/lenient]
+
+B) Manual validation in services
+   - Custom validation logic
+   - More flexible but error-prone
+
+Sanitization rules:
+
+A) ✅ Sanitize all string inputs (XSS prevention)
+   - Strip HTML tags: [yes/no]
+   - Escape special characters: [yes/no]
+   - Library: [DOMPurify/validator.js/bleach]
+
+B) ✅ SQL Injection prevention
+   - Use parameterized queries (ORM handles this automatically)
+   - Never concatenate user input in queries
+
+Request size limits:
+
+- Max JSON body size: __ MB (recommended: 1-10 MB)
+- Max file upload size: __ MB (recommended: 10-50 MB)
+- Max URL length: __ characters (recommended: 2048)
+
+File upload validation (if applicable from Phase 3.9):
+
+- Allowed file types: [jpg, png, pdf, etc.]
+- MIME type validation: [yes/no - verify actual content matches extension]
+- File content validation: [yes/no - check file headers]
+- Virus scanning: [yes/no - ClamAV, VirusTotal API]
+- Filename sanitization: [yes/no - remove special characters, limit length]
+
+Content-Type enforcement:
+
+A) ⭐ Strict - Reject if Content-Type doesn't match body (recommended)
+B) Lenient - Accept common mismatches (application/json vs text/plain)
+C) No validation
+
+Validation approach:
+
+A) ⭐ Whitelist - Only allow known good inputs (recommended)
+   - Define allowed values explicitly
+   - Reject everything else
+
+B) Blacklist - Block known bad inputs (not recommended)
+   - Easy to bypass
+   - Incomplete protection
+
+Special character handling:
+
+- Allow special characters in: [names, descriptions, etc.]
+- Escape/encode for: [HTML output, SQL queries, shell commands]
+- Reject in: [IDs, slugs, filenames]
+```
+
 ### Phase 4 Output
 
 ```
@@ -1465,6 +1556,7 @@ Encryption: [in-transit + at-rest + fields to encrypt]
 Security Headers: [list]
 Compliance: [requirements with specific controls]
 Audit Logging: [events logged + retention + storage]
+Input Validation: [strategy + sanitization rules + size limits + file upload validation + whitelist/blacklist approach]
 
 Is this correct? (Yes/No)
 ```

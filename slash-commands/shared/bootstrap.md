@@ -4,7 +4,7 @@ Execute the complete documentation generation for this backend project (new or e
 
 ## Instructions for the AI Assistant
 
-Guide the user through creating comprehensive, production-ready documentation for their backend project, independientemente de la IA utilizada.
+Guide the user through creating comprehensive, production-ready documentation for their backend project, regardless of the AI tool used.
 
 **Master Prompt Location:** `{PROJECT_ROOT}/.ai-bootstrap/prompts/backend.md`
 
@@ -68,7 +68,7 @@ Guide the user through creating comprehensive, production-ready documentation fo
 ### After Completion
 
 1. Generate all 15 documents (incrementally, not at end)
-2. Generate tool-specific configs si aplica (por ejemplo, `.clauderules`, `.cursorrules`, `.github/copilot-instructions.md`)
+2. Generate tool-specific configs if applicable (e.g., `.clauderules`, `.cursorrules`, `.github/copilot-instructions.md`)
 3. Validate no placeholders remain
 4. Provide summary and next steps
 

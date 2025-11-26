@@ -16,8 +16,8 @@ Read **Phase 7: Operations & Deployment** from `.ai-bootstrap/prompts/backend.md
 - Summarize all gathered information
 - Get user confirmation
 - **Generate ALL 15 documents** using templates from `.ai-bootstrap/templates/`
-- Generate tool-specific configs si aplica (por ejemplo, `.clauderules`, `.cursorrules`, `.github/copilot-instructions.md`)
-- Validar que no queden placeholders pendientes en los archivos generados
+- Generate tool-specific configs if applicable (e.g., `.clauderules`, `.cursorrules`, `.github/copilot-instructions.md`)
+- Validate that no placeholders remain in generated files
 
 ---
 

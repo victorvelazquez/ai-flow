@@ -140,10 +140,11 @@ ai-bootstrap init .
 **This will:**
 
 - Ask you which AI tool you'll use (Claude/Cursor/Copilot/Gemini/All)
-- Create `.ai-bootstrap/` hidden folder
+- Ask for project name (inferred from directory, press Enter to accept)
+- Create `.ai-bootstrap/` hidden folder with templates
 - Copy master prompts and templates
 - Install slash commands for your AI tool
-- Set up the foundation
+- Set up the foundation (takes ~30 seconds)
 
 ### 3. Run the Bootstrap Process
 
@@ -189,7 +190,7 @@ The AI will guide you through 7 phases:
 
 ### 5. Generated Documents (15) ✅
 
-After completion, tendrás 15 artefactos listos:
+After completion, you'll have 15 artifacts ready:
 
 ```
 my-awesome-api/
@@ -451,7 +452,7 @@ ai-bootstrap check
 1. Have a clear problem statement
 2. Know your approximate tech stack
 3. Understand your users
-4. Set aside 2 hours of focused time
+4. Set aside 90-120 min (new projects) or 35-70 min (existing projects)
 
 ### During Bootstrap
 
