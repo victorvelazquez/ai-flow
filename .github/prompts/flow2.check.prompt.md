@@ -81,6 +81,12 @@ npm audit
 - Outdated packages (current vs latest)
 - Breaking changes (major version bumps)
 - Vulnerabilities (severity levels)
+- **Version mismatches** between runtime deps and type definitions
+
+**Critical checks:**
+- If `@types/*` package is outdated by 2+ major versions → **CRITICAL** (type mismatch)
+- If runtime package version doesn't match `@types/*` major version → **CRITICAL** (incompatibility)
+- If ESM-only package detected in CommonJS project → **CRITICAL** (module system mismatch)
 
 **Example output:**
 
@@ -89,6 +95,11 @@ npm audit
   - chalk: 5.6.2 → 5.7.0 (minor)
   - commander: 14.0.2 → 15.0.0 (major, breaking)
 ✅ 0 vulnerabilities
+
+❌ CRITICAL: Type definition mismatch detected:
+  - inquirer: ^13.0.1 (runtime, ESM-only)
+  - @types/inquirer: 8.2.12 (types, 5 major versions behind)
+  → Action: Downgrade inquirer to 8.x OR upgrade @types/inquirer to 9.x
 ```
 
 ---
@@ -128,14 +139,26 @@ npm test
 - Coverage percentage
 - Failed test names
 
+**Additional validation:**
+- After tests pass, check for **ESM/CommonJS compatibility issues**:
+  ```bash
+  npm run build && node dist/cli.js --version
+  ```
+- If build succeeds but execution fails with `ERR_REQUIRE_ESM` → **CRITICAL** (module mismatch)
+
 **Example output:**
 
 ```
-✅ 24/24 tests passed
-✅ Coverage: 87% (above 80% threshold)
-❌ 2/26 tests failed:
-  - cli.test.ts: "should handle invalid args"
-  - utils.test.ts: "should parse version correctly"
+✅ 12/12 tests passed
+✅ All test suites passed
+
+✅ Build validation:
+  - npm run build: SUCCESS
+  - CLI execution: SUCCESS (v1.0.6)
+
+❌ CRITICAL: Build succeeds but CLI execution fails:
+  Error [ERR_REQUIRE_ESM]: require() of ES Module inquirer not supported
+  → Action: Check Step 3/8 for ESM/CommonJS compatibility issues
 ```
 
 ---
@@ -210,6 +233,9 @@ Provide comprehensive execution report:
 - ❌ Coverage below threshold
 - ❌ Security vulnerabilities (high/critical)
 - ❌ npm audit critical issues
+- ❌ **Type definition mismatch** (runtime vs @types/* version gap > 1 major)
+- ❌ **ESM/CommonJS incompatibility** (ERR_REQUIRE_ESM errors)
+- ❌ **Build validation failure** (CLI doesn't execute after build)
 
 **Action:** Display error details with file/line numbers and stop execution.
 
