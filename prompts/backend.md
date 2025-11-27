@@ -42,17 +42,17 @@ Your mission is to guide the user through creating **comprehensive, production-r
 
 Analyze existing project files to pre-populate answers and minimize redundant questions.
 
-### 0.1 Detect Project Type
+### 0.1 Deep Code Analysis
 
 ```
-🔍 Analyzing project structure...
+🔍 Analyzing project structure and codebase deeply...
 
-Let me check if this is an existing project or a new one.
+Let me check if this is an existing project or a new one and perform comprehensive code analysis.
 ```
 
 **Actions to perform:**
 
-1. Search for AI instruction files (in order of priority):
+1. **Search for AI instruction files** (in order of priority):
 
    - `copilot-instructions.md` or `.github/copilot-instructions.md` (GitHub Copilot)
    - `.clauderules` or `CLAUDE.md` (Claude)
@@ -63,21 +63,112 @@ Let me check if this is an existing project or a new one.
    - `AGENT.md` (Universal/Generic)
    - `ai-instructions.md` (Generic)
 
-2. Search for project documentation:
+2. **Search for project documentation:**
 
    - `README.md`
    - `package.json` / `pyproject.toml` / `pom.xml` / `go.mod` / `Cargo.toml`
    - `docs/` folder (architecture.md, api.md, etc.)
 
-3. Search for source code patterns:
-   - `src/` or `app/` folder structure
-   - Framework detection (NestJS, Express, FastAPI, Django, Spring Boot, etc.)
-   - Database configs (Prisma schema, TypeORM entities, SQLAlchemy models, etc.)
+3. **File Structure Analysis:**
+
+   - Recursively scan `src/`, `app/`, `lib/`, `modules/` directories
+   - Count files by type: controllers, services, entities, DTOs, repositories, etc.
+   - Identify project organization pattern (feature-based, layer-based, modular monolith, hybrid)
+   - List directory structure and file counts per category
+
+4. **AST-Based Code Parsing:**
+
+   **TypeScript/JavaScript Projects:**
+
+   - Read all `.ts`, `.js`, `.tsx` files in source directories (limit to first 50 files if project is very large)
+   - For NestJS: Search for:
+     - `@Controller()` decorators to identify controllers and their base paths
+     - `@Get()`, `@Post()`, `@Put()`, `@Delete()`, `@Patch()` decorators
+       - Extract route paths and HTTP methods
+       - Identify route parameters (`@Param()`, `@Query()`, `@Body()`)
+       - Detect guards, interceptors, pipes used (`@UseGuards()`, `@UseInterceptors()`, `@UsePipes()`)
+     - Service classes with `@Injectable()` decorator
+     - Module classes with `@Module()` decorator
+   - For Express: Search for:
+     - `app.get()`, `app.post()`, `router.get()`, `router.post()`, etc.
+     - Extract route patterns (including dynamic params like `:id`)
+     - Identify middleware chains (`router.use()`, `app.use()`)
+     - Detect route handlers and their parameters (req, res, next)
+   - For both frameworks: Identify service classes and their methods
+     - Detect dependency injection patterns (constructor injection, decorators)
+     - Extract service dependencies and relationships
+     - Identify error handling patterns (try-catch blocks, error middleware)
+
+   **Python Projects:**
+
+   - Read all `.py` files in source directories (limit to first 50 files if project is very large)
+   - For FastAPI: Search for:
+     - `@app.get()`, `@app.post()`, `@router.get()`, `@router.post()` decorators
+     - Extract route paths, HTTP methods, and parameters
+     - Identify dependencies (`Depends()`)
+     - Detect Pydantic models used as request/response bodies
+   - Detect SQLAlchemy models (classes inheriting from `db.Model` or `Base`)
+   - Identify route handlers and their function signatures
+
+   **Database Schema Analysis:**
+
+   - Read `schema.prisma` (Prisma) if present and extract:
+     - All models with complete field definitions (name, type, constraints, default values)
+     - Relationships (`@relation`, `foreignKey`, `references`)
+     - Indexes and unique constraints
+     - Enums and their values
+   - Read TypeORM entity files (`.entity.ts`) and extract:
+     - `@Entity()` classes with all `@Column()` decorators
+     - Relationships (`@OneToMany`, `@ManyToOne`, `@ManyToMany`, `@OneToOne`)
+     - Primary keys (`@PrimaryColumn()`, `@PrimaryGeneratedColumn()`)
+     - Indexes (`@Index()`) and unique constraints
+   - Read SQLAlchemy models and extract similar information
+   - Parse Django `models.py` files if present
+
+5. **Dependency Analysis:**
+
+   - Read `package.json` / `requirements.txt` / `pom.xml` / `go.mod` / `Cargo.toml`
+   - Extract exact versions of:
+     - Framework (Express 4.18.2, NestJS 10.0.0, FastAPI 0.104.1, etc.)
+     - ORM (Prisma 5.0.0, TypeORM 0.3.17, SQLAlchemy 2.0.0, etc.)
+     - Validation libraries (Joi, Zod, class-validator, Pydantic, marshmallow)
+     - Authentication libraries (Passport, JWT libraries, OAuth libraries)
+     - Testing frameworks (Jest, pytest, JUnit, Mocha)
+     - Logging libraries (Winston, Pino, Python logging configs)
+   - Identify installed but potentially unused libraries
+   - Detect security-related packages (helmet, cors, rate-limiting)
+
+6. **Pattern Detection:**
+   - Check for dependency injection (constructor injection, decorators like `@Inject()`)
+   - Identify error handling patterns:
+     - Try-catch blocks in controllers/services
+     - Global error middleware
+     - Custom error classes
+   - Detect validation patterns:
+     - DTOs with validation decorators
+     - Schema validation (Zod, Joi, Pydantic)
+     - Middleware-based validation
+   - Check for logging implementation:
+     - Winston/Pino configuration (Node.js)
+     - Python logging setup
+     - Log levels and formats
+   - Detect testing setup:
+     - Test files (`.spec.ts`, `.test.ts`, `test_*.py`)
+     - Coverage configuration files
+     - Test utilities and helpers
+   - Identify caching strategies:
+     - Redis usage
+     - In-memory caching
+     - Cache decorators or middleware
+   - Detect background job systems:
+     - Bull/BullMQ queues
+     - Celery tasks
+     - Cron job configurations
 
 ### 0.2 Present Detection Results
 
 ```
-📊 PROJECT ANALYSIS RESULTS:
+📊 DETAILED PROJECT ANALYSIS RESULTS:
 
 ✅ Detected Files:
 - [List of AI instruction files found]
@@ -97,21 +188,68 @@ Let me check if this is an existing project or a new one.
 - 🌳 Comprehensive: README + 5+ structured docs → **Suggest Production-Ready or Enterprise scope**
 - 🏢 Enterprise: Complete documentation suite with compliance/governance → **Suggest Enterprise scope**
 
-🔍 Inferred Information:
+🔍 Code Analysis Results:
+
+**Architecture Pattern Detected:**
+- Organization: [Feature-based / Layer-based / Modular / Hybrid]
+- Layers Found: [Controllers: X files, Services: X files, Repositories: X files, Entities: X files, DTOs: X files]
+- Pattern: [MVC / Layered / Hexagonal / Modular Monolith / Other]
+
+**API Endpoints Detected:**
+- Total Endpoints: [X]
+- Methods: [GET: X, POST: X, PUT: X, DELETE: X, PATCH: X, etc.]
+- Controllers/Routes Found:
+  - [Controller Name]: [X endpoints]
+    - GET /api/users/:id
+    - POST /api/users
+    - PUT /api/users/:id
+    - DELETE /api/users/:id
+    - [List all endpoints with methods and paths]
+  - [List all controllers/modules with their endpoints]
+
+**Database Entities Detected:**
+- Total Entities: [X]
+- Entities Found:
+  - [Entity Name]:
+    - Fields: [X fields] - [list key fields: id, email, name, etc.]
+    - Relationships: [OneToMany with Y, ManyToOne with Z, etc.]
+    - Primary Key: [field name]
+    - Indexes: [list indexes if detected]
+  - [List all entities with details including field types, relationships, constraints]
+
+**Dependencies Detected:**
+- Framework: [Name] v[Version] (e.g., NestJS v10.0.0, Express v4.18.2)
+- ORM: [Name] v[Version] (e.g., Prisma v5.0.0, TypeORM v0.3.17)
+- Validation: [Libraries found: class-validator, Zod, Joi, Pydantic, etc.]
+- Authentication: [Libraries found: @nestjs/jwt, Passport, etc.]
+- Testing: [Frameworks found: Jest, pytest, JUnit, etc.]
+- Logging: [Libraries found: Winston, Pino, Python logging, etc.]
+- Other Critical: [List other important dependencies]
+
+**Code Quality Indicators:**
+- Total Source Files: [X]
+- Average File Size: [X lines] (estimated)
+- Test Files Found: [X] (Coverage: [estimated % if possible])
+- Error Handling: [Pattern detected: try-catch / middleware / custom error classes / none]
+- Logging: [Library detected / Configuration found / Not found]
+- Validation: [DTOs detected / Middleware found / None detected]
+- Dependency Injection: [Detected / Not detected]
+
+**Inferred Information:**
 - Project Name: [from package.json or README]
 - Description: [from README or package description]
-- Framework: [detected framework]
+- Framework: [detected framework with version]
 - Language: [detected language and version]
-- Database: [detected from configs]
-- Entities: [detected from code/schemas]
-- API Endpoints: [detected from routes/controllers]
+- Database: [detected from configs/schemas]
+- Entities: [list of detected entity names]
+- API Endpoints: [summary of detected endpoints]
 
 ❓ Missing Information:
-- [List of questions that still need answers]
+- [List of questions that still need answers based on gaps in detected information]
 
 ---
 
-💡 Recommended Scope: [MVP/Production-Ready/Enterprise based on maturity level above]
+💡 Recommended Scope: [MVP/Production-Ready/Enterprise based on maturity level and code complexity above]
 
 Would you like to:
 
@@ -122,7 +260,254 @@ C) 📝 Review and edit detected information before proceeding
 Your choice: __
 ```
 
-### 0.3 Load Existing Context
+### 0.2.1 Proactive Suggestions
+
+Based on the code analysis above, generate intelligent suggestions when patterns are detected:
+
+**Security Suggestions:**
+
+- If Express detected but no validation middleware found:
+  "⚠️ SECURITY: Detected Express but no input validation middleware found. Consider adding express-validator or Joi middleware for route validation. This helps prevent injection attacks and ensures data integrity."
+
+- If JWT detected but no refresh token pattern:
+  "💡 IMPROVEMENT: Found JWT authentication but no refresh token implementation detected. Refresh tokens are recommended for production security to limit access token exposure and enable secure token rotation."
+
+- If no rate limiting detected:
+  "🔒 RECOMMENDATION: No rate limiting found in routes or middleware. Consider adding express-rate-limit or @nestjs/throttler to protect against abuse, DDoS attacks, and ensure fair resource usage."
+
+- If no CORS configuration detected:
+  "🔐 SECURITY: No CORS (Cross-Origin Resource Sharing) configuration detected. Define allowed origins explicitly to prevent unauthorized cross-origin requests."
+
+- If authentication found but no password hashing library:
+  "⚠️ SECURITY: Authentication detected but no password hashing library (bcrypt, argon2) found. Never store passwords in plain text!"
+
+**Architecture Suggestions:**
+
+- If controllers exist but no services layer:
+  "📐 ARCHITECTURE: Controllers found but no service layer detected. Consider extracting business logic from controllers into services for better testability, reusability, and separation of concerns."
+
+- If entities found but relationships not documented:
+  "📊 DATA MODEL: Found [X] entities but relationships appear incomplete or undocumented. Would you like to document all entity relationships comprehensively in the data model documentation?"
+
+- If no DTOs/validation found despite API endpoints:
+  "🏗️ ARCHITECTURE: API endpoints detected but no DTOs (Data Transfer Objects) or input validation schemas found. Consider implementing DTOs for type safety, validation, and API contract clarity."
+
+- If global error handler not detected:
+  "⚙️ ARCHITECTURE: No global error handling middleware detected. Consider implementing centralized error handling for consistent error responses and better debugging."
+
+**Documentation Suggestions:**
+
+- If endpoints found but no API documentation:
+  "📝 DOCUMENTATION: Detected [X] API endpoints but no OpenAPI/Swagger documentation found. Consider adding @nestjs/swagger or FastAPI auto-docs for interactive API documentation and client code generation."
+
+- If Prisma schema exists but no data model doc:
+  "📚 DOCUMENTATION: Found Prisma schema with [X] models but no docs/data-model.md exists. Would you like to generate comprehensive entity documentation including relationships, constraints, and data flow?"
+
+- If entities found but incomplete documentation:
+  "📖 DOCUMENTATION: Found [X] database entities but entity relationships or field descriptions are missing. Complete documentation improves onboarding and reduces development errors."
+
+**Testing Suggestions:**
+
+- If code exists but no test files found:
+  "🧪 TESTING: No test files detected (`.spec.ts`, `.test.ts`, `test_*.py`). Consider adding unit tests for services and integration tests for API endpoints. Tests catch bugs early and document expected behavior."
+
+- If test files found but coverage appears low:
+  "📈 TESTING: Found [X] test files but coverage appears incomplete. Consider expanding test coverage for critical paths, especially authentication, payment processing, and data validation."
+
+- If no test database configuration detected:
+  "🔧 TESTING: No test database configuration detected. Consider using in-memory databases (SQLite) or Docker test containers for isolated, reliable integration tests."
+
+**Performance Suggestions:**
+
+- If database entities detected but no caching:
+  "⚡ PERFORMANCE: Database entities detected but no caching strategy found. Consider adding Redis for query result caching, session storage, or frequently accessed data to improve response times."
+
+- If many endpoints but no pagination detected:
+  "📄 PERFORMANCE: Found [X] list endpoints but pagination might be missing. Implement pagination (offset/limit or cursor-based) to handle large datasets efficiently and improve user experience."
+
+- If no database indexes detected in schema:
+  "🗂️ PERFORMANCE: Entity schemas found but indexes might be missing. Consider adding indexes on frequently queried fields (foreign keys, search fields, date fields) to improve query performance."
+
+**Code Quality Suggestions:**
+
+- If no logging library configured:
+  "📋 LOGGING: No structured logging library detected. Consider adding Winston/Pino (Node.js) or Python logging configuration for better debugging, monitoring, and production troubleshooting."
+
+- If environment variables not validated:
+  "🔍 CONFIGURATION: Environment variables found but no validation detected. Validate and provide defaults for required environment variables to prevent runtime errors."
+
+Present suggestions in this format:
+
+```
+💡 PROACTIVE SUGGESTIONS:
+
+Based on my analysis, I found the following opportunities for improvement:
+
+1. ⚠️ SECURITY: [description]
+   Action: [What user can do - specific and actionable]
+   Impact: [Why this matters - security, performance, maintainability, etc.]
+
+2. 💡 IMPROVEMENT: [description]
+   Action: [What user can do]
+   Impact: [Why this matters]
+
+3. 📐 ARCHITECTURE: [description]
+   Action: [What user can do]
+   Impact: [Why this matters]
+
+[... more suggestions, prioritized by severity and impact ...]
+
+Would you like to:
+
+A) ✅ Address these suggestions during bootstrap (I'll integrate them into relevant phases)
+   - Security suggestions → Phase 4 (Security)
+   - Architecture suggestions → Phase 3 (Architecture)
+   - Documentation suggestions → Relevant documentation phases
+   - Testing suggestions → Phase 6 (Testing)
+   - Performance suggestions → Phase 3 (Architecture) and Phase 7 (Operations)
+
+B) 📝 Save suggestions for later review (I'll add them to a suggestions.md file)
+
+C) ❌ Skip suggestions and continue with standard bootstrap
+
+Your choice: __
+```
+
+**If user selects A (Address during bootstrap):**
+
+- Note which suggestions apply to which phases
+- When reaching relevant phases, reference the suggestion: "Based on the analysis, you mentioned wanting to address [suggestion]. Let's configure that now."
+- Integrate suggestions naturally into the questionnaire flow
+
+**If user selects B (Save for later):**
+
+```
+✅ I'll create a suggestions.md file with all the recommendations for your reference.
+
+You can review and implement them later.
+```
+
+Then create a `suggestions.md` file with all suggestions formatted for easy reference.
+
+**If user selects C (Skip):**
+
+```
+✅ Understood. Continuing with standard bootstrap process.
+```
+
+---
+
+### 0.3 Export Analysis Results (Optional)
+
+```
+Would you like to export the analysis results to a JSON file?
+
+This allows you to:
+- Reference the analysis later
+- Use it for automation/CI
+- Share with team members
+- Skip re-analysis on future bootstrap runs
+- Track project evolution over time
+
+Export location: `.ai-bootstrap/analysis.json`
+
+A) ✅ Yes - Export full analysis to JSON (Recommended)
+
+B) ❌ No - Keep in memory only
+
+Your choice: __
+```
+
+**If user selects A:**
+
+```
+✅ Exporting analysis to .ai-bootstrap/analysis.json...
+
+The file contains:
+- Project structure analysis
+- All detected endpoints with details (method, path, parameters, middleware)
+- All entities with full schemas (fields, types, relationships, constraints)
+- Dependencies and versions
+- Architecture patterns detected
+- Code quality metrics
+- Suggestions generated
+
+You can view/edit this file anytime to update the analysis.
+
+Example structure:
+{
+  "version": "1.0",
+  "analyzedAt": "2024-01-15T10:30:00Z",
+  "project": {
+    "name": "detected-name",
+    "type": "backend",
+    "language": "TypeScript",
+    "framework": "NestJS",
+    "version": "10.0.0"
+  },
+  "structure": {
+    "pattern": "feature-based",
+    "directories": {
+      "controllers": 8,
+      "services": 12,
+      "entities": 15,
+      "dto": 20
+    }
+  },
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/users/:id",
+      "controller": "UsersController",
+      "handler": "findOne",
+      "parameters": ["id"],
+      "middleware": ["AuthGuard"],
+      "file": "src/users/users.controller.ts"
+    }
+  ],
+  "entities": [
+    {
+      "name": "User",
+      "source": "prisma",
+      "fields": [
+        {"name": "id", "type": "String", "required": true, "primary": true},
+        {"name": "email", "type": "String", "required": true, "unique": true}
+      ],
+      "relationships": [
+        {"type": "OneToMany", "target": "Order", "field": "orders"}
+      ]
+    }
+  ],
+  "dependencies": {
+    "framework": {"name": "@nestjs/core", "version": "10.0.0"},
+    "orm": {"name": "prisma", "version": "5.0.0"},
+    "validation": ["class-validator", "class-transformer"],
+    "auth": ["@nestjs/passport", "@nestjs/jwt"]
+  },
+  "suggestions": [
+    {
+      "type": "security",
+      "severity": "warning",
+      "message": "No rate limiting detected",
+      "recommendation": "Add @nestjs/throttler"
+    }
+  ]
+}
+
+Export complete! ✅
+```
+
+**If user selects B:**
+
+```
+✅ Analysis results will remain in memory only.
+
+Continuing with bootstrap...
+```
+
+---
+
+### 0.4 Load Existing Context
 
 **If user selects A (Use detected information):**
 
@@ -3441,9 +3826,53 @@ When executing this master prompt:
 - [ ] Check if project has existing code/documentation
 - [ ] Search for AI instruction files (copilot-instructions.md, .clauderules, .cursorrules, AGENT.md, etc.)
 - [ ] Search for README.md, package.json, and config files
-- [ ] Analyze source code structure to detect framework, language, entities
-- [ ] Present detected information summary to user
+- [ ] **Perform deep code analysis:**
+  - [ ] Recursively scan source directories (src/, app/, lib/, modules/)
+  - [ ] Count files by type (controllers, services, entities, DTOs, etc.)
+  - [ ] Identify architecture pattern (feature-based, layer-based, modular, hybrid)
+  - [ ] **Parse source code files for AST-based analysis:**
+    - [ ] Detect decorators (@Controller, @Get, @Post for NestJS; @app.get() for FastAPI)
+    - [ ] Extract API endpoints (method, path, parameters, middleware)
+    - [ ] Identify services and dependency injection patterns
+    - [ ] Detect error handling patterns
+  - [ ] **Analyze database schemas:**
+    - [ ] Parse Prisma schema.prisma (models, relationships, indexes)
+    - [ ] Parse TypeORM entities (@Entity, @Column, relationships)
+    - [ ] Parse SQLAlchemy models
+    - [ ] Extract complete entity definitions with fields and relationships
+  - [ ] **Analyze dependencies:**
+    - [ ] Extract exact versions from package.json/requirements.txt/etc.
+    - [ ] Identify framework, ORM, validation, auth, testing libraries
+    - [ ] Detect security-related packages
+  - [ ] **Detect code patterns:**
+    - [ ] Dependency injection usage
+    - [ ] Error handling implementation
+    - [ ] Validation patterns (DTOs, schemas)
+    - [ ] Logging setup
+    - [ ] Testing configuration
+    - [ ] Caching strategies
+    - [ ] Background job systems
+- [ ] Present detailed detection results (0.2) including:
+  - [ ] Architecture pattern detected
+  - [ ] Complete list of API endpoints with details
+  - [ ] All entities with schemas and relationships
+  - [ ] Dependencies with versions
+  - [ ] Code quality indicators
+- [ ] **Generate proactive suggestions (0.2.1):**
+  - [ ] Analyze code for security gaps (validation, rate limiting, CORS, etc.)
+  - [ ] Identify architecture improvements
+  - [ ] Detect documentation gaps
+  - [ ] Suggest testing improvements
+  - [ ] Recommend performance optimizations
+  - [ ] Present suggestions with actions and impacts
+- [ ] **Offer export option (0.3):**
+  - [ ] Ask if user wants to export analysis to JSON
+  - [ ] If yes, create .ai-bootstrap/analysis.json with complete analysis
 - [ ] Let user choose: A) Use detected info, B) Start fresh, C) Review/edit detected info
+- [ ] **Handle suggestions:**
+  - [ ] If user selected A (address during bootstrap), integrate suggestions into relevant phases
+  - [ ] If user selected B (save for later), create suggestions.md file
+  - [ ] If user selected C (skip), continue without changes
 - [ ] Pre-populate answers based on detected information
 - [ ] Mark questions that still need answers
 
@@ -3470,7 +3899,10 @@ When executing this master prompt:
 **DO NOT:**
 
 - ❌ Skip Phase 0 detection for existing projects
-- ❌ Ask questions already answered by detected files
+- ❌ Skip deep code analysis - always perform comprehensive AST-based parsing when code exists
+- ❌ Present superficial analysis - include detailed endpoints, entities, and patterns
+- ❌ Ignore proactive suggestions - always generate and present improvement opportunities
+- ❌ Ask questions already answered by detected files or code analysis
 - ❌ Ignore existing AI instruction files
 - ❌ Skip questions or phases
 - ❌ Assume answers without asking (when info is not detected)
@@ -3479,7 +3911,8 @@ When executing this master prompt:
 - ❌ Forget to re-read documents before using their info
 - ❌ Generate final documents without re-reading all previous docs
 - ❌ Leave placeholder text in final documents
-- ❌ Rush through the process
+- ❌ Skip exporting analysis JSON if user requested it
+- ❌ Rush through the analysis - thoroughness saves time later
 
 **ESTIMATED TIME:**
 
@@ -3496,9 +3929,13 @@ When executing this master prompt:
 
 **Existing Projects (with Phase 0 detection):**
 
-- Phase 0: 5-10 min (detection + review)
+- Phase 0: 10-20 min (deep code analysis + suggestions + review)
+  - File detection: 2-3 min
+  - Deep code analysis (AST parsing, schema extraction): 5-10 min
+  - Generating suggestions: 2-3 min
+  - User review and export: 1-4 min
 - Phases 1-7: 30-60 min (only missing questions)
-- **Total: 35-70 minutes** (50-60% time saved!)
+- **Total: 40-80 minutes** (40-60% time saved!)
 
 This is an investment that will save 10-20 hours over the project lifecycle.
 
@@ -3508,9 +3945,15 @@ This is an investment that will save 10-20 hours over the project lifecycle.
 
 1. **START:** User runs `/bootstrap`
 2. **DETECT:** Check for existing project files (Phase 0)
-   - If existing files found → Run Phase 0 detection
+   - If existing files found → Run Phase 0 deep analysis:
+     - 0.1: Deep Code Analysis (file structure, AST parsing, schema extraction, pattern detection)
+     - 0.2: Present Detailed Detection Results (architecture, endpoints, entities, dependencies, code quality)
+     - 0.2.1: Generate Proactive Suggestions (security, architecture, documentation, testing, performance)
+     - 0.3: Export Analysis Results (optional JSON export)
+     - 0.4: Load Existing Context (pre-populate answers)
    - If no files found → Skip to Phase 1
 3. **EXECUTE:** Run Phases 1-7 with pre-populated answers (if any)
+   - Integrate suggestions from Phase 0 into relevant phases if user selected option A
 4. **GENERATE:** Create documents incrementally with validation
 5. **COMPLETE:** Final checkpoint and remaining documents
 
