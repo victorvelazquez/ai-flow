@@ -4,6 +4,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## 🎯 RESUMEN EJECUTIVO (Quick Context)
+
+**Qué es:** CLI de Node.js/TypeScript que genera 15 documentos de backend profesionales mediante cuestionario interactivo de 7 fases
+
+**Flujo principal:**
+1. Usuario instala globalmente: `npm install -g ai-bootstrap`
+2. Ejecuta: `ai-bootstrap init .` → Crea `.ai-bootstrap/` con templates, prompts, slash commands
+3. Abre AI tool (Claude/Cursor/Copilot/Gemini) → Ejecuta `/bootstrap`
+4. AI lee `prompts/backend/bootstrap.md` → Hace 7 fases de preguntas
+5. AI genera 15 archivos .md llenando placeholders `{{VARIABLE}}` en templates
+
+**Arquitectura clave:**
+- `src/cli.ts` (329 líneas) - Toda la lógica CLI (Commander.js + Inquirer)
+- `templates/*.template.md` (15 archivos) - Templates con placeholders
+- `prompts/backend/bootstrap.md` - Cuestionario maestro de 7 fases
+- `dist/cli.js` - Punto de entrada npm bin (usa `__dirname` para copiar assets)
+
+**Para desarrollo:** `npm run dev init test --ai claude` (ts-node, no build)
+
+**Reglas críticas:**
+- SIEMPRE leer archivos antes de editar (Read → Edit, nunca Write sobre existentes)
+- Templates usan `{{PLACEHOLDER_FORMAT}}`
+- Path resolution: `__dirname` relativo a `dist/` para copiar assets desde package instalado
+- TypeScript strict mode habilitado
+- Comandos slash se copian de `prompts/backend/` a `.{tool}/commands/`
+
+**Si necesitas más detalle:** Lee secciones específicas abajo ↓
+
+---
+
 ## 📋 About This Project
 
 **AI Bootstrap** is a CLI tool that generates comprehensive backend documentation through interactive questionnaires.
