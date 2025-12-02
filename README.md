@@ -394,6 +394,7 @@ After initialization, you can use these commands in your AI tool:
 **Documentation Generation:**
 
 **Documentation Generation:**
+
 - `/bootstrap` - Full 7-phase documentation generation
 - `/bootstrap-phase0-context` - Context Discovery (existing projects only)
 - `/bootstrap-phase1-business` - Discovery & Business only
@@ -405,6 +406,7 @@ After initialization, you can use these commands in your AI tool:
 - `/bootstrap-phase7-operations` - Operations + Tools only
 
 **Documentation Maintenance:**
+
 - `/docs-update` - Detect code changes and update documentation automatically
 
 **Documentation Maintenance:**
@@ -822,6 +824,28 @@ your-project/
 - [ ] Interactive web UI
 
 ---
+
+## 🛠️ Troubleshooting
+
+### Node.js Version Error
+
+If you see an error related to the Node.js version, make sure you have Node.js >=18.0.0 installed.
+
+### Insufficient Permissions
+
+If the CLI cannot write files, check the permissions of the target folder.
+
+### Error Publishing to npm
+
+Make sure you are authenticated with `npm login` and that the version does not already exist in the registry.
+
+### Slash Command Issues
+
+Check that the command files are in the correct path for your AI tool.
+
+### Other Issues
+
+See [GitHub Issues](https://github.com/victorvelazquez/ai-bootstrap/issues) for support.
 
 ## 🤝 Contributing
 
