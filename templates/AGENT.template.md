@@ -16,6 +16,23 @@
 
 **Target Users:** {{TARGET_USERS}}
 
+### Technical Context
+
+**Project Type:** Backend API/Service
+**Architecture:** {{ARCHITECTURE_PATTERN}}
+**Primary Language:** {{LANGUAGE}} {{LANGUAGE_VERSION}}
+**Framework:** {{FRAMEWORK}}
+**Database:** {{DATABASE}} with {{ORM}}
+
+**Key Characteristics:**
+- Authentication: {{AUTH_METHOD}}
+- API Style: {{API_STYLE}}
+- Deployment: {{DEPLOYMENT_PLATFORM}}
+- Current Phase: {{PROJECT_PHASE}}
+
+> This project uses AI-assisted development with comprehensive documentation.
+> All files below provide context to AI assistants for consistent, high-quality code generation.
+
 ---
 
 ## 🏗️ Documentation Architecture
