@@ -157,7 +157,7 @@ async function createBootstrapStructure(targetPath: string, aiTools: string[], d
 
     // Create config file
     const config = {
-      version: PKG_VERSION,
+      version: '1.0.8',
       aiTools: aiTools,
       createdAt: new Date().toISOString(),
       backend: true,
@@ -433,7 +433,7 @@ async function initializeProject(targetPath: string, aiTool?: string, projectNam
 program
   .name('ai-bootstrap')
   .description('Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation')
-  .version(PKG_VERSION);
+  .version('1.0.8');
 
 program
   .command('init')
