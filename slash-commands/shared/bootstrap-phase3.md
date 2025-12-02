@@ -4,7 +4,7 @@ Execute Phase 3: Technical stack, architecture patterns, and system design.
 
 ## Instructions for the AI Assistant
 
-Read **Phase 3: System Architecture** from `.ai-bootstrap/prompts/backend.md` and execute the questionnaire, regardless of the AI tool.
+Read **Phase 3: System Architecture** from `.ai-bootstrap/prompts/backend/phase-3-system-architecture.md` and execute the questionnaire, regardless of the AI tool.
 
 **Time Estimate:** 15-20 minutes
 

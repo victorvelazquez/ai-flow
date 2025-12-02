@@ -4,7 +4,7 @@ Execute Phase 2: Database architecture, data models, and relationships.
 
 ## Instructions for the AI Assistant
 
-Read **Phase 2: Data Architecture** from `.ai-bootstrap/prompts/backend.md` and execute the questionnaire, regardless of the AI tool.
+Read **Phase 2: Data Architecture** from `.ai-bootstrap/prompts/backend/phase-2-data-architecture.md` and execute the questionnaire, regardless of the AI tool.
 
 **Time Estimate:** 15-20 minutes
 

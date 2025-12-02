@@ -6,17 +6,23 @@ Execute the complete documentation generation for this backend project (new or e
 
 Guide the user through creating comprehensive, production-ready documentation for their backend project, regardless of the AI tool used.
 
-**Master Prompt Location:** `{PROJECT_ROOT}/.ai-bootstrap/prompts/backend.md`
+**Master Prompt Location:** `{PROJECT_ROOT}/.ai-bootstrap/prompts/backend.md` (orchestrator file)
+
+**Phase Files Location:** `{PROJECT_ROOT}/.ai-bootstrap/prompts/backend/phase-*.md`
 
 ### Your Task
 
-1. **Read the master prompt** from `.ai-bootstrap/prompts/backend.md` completely
+1. **Read the orchestrator** from `.ai-bootstrap/prompts/backend.md` to understand the modular structure
 
 2. **PHASE 0 (Existing Projects Only):**
 
-   - Detect if project has existing code/documentation
-   - Search for AI instruction files (copilot-instructions.md, .clauderules, AGENT.md, etc.)
-   - Analyze README.md, package.json, source code structure
+   - Read `.ai-bootstrap/prompts/backend/phase-0-context-discovery.md`
+   - Execute 3-layer incremental analysis:
+     - Layer 0: Cache Check (instant re-runs)
+     - Layer 1: Fast Metadata Scan (10-20 seconds)
+     - Layer 2: Structural Analysis (30-90 seconds)
+     - Layer 3: Selective Deep Analysis (optional, user-controlled)
+   - Detect project language, framework, ORM, entities, routes
    - Present detected information to user
    - Pre-populate answers where possible
    - **If new project with no existing files, skip Phase 0**
@@ -109,15 +115,25 @@ Guide the user through creating comprehensive, production-ready documentation fo
 
 **BEGIN EXECUTION NOW**
 
-Read the master prompt from `.ai-bootstrap/prompts/backend.md` and:
+Read the orchestrator from `.ai-bootstrap/prompts/backend.md` to understand the modular structure, then:
 
 1. Check if project has existing files (Phase 0)
 2. If existing files found:
-   - Run detection and analyze documentation maturity
+   - Read and execute `.ai-bootstrap/prompts/backend/phase-0-context-discovery.md`
+   - Run 3-layer incremental analysis (Layer 0 → 1 → 2 → optional Layer 3)
+   - Analyze documentation maturity level
    - Pre-populate answers from existing docs
    - Suggest appropriate scope based on maturity level
 3. If new project: Suggest MVP for prototypes, Production-Ready for serious projects
 4. Ask user to select project scope (MVP/Production-Ready/Enterprise)
-5. Execute phases with depth adjusted to selected scope
-6. Skip redundant questions if answers were detected in Phase 0
-7. Generate documents incrementally with validation
+5. Execute Phases 1-7 sequentially by reading individual phase files:
+   - `.ai-bootstrap/prompts/backend/phase-1-business.md`
+   - `.ai-bootstrap/prompts/backend/phase-2-data-architecture.md`
+   - `.ai-bootstrap/prompts/backend/phase-3-system-architecture.md`
+   - `.ai-bootstrap/prompts/backend/phase-4-security.md`
+   - `.ai-bootstrap/prompts/backend/phase-5-code-standards.md`
+   - `.ai-bootstrap/prompts/backend/phase-6-testing.md`
+   - `.ai-bootstrap/prompts/backend/phase-7-operations.md`
+6. Adjust question depth based on selected scope
+7. Skip redundant questions if answers were detected in Phase 0
+8. Generate documents incrementally with validation

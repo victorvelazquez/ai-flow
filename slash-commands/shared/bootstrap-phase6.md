@@ -4,7 +4,7 @@ Execute Phase 6: Testing approach, tools, and quality gates.
 
 ## Instructions for the AI Assistant
 
-Read **Phase 6: Testing Strategy** from `.ai-bootstrap/prompts/backend.md` and execute the questionnaire, regardless of the AI tool.
+Read **Phase 6: Testing Strategy** from `.ai-bootstrap/prompts/backend/phase-6-testing.md` and execute the questionnaire, regardless of the AI tool.
 
 **Time Estimate:** 10 minutes
 

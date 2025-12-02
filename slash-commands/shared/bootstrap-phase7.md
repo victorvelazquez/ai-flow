@@ -4,7 +4,7 @@ Execute Phase 7: Deployment, monitoring, and operational practices.
 
 ## Instructions for the AI Assistant
 
-Read **Phase 7: Operations & Deployment** from `.ai-bootstrap/prompts/backend.md` and execute the questionnaire, regardless of the AI tool.
+Read **Phase 7: Operations & Deployment** from `.ai-bootstrap/prompts/backend/phase-7-operations.md` and execute the questionnaire, regardless of the AI tool.
 
 **Time Estimate:** 10 minutes
 

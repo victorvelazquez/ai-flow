@@ -4,7 +4,7 @@ Execute Phase 4: Security policies, authentication, authorization, and complianc
 
 ## Instructions for the AI Assistant
 
-Read **Phase 4: Security & Authentication** from `.ai-bootstrap/prompts/backend.md` and execute the questionnaire, regardless of the AI tool.
+Read **Phase 4: Security & Authentication** from `.ai-bootstrap/prompts/backend/phase-4-security.md` and execute the questionnaire, regardless of the AI tool.
 
 **Time Estimate:** 15-20 minutes
 

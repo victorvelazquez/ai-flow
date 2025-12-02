@@ -1,0 +1,374 @@
+﻿## PHASE 6: Testing Strategy (15-25 min)
+
+> **Order for this phase:**
+>
+> - **MVP:** 6.1 → 6.2 (smoke tests) → 6.7 (CI basics)
+> - **Production-Ready:** 6.1 → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7
+> - **Enterprise:** 6.1 → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7 → 6.8 → 6.9
+
+> **📌 Scope-based behavior:**
+>
+> - **MVP:** Ask 6.1 (framework), 6.2 (smoke tests only), 6.7 (CI basics) - **Target: 15-25% coverage**
+> - **Production-Ready:** Ask all questions 6.1-6.7 - **Target: 60-80% coverage**
+> - **Enterprise:** Ask all questions 6.1-6.9 - **Target: 80-95% coverage + contract/load tests**
+
+### Objective
+
+Define testing approach, tools, and quality gates.
+
+**🚨 Important: All projects require basic testing. Scope determines depth, not whether to test.**
+
+**6.1 Testing Framework**
+
+```
+
+Which testing tools will you use?
+
+JavaScript/TypeScript:
+A) ⭐ Jest - Most popular, great ecosystem
+B) Vitest - Modern, fast, Vite-compatible
+C) Mocha + Chai
+D) AVA
+
+Python:
+E) ⭐ pytest - Modern, feature-rich
+F) unittest - Built-in
+G) nose2
+
+Java:
+H) ⭐ JUnit 5 + Mockito
+I) TestNG
+
+Your choice: \_\_
+
+Assertion library: **
+Mocking library: **
+
+```
+
+**6.2 Test Types**
+
+```
+[If MVP scope selected, ask simplified version:]
+
+For MVP, we'll focus on smoke tests (critical path verification).
+Which critical flows should be tested?
+
+Select 3-5 most important endpoints/features:
+A) Authentication (login/register)
+B) Main business operation (e.g., create order, post article)
+C) User profile/account management
+D) Payment processing (if applicable)
+E) Data retrieval (main GET endpoints)
+
+Selected: __
+
+Test approach: Integration tests covering happy path of selected flows
+Coverage target: 15-25%
+Test type: Integration/E2E only (no unit tests required for MVP)
+
+[If Production-Ready or Enterprise scope selected, ask full version:]
+
+Which test types will you implement?
+
+A) ✅ Unit Tests
+   - Test individual functions/methods in isolation
+   - Fast, numerous
+   - Mock all dependencies
+
+B) ✅ Integration Tests
+   - Test multiple components together
+   - Database, external APIs
+   - Slower but more realistic
+
+C) ✅ E2E (End-to-End) Tests
+   - Test full user flows
+   - API endpoints from request to response
+   - Tool: Supertest (Node.js), pytest with TestClient (Python)
+
+D) 🏆 Contract Tests (Advanced - Enterprise recommended)
+   - Verify API contracts between services
+   - Tool: Pact
+
+E) ⚡ Load/Performance Tests (Enterprise recommended)
+   - Tool: Artillery, K6, JMeter
+
+Selected: __
+
+Pyramid distribution:
+- 70% Unit tests
+- 20% Integration tests
+- 10% E2E tests
+  (Adjust as needed)
+
+```
+
+**6.3 Test Database** [Skip if MVP scope]
+
+```
+[Production-Ready/Enterprise only]
+
+How will you handle database in tests?
+
+A) ⭐ In-memory database
+   - SQLite for testing, PostgreSQL for prod
+   - Fast, isolated
+
+B) 🏆 Docker test database
+   - Same DB as production
+   - More realistic
+   - Tool: Testcontainers
+
+C) 🔄 Shared test database
+   - One DB for all tests
+   - Reset between test suites
+
+D) 🎭 Mock database
+   - Mock all DB calls
+   - Fastest, but less realistic
+
+Your choice: __
+
+Test data strategy:
+A) ⭐ Factories/Fixtures - Generate test data programmatically
+B) Seed files - Load from JSON/SQL files
+C) Inline - Create data in each test
+
+```
+
+**6.4 Test Data Management** [Skip if MVP scope]
+
+```
+[Production-Ready/Enterprise only]
+
+How will you create test data?
+
+A) ⭐ Factory pattern
+   - Libraries: factory_boy (Python), Fishery (TypeScript)
+   - Generate realistic data on demand
+
+B) Fixtures
+   - Predefined test data
+   - Loaded before tests
+
+C) Faker
+   - Random realistic data
+   - Library: @faker-js/faker, Faker (Python)
+
+Your approach: __
+
+Example test data needs:
+- Users with various roles
+- Products with different states
+- Orders in different stages
+- Payment records
+- [Add your specific needs]
+
+```
+
+**6.5 Mocking Strategy** [Skip if MVP scope]
+
+```
+[Production-Ready/Enterprise only]
+
+What will you mock?
+
+A) ✅ External APIs - Third-party services
+B) ✅ Database - In unit tests
+C) ✅ File system - S3, local storage
+D) ✅ Time/Date - For deterministic tests
+E) ✅ Email/SMS - Sending services
+F) ✅ Payment gateways
+
+Mocking approach:
+A) ⭐ Manual mocks - jest.fn(), unittest.mock
+B) Library - MSW (Mock Service Worker), nock
+C) Test doubles - Stubs, spies, mocks
+
+When NOT to mock:
+- Internal business logic
+- Simple utilities
+- Value objects
+
+```
+
+**6.6 Test Organization** [Skip if MVP scope]
+
+```
+[Production-Ready/Enterprise only]
+
+Test file structure:
+
+A) ⭐ Co-located with source
+```
+
+src/
+users/
+user.service.ts
+user.service.spec.ts
+
+```
+
+B) Separate test directory
+```
+
+src/users/user.service.ts
+tests/users/user.service.test.ts
+
+````
+
+Test naming:
+
+```typescript
+describe('UserService', () => {
+  describe('createUser', () => {
+    it('should create a new user with valid data', async () => {
+      // Arrange
+      const userData = { email: 'test@example.com', name: 'Test' };
+
+      // Act
+      const result = await userService.createUser(userData);
+
+      // Assert
+      expect(result).toBeDefined();
+      expect(result.email).toBe(userData.email);
+    });
+
+    it('should throw error when email is duplicated', async () => {
+      // ...
+    });
+  });
+});
+````
+
+Naming pattern:
+A) ⭐ "should [expected behavior] when [condition]"
+B) "it [expected behavior]"
+C) Free-form
+
+````
+
+**6.7 CI/CD Testing** [All scopes - simplified for MVP]
+
+```
+[If MVP scope:]
+For MVP, we'll set up basic CI to run smoke tests.
+
+When will smoke tests run?
+A) ⭐ On pull request (GitHub Actions, GitLab CI) - Recommended
+B) Before deploy only
+
+Selected: __
+
+Quality gate for MVP:
+- ✅ All smoke tests must pass
+- ⚠️ Coverage tracking (no minimum required)
+
+[If Production-Ready or Enterprise scope:]
+
+When will tests run?
+
+A) ⭐ On every commit (pre-commit hook) - Catch issues early
+B) 🔥 On pull request (GitHub Actions, GitLab CI) - Most popular, prevents broken merges
+C) ⭐ Before deploy (staging pipeline) - Recommended safety check
+D) Nightly (comprehensive test suite) - For slow/extensive tests
+
+Selected: __
+
+Quality gates:
+
+- ✅ All tests must pass
+- ✅ Coverage must be >= __% (15-25% MVP, 60-80% Production, 80-95% Enterprise)
+- ✅ No linting errors
+- ⚡ Performance benchmarks met (optional, Enterprise recommended)
+
+Failing a quality gate:
+A) ⭐ Block merge/deploy - Force fix
+B) ⚠️ Warning only - Allow with justification
+
+```
+
+### Phase 6 Output
+
+```
+📋 PHASE 6 SUMMARY:
+
+**If MVP scope (A):**
+Testing Framework: [Jest/pytest/JUnit] (6.1)
+Test Types: Smoke tests on critical paths [selected 3-5 critical flows] (6.2)
+Test Approach: Integration/E2E tests covering happy path only (6.2)
+Coverage Target: 15-25% (6.2)
+CI/CD Testing: [on PR/before deploy] + quality gate: all tests must pass (6.7)
+Status: Basic testing implemented for MVP
+
+**If Production-Ready (B):**
+Testing Framework: [Jest/pytest/JUnit + assertion library + mocking library] (6.1)
+Test Types: [unit/integration/e2e - selected types] (6.2)
+Test Distribution: [pyramid percentages: 70/20/10 or custom] (6.2)
+Test Database: [in-memory/Docker/shared/mock + initial data strategy] (6.3)
+Test Data Management: [factories/fixtures/faker approach + specific test data needs] (6.4)
+Mocking Strategy: [what to mock (APIs/DB/files/time/email/payments) + approach] (6.5)
+Test Organization: [co-located/separate folder + naming pattern] (6.6)
+CI/CD Testing: [when tests run (commit/PR/deploy/nightly) + quality gates (pass/60-80% coverage/lint) + gate behavior (block/warn)] (6.7)
+Status: Comprehensive testing strategy implemented
+
+**If Enterprise (C):**
+Testing Framework: [Jest/pytest/JUnit + assertion library + mocking library] (6.1)
+Test Types: [unit/integration/e2e/contract/load - all types] (6.2)
+Test Distribution: [pyramid percentages: 70/20/10 or custom] (6.2)
+Test Database: [in-memory/Docker/shared/mock + initial data strategy] (6.3)
+Test Data Management: [factories/fixtures/faker approach + specific test data needs] (6.4)
+Mocking Strategy: [what to mock (APIs/DB/files/time/email/payments) + approach] (6.5)
+Test Organization: [co-located/separate folder + naming pattern] (6.6)
+CI/CD Testing: [when tests run (commit/PR/deploy/nightly) + quality gates (pass/80-95% coverage/lint/performance) + gate behavior (block/warn)] (6.7)
+Advanced Testing: Contract tests (Pact), load tests (K6/Artillery), security tests (6.2)
+Status: Exhaustive testing strategy with advanced scenarios
+
+Is this correct? (Yes/No)
+```
+
+---
+
+### 📄 Generate Phase 6 Documents
+
+**Before starting generation:**
+
+```
+📖 Loading context from previous phases...
+✅ Re-reading docs/code-standards.md
+✅ Re-reading ai-instructions.md
+```
+
+Once confirmed, generate:
+
+**1. `docs/testing.md`**
+
+- Use template: `.ai-bootstrap/templates/docs/testing.template.md`
+- **If MVP scope:** Fill with basic testing strategy: framework selection, smoke tests on critical paths, coverage 15-25%, basic CI setup. Mark advanced sections as "Not implemented yet - expand when moving to Production-Ready"
+- **If Production-Ready:** Fill with comprehensive testing strategy: framework, unit/integration/e2e tests, 60-80% coverage, test data management, mocking, full CI/CD
+- **If Enterprise:** Fill with exhaustive testing strategy: all Production-Ready items + contract tests, load tests, security tests, 80-95% coverage, performance benchmarks
+
+```
+✅ Generated: docs/testing.md
+
+📝 Please review this document. Do you need to make any corrections?
+
+A) ✅ Looks perfect, continue to Phase 7
+B) 📝 I'll edit it now (I'll wait)
+C) 🔄 Regenerate with changes (tell me what to modify)
+```
+
+**If user selects B:**
+
+```
+Perfect. Please edit the document and type "ready" when you're done.
+I'll re-read all files to update my context before continuing.
+```
+
+---
+
+**Proceed to Phase 7 only after document is validated.**
+
+---
+
+## PHASE 7: Operations & Deployment (10 min)
