@@ -44,25 +44,25 @@ describe('slash commands installation', () => {
 
   it('installs Copilot prompts with .prompt.md suffix', () => {
     runInit('copilot');
-    const file = path.join(tempDir, '.github', 'prompts', 'bootstrap-phase1.prompt.md');
+    const file = path.join(tempDir, '.github', 'prompts', 'bootstrap-phase1-business.prompt.md');
     expect(fs.existsSync(file)).toBe(true);
   });
 
   it('installs Claude commands', () => {
     runInit('claude');
-    const file = path.join(tempDir, '.claude', 'commands', 'bootstrap-phase1.md');
+    const file = path.join(tempDir, '.claude', 'commands', 'bootstrap-phase1-business.md');
     expect(fs.existsSync(file)).toBe(true);
   });
 
   it('installs Cursor commands', () => {
     runInit('cursor');
-    const file = path.join(tempDir, '.cursor', 'commands', 'bootstrap-phase1.md');
+    const file = path.join(tempDir, '.cursor', 'commands', 'bootstrap-phase1-business.md');
     expect(fs.existsSync(file)).toBe(true);
   });
 
   it('installs Gemini commands', () => {
     runInit('gemini');
-    const file = path.join(tempDir, '.gemini', 'commands', 'bootstrap-phase1.md');
+    const file = path.join(tempDir, '.gemini', 'commands', 'bootstrap-phase1-business.md');
     expect(fs.existsSync(file)).toBe(true);
   });
 });

@@ -176,7 +176,7 @@ Open your AI tool and run:
 Tell your AI assistant:
 
 ```
-Read .ai-bootstrap/prompts/backend.md and execute the 7-phase questionnaire
+Read .ai-bootstrap/prompts/backend/bootstrap.md and execute the 7-phase questionnaire
 ```
 
 ### 4. Answer Questions
@@ -393,15 +393,19 @@ After initialization, you can use these commands in your AI tool:
 
 **Documentation Generation:**
 
+**Documentation Generation:**
 - `/bootstrap` - Full 7-phase documentation generation
-- `/bootstrap-phase0` - Context Discovery (existing projects only)
-- `/bootstrap-phase1` - Discovery & Business only
-- `/bootstrap-phase2` - Data Architecture only
-- `/bootstrap-phase3` - System Architecture only
-- `/bootstrap-phase4` - Security & Auth only
-- `/bootstrap-phase5` - Code Standards only
-- `/bootstrap-phase6` - Testing only
-- `/bootstrap-phase7` - Operations + Tools only
+- `/bootstrap-phase0-context` - Context Discovery (existing projects only)
+- `/bootstrap-phase1-business` - Discovery & Business only
+- `/bootstrap-phase2-data` - Data Architecture only
+- `/bootstrap-phase3-architecture` - System Architecture only
+- `/bootstrap-phase4-security` - Security & Auth only
+- `/bootstrap-phase5-standards` - Code Standards only
+- `/bootstrap-phase6-testing` - Testing only
+- `/bootstrap-phase7-operations` - Operations + Tools only
+
+**Documentation Maintenance:**
+- `/docs-update` - Detect code changes and update documentation automatically
 
 **Documentation Maintenance:**
 
@@ -459,7 +463,7 @@ For existing projects, AI Bootstrap uses an intelligent, incremental analysis sy
 
 ### 2. Master Prompt System
 
-The `.ai-bootstrap/prompts/backend.md` file contains a comprehensive questionnaire that guides AI assistants through gathering all necessary information.
+The `.ai-bootstrap/prompts/backend/bootstrap.md` file contains a comprehensive questionnaire that guides AI assistants through gathering all necessary information.
 
 ### 3. Template-Based Generation
 
@@ -764,21 +768,31 @@ your-project/
 │   ├── core/
 │   │   └── config.json        # Bootstrap configuration
 │   ├── prompts/
-│   │   ├── backend.md          # 7-phase master prompt (orchestrator)
 │   │   └── backend/
-│   │       ├── phase-0-context-discovery.md
-│   │       ├── phase-1-business.md
-│   │       ├── ... (phases 2-7)
-│   │       └── docs-update.md  # Documentation update command
+│   │       ├── bootstrap.md                      # 7-phase master prompt (orchestrator)
+│   │       ├── bootstrap-phase0-context.md      # Context Discovery
+│   │       ├── bootstrap-phase1-business.md     # Discovery & Business
+│   │       ├── bootstrap-phase2-data.md         # Data Architecture
+│   │       ├── bootstrap-phase3-architecture.md # System Architecture
+│   │       ├── bootstrap-phase4-security.md     # Security & Auth
+│   │       ├── bootstrap-phase5-standards.md    # Code Standards
+│   │       ├── bootstrap-phase6-testing.md      # Testing
+│   │       ├── bootstrap-phase7-operations.md   # Operations & Deployment
+│   │       └── docs-update.md                   # Documentation update command
 │   ├── templates/             # 15 document templates
 │   ├── scripts/               # Setup scripts
 │   └── slash-commands/        # Commands for each AI tool
 │
 ├── .claude/commands/          # If Claude selected
 │   ├── bootstrap.md
-│   ├── bootstrap-phase0.md
-│   ├── bootstrap-phase1.md
-│   ├── ... (phases 2-7)
+│   ├── bootstrap-phase0-context.md
+│   ├── bootstrap-phase1-business.md
+│   ├── bootstrap-phase2-data.md
+│   ├── bootstrap-phase3-architecture.md
+│   ├── bootstrap-phase4-security.md
+│   ├── bootstrap-phase5-standards.md
+│   ├── bootstrap-phase6-testing.md
+│   ├── bootstrap-phase7-operations.md
 │   └── docs-update.md
 │
 ├── .gemini/commands/          # If Gemini selected

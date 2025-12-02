@@ -342,8 +342,8 @@ ai-bootstrap/
 │   ├── docs/
 │   └── specs/
 ├── prompts/                # Master prompts
-│   └── backend.md
-├── slash-commands/         # AI tool commands
+│   └── backend/
+│       └── bootstrap.md    # Master prompt + phase files
 │   ├── claude/
 │   ├── cursor/
 │   ├── copilot/

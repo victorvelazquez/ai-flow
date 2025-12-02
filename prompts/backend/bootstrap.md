@@ -41,21 +41,21 @@ This documentation is **modularized** for better maintainability and performance
 
 Execute phases sequentially by reading each file in order:
 
-1. **Phase 0 (Optional - Existing Projects Only):** Read `.ai-bootstrap/prompts/backend/phase-0-context-discovery.md`
-2. **Phase 1 (Discovery & Business):** Read `.ai-bootstrap/prompts/backend/phase-1-business.md`
-3. **Phase 2 (Data Architecture):** Read `.ai-bootstrap/prompts/backend/phase-2-data-architecture.md`
-4. **Phase 3 (System Architecture):** Read `.ai-bootstrap/prompts/backend/phase-3-system-architecture.md`
-5. **Phase 4 (Security & Authentication):** Read `.ai-bootstrap/prompts/backend/phase-4-security.md`
-6. **Phase 5 (Code Standards):** Read `.ai-bootstrap/prompts/backend/phase-5-code-standards.md`
-7. **Phase 6 (Testing Strategy):** Read `.ai-bootstrap/prompts/backend/phase-6-testing.md`
-8. **Phase 7 (Operations & Deployment):** Read `.ai-bootstrap/prompts/backend/phase-7-operations.md`
+1. **Phase 0 (Optional - Existing Projects Only):** Read `.ai-bootstrap/prompts/backend/bootstrap-phase0-context.md`
+2. **Phase 1 (Discovery & Business):** Read `.ai-bootstrap/prompts/backend/bootstrap-phase1-business.md`
+3. **Phase 2 (Data Architecture):** Read `.ai-bootstrap/prompts/backend/bootstrap-phase2-data.md`
+4. **Phase 3 (System Architecture):** Read `.ai-bootstrap/prompts/backend/bootstrap-phase3-architecture.md`
+5. **Phase 4 (Security & Authentication):** Read `.ai-bootstrap/prompts/backend/bootstrap-phase4-security.md`
+6. **Phase 5 (Code Standards):** Read `.ai-bootstrap/prompts/backend/bootstrap-phase5-standards.md`
+7. **Phase 6 (Testing Strategy):** Read `.ai-bootstrap/prompts/backend/bootstrap-phase6-testing.md`
+8. **Phase 7 (Operations & Deployment):** Read `.ai-bootstrap/prompts/backend/bootstrap-phase7-operations.md`
 
 ### For Individual Phases
 
 You can execute any phase independently by reading its file. For example:
 
 ```
-Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
+Read .ai-bootstrap/prompts/backend/bootstrap-phase4-security.md and execute only Phase 4
 ```
 
 ---
@@ -64,7 +64,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 
 ### Phase 0: Context Discovery (Optional)
 
-**File:** `backend/phase-0-context-discovery.md`
+**File:** `backend/bootstrap-phase0-context.md`
 **For:** Existing projects with code/documentation
 **Duration:** 1-5 minutes (automated analysis)
 **Output:** Pre-populated answers, project analysis
@@ -84,7 +84,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 
 ### Phase 1: Discovery & Business
 
-**File:** `backend/phase-1-business.md`
+**File:** `backend/bootstrap-phase1-business.md`
 **Duration:** 15-20 minutes
 **Key Questions:**
 
@@ -102,7 +102,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 
 ### Phase 2: Data Architecture
 
-**File:** `backend/phase-2-data-architecture.md`
+**File:** `backend/bootstrap-phase2-data.md`
 **Duration:** 15-20 minutes
 **Key Questions:**
 
@@ -120,7 +120,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 
 ### Phase 3: System Architecture
 
-**File:** `backend/phase-3-system-architecture.md`
+**File:** `backend/bootstrap-phase3-architecture.md`
 **Duration:** 15-20 minutes
 **Key Questions:**
 
@@ -140,7 +140,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 
 ### Phase 4: Security & Authentication
 
-**File:** `backend/phase-4-security.md`
+**File:** `backend/bootstrap-phase4-security.md`
 **Duration:** 15-20 minutes
 **Key Questions:**
 
@@ -158,7 +158,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 
 ### Phase 5: Code Standards
 
-**File:** `backend/phase-5-code-standards.md`
+**File:** `backend/bootstrap-phase5-standards.md`
 **Duration:** 15-20 minutes
 **Key Questions:**
 
@@ -176,7 +176,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 
 ### Phase 6: Testing Strategy
 
-**File:** `backend/phase-6-testing.md`
+**File:** `backend/bootstrap-phase6-testing.md`
 **Duration:** 15-25 minutes
 **Key Questions:**
 
@@ -194,7 +194,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 
 ### Phase 7: Operations & Deployment
 
-**File:** `backend/phase-7-operations.md`
+**File:** `backend/bootstrap-phase7-operations.md`
 **Duration:** 10 minutes
 **Key Questions:**
 
@@ -226,7 +226,7 @@ Read .ai-bootstrap/prompts/backend/phase-4-security.md and execute only Phase 4
 **Command:**
 
 ```
-Read .ai-bootstrap/prompts/backend/phase-1-business.md and execute Phase 1
+Read .ai-bootstrap/prompts/backend/bootstrap-phase1-business.md and execute Phase 1
 ```
 
 ---
@@ -248,7 +248,7 @@ Read .ai-bootstrap/prompts/backend/phase-1-business.md and execute Phase 1
 **Command:**
 
 ```
-Read .ai-bootstrap/prompts/backend/phase-0-context-discovery.md and execute Phase 0
+Read .ai-bootstrap/prompts/backend/bootstrap-phase0-context.md and execute Phase 0
 ```
 
 ---
@@ -380,8 +380,8 @@ As your project evolves, your documentation may become out of sync with your cod
 
 **Ready to start?** Choose your path:
 
-- 🆕 **New Project:** Read `backend/phase-1-business.md` to start
-- 📁 **Existing Project:** Read `backend/phase-0-context-discovery.md` to analyze first
+- 🆕 **New Project:** Read `backend/bootstrap-phase1-business.md` to start
+- 📁 **Existing Project:** Read `backend/bootstrap-phase0-context.md` to analyze first
 - 🔄 **Update Docs:** Use `/docs-update` command
 
 ---

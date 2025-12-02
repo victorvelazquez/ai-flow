@@ -249,8 +249,13 @@ async function setupSlashCommands(targetPath: string, aiTools: string[], dryRun?
   const spinner = ora('Setting up slash commands...').start();
 
   try {
-    const sharedSource = path.join(ROOT_DIR, 'slash-commands', 'shared');
-    const files = await fs.readdir(sharedSource);
+    // Copy slash commands directly from prompts/backend/ directory
+    const promptsSource = path.join(ROOT_DIR, 'prompts', 'backend');
+    const allFiles = await fs.readdir(promptsSource);
+    // Filter only files that match slash command pattern (bootstrap*.md or docs-update.md)
+    const files = allFiles.filter(file => 
+      file.endsWith('.md') && (file.startsWith('bootstrap') || file === 'docs-update.md')
+    );
 
     for (const tool of aiTools) {
       if (tool === 'copilot') {
@@ -261,13 +266,11 @@ async function setupSlashCommands(targetPath: string, aiTools: string[], dryRun?
           await fs.ensureDir(promptsTarget);
         }
         for (const file of files) {
-          if (file.endsWith('.md')) {
-            const srcFile = path.join(sharedSource, file);
-            const base = file.replace(/\.md$/, '');
-            const destFile = path.join(promptsTarget, `${base}.prompt.md`);
-            if (!dryRun) await fs.copyFile(srcFile, destFile);
-            logVerbose(`Installed ${destFile}`, verbose);
-          }
+          const srcFile = path.join(promptsSource, file);
+          const base = file.replace(/\.md$/, '');
+          const destFile = path.join(promptsTarget, `${base}.prompt.md`);
+          if (!dryRun) await fs.copyFile(srcFile, destFile);
+          logVerbose(`Installed ${destFile}`, verbose);
         }
       } else if (tool === 'claude') {
         const commandsTarget = path.join(targetPath, '.claude', 'commands');
@@ -276,12 +279,10 @@ async function setupSlashCommands(targetPath: string, aiTools: string[], dryRun?
           await fs.ensureDir(commandsTarget);
         }
         for (const file of files) {
-          if (file.endsWith('.md')) {
-            const srcFile = path.join(sharedSource, file);
-            const destFile = path.join(commandsTarget, file);
-            if (!dryRun) await fs.copyFile(srcFile, destFile);
-            logVerbose(`Installed ${destFile}`, verbose);
-          }
+          const srcFile = path.join(promptsSource, file);
+          const destFile = path.join(commandsTarget, file);
+          if (!dryRun) await fs.copyFile(srcFile, destFile);
+          logVerbose(`Installed ${destFile}`, verbose);
         }
       } else if (tool === 'cursor') {
         const commandsTarget = path.join(targetPath, '.cursor', 'commands');
@@ -290,12 +291,10 @@ async function setupSlashCommands(targetPath: string, aiTools: string[], dryRun?
           await fs.ensureDir(commandsTarget);
         }
         for (const file of files) {
-          if (file.endsWith('.md')) {
-            const srcFile = path.join(sharedSource, file);
-            const destFile = path.join(commandsTarget, file);
-            if (!dryRun) await fs.copyFile(srcFile, destFile);
-            logVerbose(`Installed ${destFile}`, verbose);
-          }
+          const srcFile = path.join(promptsSource, file);
+          const destFile = path.join(commandsTarget, file);
+          if (!dryRun) await fs.copyFile(srcFile, destFile);
+          logVerbose(`Installed ${destFile}`, verbose);
         }
       } else if (tool === 'gemini') {
         const commandsTarget = path.join(targetPath, '.gemini', 'commands');
@@ -304,12 +303,10 @@ async function setupSlashCommands(targetPath: string, aiTools: string[], dryRun?
           await fs.ensureDir(commandsTarget);
         }
         for (const file of files) {
-          if (file.endsWith('.md')) {
-            const srcFile = path.join(sharedSource, file);
-            const destFile = path.join(commandsTarget, file);
-            if (!dryRun) await fs.copyFile(srcFile, destFile);
-            logVerbose(`Installed ${destFile}`, verbose);
-          }
+          const srcFile = path.join(promptsSource, file);
+          const destFile = path.join(commandsTarget, file);
+          if (!dryRun) await fs.copyFile(srcFile, destFile);
+          logVerbose(`Installed ${destFile}`, verbose);
         }
       }
     }
@@ -410,16 +407,16 @@ async function initializeProject(targetPath: string, aiTool?: string, projectNam
     }
 
     console.log(chalk.white('Available slash commands:'));
-    console.log(chalk.gray('  /bootstrap              - Full 7-phase documentation generation'));
-    console.log(chalk.gray('  /bootstrap-phase0       - Context Discovery (existing projects)'));
-    console.log(chalk.gray('  /bootstrap-phase1       - Discovery & Business'));
-    console.log(chalk.gray('  /bootstrap-phase2       - Data Architecture'));
-    console.log(chalk.gray('  /bootstrap-phase3       - System Architecture'));
-    console.log(chalk.gray('  /bootstrap-phase4       - Security & Auth'));
-    console.log(chalk.gray('  /bootstrap-phase5       - Code Standards'));
-    console.log(chalk.gray('  /bootstrap-phase6       - Testing'));
-    console.log(chalk.gray('  /bootstrap-phase7       - Operations + Tools'));
-    console.log(chalk.gray('  /docs-update            - Update documentation when code changes\n'));
+    console.log(chalk.gray('  /bootstrap                    - Full 7-phase documentation generation'));
+    console.log(chalk.gray('  /bootstrap-phase0-context     - Context Discovery (existing projects)'));
+    console.log(chalk.gray('  /bootstrap-phase1-business    - Discovery & Business'));
+    console.log(chalk.gray('  /bootstrap-phase2-data        - Data Architecture'));
+    console.log(chalk.gray('  /bootstrap-phase3-architecture - System Architecture'));
+    console.log(chalk.gray('  /bootstrap-phase4-security    - Security & Auth'));
+    console.log(chalk.gray('  /bootstrap-phase5-standards    - Code Standards'));
+    console.log(chalk.gray('  /bootstrap-phase6-testing     - Testing'));
+    console.log(chalk.gray('  /bootstrap-phase7-operations  - Operations + Tools'));
+    console.log(chalk.gray('  /docs-update                  - Update documentation when code changes\n'));
 
     if (flags?.dryRun) {
       console.log(chalk.yellow('⚠️ Dry-run: no files were written. Run again without --dry-run to apply changes.\n'));
@@ -469,7 +466,7 @@ program
       console.log(chalk.gray(`  AI Tools: ${config.aiTools.join(', ')}`));
       console.log(chalk.gray(`  Created: ${new Date(config.createdAt).toLocaleString()}`));
       console.log(chalk.gray(`  Working Dir: ${process.cwd()}`));
-      console.log(chalk.gray(`  Prompts: ${path.join(process.cwd(), '.ai-bootstrap', 'prompts', 'backend.md')}`));
+      console.log(chalk.gray(`  Prompts: ${path.join(process.cwd(), '.ai-bootstrap', 'prompts', 'backend', 'bootstrap.md')}`));
       console.log(chalk.white('\nNext steps:'));
       if (config.aiTools.includes('claude')) {
         console.log(chalk.cyan('  1. Open Claude Code'));

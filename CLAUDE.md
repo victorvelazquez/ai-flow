@@ -21,7 +21,8 @@ ai-bootstrap/
 ├── src/
 │   └── cli.ts                 # Main CLI application
 ├── prompts/
-│   └── backend.md             # 7-phase master questionnaire
+│   └── backend/
+│       └── bootstrap.md       # 7-phase master questionnaire
 ├── templates/                 # 15 document templates
 │   ├── AGENT.template.md
 │   ├── ai-instructions.template.md
@@ -31,7 +32,7 @@ ai-bootstrap/
 │   ├── specs/                 # 2 templates
 │   ├── README.template.md
 │   └── .env.example.template
-├── slash-commands/            # Commands for AI tools
+├── prompts/backend/           # Slash commands (bootstrap*.md, docs-update.md)
 │   ├── claude/
 │   ├── cursor/
 │   └── copilot/
@@ -147,7 +148,7 @@ npm run prepare
 4. Create `.ai-bootstrap/` structure with core/, prompts/, templates/, scripts/
 5. Write config.json with version, aiTools, timestamps
 6. Copy templates from package to project
-7. Copy master prompts (backend.md)
+7. Copy master prompts (backend/bootstrap.md and phase files)
 8. Copy the helper script `init.sh`
 9. Set up slash commands in tool-specific directories:
    - Claude → `.claude/commands/`
@@ -159,7 +160,7 @@ npm run prepare
 **Package Structure:**
 
 - Binary entry point: `dist/cli.js` (from `src/cli.ts`)
-- Files included in npm package: `dist/`, `prompts/`, `templates/`, `slash-commands/`, `scripts/`
+- Files included in npm package: `dist/`, `prompts/`, `templates/`, `scripts/`
 - Users install globally: `npm install -g ai-bootstrap`
 
 ### Template System
@@ -188,7 +189,7 @@ npm run prepare
 
 **Generation Process:**
 
-1. AI assistant reads `prompts/backend.md` (7-phase questionnaire)
+1. AI assistant reads `prompts/backend/bootstrap.md` (7-phase questionnaire)
 2. Collects user responses across all phases
 3. Reads template files from `.ai-bootstrap/templates/`
 4. Performs string replacement on placeholders with gathered data
@@ -196,7 +197,7 @@ npm run prepare
 
 ---
 
-## 📝 Master Prompt (`prompts/backend.md`)
+## 📝 Master Prompt (`prompts/backend/bootstrap.md`)
 
 ### Structure
 
@@ -297,8 +298,8 @@ try {
 3. Review affected code areas (likely `src/cli.ts` or template files)
 4. Check if changes require updating:
    - Templates in `templates/`
-   - Master prompt in `prompts/backend.md`
-   - Slash commands in `slash-commands/{tool}/`
+   - Master prompt in `prompts/backend/bootstrap.md`
+   - Slash commands copied from `prompts/backend/` to `.{tool}/commands/`
    - README.md if user-facing
 
 ### While Coding
@@ -334,7 +335,7 @@ rm -rf test-folder
 
 **For Prompt Changes:**
 
-1. Edit `prompts/backend.md`
+1. Edit `prompts/backend/bootstrap.md` or individual phase files
 2. Rebuild and initialize test project
 3. Run through full 7-phase questionnaire
 4. Verify all questions work and flow properly
@@ -506,12 +507,12 @@ Every change should be tested with the **full bootstrap flow**:
 
 1. Add to `AI_TOOLS` array in `src/cli.ts`
 2. Add case in `setupSlashCommands()` for folder mapping
-3. Create `slash-commands/{tool}/` with 8 command files
+3. Slash commands are automatically copied from `prompts/backend/` to `.{tool}/commands/`
 4. Update README.md with tool-specific instructions
 
 **Adding a new phase:**
 
-1. Add phase to `prompts/backend.md`
+1. Add phase file to `prompts/backend/` (e.g., `bootstrap-phase8-new.md`)
 2. Create `/bootstrap-phase{N}.md` for each AI tool
 3. Update template placeholders if needed
 4. Test full questionnaire flow
@@ -520,7 +521,7 @@ Every change should be tested with the **full bootstrap flow**:
 
 1. Create `templates/{name}.template.md`
 2. Add placeholders like `{{VARIABLE}}`
-3. Update `prompts/backend.md` to gather needed info
+3. Update `prompts/backend/bootstrap.md` to reference new phase
 4. Update AGENT.md template to reference new doc
 
 ---
@@ -543,10 +544,10 @@ npm run build
 # (requires AI tool to run /bootstrap)
 
 # Update questionnaire
-vim prompts/backend.md
+vim prompts/backend/bootstrap.md
 
 # Update commands
-vim slash-commands/claude/bootstrap.md
+vim prompts/backend/bootstrap.md
 npm run dev init test --ai claude
 cat test/.claude/commands/bootstrap.md
 ```
