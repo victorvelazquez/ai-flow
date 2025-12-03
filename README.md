@@ -4,9 +4,9 @@
 
 ## English
 
-Transform your idea into a production-ready, AI-documented backend in minutes.
+Transform your idea into a production-ready, AI-documented project (backend or frontend) in minutes.
 
-AI Bootstrap is an interactive CLI that generates 15 professional documents for backend projects (new or existing), guiding users (or AI agents) through 7 key phases: business, architecture, security, standards, testing, and operations. Compatible with Claude, Copilot, Cursor, Gemini, and any AI assistant.
+AI Bootstrap is an interactive CLI that generates comprehensive professional documents for backend and frontend projects (new or existing), guiding users (or AI agents) through 7 key phases: business, architecture, security, standards, testing, and operations. Compatible with Claude, Copilot, Cursor, Gemini, and any AI assistant.
 
 - 🚀 Complete, interconnected documentation
 - 🌍 Universal Support - 12 languages, 60+ frameworks, 35+ ORMs (98% market coverage!)
@@ -24,15 +24,15 @@ ai-bootstrap init .
 ```
 
 Open your favorite AI tool (Claude, Copilot, Cursor, Gemini, etc.) and type the command `/bootstrap` as a message or slash command.
-This will start an interactive questionnaire: when finished, you will have all your backend’s professional, connected documentation generated automatically in minutes.
+This will start an interactive questionnaire: when finished, you will have all your project's professional, connected documentation generated automatically in minutes.
 
 ---
 
 ## Español
 
-Transforma tu idea en un backend listo para producción y documentado para IA en minutos.
+Transforma tu idea en un proyecto listo para producción y documentado para IA en minutos (backend o frontend).
 
-AI Bootstrap es un CLI interactivo que genera 15 documentos profesionales para proyectos backend (nuevos o existentes), guiando al usuario (o agente AI) por 7 fases clave: negocio, arquitectura, seguridad, estándares, testing y operaciones. Compatible con Claude, Copilot, Cursor, Gemini y cualquier asistente AI.
+AI Bootstrap es un CLI interactivo que genera documentos profesionales completos para proyectos backend y frontend (nuevos o existentes), guiando al usuario (o agente AI) por 7 fases clave: negocio, arquitectura, seguridad, estándares, testing y operaciones. Compatible con Claude, Copilot, Cursor, Gemini y cualquier asistente AI.
 
 - 🚀 Documentación completa y conectada
 - 🌍 Soporte Universal - 12 lenguajes, 60+ frameworks, 35+ ORMs (¡98% cobertura!)
@@ -50,7 +50,7 @@ ai-bootstrap init .
 ```
 
 Abre tu herramienta AI favorita (Claude, Copilot, Cursor, Gemini, etc.) y escribe el comando `/bootstrap` como mensaje o slash command.
-Esto iniciará un cuestionario interactivo: al finalizar, tendrás toda la documentación profesional y conectada de tu backend generada automáticamente en minutos.
+Esto iniciará un cuestionario interactivo: al finalizar, tendrás toda la documentación profesional y conectada de tu proyecto generada automáticamente en minutos.
 
 ---
 
@@ -155,11 +155,22 @@ ai-bootstrap init .
 **This will:**
 
 - Ask you which AI tool you'll use (Claude/Cursor/Copilot/Gemini/All)
+- Ask for project type (Backend API/Service or Frontend Application)
 - Ask for project name (inferred from directory, press Enter to accept)
 - Create `.ai-bootstrap/` hidden folder with templates
 - Copy master prompts and templates
 - Install slash commands for your AI tool
 - Set up the foundation (takes ~30 seconds)
+
+**Or specify project type directly:**
+
+```bash
+# For backend projects
+ai-bootstrap init . --type backend
+
+# For frontend projects
+ai-bootstrap init . --type frontend
+```
 
 ### 3. Run the Bootstrap Process
 
@@ -176,7 +187,11 @@ Open your AI tool and run:
 Tell your AI assistant:
 
 ```
+# For backend projects
 Read .ai-bootstrap/prompts/backend/bootstrap.md and execute the 7-phase questionnaire
+
+# For frontend projects
+Read .ai-bootstrap/prompts/frontend/bootstrap.md and execute the 7-phase questionnaire
 ```
 
 ### 4. Answer Questions
@@ -743,18 +758,18 @@ ai-bootstrap check
 ### Perfect For
 
 - ✅ Backend developers starting new projects (any of 12 languages)
+- ✅ Frontend developers building React, Vue, Angular, Svelte, or Solid applications
 - ✅ Teams with existing codebases needing AI-ready documentation
 - ✅ Legacy projects lacking proper documentation (60+ frameworks supported)
 - ✅ Teams adopting AI-assisted development
 - ✅ Projects requiring comprehensive documentation
 - ✅ Developers who want to learn best practices
-- ✅ Anyone building APIs or backend services
+- ✅ Anyone building APIs, backend services, or frontend applications
 - ✅ Multi-language teams (Node.js, Python, PHP, Java, Go, Ruby, etc.)
 - ✅ Enterprise projects requiring compliance documentation
 
 ### Not Ideal For
 
-- ❌ Frontend-only projects (frontend bootstrap coming soon)
 - ❌ Projects with zero documentation needs
 - ❌ Quick prototypes that won't be maintained
 
@@ -815,9 +830,9 @@ your-project/
 ## 🚀 Roadmap
 
 - [x] Backend bootstrap (v1.0)
-- [ ] Frontend bootstrap (v1.1)
-- [ ] Full-stack bootstrap (v1.2)
-- [ ] Mobile bootstrap (v1.3)
+- [x] Frontend bootstrap (v1.2.0) ✅
+- [ ] Full-stack bootstrap (v1.3.0)
+- [ ] Mobile bootstrap (v1.4.0)
 - [ ] Template customization
 - [ ] Multiple language support
 - [ ] VS Code extension
