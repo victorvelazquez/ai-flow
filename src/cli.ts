@@ -142,8 +142,8 @@ async function selectProjectType(providedType?: string): Promise<'backend' | 'fr
       process.exit(EXIT.INVALID_ARGS);
     }
     if (providedType === 'fullstack') {
-      console.error(chalk.red(`❌ 'fullstack' support coming in v1.3.0`));
-      console.log(chalk.yellow('Please use "backend" or "frontend" for now'));
+      console.error(chalk.red('❌ \'fullstack\' support coming in v1.3.0'));
+      console.log(chalk.yellow('Please use \'backend\' or \'frontend\' for now'));
       process.exit(EXIT.INVALID_ARGS);
     }
     return providedType as 'backend' | 'frontend' | 'fullstack';
