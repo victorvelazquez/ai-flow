@@ -25,6 +25,7 @@
 **Database:** {{DATABASE}} with {{ORM}}
 
 **Key Characteristics:**
+
 - Authentication: {{AUTH_METHOD}}
 - API Style: {{API_STYLE}}
 - Deployment: {{DEPLOYMENT_PLATFORM}}
@@ -220,11 +221,13 @@ This project can use [GitHub Spec-Kit](https://github.com/github/spec-kit) for s
 ### Quick Start
 
 1. Install Spec-Kit CLI:
+
    ```bash
    uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
    ```
 
 2. Initialize Spec-Kit in this project:
+
    ```bash
    specify init
    ```
