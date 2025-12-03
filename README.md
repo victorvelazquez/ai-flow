@@ -4,9 +4,9 @@
 
 ## English
 
-Transform your idea into a production-ready, AI-documented project (backend or frontend) in minutes.
+Transform your idea into a production-ready, AI-documented project (backend, frontend, or full-stack) in minutes.
 
-AI Bootstrap is an interactive CLI that generates comprehensive professional documents for backend and frontend projects (new or existing), guiding users (or AI agents) through 7 key phases: business, architecture, security, standards, testing, and operations. Compatible with Claude, Copilot, Cursor, Gemini, and any AI assistant.
+AI Bootstrap is an interactive CLI that generates comprehensive professional documents for backend, frontend, and full-stack projects (new or existing), guiding users (or AI agents) through 7 key phases: business, architecture, security, standards, testing, and operations. Compatible with Claude, Copilot, Cursor, Gemini, and any AI assistant.
 
 - 🚀 Complete, interconnected documentation
 - 🌍 Universal Support - 12 languages, 60+ frameworks, 35+ ORMs (98% market coverage!)
@@ -30,9 +30,9 @@ This will start an interactive questionnaire: when finished, you will have all y
 
 ## Español
 
-Transforma tu idea en un proyecto listo para producción y documentado para IA en minutos (backend o frontend).
+Transforma tu idea en un proyecto listo para producción y documentado para IA en minutos (backend, frontend o full-stack).
 
-AI Bootstrap es un CLI interactivo que genera documentos profesionales completos para proyectos backend y frontend (nuevos o existentes), guiando al usuario (o agente AI) por 7 fases clave: negocio, arquitectura, seguridad, estándares, testing y operaciones. Compatible con Claude, Copilot, Cursor, Gemini y cualquier asistente AI.
+AI Bootstrap es un CLI interactivo que genera documentos profesionales completos para proyectos backend, frontend y full-stack (nuevos o existentes), guiando al usuario (o agente AI) por 7 fases clave: negocio, arquitectura, seguridad, estándares, testing y operaciones. Compatible con Claude, Copilot, Cursor, Gemini y cualquier asistente AI.
 
 - 🚀 Documentación completa y conectada
 - 🌍 Soporte Universal - 12 lenguajes, 60+ frameworks, 35+ ORMs (¡98% cobertura!)
@@ -155,7 +155,7 @@ ai-bootstrap init .
 **This will:**
 
 - Ask you which AI tool you'll use (Claude/Cursor/Copilot/Gemini/All)
-- Ask for project type (Backend API/Service or Frontend Application)
+- Ask for project type (Backend API/Service, Frontend Application, or Full Stack Application)
 - Ask for project name (inferred from directory, press Enter to accept)
 - Create `.ai-bootstrap/` hidden folder with templates
 - Copy master prompts and templates
@@ -170,6 +170,9 @@ ai-bootstrap init . --type backend
 
 # For frontend projects
 ai-bootstrap init . --type frontend
+
+# For full-stack projects
+ai-bootstrap init . --type fullstack
 ```
 
 ### 3. Run the Bootstrap Process
@@ -831,7 +834,7 @@ your-project/
 
 - [x] Backend bootstrap (v1.0)
 - [x] Frontend bootstrap (v1.2.0) ✅
-- [ ] Full-stack bootstrap (v1.3.0)
+- [x] Full-stack bootstrap (v1.3.0) ✅
 - [ ] Mobile bootstrap (v1.4.0)
 - [ ] Template customization
 - [ ] Multiple language support
