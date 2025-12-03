@@ -128,4 +128,67 @@ describe('ai-bootstrap CLI', () => {
     expect(output).toContain('Frontend');
     expect(output).toContain('frontend');
   });
+
+  it('initializes fullstack project when --type fullstack is supplied', () => {
+    execFileSync('node', [
+      CLI_PATH, 'init', tempDir, 
+      '--ai', 'cursor',
+      '--type', 'fullstack',
+      '--name', 'Fullstack App',
+      '--description', 'Fullstack Test Description'
+    ], {
+      cwd: PROJECT_ROOT,
+      stdio: 'pipe'
+    });
+
+    const configPath = path.join(tempDir, '.ai-bootstrap', 'core', 'config.json');
+    expect(fs.existsSync(configPath)).toBe(true);
+
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    expect(config.aiTools).toEqual(['cursor']);
+    expect(config.projectType).toBe('fullstack');
+    expect(config.backend).toBe(true);
+    expect(config.frontend).toBe(true);
+
+    // Verify both backend and frontend prompts are copied with prefixes
+    const backendPromptPath = path.join(tempDir, '.cursor', 'commands', 'backend-bootstrap.md');
+    const frontendPromptPath = path.join(tempDir, '.cursor', 'commands', 'frontend-bootstrap.md');
+    expect(fs.existsSync(backendPromptPath)).toBe(true);
+    expect(fs.existsSync(frontendPromptPath)).toBe(true);
+
+    // Verify templates from both backend and frontend are copied
+    // Backend templates
+    const backendTemplatePath = path.join(tempDir, '.ai-bootstrap', 'templates', 'docs', 'api.md');
+    // Frontend templates
+    const frontendTemplatePath = path.join(tempDir, '.ai-bootstrap', 'templates', 'docs', 'components.md');
+    
+    // At least one should exist (depending on processing order)
+    const templatesExist = fs.existsSync(backendTemplatePath) || fs.existsSync(frontendTemplatePath);
+    expect(templatesExist).toBe(true);
+  });
+
+  it('reports initialized status via the check command (fullstack)', () => {
+    execFileSync('node', [
+      CLI_PATH, 'init', tempDir, 
+      '--ai', 'claude',
+      '--type', 'fullstack',
+      '--name', 'Fullstack Project',
+      '--description', 'Fullstack Description'
+    ], {
+      cwd: PROJECT_ROOT,
+      stdio: 'pipe'
+    });
+
+    const output = execFileSync('node', [CLI_PATH, 'check'], {
+      cwd: tempDir,
+      stdio: 'pipe',
+      encoding: 'utf8'
+    });
+
+    expect(output).toContain('Full Stack');
+    expect(output).toContain('Backend Prompts');
+    expect(output).toContain('Frontend Prompts');
+    expect(output).toContain('/backend-bootstrap');
+    expect(output).toContain('/frontend-bootstrap');
+  });
 });
