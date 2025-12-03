@@ -190,7 +190,7 @@ async function createBootstrapStructure(targetPath: string, aiTools: string[], p
 
     // Create config file with new projectType field
     const config = {
-      version: '1.1.0',
+      version: '1.1.1',
       aiTools: aiTools,
       createdAt: new Date().toISOString(),
       projectType: projectType,
@@ -624,7 +624,7 @@ async function initializeProject(targetPath: string, aiTool?: string, projectTyp
 program
   .name('ai-bootstrap')
   .description('Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation')
-  .version('1.1.0');
+  .version('1.1.1');
 
 program
   .command('init')
