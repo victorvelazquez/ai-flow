@@ -343,26 +343,57 @@ As your project evolves, your code changes but your documentation may become out
 **How it works:**
 
 1. Compares current code with last documented state (`.ai-bootstrap/analysis.json`)
-2. Detects changes in endpoints, entities, dependencies, architecture, configuration
+2. Detects changes based on project type:
+   - **Backend:** endpoints, entities, dependencies, architecture, configuration
+   - **Frontend:** components, state management, styling, dependencies, architecture, configuration
+   - **Mobile:** screens, navigation, permissions, native features, state management, build configuration, dependencies, architecture
+   - **Fullstack:** Uses `/backend-docs-update` and `/frontend-docs-update` commands separately
 3. Shows report of documents that need updating
 4. Asks for confirmation to update all detected documents
 5. Updates documents incrementally (only changed sections)
 
 **When to use:**
 
+**Backend:**
 - After adding new API endpoints
 - After modifying database entities
 - After adding new dependencies
 - After changing project structure
-- Periodically (weekly/monthly) to catch any drift
+
+**Frontend:**
+- After adding new components
+- After modifying state management (stores, hooks)
+- After changing styling approach or design tokens
+- After adding new dependencies
+- After changing project structure
+
+**Mobile:**
+- After adding new screens
+- After modifying navigation structure
+- After requesting new permissions
+- After adding native modules or features
+- After modifying build configuration
+- After adding new dependencies
+- After changing project structure
+
+**Fullstack:**
+- Run `/backend-docs-update` for backend changes
+- Run `/frontend-docs-update` for frontend changes
+
+**Periodically:** Weekly/monthly to catch any drift
 
 **Usage:**
 
 ```
+# For backend, frontend, or mobile projects
 /docs-update
+
+# For fullstack projects
+/backend-docs-update
+/frontend-docs-update
 ```
 
-**Example:**
+**Example (Backend):**
 
 ```
 /docs-update
@@ -381,6 +412,48 @@ As your project evolves, your code changes but your documentation may become out
 📝 docs/api.md - Agregados 3 nuevos endpoints
 📝 docs/data-model.md - Actualizado con nuevo campo
 ✅ analysis.json actualizado
+```
+
+**Example (Frontend):**
+
+```
+/docs-update
+
+📊 CHANGES DETECTED:
+
+🔴 Documents that require updating:
+- docs/components.md (2 new components)
+- docs/state-management.md (new Zustand store)
+
+¿Actualizar todos los documentos detectados? (Y/N)
+
+> Y
+
+✅ DOCUMENTATION UPDATED:
+📝 docs/components.md - Added 2 new components
+📝 docs/state-management.md - Added new store
+✅ analysis.json updated
+```
+
+**Example (Mobile):**
+
+```
+/docs-update
+
+📊 CHANGES DETECTED:
+
+🔴 Documents that require updating:
+- docs/navigation.md (1 new screen)
+- docs/permissions.md (new permission: Camera)
+
+¿Actualizar todos los documentos detectados? (Y/N)
+
+> Y
+
+✅ DOCUMENTATION UPDATED:
+📝 docs/navigation.md - Added 1 new screen
+📝 docs/permissions.md - Added new permission
+✅ analysis.json updated
 ```
 
 **Note:** The `/docs-update` command reuses the same analysis logic from Phase 0 to detect changes. If `.ai-bootstrap/analysis.json` doesn't exist, it will run a full analysis first.
