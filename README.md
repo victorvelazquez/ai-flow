@@ -836,20 +836,25 @@ class User(Base):          # ✅ Entity: User
 
 ## 🔧 Optional: Spec-Kit Integration
 
-At the end of Phase 7, you can optionally install [GitHub Spec-Kit](https://github.com/github/spec-kit) for structured development workflow:
+After running `/bootstrap`, you can optionally use [GitHub Spec-Kit](https://github.com/github/spec-kit) for structured feature development:
 
 ```bash
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+specify init
 ```
+
+**Integration Guide:** See `docs/spec-kit-integration.md` (generated after bootstrap) for complete document mapping and usage instructions.
 
 **Spec-Kit adds:**
 
-- `/constitution` - Load project rules
-- `/specify` - Define what to build
-- `/plan` - Define how to build
-- `/task` - Break into tasks
-- `/implement` - Generate code
-- `/checklist` - Verify completeness
+- `/speckit.constitution` - Load project rules
+- `/speckit.specify` - Define what to build
+- `/speckit.plan` - Define how to build
+- `/speckit.tasks` - Break into tasks
+- `/speckit.implement` - Generate code
+- `/speckit.checklist` - Verify completeness
+
+**How it works:** The integration guide (`docs/spec-kit-integration.md`) maps each Spec-Kit command to the relevant AI Bootstrap documents, ensuring your Spec-Kit workflows align with your project's architecture, standards, and patterns.
 
 AI Bootstrap + Spec-Kit = **Complete AI-assisted development workflow**
 
