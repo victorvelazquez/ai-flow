@@ -133,37 +133,40 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
 }
 
 async function selectProjectType(providedType?: string): Promise<'backend' | 'frontend' | 'fullstack'> {
-  // For v1.1.0: Only backend is supported, return hardcoded value
-  // Future releases will enable interactive selection
+  // v1.2.0: Backend and Frontend supported (fullstack coming in v1.3.0)
   if (providedType) {
     const valid = ['backend', 'frontend', 'fullstack'];
     if (!valid.includes(providedType)) {
       console.error(chalk.red(`❌ Invalid project type: ${providedType}`));
-      console.log(chalk.yellow('Available options: backend (frontend and fullstack coming soon)'));
+      console.log(chalk.yellow('Available options: backend, frontend (fullstack coming in v1.3.0)'));
       process.exit(EXIT.INVALID_ARGS);
     }
-    if (providedType !== 'backend') {
-      console.error(chalk.red(`❌ Only 'backend' is supported in this version`));
-      console.log(chalk.yellow('Frontend and fullstack support coming in v1.2.0+'));
+    if (providedType === 'fullstack') {
+      console.error(chalk.red(`❌ 'fullstack' support coming in v1.3.0`));
+      console.log(chalk.yellow('Please use "backend" or "frontend" for now'));
       process.exit(EXIT.INVALID_ARGS);
     }
+    return providedType as 'backend' | 'frontend' | 'fullstack';
   }
 
-  // v1.1.0: Always return 'backend'
-  return 'backend';
+  // If no TTY available (non-interactive mode, e.g., in tests), default to backend
+  // This maintains backward compatibility with existing tests and scripts
+  if (!process.stdin.isTTY) {
+    return 'backend';
+  }
 
-  // Future v1.2.0+: Interactive selection
-  // const answer = await inquirer.prompt([{
-  //   type: 'list',
-  //   name: 'projectType',
-  //   message: 'What type of project are you bootstrapping?',
-  //   choices: [
-  //     { name: '🔧 Backend API/Service', value: 'backend' },
-  //     { name: '🎨 Frontend Application', value: 'frontend' },
-  //     { name: '🚀 Full Stack (Backend + Frontend)', value: 'fullstack' }
-  //   ]
-  // }]);
-  // return answer.projectType;
+  // v1.2.0: Interactive selection for backend/frontend
+  const answer = await inquirer.prompt([{
+    type: 'list',
+    name: 'projectType',
+    message: 'What type of project are you bootstrapping?',
+    choices: [
+      { name: '🔧 Backend API/Service', value: 'backend' },
+      { name: '🎨 Frontend Application', value: 'frontend' },
+      { name: chalk.gray('🚀 Full Stack (coming in v1.3.0)'), value: 'backend', disabled: true }
+    ]
+  }]);
+  return answer.projectType;
 }
 
 async function checkIfInitialized(targetPath: string): Promise<boolean> {
@@ -243,12 +246,20 @@ async function renderTemplates(targetPath: string, projectData: { name: string; 
     const sharedSource = path.join(ROOT_DIR, 'templates', 'shared');
     templateSources.push({ source: sharedSource, base: sharedSource });
 
-    // Include project-type-specific templates (backend for now, frontend in future)
+    // Include project-type-specific templates
     if (projectType === 'backend') {
       const backendSource = path.join(ROOT_DIR, 'templates', 'backend');
       templateSources.push({ source: backendSource, base: backendSource });
+    } else if (projectType === 'frontend') {
+      const frontendSource = path.join(ROOT_DIR, 'templates', 'frontend');
+      templateSources.push({ source: frontendSource, base: frontendSource });
+    } else if (projectType === 'fullstack') {
+      // v1.3.0: Copy both backend and frontend templates
+      const backendSource = path.join(ROOT_DIR, 'templates', 'backend');
+      const frontendSource = path.join(ROOT_DIR, 'templates', 'frontend');
+      templateSources.push({ source: backendSource, base: backendSource });
+      templateSources.push({ source: frontendSource, base: frontendSource });
     }
-    // Future: handle 'frontend' and 'fullstack' cases
 
     // Walk all source directories and collect template files
     const allTemplateFiles: { file: string; base: string }[] = [];
@@ -303,68 +314,86 @@ async function copyPrompts(targetPath: string, dryRun?: boolean, verbose?: boole
   }
 }
 
-async function setupSlashCommands(targetPath: string, aiTools: string[], dryRun?: boolean, verbose?: boolean): Promise<void> {
+async function setupSlashCommands(targetPath: string, aiTools: string[], projectType: 'backend' | 'frontend' | 'fullstack' = 'backend', dryRun?: boolean, verbose?: boolean): Promise<void> {
   const spinner = ora('Setting up slash commands...').start();
 
   try {
-    // Copy slash commands directly from prompts/backend/ directory
-    const promptsSource = path.join(ROOT_DIR, 'prompts', 'backend');
-    const allFiles = await fs.readdir(promptsSource);
-    // Filter only files that match slash command pattern (bootstrap*.md or docs-update.md)
-    const files = allFiles.filter(file => 
-      file.endsWith('.md') && (file.startsWith('bootstrap') || file === 'docs-update.md')
-    );
+    // Determine which prompt directories to copy from
+    const promptSources: Array<{ dir: string; prefix?: string }> = [];
 
-    for (const tool of aiTools) {
-      if (tool === 'copilot') {
-        // Copilot: prompts in .github/prompts with .prompt.md suffix
-        const promptsTarget = path.join(targetPath, '.github', 'prompts');
-        if (!dryRun) {
-          await assertDirWritable(promptsTarget);
-          await fs.ensureDir(promptsTarget);
-        }
-        for (const file of files) {
-          const srcFile = path.join(promptsSource, file);
-          const base = file.replace(/\.md$/, '');
-          const destFile = path.join(promptsTarget, `${base}.prompt.md`);
-          if (!dryRun) await fs.copyFile(srcFile, destFile);
-          logVerbose(`Installed ${destFile}`, verbose);
-        }
-      } else if (tool === 'claude') {
-        const commandsTarget = path.join(targetPath, '.claude', 'commands');
-        if (!dryRun) {
-          await assertDirWritable(commandsTarget);
-          await fs.ensureDir(commandsTarget);
-        }
-        for (const file of files) {
-          const srcFile = path.join(promptsSource, file);
-          const destFile = path.join(commandsTarget, file);
-          if (!dryRun) await fs.copyFile(srcFile, destFile);
-          logVerbose(`Installed ${destFile}`, verbose);
-        }
-      } else if (tool === 'cursor') {
-        const commandsTarget = path.join(targetPath, '.cursor', 'commands');
-        if (!dryRun) {
-          await assertDirWritable(commandsTarget);
-          await fs.ensureDir(commandsTarget);
-        }
-        for (const file of files) {
-          const srcFile = path.join(promptsSource, file);
-          const destFile = path.join(commandsTarget, file);
-          if (!dryRun) await fs.copyFile(srcFile, destFile);
-          logVerbose(`Installed ${destFile}`, verbose);
-        }
-      } else if (tool === 'gemini') {
-        const commandsTarget = path.join(targetPath, '.gemini', 'commands');
-        if (!dryRun) {
-          await assertDirWritable(commandsTarget);
-          await fs.ensureDir(commandsTarget);
-        }
-        for (const file of files) {
-          const srcFile = path.join(promptsSource, file);
-          const destFile = path.join(commandsTarget, file);
-          if (!dryRun) await fs.copyFile(srcFile, destFile);
-          logVerbose(`Installed ${destFile}`, verbose);
+    if (projectType === 'backend') {
+      promptSources.push({ dir: 'backend' });
+    } else if (projectType === 'frontend') {
+      promptSources.push({ dir: 'frontend' });
+    } else if (projectType === 'fullstack') {
+      // For fullstack, copy both with prefixes
+      promptSources.push({ dir: 'backend', prefix: 'backend-' });
+      promptSources.push({ dir: 'frontend', prefix: 'frontend-' });
+    }
+
+    for (const { dir, prefix } of promptSources) {
+      const promptsSource = path.join(ROOT_DIR, 'prompts', dir);
+      const allFiles = await fs.readdir(promptsSource);
+      // Filter only files that match slash command pattern (bootstrap*.md or docs-update.md)
+      const files = allFiles.filter(file =>
+        file.endsWith('.md') && (file.startsWith('bootstrap') || file === 'docs-update.md')
+      );
+
+      for (const tool of aiTools) {
+        if (tool === 'copilot') {
+          // Copilot: prompts in .github/prompts with .prompt.md suffix
+          const promptsTarget = path.join(targetPath, '.github', 'prompts');
+          if (!dryRun) {
+            await assertDirWritable(promptsTarget);
+            await fs.ensureDir(promptsTarget);
+          }
+          for (const file of files) {
+            const srcFile = path.join(promptsSource, file);
+            const base = file.replace(/\.md$/, '');
+            const destName = prefix ? `${prefix}${base}.prompt.md` : `${base}.prompt.md`;
+            const destFile = path.join(promptsTarget, destName);
+            if (!dryRun) await fs.copyFile(srcFile, destFile);
+            logVerbose(`Installed ${destFile}`, verbose);
+          }
+        } else if (tool === 'claude') {
+          const commandsTarget = path.join(targetPath, '.claude', 'commands');
+          if (!dryRun) {
+            await assertDirWritable(commandsTarget);
+            await fs.ensureDir(commandsTarget);
+          }
+          for (const file of files) {
+            const srcFile = path.join(promptsSource, file);
+            const destName = prefix ? `${prefix}${file}` : file;
+            const destFile = path.join(commandsTarget, destName);
+            if (!dryRun) await fs.copyFile(srcFile, destFile);
+            logVerbose(`Installed ${destFile}`, verbose);
+          }
+        } else if (tool === 'cursor') {
+          const commandsTarget = path.join(targetPath, '.cursor', 'commands');
+          if (!dryRun) {
+            await assertDirWritable(commandsTarget);
+            await fs.ensureDir(commandsTarget);
+          }
+          for (const file of files) {
+            const srcFile = path.join(promptsSource, file);
+            const destName = prefix ? `${prefix}${file}` : file;
+            const destFile = path.join(commandsTarget, destName);
+            if (!dryRun) await fs.copyFile(srcFile, destFile);
+            logVerbose(`Installed ${destFile}`, verbose);
+          }
+        } else if (tool === 'gemini') {
+          const commandsTarget = path.join(targetPath, '.gemini', 'commands');
+          if (!dryRun) {
+            await assertDirWritable(commandsTarget);
+            await fs.ensureDir(commandsTarget);
+          }
+          for (const file of files) {
+            const srcFile = path.join(promptsSource, file);
+            const destName = prefix ? `${prefix}${file}` : file;
+            const destFile = path.join(commandsTarget, destName);
+            if (!dryRun) await fs.copyFile(srcFile, destFile);
+            logVerbose(`Installed ${destFile}`, verbose);
+          }
         }
       }
     }
@@ -376,7 +405,7 @@ async function setupSlashCommands(targetPath: string, aiTools: string[], dryRun?
   }
 }
 
-async function initializeProject(targetPath: string, aiTool?: string, projectName?: string, projectDescription?: string, flags?: { dryRun?: boolean; verbose?: boolean }): Promise<void> {
+async function initializeProject(targetPath: string, aiTool?: string, projectType?: string, projectName?: string, projectDescription?: string, flags?: { dryRun?: boolean; verbose?: boolean }): Promise<void> {
   try {
     // Check if already initialized
     const isInitialized = await checkIfInitialized(targetPath);
@@ -399,8 +428,8 @@ async function initializeProject(targetPath: string, aiTool?: string, projectNam
     // Select AI tools
     const aiTools = await selectAITool(aiTool);
 
-    // Select project type (v1.1.0: hardcoded to 'backend')
-    const projectType = await selectProjectType();
+    // Select project type (v1.2.0: backend or frontend)
+    const selectedProjectType = await selectProjectType(projectType);
 
     // Infer project name from directory
     const inferredName = path.basename(targetPath)
@@ -436,10 +465,10 @@ async function initializeProject(targetPath: string, aiTool?: string, projectNam
     console.log(chalk.cyan('\n📦 Initializing AI Bootstrap...\n'));
 
     // Create structure
-    await createBootstrapStructure(targetPath, aiTools, projectType, flags?.dryRun, flags?.verbose);
-    await renderTemplates(targetPath, { name: finalProjectName!, description: finalProjectDescription! }, projectType, flags?.dryRun, flags?.verbose);
+    await createBootstrapStructure(targetPath, aiTools, selectedProjectType, flags?.dryRun, flags?.verbose);
+    await renderTemplates(targetPath, { name: finalProjectName!, description: finalProjectDescription! }, selectedProjectType, flags?.dryRun, flags?.verbose);
     await copyPrompts(targetPath, flags?.dryRun, flags?.verbose);
-    await setupSlashCommands(targetPath, aiTools, flags?.dryRun, flags?.verbose);
+    await setupSlashCommands(targetPath, aiTools, selectedProjectType, flags?.dryRun, flags?.verbose);
 
     const modeText = flags?.dryRun ? 'DRY-RUN' : 'WRITE';
     console.log(chalk.green('\n✅ AI Bootstrap initialized successfully!'));
@@ -501,14 +530,15 @@ program
   .description('Initialize AI Bootstrap in current directory')
   .argument('[path]', 'Target directory (defaults to current directory)', '.')
   .option('--ai <tool>', 'AI tool to use (claude, cursor, copilot, gemini, all)')
+  .option('--type <type>', 'Project type (backend, frontend, fullstack)')
   .option('--name <name>', 'Project name (skip interactive prompt)')
   .option('--description <desc>', 'Project description (skip interactive prompt)')
   .option('--verbose', 'Enable verbose logging')
   .option('--dry-run', 'Simulate without writing files')
-  .action(async (targetPath: string, options: { ai?: string; name?: string; description?: string }) => {
+  .action(async (targetPath: string, options: { ai?: string; type?: string; name?: string; description?: string }) => {
     const absolutePath = path.resolve(targetPath);
     const flags = { dryRun: (options as any).dryRun === true, verbose: (options as any).verbose === true };
-    await initializeProject(absolutePath, options.ai, options.name, options.description, flags);
+    await initializeProject(absolutePath, options.ai, options.type, options.name, options.description, flags);
   });
 
 program
@@ -522,12 +552,21 @@ program
       const configPath = path.join(process.cwd(), '.ai-bootstrap', 'core', 'config.json');
       const config = await fs.readJSON(configPath);
 
+      // Detect project type (support both old and new config format)
+      const projectType = config.projectType || (config.backend && !config.frontend ? 'backend' : config.frontend && !config.backend ? 'frontend' : 'backend');
+      const projectTypeDisplay = projectType === 'backend' ? '🔧 Backend' : projectType === 'frontend' ? '🎨 Frontend' : '🚀 Full Stack';
+
       console.log(chalk.white('\nConfiguration:'));
       console.log(chalk.gray(`  Version: ${config.version}`));
+      console.log(chalk.gray(`  Project Type: ${projectTypeDisplay}`));
       console.log(chalk.gray(`  AI Tools: ${config.aiTools.join(', ')}`));
       console.log(chalk.gray(`  Created: ${new Date(config.createdAt).toLocaleString()}`));
       console.log(chalk.gray(`  Working Dir: ${process.cwd()}`));
-      console.log(chalk.gray(`  Prompts: ${path.join(process.cwd(), '.ai-bootstrap', 'prompts', 'backend', 'bootstrap.md')}`));
+      
+      // Show correct prompts path based on project type
+      const promptsPath = path.join(process.cwd(), '.ai-bootstrap', 'prompts', projectType, 'bootstrap.md');
+      console.log(chalk.gray(`  Prompts: ${promptsPath}`));
+      
       console.log(chalk.white('\nNext steps:'));
       if (config.aiTools.includes('claude')) {
         console.log(chalk.cyan('  1. Open Claude Code'));
