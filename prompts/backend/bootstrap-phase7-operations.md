@@ -779,31 +779,6 @@ graph TD
 
 ---
 
-**7.11 Optional: Spec-Kit Integration**
-
-```
-
-Would you like to install GitHub Spec-Kit?
-
-Spec-Kit adds structured development workflow:
-
-- /constitution - Load project constitution
-- /specify - Define what to build
-- /plan - Define how to build
-- /task - Break down into tasks
-- /implement - Generate code
-- /checklist - Verify completeness
-
-A) ✅ Yes - Install Spec-Kit (Recommended)
-
-- I'll run: uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
-
-B) ❌ No - Just AI Bootstrap documentation
-
-Your choice: \_\_
-
-```
-
 ### Phase 7 Output
 
 ```
@@ -824,7 +799,6 @@ Health Checks: [endpoints (/health, /health/ready, /health/live) + checks perfor
 Graceful Shutdown: [yes/no + shutdown sequence + timeouts] (7.9.1)
 Circuit Breakers & Resilience: [yes/no + tool + configuration + fallback strategies] (7.9.2)
 Documentation & Runbooks: [what will be created (deployment guide/runbooks/architecture diagrams in mermaid format/API docs) + API doc strategy (code-first/design-first)] (7.10)
-Spec-Kit Integration: [yes/no + if yes, installation command] (7.11)
 
 Is this correct? (Yes/No)
 ```
@@ -1068,7 +1042,7 @@ Next steps:
 3. Initialize git repository (if not already done)
 4. Set up environment variables (.env file from .env.example)
 5. Install dependencies
-6. [If Spec-Kit installed] Run /constitution to load project rules
+6. Start building! 🚀
 7. Start building! 🚀
 
 ---
