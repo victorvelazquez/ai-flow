@@ -85,13 +85,17 @@ Read .ai-bootstrap/prompts/mobile/bootstrap-phase3-state.md and execute only Pha
 ### Phase 1: Platform & Framework Selection
 
 **File:** `mobile/bootstrap-phase1-platform.md`
-**Duration:** 15-20 minutes
+**Duration:** 20-25 minutes
 **Key Questions:**
 
 - What platforms will you target? (iOS, Android, or both)
 - What framework will you use? (React Native, Flutter, Native, Ionic, etc.)
 - What minimum OS versions will you support?
 - Will you use TypeScript/Dart?
+- What UI/UX framework? (Material Design, Cupertino, custom)
+- Will you support dark mode?
+- Will you support multiple languages (i18n)?
+- How will you handle images and assets?
 
 **Generates:**
 

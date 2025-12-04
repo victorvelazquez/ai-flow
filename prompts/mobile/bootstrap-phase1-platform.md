@@ -1,7 +1,7 @@
 # Phase 1: Platform & Framework Selection
 
-**Duration:** 15-20 minutes
-**Questions:** ~12 questions
+**Duration:** 20-25 minutes
+**Questions:** ~15 questions
 **Output:** project-brief.md, parts of AGENT.md, parts of ai-instructions.md
 
 ---
@@ -361,33 +361,121 @@ D) **No Analytics**
 
 ---
 
-### Question 1.12: Backend Integration
+### Question 1.12: UI/UX Framework
 
-**How will your app connect to backend services?**
+**What UI/UX framework or design system will you use?**
 
-A) ⭐ **REST API** (Recommended)
-   - Standard HTTP/HTTPS
-   - Easy to implement
-   - Best for: Most apps
+**If React Native:**
+- A) ⭐ **React Native Paper** (Material Design)
+  - Material Design components
+  - Best for: Android-first apps
+- B) **React Native Elements**
+  - Cross-platform components
+  - Best for: Customizable UI
+- C) **NativeBase**
+  - Component library
+  - Best for: Rapid development
+- D) **Custom UI Components**
+  - Build your own components
+  - Best for: Brand-specific design
 
-B) **GraphQL**
-   - Flexible queries
-   - Good for: Complex data needs
+**If Flutter:**
+- A) ⭐ **Material Design 3** (Default)
+  - Google's Material Design
+  - Best for: Most apps
+- B) **Cupertino Design**
+  - iOS-style components
+  - Best for: iOS-first apps
+- C) **Custom Theme**
+  - Custom design system
+  - Best for: Brand-specific design
 
-C) **gRPC**
-   - High performance
-   - Best for: Real-time, high-throughput
+**If Native iOS:**
+- A) ⭐ **UIKit** (Standard)
+- B) **SwiftUI** (Modern)
 
-D) **Firebase / Supabase**
-   - Backend-as-a-Service
-   - Real-time database
-   - Best for: Rapid development
-
-E) **No Backend**
-   - Offline-only app
-   - Best for: Utility apps, games
+**If Native Android:**
+- A) ⭐ **Material Design Components**
+- B) **Jetpack Compose**
 
 **Your answer:**
+
+**If cross-platform, ask:**
+- Will you use platform-specific UI? (iOS uses Cupertino, Android uses Material)
+- Or unified design across platforms?
+
+---
+
+### Question 1.13: Theme & Dark Mode
+
+**Will your app support dark mode?**
+
+A) ⭐ **Yes - System Theme** (Recommended)
+   - Follows system dark/light mode
+   - Best for: Most apps
+
+B) **Yes - Manual Toggle**
+   - User can toggle dark/light mode
+   - Best for: Apps with theme customization
+
+C) **No Dark Mode**
+   - Light mode only
+   - Best for: Simple apps
+
+**Your answer:**
+
+---
+
+### Question 1.14: Internationalization (i18n)
+
+**Will your app support multiple languages?**
+
+A) ⭐ **Yes - Multiple Languages** (Recommended)
+   - Support 2+ languages
+   - Best for: Global apps
+
+B) **Yes - English Only (for now)**
+   - Single language, but i18n-ready
+   - Best for: MVPs planning expansion
+
+C) **No Internationalization**
+   - Single language only
+   - Best for: Local apps
+
+**Your answer:**
+
+**If multiple languages selected, ask:**
+- What i18n library?
+  - React Native: react-i18next, react-native-localize
+  - Flutter: intl, easy_localization
+  - Native: NSLocalizedString (iOS), Resources (Android)
+
+---
+
+### Question 1.15: Image & Asset Management
+
+**How will you handle images and assets?**
+
+A) ⭐ **Local Assets + Remote Images** (Recommended)
+   - Local assets for icons/logos
+   - Remote images for content
+   - Best for: Most apps
+
+B) **All Local Assets**
+   - All images bundled with app
+   - Best for: Small apps, offline-first
+
+C) **All Remote Images**
+   - All images from CDN/server
+   - Best for: Content-heavy apps
+
+**Your answer:**
+
+**If remote images selected, ask:**
+- What image optimization library?
+  - React Native: react-native-fast-image, react-native-image-caching
+  - Flutter: cached_network_image
+  - Native: SDWebImage (iOS), Glide (Android)
 
 ---
 
@@ -409,7 +497,10 @@ Selected Stack:
 - Package Manager: npm
 - Build Tools: Fastlane
 - Analytics: Firebase Analytics + Crashlytics
-- Backend: REST API
+- UI Framework: React Native Paper
+- Dark Mode: System Theme
+- Internationalization: Multiple Languages (react-i18next)
+- Image Management: Local Assets + Remote Images
 
 Proceed to Phase 2 (Navigation & Architecture)? (Y/n)
 ```

@@ -1,7 +1,7 @@
 # Phase 3: State & Data Management
 
-**Duration:** 15-20 minutes
-**Questions:** ~12 questions
+**Duration:** 20-25 minutes
+**Questions:** ~13 questions
 **Output:** docs/state-management.md, docs/offline-strategy.md, parts of ai-instructions.md
 
 ---
@@ -73,42 +73,60 @@ Define how your mobile app will manage state and handle data:
 
 ---
 
-### Question 3.2: Server Data Fetching
+### Question 3.2: HTTP Client Library
 
-**How will you fetch data from your backend?**
+**What HTTP client library will you use to fetch data from your backend?**
 
-A) ⭐ **REST API** (Recommended)
-   - Standard HTTP/HTTPS
-   - Easy to implement
-   - Best for: Most apps
+**If React Native:**
+- A) ⭐ **Axios** (Recommended)
+  - Promise-based HTTP client
+  - Interceptors, automatic JSON parsing
+  - Best for: Most React Native apps
 
-B) **GraphQL**
-   - Flexible queries
-   - Single endpoint
-   - Best for: Complex data needs
+- B) **Fetch API**
+  - Built-in browser API
+  - No dependencies
+  - Best for: Simple apps
 
-C) **gRPC**
-   - High performance
-   - Protocol buffers
-   - Best for: Real-time, high-throughput
+- C) **React Query / TanStack Query**
+  - Data fetching with caching
+  - Automatic refetching
+  - Best for: Complex data needs
 
-D) **Firebase / Supabase**
-   - Real-time database
-   - Backend-as-a-Service
-   - Best for: Rapid development
+**If Flutter:**
+- A) ⭐ **Dio** (Recommended)
+  - Powerful HTTP client
+  - Interceptors, form data
+  - Best for: Most Flutter apps
+
+- B) **http package**
+  - Simple HTTP client
+  - Built-in Flutter package
+  - Best for: Simple apps
+
+**If Native iOS:**
+- A) ⭐ **URLSession** (Built-in)
+- B) **Alamofire**
+  - Popular third-party library
+
+**If Native Android:**
+- A) ⭐ **OkHttp** (Recommended)
+- B) **Retrofit**
+  - Type-safe HTTP client
 
 **Your answer:**
 
-**If REST API selected, ask:**
-- What HTTP client library?
-  - React Native: Axios, Fetch API
-  - Flutter: Dio, http package
-  - Native: URLSession (iOS), OkHttp (Android)
+**If using REST API, ask:**
+- What API base URL structure?
+  - Single base URL
+  - Multiple endpoints
+  - Environment-based URLs (dev/staging/prod)
 
-**If GraphQL selected, ask:**
+**If using GraphQL, ask:**
 - What GraphQL client?
   - React Native: Apollo Client, urql
   - Flutter: graphql_flutter, ferry
+  - What GraphQL endpoint URL?
 
 ---
 
@@ -299,7 +317,48 @@ C) **Error Boundary Pattern**
 
 ---
 
-### Question 3.10: Loading States
+### Question 3.10: Network Error Handling (Mobile-Specific)
+
+**How will you handle mobile-specific network errors?**
+
+**Select all that apply:**
+
+- [ ] **No Internet Connection**
+  - Show offline message
+  - Display cached data when available
+  - Best for: All apps
+
+- [ ] **Slow Network (2G/3G)**
+  - Show loading indicators
+  - Implement request timeouts
+  - Best for: Apps with heavy data
+
+- [ ] **Request Timeout**
+  - Retry failed requests
+  - Show timeout error message
+  - Best for: All apps
+
+- [ ] **Network Switching (WiFi ↔ Mobile Data)**
+  - Handle connection changes gracefully
+  - Retry failed requests on reconnect
+  - Best for: Apps with background sync
+
+- [ ] **Certificate Errors**
+  - Handle SSL pinning failures
+  - Show security warnings
+  - Best for: Apps with certificate pinning
+
+**Your answer:**
+
+**If retry logic selected, ask:**
+- What retry strategy?
+  - Exponential backoff
+  - Fixed interval
+  - User-triggered retry
+
+---
+
+### Question 3.11: Loading States
 
 **How will you handle loading states?**
 
@@ -321,7 +380,7 @@ C) **Progressive Loading**
 
 ---
 
-### Question 3.11: Data Validation
+### Question 3.12: Data Validation
 
 **How will you validate data?**
 
@@ -342,7 +401,7 @@ C) **Server Validation Only**
 
 ---
 
-### Question 3.12: Background Data Refresh
+### Question 3.13: Background Data Refresh
 
 **How will you refresh data in the background?**
 
@@ -564,12 +623,13 @@ After answering all questions, summarize:
 
 Selected Stack:
 - State Management: Redux Toolkit
-- Data Fetching: REST API (Axios)
+- HTTP Client: Axios
 - Offline Strategy: Read-Only Offline
 - Local Storage: AsyncStorage + WatermelonDB
 - Sync Strategy: Optimistic Updates + Background Sync
 - Conflict Resolution: Last Write Wins
 - Caching: Stale-While-Revalidate
+- Network Error Handling: Centralized with retry logic
 
 Proceed to Phase 4 (Permissions & Native Features)? (Y/n)
 ```
