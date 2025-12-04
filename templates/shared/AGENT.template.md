@@ -214,40 +214,6 @@ Different AI tools have specific configuration files that extend this AGENT.md:
 
 ---
 
-## 🔄 Spec-Driven Development Integration
-
-This project can use [GitHub Spec-Kit](https://github.com/github/spec-kit) for structured feature development.
-
-### Quick Start
-
-1. Install Spec-Kit CLI:
-
-   ```bash
-   uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
-   ```
-
-2. Initialize Spec-Kit in this project:
-
-   ```bash
-   specify init
-   ```
-
-3. Read `docs/spec-kit-integration.md` for complete integration guide
-
-### Document Mapping
-
-When using Spec-Kit commands, reference these AI Bootstrap documents:
-
-- **`/speckit.constitution`** → See `docs/spec-kit-integration.md` for document mapping
-- **`/speckit.specify`** → See `docs/spec-kit-integration.md` for document mapping
-- **`/speckit.plan`** → See `docs/spec-kit-integration.md` for document mapping
-- **`/speckit.tasks`** → See `docs/spec-kit-integration.md` for document mapping
-- **`/speckit.implement`** → See `docs/spec-kit-integration.md` for document mapping
-
-**Full guide:** `docs/spec-kit-integration.md`
-
----
-
 ## 📊 Project Status
 
 **Current Phase:** {{PROJECT_PHASE}}
