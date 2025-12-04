@@ -712,6 +712,100 @@ After initialization, you can use these commands in your AI tool:
 
 ---
 
+## 🔄 Workflow Commands (Backend Projects)
+
+AI-Bootstrap includes workflow commands for structured backend development inspired by best practices from Spec-Kit, OpenSpec, and BMAD-METHOD:
+
+### Feature Development
+
+**`/feature`** - Create/modify/refactor complete features (15-20 min)
+
+- **Modes:**
+  - `/feature` - Interactive (asks: new/change/refactor)
+  - `/feature new` - New feature from scratch
+  - `/feature change` - Modify existing feature
+  - `/feature refactor` - Refactor existing code
+
+- **Workflow:** Spec → Plan → Implementation → Auto-Archive
+- **Generates:** `.ai-bootstrap/work/feature-[name]/` with spec.md, plan.md, tasks.md
+- **Output:** Working code + tests + updated documentation
+
+### Bug Fixes
+
+**`/fix`** - Fix bugs with automatic complexity detection (3-15 min)
+
+- **Adaptive workflow:**
+  - Simple bugs: 3-5 minutes (quick fix + test)
+  - Complex bugs: 10-15 minutes (deep analysis + comprehensive fix)
+- **Auto-detects complexity** based on scope and root cause
+- **Generates:** Fix + test case + documentation
+
+### Work Management
+
+**`/work`** - Manage work in progress
+
+- **Subcommands:**
+  - `/work` - List active tasks with progress
+  - `/work show [name]` - Show task details
+  - `/work resume [name]` - Resume interrupted work without context loss
+  - `/work archive [name]` - Archive completed work and update docs
+
+- **Structure:** `.ai-bootstrap/work/` (active) → `.ai-bootstrap/archive/` (completed)
+
+### Code Review
+
+**`/review`** - Professional code review with multi-aspect analysis (5 min)
+
+- **Analyzes 5 perspectives:**
+  - 🔒 Security (SQL injection, XSS, auth issues)
+  - ⚡ Performance (N+1 queries, missing indexes)
+  - 🧪 Testing (coverage, edge cases)
+  - 📐 Architecture (SOLID, DRY, coupling)
+  - 🎨 Code Quality (naming, complexity)
+
+- **Prioritized report:** 🔴 Critical, 🟡 Warnings, 🟢 Suggestions
+- **Modes:** `/review` (current changes), `/review feature-[name]`, `/review --full`
+
+### Quick Refactoring
+
+**`/refactor-quick`** - Small refactorings without overhead (3-5 min)
+
+- **Use cases:**
+  - Extract methods/functions
+  - Rename variables/classes
+  - Move logic between layers
+  - Extract to utility modules
+
+- **vs `/feature refactor`:** No spec/plan required, 3x faster
+
+### Benefits
+
+- ✅ Structured workflow with auditable history
+- ✅ Automatic documentation updates
+- ✅ Resume work without context loss
+- ✅ 60-70% time savings on typical development
+- ✅ Works with Claude, Cursor, Copilot, Gemini
+
+**Example workflow:**
+```bash
+# Morning: Start new feature
+/feature "Real-time notifications API"
+# → 18 minutes later: Complete feature with tests + docs
+
+# Bug reported
+/fix "Login returns 500 when email not found"
+# → 4 minutes later: Fixed with test case
+
+# Meeting interruption
+# Work saved automatically in .ai-bootstrap/work/
+
+# After meeting: Resume
+/work resume feature-notifications
+# → Continues from exact task without context loss
+```
+
+---
+
 ## 💡 How It Works
 
 ### 1. Smart 3-Layer Context Detection (Phase 0)
