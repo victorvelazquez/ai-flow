@@ -122,6 +122,21 @@
 - External API consumers
 - Frontend/Backend contracts
 
+**Strategy:**
+- Consumer-driven contracts (CDC)
+- Provider contracts verification
+- Contract versioning
+
+**Example:**
+```{{LANGUAGE}}
+{{CONTRACT_TEST_EXAMPLE}}
+```
+
+**Contract Management:**
+- Contract storage: {{CONTRACT_STORAGE}}
+- Versioning: {{CONTRACT_VERSIONING}}
+- Breaking changes: {{CONTRACT_BREAKING_CHANGES}}
+
 {{/IF}}
 
 {{#IF PERFORMANCE_TESTS}}
@@ -131,16 +146,80 @@
 
 **Tool:** {{PERFORMANCE_TEST_TOOL}}
 
+**Test Types:**
+- **Load Testing**: Normal expected load
+- **Stress Testing**: Beyond normal capacity
+- **Spike Testing**: Sudden load increases
+- **Endurance Testing**: Sustained load over time
+
 **Metrics:**
 - Response time (p50, p95, p99)
 - Throughput (requests/second)
 - Error rate
-- Resource usage
+- Resource usage (CPU, memory, disk, network)
 
 **Thresholds:**
 {{#EACH PERFORMANCE_THRESHOLD}}
 - {{METRIC_NAME}}: {{THRESHOLD_VALUE}}
 {{/EACH}}
+
+**Test Scenarios:**
+{{#EACH PERFORMANCE_SCENARIO}}
+#### {{SCENARIO_NAME}}
+
+- Load: {{SCENARIO_LOAD}}
+- Duration: {{SCENARIO_DURATION}}
+- Expected: {{SCENARIO_EXPECTED}}
+- Actual: {{SCENARIO_ACTUAL}}
+
+{{/EACH}}
+
+**Example:**
+```{{LANGUAGE}}
+{{PERFORMANCE_TEST_EXAMPLE}}
+```
+
+{{/IF}}
+
+{{#IF CHAOS_ENGINEERING}}
+### Chaos Engineering
+
+**Purpose:** Test system resilience to failures
+
+**Tool:** {{CHAOS_TOOL}}
+
+**Chaos Experiments:**
+{{#EACH CHAOS_EXPERIMENT}}
+#### {{EXPERIMENT_NAME}}
+
+**Type:** {{EXPERIMENT_TYPE}}
+
+**Hypothesis:** {{EXPERIMENT_HYPOTHESIS}}
+
+**Method:**
+{{#EACH EXPERIMENT_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+
+**Expected Behavior:** {{EXPERIMENT_EXPECTED}}
+
+**Results:** {{EXPERIMENT_RESULTS}}
+
+{{/EACH}}
+
+**Common Scenarios:**
+- Network latency injection
+- Service failures
+- Database connection failures
+- CPU/memory exhaustion
+- Disk space issues
+
+**Safety Rules:**
+- ✅ Run in staging first
+- ✅ Have rollback plan ready
+- ✅ Monitor metrics during experiments
+- ✅ Limit blast radius
+- ❌ Never run in production without approval
 
 {{/IF}}
 

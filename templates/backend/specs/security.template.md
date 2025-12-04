@@ -293,6 +293,117 @@
 
 ---
 
+## 🔑 API Keys Management
+
+{{#IF API_KEYS_ENABLED}}
+**Enabled:** Yes
+
+**Use Cases:**
+{{#EACH API_KEY_USE_CASE}}
+- {{USE_CASE_DESCRIPTION}}
+{{/EACH}}
+
+### Key Generation
+
+**Format:** {{API_KEY_FORMAT}}
+
+**Length:** {{API_KEY_LENGTH}} characters
+
+**Prefix:** {{API_KEY_PREFIX}}
+
+**Example:**
+```{{LANGUAGE}}
+{{API_KEY_GENERATION_EXAMPLE}}
+```
+
+### Key Storage
+
+**Location:** {{API_KEY_STORAGE}} ({{#IF HASHED}}Hashed{{ELSE}}Plain text{{/IF}})
+
+**Hashing Algorithm:** {{API_KEY_HASH_ALGORITHM}}
+
+### Key Rotation
+
+**Strategy:** {{API_KEY_ROTATION_STRATEGY}}
+
+**Frequency:** {{API_KEY_ROTATION_FREQUENCY}}
+
+**Process:**
+{{#EACH API_KEY_ROTATION_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+
+### Key Revocation
+
+**Revocation Process:**
+{{#EACH API_KEY_REVOCATION_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+
+**Revocation Reasons:**
+- Compromised key
+- Key expiration
+- User request
+- Security incident
+
+### Rate Limiting by API Key
+
+**Limits:**
+{{#EACH API_KEY_RATE_LIMIT}}
+- **{{KEY_TIER}}**: {{LIMIT_COUNT}} requests per {{LIMIT_WINDOW}}
+{{/EACH}}
+
+{{ELSE}}
+**API Keys:** Not used - Authentication via JWT/Sessions only
+{{/IF}}
+
+---
+
+## 🔍 Dependency Security
+
+**Scanning Tool:** {{DEPENDENCY_SCANNER}}
+
+**Frequency:** {{SCAN_FREQUENCY}}
+
+**Automated Scanning:** {{#IF AUTO_SCAN}}Enabled{{ELSE}}Manual{{/IF}}
+
+### Vulnerability Management
+
+**Process:**
+{{#EACH VULN_MANAGEMENT_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+
+**Severity Levels:**
+- **Critical**: Fix within 24 hours
+- **High**: Fix within 7 days
+- **Medium**: Fix within 30 days
+- **Low**: Fix in next release
+
+### Security Audit Commands
+
+```bash
+# Check for vulnerabilities
+{{SECURITY_AUDIT_COMMAND}}
+
+# Fix automatically fixable issues
+{{SECURITY_FIX_COMMAND}}
+
+# Update dependencies
+{{DEPENDENCY_UPDATE_COMMAND}}
+```
+
+### Dependency Update Policy
+
+- ✅ Review changelogs before updating
+- ✅ Test updates in staging first
+- ✅ Pin exact versions in production
+- ✅ Regular security audits ({{AUDIT_FREQUENCY}})
+- ❌ Don't ignore critical vulnerabilities
+- ❌ Don't update without testing
+
+---
+
 ## 🚨 Security Incident Response
 
 **Contact:** {{SECURITY_CONTACT}}

@@ -228,6 +228,48 @@ Not Allowed: Controller → Repository (bypasses service)
 
 **Versioning:** {{API_VERSIONING_STRATEGY}}
 
+### API Gateway
+
+{{#IF API_GATEWAY}}
+**Gateway:** {{API_GATEWAY_NAME}}
+
+**Purpose:** {{API_GATEWAY_PURPOSE}}
+
+**Configuration:**
+- Rate limiting: {{GATEWAY_RATE_LIMITING}}
+- Authentication: {{GATEWAY_AUTHENTICATION}}
+- Request routing: {{GATEWAY_ROUTING}}
+- Load balancing: {{GATEWAY_LOAD_BALANCING}}
+
+**Routes:**
+{{#EACH GATEWAY_ROUTE}}
+- **{{ROUTE_PATH}}** → {{TARGET_SERVICE}} ({{ROUTE_METHODS}})
+{{/EACH}}
+
+{{ELSE}}
+**API Gateway:** Not used - Direct API access
+{{/IF}}
+
+### API Documentation
+
+**Tool:** {{API_DOC_TOOL}}
+
+{{#IF SWAGGER_OPENAPI}}
+**Swagger/OpenAPI:**
+- Specification: `{{OPENAPI_SPEC_PATH}}`
+- UI endpoint: `{{SWAGGER_UI_URL}}`
+- Strategy: {{API_DOC_STRATEGY}} ({{#IF CODE_FIRST}}Code-First{{ELSE}}Design-First{{/IF}})
+
+**Auto-generation:** {{#IF AUTO_GENERATE_DOCS}}Enabled{{ELSE}}Manual{{/IF}}
+
+{{#IF AUTO_GENERATE_DOCS}}
+**Example:**
+```{{LANGUAGE}}
+{{API_DOC_EXAMPLE}}
+```
+{{/IF}}
+{{/IF}}
+
 ### Endpoint Patterns
 
 {{#IF REST_API}}
@@ -272,6 +314,123 @@ Not Allowed: Controller → Repository (bypasses service)
   - Integration: {{INTEGRATION_METHOD}}
   - Fallback: {{FALLBACK_STRATEGY}}
 {{/EACH}}
+
+---
+
+## 🔌 Real-time Communication
+
+{{#IF REALTIME_ENABLED}}
+### WebSockets
+
+**Enabled:** Yes
+
+**Use Cases:**
+{{#EACH WEBSOCKET_USE_CASE}}
+- {{USE_CASE_DESCRIPTION}}
+{{/EACH}}
+
+**Implementation:**
+- Library: {{WEBSOCKET_LIBRARY}}
+- Protocol: {{WEBSOCKET_PROTOCOL}}
+- Authentication: {{WEBSOCKET_AUTH}}
+
+**Connection Management:**
+- Max connections: {{WEBSOCKET_MAX_CONNECTIONS}}
+- Heartbeat interval: {{WEBSOCKET_HEARTBEAT}}s
+- Reconnection strategy: {{WEBSOCKET_RECONNECTION}}
+
+**Example:**
+```{{LANGUAGE}}
+{{WEBSOCKET_EXAMPLE}}
+```
+
+### Server-Sent Events (SSE)
+
+{{#IF SSE_ENABLED}}
+**Enabled:** Yes
+
+**Use Cases:**
+{{#EACH SSE_USE_CASE}}
+- {{USE_CASE_DESCRIPTION}}
+{{/EACH}}
+
+**Implementation:**
+```{{LANGUAGE}}
+{{SSE_EXAMPLE}}
+```
+{{ELSE}}
+**Enabled:** No
+{{/IF}}
+
+{{ELSE}}
+**Real-time Communication:** Not implemented
+{{/IF}}
+
+---
+
+## 📨 Message Broker Patterns
+
+{{#IF MESSAGE_BROKER}}
+**Broker:** {{MESSAGE_BROKER_NAME}}
+
+**Patterns Used:**
+{{#EACH MESSAGE_PATTERN}}
+### {{PATTERN_NAME}}
+
+**Type:** {{PATTERN_TYPE}} ({{#IF PUB_SUB}}Pub/Sub{{ELSE}}Queue{{/IF}})
+
+**Use Case:** {{PATTERN_USE_CASE}}
+
+**Topics/Queues:**
+{{#EACH TOPIC_QUEUE}}
+- **{{NAME}}**: {{DESCRIPTION}}
+  - Producers: {{PRODUCERS}}
+  - Consumers: {{CONSUMERS}}
+  - Retention: {{RETENTION}}
+{{/EACH}}
+
+**Delivery Guarantees:** {{DELIVERY_GUARANTEES}} ({{#IF AT_LEAST_ONCE}}At-least-once{{ELSE}}{{#IF EXACTLY_ONCE}}Exactly-once{{ELSE}}At-most-once{{/IF}}{{/IF}})
+
+**Implementation:**
+```{{LANGUAGE}}
+{{PATTERN_EXAMPLE}}
+```
+
+{{/EACH}}
+
+**Error Handling:**
+- Dead letter queue: {{#IF DLQ_ENABLED}}Enabled{{ELSE}}Disabled{{/IF}}
+- Retry strategy: {{RETRY_STRATEGY}}
+- Max retries: {{MAX_RETRIES}}
+
+{{ELSE}}
+**Message Broker:** Not used
+{{/IF}}
+
+---
+
+## 🕸️ Service Mesh
+
+{{#IF SERVICE_MESH}}
+**Mesh:** {{SERVICE_MESH_NAME}}
+
+**Purpose:** {{SERVICE_MESH_PURPOSE}}
+
+**Features:**
+- Service discovery: {{SERVICE_DISCOVERY}}
+- Load balancing: {{MESH_LOAD_BALANCING}}
+- Traffic management: {{TRAFFIC_MANAGEMENT}}
+- Security: {{MESH_SECURITY}} (mTLS)
+- Observability: {{MESH_OBSERVABILITY}}
+
+**Configuration:**
+```yaml
+{{SERVICE_MESH_CONFIG_EXAMPLE}}
+```
+
+{{ELSE}}
+**Service Mesh:** Not used (monolith or simple microservices)
+{{/IF}}
 
 ---
 

@@ -228,6 +228,55 @@
 {{MIGRATION_STATUS_COMMAND}}
 ```
 
+### Database Migrations in Production
+
+**Strategy:** {{PRODUCTION_MIGRATION_STRATEGY}}
+
+{{#IF ZERO_DOWNTIME_MIGRATIONS}}
+**Zero-Downtime Migrations:** Enabled
+
+**Approach:**
+{{#EACH ZERO_DOWNTIME_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+
+**Rollback Plan:**
+{{#EACH ROLLBACK_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+{{ELSE}}
+**Zero-Downtime Migrations:** Not implemented (requires maintenance window)
+{{/IF}}
+
+**Migration Windows:**
+- Preferred time: {{MIGRATION_WINDOW_TIME}}
+- Duration: {{MIGRATION_WINDOW_DURATION}}
+- Notification: {{MIGRATION_NOTIFICATION}}
+
+### Database Connection Pooling
+
+**Pool Configuration:**
+
+**Tool:** {{CONNECTION_POOL_TOOL}}
+
+**Settings:**
+- Min connections: {{POOL_MIN_CONNECTIONS}}
+- Max connections: {{POOL_MAX_CONNECTIONS}}
+- Connection timeout: {{POOL_CONNECTION_TIMEOUT}}ms
+- Idle timeout: {{POOL_IDLE_TIMEOUT}}ms
+- Max lifetime: {{POOL_MAX_LIFETIME}}ms
+
+**Configuration:**
+```{{LANGUAGE}}
+{{CONNECTION_POOL_CONFIG_EXAMPLE}}
+```
+
+**Monitoring:**
+- Active connections: {{POOL_MONITORING_ACTIVE}}
+- Idle connections: {{POOL_MONITORING_IDLE}}
+- Wait time: {{POOL_MONITORING_WAIT}}
+- Connection errors: {{POOL_MONITORING_ERRORS}}
+
 ### Backups
 
 **Frequency:** {{BACKUP_FREQUENCY}}
@@ -407,6 +456,121 @@ GET /health/live     - Liveness check
 {{#EACH ROLLBACK_STEP}}
 {{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
 {{/EACH}}
+
+---
+
+## 🎯 Deployment Strategies
+
+### Blue-Green Deployment
+
+{{#IF BLUE_GREEN_DEPLOYMENT}}
+**Enabled:** Yes
+
+**Strategy:**
+{{#EACH BLUE_GREEN_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+
+**Rollback:** {{BLUE_GREEN_ROLLBACK}}
+
+**Benefits:**
+- Zero-downtime deployments
+- Instant rollback capability
+- Easy A/B testing
+
+{{ELSE}}
+**Enabled:** No - Using standard deployment
+{{/IF}}
+
+### Canary Deployment
+
+{{#IF CANARY_DEPLOYMENT}}
+**Enabled:** Yes
+
+**Strategy:**
+- Initial traffic: {{CANARY_INITIAL_TRAFFIC}}%
+- Gradual increase: {{CANARY_GRADUAL_INCREASE}}% per {{CANARY_INCREASE_INTERVAL}}
+- Success criteria: {{CANARY_SUCCESS_CRITERIA}}
+- Rollback trigger: {{CANARY_ROLLBACK_TRIGGER}}
+
+{{ELSE}}
+**Enabled:** No
+{{/IF}}
+
+---
+
+## 🛡️ Resilience Patterns
+
+### Graceful Shutdown
+
+**Enabled:** {{#IF GRACEFUL_SHUTDOWN}}Yes{{ELSE}}No{{/IF}}
+
+{{#IF GRACEFUL_SHUTDOWN}}
+**Shutdown Sequence:**
+{{#EACH SHUTDOWN_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}} (timeout: {{STEP_TIMEOUT}}s)
+{{/EACH}}
+
+**Implementation:**
+```{{LANGUAGE}}
+{{GRACEFUL_SHUTDOWN_EXAMPLE}}
+```
+
+**Configuration:**
+- Shutdown timeout: {{SHUTDOWN_TIMEOUT}}s
+- Health check grace period: {{HEALTH_CHECK_GRACE_PERIOD}}s
+- Connection drain timeout: {{CONNECTION_DRAIN_TIMEOUT}}s
+{{/IF}}
+
+### Circuit Breakers
+
+{{#IF CIRCUIT_BREAKERS}}
+**Enabled:** Yes
+
+**Tool:** {{CIRCUIT_BREAKER_TOOL}}
+
+**Configuration:**
+{{#EACH CIRCUIT_BREAKER}}
+#### {{SERVICE_NAME}}
+
+- Failure threshold: {{FAILURE_THRESHOLD}}%
+- Success threshold: {{SUCCESS_THRESHOLD}}%
+- Timeout: {{TIMEOUT}}ms
+- Half-open retries: {{HALF_OPEN_RETRIES}}
+- Reset timeout: {{RESET_TIMEOUT}}s
+
+**Fallback Strategy:** {{FALLBACK_STRATEGY}}
+
+**Implementation:**
+```{{LANGUAGE}}
+{{CIRCUIT_BREAKER_EXAMPLE}}
+```
+
+{{/EACH}}
+
+{{ELSE}}
+**Enabled:** No - Direct service calls without circuit breaking
+{{/IF}}
+
+### Retry Policies
+
+{{#IF RETRY_POLICIES}}
+**Retry Strategy:** {{RETRY_STRATEGY}}
+
+{{#EACH RETRY_POLICY}}
+#### {{SERVICE_NAME}}
+
+- Max attempts: {{MAX_ATTEMPTS}}
+- Backoff strategy: {{BACKOFF_STRATEGY}}
+- Initial delay: {{INITIAL_DELAY}}ms
+- Max delay: {{MAX_DELAY}}ms
+- Retryable errors: {{RETRYABLE_ERRORS}}
+
+{{/EACH}}
+
+{{ELSE}}
+- Retry policies to be configured per service.
+{{/IF}}
 
 ---
 

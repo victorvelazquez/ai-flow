@@ -92,6 +92,169 @@
 
 ---
 
+## 📇 Database Indexes
+
+### Index Strategy
+
+{{#IF INDEXES_DEFINED}}
+{{#EACH INDEX}}
+
+#### {{INDEX_NAME}}
+
+**Table:** `{{TABLE_NAME}}`
+
+**Columns:** {{INDEX_COLUMNS}}
+
+**Type:** {{INDEX_TYPE}} ({{#IF UNIQUE}}Unique{{ELSE}}Non-unique{{/IF}})
+
+**Purpose:** {{INDEX_PURPOSE}}
+
+**Query Patterns:** {{INDEX_QUERY_PATTERNS}}
+
+{{/EACH}}
+
+{{ELSE}}
+- No indexes explicitly defined yet. Indexes will be created based on query patterns and foreign keys.
+{{/IF}}
+
+### Index Guidelines
+
+- ✅ Index all foreign keys
+- ✅ Index frequently queried columns
+- ✅ Index columns used in WHERE, JOIN, ORDER BY clauses
+- ✅ Consider composite indexes for multi-column queries
+- ❌ Don't over-index (each index slows writes)
+- ❌ Don't index low-cardinality columns (unless frequently filtered)
+
+---
+
+## 🔄 Transaction Management
+
+### Transaction Isolation Level
+
+**Default Level:** {{TRANSACTION_ISOLATION_LEVEL}}
+
+**Supported Levels:**
+{{#EACH ISOLATION_LEVEL}}
+- **{{LEVEL_NAME}}**: {{LEVEL_DESCRIPTION}}
+{{/EACH}}
+
+### Transaction Strategy
+
+**When to use transactions:**
+- ✅ Multi-step operations that must succeed or fail together
+- ✅ Updates affecting multiple tables
+- ✅ Operations requiring consistency guarantees
+- ❌ Single-row operations (usually handled by database)
+
+**Transaction Patterns:**
+
+{{#IF TRANSACTION_PATTERNS}}
+{{#EACH TRANSACTION_PATTERN}}
+#### {{PATTERN_NAME}}
+
+**Use Case:** {{PATTERN_USE_CASE}}
+
+**Implementation:**
+```{{LANGUAGE}}
+{{PATTERN_EXAMPLE}}
+```
+
+**Consistency Guarantees:** {{CONSISTENCY_GUARANTEES}}
+
+{{/EACH}}
+{{ELSE}}
+- Transaction patterns to be defined based on business requirements.
+{{/IF}}
+
+### Consistency Model
+
+**Consistency Strategy:** {{CONSISTENCY_STRATEGY}}
+
+{{#IF EVENTUAL_CONSISTENCY}}
+**Eventual Consistency:**
+- Acceptable delay: {{CONSISTENCY_DELAY}}
+- Replication lag tolerance: {{REPLICATION_LAG}}
+- Conflict resolution: {{CONFLICT_RESOLUTION}}
+{{/IF}}
+
+{{#IF STRONG_CONSISTENCY}}
+**Strong Consistency:**
+- All reads see latest writes
+- Synchronous replication required
+- Higher latency, lower throughput
+{{/IF}}
+
+---
+
+## 🔧 Schema Migrations
+
+### Migration Tool
+
+**Tool:** {{MIGRATION_TOOL}}
+
+{{#IF PRISMA_MIGRATE}}
+**Prisma Migrate:**
+- Location: `prisma/migrations/`
+- Generate migration: `npx prisma migrate dev --name migration_name`
+- Apply migration: `npx prisma migrate deploy`
+{{/IF}}
+
+{{#IF TYPEORM_MIGRATIONS}}
+**TypeORM Migrations:**
+- Location: `src/migrations/`
+- Generate migration: `npm run migration:generate -- -n MigrationName`
+- Run migration: `npm run migration:run`
+- Revert migration: `npm run migration:revert`
+{{/IF}}
+
+{{#IF ALEMBIC}}
+**Alembic (Python):**
+- Location: `alembic/versions/`
+- Generate migration: `alembic revision --autogenerate -m "migration_name"`
+- Apply migration: `alembic upgrade head`
+- Rollback: `alembic downgrade -1`
+{{/IF}}
+
+### Migration Strategy
+
+**Versioning:** {{MIGRATION_VERSIONING}}
+
+**Rollback Strategy:** {{MIGRATION_ROLLBACK_STRATEGY}}
+
+**Zero-Downtime Migrations:** {{#IF ZERO_DOWNTIME_MIGRATIONS}}Yes{{ELSE}}No{{/IF}}
+
+{{#IF ZERO_DOWNTIME_MIGRATIONS}}
+**Zero-Downtime Approach:**
+{{#EACH ZERO_DOWNTIME_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+{{/IF}}
+
+### Migration Guidelines
+
+- ✅ Always review generated migrations before applying
+- ✅ Test migrations on staging before production
+- ✅ Keep migrations small and focused
+- ✅ Never edit applied migrations (create new ones)
+- ✅ Document breaking changes
+- ❌ Don't run migrations manually in production
+- ❌ Don't mix data migrations with schema migrations
+
+### Migration History
+
+{{#IF MIGRATION_HISTORY}}
+| Version | Description | Applied | Rollback Available |
+|---------|-------------|---------|-------------------|
+{{#EACH MIGRATION}}
+| {{VERSION}} | {{DESCRIPTION}} | {{APPLIED_DATE}} | {{#IF ROLLBACK_AVAILABLE}}Yes{{ELSE}}No{{/IF}} |
+{{/EACH}}
+{{ELSE}}
+- Migration history will be tracked by the migration tool.
+{{/IF}}
+
+---
+
 ## 🧩 Domain Logic & Aggregates
 
 ### Aggregate Roots

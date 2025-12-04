@@ -302,6 +302,102 @@ class Repository<T> {
 
 ---
 
+## 📝 Logging Standards
+
+### Log Levels
+
+**Hierarchy:** DEBUG < INFO < WARN < ERROR < FATAL
+
+**Usage Guidelines:**
+- **DEBUG**: Detailed information for debugging (development only)
+- **INFO**: General informational messages (request start, successful operations)
+- **WARN**: Warning messages (deprecated features, recoverable errors)
+- **ERROR**: Error messages (failed operations, exceptions)
+- **FATAL**: Critical errors (system failures, unrecoverable errors)
+
+**Default Level:** {{LOG_LEVEL}} ({{LOG_LEVEL_ENVIRONMENT}})
+
+### Log Format
+
+**Format:** {{LOG_FORMAT}} ({{#IF JSON_LOGS}}Structured JSON{{ELSE}}Plain Text{{/IF}})
+
+**Structured Logging Example:**
+```json
+{
+  "timestamp": "2024-01-20T10:30:00Z",
+  "level": "info",
+  "message": "User logged in successfully",
+  "context": {
+    "userId": "123",
+    "ip": "192.168.1.1",
+    "userAgent": "Mozilla/5.0..."
+  },
+  "requestId": "req-abc123",
+  "duration": 45
+}
+```
+
+**Implementation:**
+```{{LANGUAGE}}
+{{LOGGING_IMPLEMENTATION_EXAMPLE}}
+```
+
+### Log Context
+
+**Always Include:**
+- Request ID (for tracing)
+- User ID (if authenticated)
+- Timestamp
+- Log level
+- Message
+
+**Optional Context:**
+- IP address
+- User agent
+- Request path
+- Response status
+- Duration
+- Error stack traces
+
+### Logging Best Practices
+
+✅ **DO:**
+- Use structured logging (JSON format)
+- Include request ID for tracing
+- Log at appropriate levels
+- Include relevant context
+- Sanitize sensitive data (passwords, tokens, PII)
+- Use correlation IDs across services
+
+❌ **DON'T:**
+- Log sensitive information (passwords, API keys, tokens)
+- Log excessive data (full request/response bodies)
+- Use console.log in production
+- Log in tight loops
+- Log PII without consent
+
+### Log Aggregation
+
+**Tool:** {{LOG_AGGREGATION_TOOL}}
+
+**Retention:** {{LOG_RETENTION}} days
+
+**Search:** {{LOG_SEARCH_TOOL}}
+
+**Example Queries:**
+```bash
+# Find errors in last hour
+{{LOG_ERROR_QUERY}}
+
+# Find slow requests
+{{LOG_SLOW_QUERY}}
+
+# Find by request ID
+{{LOG_REQUEST_ID_QUERY}}
+```
+
+---
+
 ## 📝 Comments and Documentation
 
 ### When to Comment
