@@ -3,6 +3,7 @@
 > **Order for this phase:** 7.1 → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.7 → 7.8 → 7.9 → 7.10 → 7.11
 
 > **📌 Scope-based behavior:**
+>
 > - **MVP:** Ask 7.1-7.4 only (deployment basics), skip 7.5-7.11 (monitoring, scaling, backups), mark as "TBD"
 > - **Production-Ready:** Ask 7.1-7.8, simplify 7.9-7.11 (advanced monitoring and scaling)
 > - **Enterprise:** Ask all questions 7.1-7.11 with emphasis on reliability and disaster recovery
@@ -148,6 +149,28 @@ C) Manual deploy for all environments
 
 ```
 
+**7.4.1 Deployment Strategy**
+
+```
+What deployment strategy will you use?
+
+A) ⭐ Standard deployment - Stop old, deploy new (downtime)
+B) 🏆 Blue-Green deployment - Zero-downtime, instant rollback
+C) ⚡ Canary deployment - Gradual rollout, A/B testing
+D) Rolling deployment - Gradual replacement (Kubernetes)
+
+If Blue-Green:
+- Traffic switching: [Load balancer, DNS, etc.]
+- Rollback: [Instant switch back to blue]
+- Database migrations: [Strategy for zero-downtime]
+
+If Canary:
+- Initial traffic: __%
+- Gradual increase: __% per __ minutes
+- Success criteria: __
+- Rollback trigger: __
+```
+
 **7.5 Monitoring & Logging**
 
 ````
@@ -261,6 +284,45 @@ Example:
 
 ```
 
+**7.7.1 Database Migrations in Production**
+
+```
+How will you handle database migrations in production?
+
+Zero-downtime migrations:
+A) ⭐ Yes - Plan for zero-downtime migrations (Production-Ready/Enterprise)
+B) No - Accept maintenance windows (MVP)
+
+If zero-downtime:
+- Strategy: [Expand/Contract, Blue-Green migrations, etc.]
+- Rollback plan: __
+- Testing: [Tested on staging, Dry-run process]
+
+Migration windows (if not zero-downtime):
+- Preferred time: __
+- Duration: __ minutes
+- Notification: __
+```
+
+**7.7.2 Database Connection Pooling**
+
+```
+Database connection pooling configuration:
+
+Pool tool: [ORM built-in, pgBouncer, HikariCP, etc.]
+
+Settings:
+- Min connections: __
+- Max connections: __
+- Connection timeout: __ ms
+- Idle timeout: __ ms
+- Max lifetime: __ ms
+
+Monitoring:
+- Track active/idle connections: [Yes/No]
+- Alert on pool exhaustion: [Yes/No]
+```
+
 **7.8 Scaling Strategy**
 
 ```
@@ -337,6 +399,60 @@ Example response:
 Your health check endpoints: \_\_
 
 ````
+
+**7.9.1 Graceful Shutdown**
+
+```
+Will you implement graceful shutdown?
+
+A) ⭐ Yes - Handle shutdown gracefully (Production-Ready/Enterprise)
+B) No - Standard shutdown
+
+If yes:
+Shutdown sequence:
+1. Stop accepting new requests (timeout: __s)
+2. Finish processing current requests (timeout: __s)
+3. Close database connections (timeout: __s)
+4. Close other connections (Redis, message queues, etc.)
+5. Exit process
+
+Total shutdown timeout: __s
+
+Implementation:
+- Signal handling: [SIGTERM, SIGINT]
+- Health check grace period: __s
+- Connection drain timeout: __s
+```
+
+**7.9.2 Circuit Breakers & Resilience**
+
+```
+Will you implement circuit breakers?
+
+A) ⭐ Yes - Protect against cascading failures (Production-Ready/Enterprise)
+B) No - Direct service calls
+
+If yes:
+Circuit breaker tool: [Resilience4j, Hystrix, Polly, etc.]
+
+Configuration:
+- Failure threshold: __% (open circuit after X% failures)
+- Success threshold: __% (close circuit after X% successes)
+- Timeout: __ms
+- Half-open retries: __
+- Reset timeout: __s
+
+Fallback strategy:
+A) ⭐ Return cached data
+B) Return default/empty response
+C) Call alternative service
+D) Return error gracefully
+
+Services to protect:
+{{#EACH SERVICE_TO_PROTECT}}
+- **{{SERVICE_NAME}}**: {{FAILURE_THRESHOLD}}% threshold, fallback: {{FALLBACK_STRATEGY}}
+{{/EACH}}
+```
 
 **7.10 Documentation & Runbooks**
 
@@ -644,6 +760,7 @@ graph TD
 8. **Color Code by Layer:** Infrastructure (blue), data (green), monitoring (purple), alerts (red)
 
 **Common Formatting Rules:**
+
 - Code fence: ` ```mermaid ` (lowercase, no spaces, three backticks)
 - Use `subgraph "Name"` to group related components by layer/zone
 - Use `[(Cylinder)]` for databases, data stores, and persistent storage
@@ -652,6 +769,7 @@ graph TD
 - Apply consistent styling: `style NodeName fill:#colorcode`
 
 **Deployment Context Examples:**
+
 - For Docker: Show containers, volumes, networks, registries
 - For Kubernetes: Show pods, services, ingress, namespaces, persistent volumes
 - For Serverless: Show Lambda functions, API Gateway, S3 triggers, event sources
@@ -695,11 +813,16 @@ Deployment Environment: [cloud/PaaS/on-premises/container-orchestration + platfo
 Containerization: [yes/no + Docker setup (base image, size, compose stack)] (7.2)
 Environments: [number of environments (dev/staging/prod) + config approach (env vars/secrets/feature flags)] (7.3)
 CI/CD Pipeline: [platform (GitHub Actions/GitLab CI/etc.) + pipeline stages + auto-deploy strategy] (7.4)
+Deployment Strategy: [standard/blue-green/canary/rolling + zero-downtime approach + rollback plan] (7.4.1)
 Monitoring & Logging: [APM tool + logging strategy (centralized/structured JSON) + metrics to track] (7.5)
 Alerts: [alert conditions (error rate/response time/5xx/etc.) + channels (email/Slack/PagerDuty) + on-call rotation] (7.6)
 Backup & Disaster Recovery: [backup strategy + retention period + RTO/RPO targets] (7.7)
+Database Migrations in Production: [zero-downtime strategy + rollback plan + migration windows] (7.7.1)
+Database Connection Pooling: [pool tool + settings (min/max/timeouts) + monitoring] (7.7.2)
 Scaling Strategy: [horizontal/vertical/auto-scaling + expected load + database scaling approach] (7.8)
 Health Checks: [endpoints (/health, /health/ready, /health/live) + checks performed] (7.9)
+Graceful Shutdown: [yes/no + shutdown sequence + timeouts] (7.9.1)
+Circuit Breakers & Resilience: [yes/no + tool + configuration + fallback strategies] (7.9.2)
 Documentation & Runbooks: [what will be created (deployment guide/runbooks/architecture diagrams in mermaid format/API docs) + API doc strategy (code-first/design-first)] (7.10)
 Spec-Kit Integration: [yes/no + if yes, installation command] (7.11)
 
@@ -1103,4 +1226,7 @@ This is an investment that will save 10-20 hours over the project lifecycle.
 ---
 
 **BEGIN EXECUTION when user runs `/bootstrap`**
-````
+
+```
+
+```

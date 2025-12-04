@@ -321,7 +321,62 @@ Log retention: __ days (recommended: 90+ days)
 Log storage: [Database / File system / External service (CloudWatch, Datadog)]
 ```
 
-**4.11 Input Validation & Sanitization**
+**4.11 API Keys Management**
+
+```
+Will you use API keys for service-to-service authentication?
+
+A) ⭐ Yes - API keys for programmatic access
+B) No - JWT/Sessions only
+
+If yes:
+- Key format: [Prefix + random string, UUID, etc.]
+- Key length: __ characters
+- Storage: [Hashed in database, Plain text (not recommended)]
+- Hashing algorithm: [bcrypt, SHA-256, etc.]
+
+Key rotation:
+A) ⭐ Manual rotation - Rotate on demand
+B) Automatic rotation - Rotate every __ days
+C) No rotation
+
+Key revocation:
+- Process: __
+- Reasons: [Compromised, Expired, User request, Security incident]
+
+Rate limiting by API key tier:
+- Free tier: __ requests per __
+- Paid tier: __ requests per __
+- Enterprise: __ requests per __
+```
+
+**4.12 Dependency Security**
+
+```
+How will you manage dependency security?
+
+A) ⭐ Automated scanning - Regular security audits (npm audit, Snyk, Dependabot)
+B) Manual scanning - Check vulnerabilities manually
+C) No scanning - Not recommended
+
+Scanning frequency:
+A) ⭐ On every install/update
+B) Daily automated scans
+C) Weekly scans
+D) Monthly scans
+
+Vulnerability response:
+- Critical: Fix within __ hours
+- High: Fix within __ days
+- Medium: Fix within __ days
+- Low: Fix in next release
+
+Tools:
+- Dependency scanner: __
+- Security alerts: [GitHub Dependabot, Snyk, npm audit, etc.]
+```
+
+**4.13 Input Validation & Sanitization**
 
 ```
 Input validation strategy:
@@ -400,6 +455,8 @@ Encryption: [in-transit + at-rest + fields to encrypt]
 Security Headers: [list]
 Compliance: [requirements with specific controls]
 Audit Logging: [events logged + retention + storage]
+API Keys Management: [yes/no + format + rotation + revocation + rate limiting]
+Dependency Security: [scanning tool + frequency + vulnerability response]
 Input Validation: [strategy + sanitization rules + size limits + file upload validation + whitelist/blacklist approach]
 
 Is this correct? (Yes/No)

@@ -59,12 +59,14 @@ graph TD
 ````
 
 **Diagram Types:**
+
 - `graph TD` = Top-Down flow (recommended for most architectures)
 - `graph LR` = Left-Right flow (good for linear pipelines)
 - `graph BT` = Bottom-Top (less common)
 - `graph RL` = Right-Left (less common)
 
 **Node Shapes:**
+
 - `[Square Brackets]` = Services, applications, components
 - `[(Cylinder)]` = Databases, persistent storage
 - `([Rounded])` = Start/End points
@@ -73,6 +75,7 @@ graph TD
 - `[/Parallelogram/]` = Input/Output
 
 **Styling:**
+
 - Use `<br/>` for line breaks in node labels
 - Apply styles with: `style NodeName fill:#colorcode`
 - Label connections: `A -->|Label Text| B`
@@ -117,6 +120,7 @@ graph TD
 ```
 
 **Best Practices:**
+
 - Group related components using `subgraph`
 - Show external services (Email, SMS, Payment gateways)
 - Include monitoring and logging components
@@ -413,7 +417,96 @@ If storing files:
 - Storage quota estimate: __ GB
 ```
 
-**3.10 External Integrations**
+**3.10 API Gateway**
+
+```
+Will you use an API Gateway?
+
+A) ⭐ Yes - Using API Gateway (Kong, AWS API Gateway, Azure API Management, etc.)
+B) No - Direct API access
+
+If yes:
+- Gateway: __
+- Purpose: [Rate limiting, Authentication, Request routing, Load balancing, etc.]
+- Routes: __
+```
+
+**3.11 Real-time Communication**
+
+```
+Do you need real-time communication?
+
+A) ⭐ WebSockets - Bidirectional communication (chat, notifications, live updates)
+B) Server-Sent Events (SSE) - Server-to-client streaming (live feeds, updates)
+C) Both - Different use cases
+D) No - Standard HTTP requests only
+
+If WebSockets or SSE:
+- Use cases: __
+- Library: __
+- Authentication: __
+```
+
+**3.12 Message Broker Details** (if using background jobs from 3.8)
+
+```
+What message broker will you use?
+
+A) ⭐ RabbitMQ - Popular, reliable, feature-rich
+B) 🔥 Apache Kafka - High throughput, event streaming
+C) ⚡ AWS SQS - Managed, serverless
+D) Google Pub/Sub - Managed, scalable
+E) Redis Streams - Simple, fast
+F) Other: __
+
+Message patterns:
+A) ⭐ Queue - Point-to-point messaging
+B) Pub/Sub - Publish-subscribe pattern
+C) Both - Different use cases
+
+Delivery guarantees:
+A) ⭐ At-least-once - Messages delivered at least once (may have duplicates)
+B) Exactly-once - Messages delivered exactly once (more complex)
+C) At-most-once - Messages may be lost (rarely used)
+
+Dead letter queue:
+A) ⭐ Yes - Handle failed messages
+B) No
+```
+
+**3.13 API Documentation**
+
+```
+How will you document your API?
+
+A) ⭐ Swagger/OpenAPI - Auto-generated from code (code-first)
+   - Tool: [@nestjs/swagger, FastAPI docs, Swagger UI, etc.]
+   - Endpoint: /api-docs or /swagger
+
+B) 📝 OpenAPI Spec - Write spec first, generate code (design-first)
+   - File: openapi.yaml
+   - Tool: [OpenAPI Generator, etc.]
+
+C) Manual - Markdown documentation
+   - Not recommended (hard to keep in sync)
+
+Your choice: __
+```
+
+**3.14 Service Mesh** (if microservices architecture)
+
+```
+Will you use a Service Mesh?
+
+A) ⭐ Yes - Using Service Mesh (Istio, Linkerd, Consul Connect)
+B) No - Not needed (monolith or simple microservices)
+
+If yes:
+- Mesh: __
+- Features: [Service discovery, Load balancing, mTLS, Observability]
+```
+
+**3.15 External Integrations**
 
 ```
 Will you integrate with external services?
@@ -517,6 +610,11 @@ Architecture: [pattern]
 API Style: [REST/GraphQL/gRPC]
 API Versioning: [strategy]
 API Conventions: [auth, pagination, error format, expansions]
+API Gateway: [yes/no + tool + purpose]
+Real-time Communication: [WebSockets/SSE/none + use cases]
+Message Broker: [tool + patterns + delivery guarantees]
+API Documentation: [Swagger/OpenAPI/manual + strategy]
+Service Mesh: [yes/no + tool if applicable]
 Database: [from Phase 2]
 ORM: [name]
 Validation: [library]

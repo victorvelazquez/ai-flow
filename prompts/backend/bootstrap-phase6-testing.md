@@ -88,10 +88,14 @@ C) ✅ E2E (End-to-End) Tests
 
 D) 🏆 Contract Tests (Advanced - Enterprise recommended)
    - Verify API contracts between services
-   - Tool: Pact
+   - Tool: Pact, Spring Cloud Contract
 
 E) ⚡ Load/Performance Tests (Enterprise recommended)
    - Tool: Artillery, K6, JMeter
+
+F) 🔬 Chaos Engineering (Enterprise only)
+   - Test system resilience to failures
+   - Tool: Chaos Monkey, Litmus, Gremlin
 
 Selected: __
 
@@ -248,6 +252,89 @@ C) Free-form
 
 ````
 
+**6.6.1 Contract Testing** [If selected in 6.2]
+
+```
+[Production-Ready/Enterprise only]
+
+Contract testing tool:
+A) ⭐ Pact - Consumer-driven contracts
+B) Spring Cloud Contract - Provider contracts
+C) Other: __
+
+Contract strategy:
+A) ⭐ Consumer-driven - Frontend/consumers define contracts
+B) Provider-driven - Backend defines contracts
+C) Both - Hybrid approach
+
+Contract storage:
+A) ⭐ Pact Broker - Centralized contract storage
+B) Git repository - Version contracts in code
+C) Other: __
+
+Contract versioning:
+- Strategy: __
+- Breaking changes: __
+```
+
+**6.6.2 Load/Performance Testing** [If selected in 6.2]
+
+```
+[Production-Ready/Enterprise only]
+
+Load testing tool:
+A) ⭐ Artillery - Node.js, YAML-based
+B) K6 - Modern, JavaScript-based
+C) JMeter - Java-based, GUI available
+D) Locust - Python-based
+E) Other: __
+
+Test scenarios:
+- Normal load: __ requests/second
+- Peak load: __ requests/second
+- Stress test: __ requests/second (beyond capacity)
+- Duration: __ minutes
+
+Performance thresholds:
+- Response time p50: < __ ms
+- Response time p95: < __ ms
+- Response time p99: < __ ms
+- Error rate: < __%
+- Throughput: > __ requests/second
+
+When to run:
+A) ⭐ Before major releases
+B) Weekly automated runs
+C) On-demand only
+```
+
+**6.6.3 Chaos Engineering** [If selected in 6.2 - Enterprise only]
+
+```
+[Enterprise only]
+
+Chaos engineering tool:
+A) ⭐ Chaos Monkey (Netflix)
+B) Litmus (Kubernetes)
+C) Gremlin - Managed chaos platform
+D) Custom scripts
+E) Other: __
+
+Chaos experiments to run:
+□ Network latency injection
+□ Service failures
+□ Database connection failures
+□ CPU/memory exhaustion
+□ Disk space issues
+□ Network partition
+
+Safety rules:
+- Run only in: [Staging, Production with approval]
+- Blast radius: __% of traffic/instances
+- Auto-rollback: [Yes/No]
+- Approval required: [Yes/No]
+```
+
 **6.7 CI/CD Testing** [All scopes - simplified for MVP]
 
 ```
@@ -314,14 +401,16 @@ Status: Comprehensive testing strategy implemented
 
 **If Enterprise (C):**
 Testing Framework: [Jest/pytest/JUnit + assertion library + mocking library] (6.1)
-Test Types: [unit/integration/e2e/contract/load - all types] (6.2)
+Test Types: [unit/integration/e2e/contract/load/chaos - all types] (6.2)
 Test Distribution: [pyramid percentages: 70/20/10 or custom] (6.2)
 Test Database: [in-memory/Docker/shared/mock + initial data strategy] (6.3)
 Test Data Management: [factories/fixtures/faker approach + specific test data needs] (6.4)
 Mocking Strategy: [what to mock (APIs/DB/files/time/email/payments) + approach] (6.5)
 Test Organization: [co-located/separate folder + naming pattern] (6.6)
+Contract Testing: [tool (Pact/Spring Cloud Contract) + strategy + storage + versioning] (6.6.1)
+Load Testing: [tool (Artillery/K6/JMeter) + scenarios + thresholds + schedule] (6.6.2)
+Chaos Engineering: [tool (Chaos Monkey/Litmus/Gremlin) + experiments + safety rules] (6.6.3)
 CI/CD Testing: [when tests run (commit/PR/deploy/nightly) + quality gates (pass/80-95% coverage/lint/performance) + gate behavior (block/warn)] (6.7)
-Advanced Testing: Contract tests (Pact), load tests (K6/Artillery), security tests (6.2)
 Status: Exhaustive testing strategy with advanced scenarios
 
 Is this correct? (Yes/No)
@@ -372,3 +461,4 @@ I'll re-read all files to update my context before continuing.
 ---
 
 ## PHASE 7: Operations & Deployment (10 min)
+````

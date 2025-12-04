@@ -218,6 +218,98 @@ H) 🗂️ Partitioning - Split large tables by date/region/etc.
 For each selected, provide brief detail:
 ```
 
+**2.8 Database Indexes**
+
+```
+What indexes will you need for performance optimization?
+
+Indexes are critical for query performance. Based on your entities and relationships, consider:
+
+Common indexes needed:
+□ Foreign keys (automatically indexed by most ORMs)
+□ Frequently queried columns (email, username, status)
+□ Columns used in WHERE clauses
+□ Columns used in JOIN conditions
+□ Columns used in ORDER BY clauses
+□ Composite indexes for multi-column queries
+
+Do you have specific query patterns that need optimization?
+
+Example:
+- User lookup by email: Index on users.email
+- Order search by date range: Index on orders.created_at
+- Product search by category and status: Composite index on (category_id, status)
+
+Your specific indexes:
+1.
+2.
+3.
+```
+
+**2.9 Transaction Management**
+
+```
+What transaction isolation level will you use?
+
+A) ⭐ READ COMMITTED - Recommended default (PostgreSQL, MySQL default)
+   - Prevents dirty reads
+   - Allows non-repeatable reads and phantom reads
+   - Good balance of consistency and performance
+
+B) READ UNCOMMITTED - Lowest isolation (rarely used)
+   - Allows dirty reads
+   - Fastest but least safe
+
+C) REPEATABLE READ - Higher isolation
+   - Prevents dirty reads and non-repeatable reads
+   - May have phantom reads
+   - Better consistency, slightly slower
+
+D) 🏆 SERIALIZABLE - Highest isolation (Enterprise)
+   - Prevents all concurrency issues
+   - Slowest but safest
+   - Use only when absolutely necessary
+
+Your choice: __
+
+Consistency model:
+A) ⭐ Strong consistency - All reads see latest writes (most backends)
+B) Eventual consistency - Acceptable delay for better performance (distributed systems)
+
+If eventual consistency:
+- Acceptable delay: __ seconds/minutes
+- Conflict resolution strategy: __
+```
+
+**2.10 Schema Migrations**
+
+```
+What migration tool will you use?
+
+A) ⭐ Prisma Migrate (if using Prisma)
+B) TypeORM Migrations (if using TypeORM)
+C) Alembic (Python/SQLAlchemy)
+D) Flyway (Java/Universal)
+E) Liquibase (Java/Universal)
+F) Django Migrations (Django)
+G) Laravel Migrations (Laravel)
+H) Rails Migrations (Ruby on Rails)
+I) Other: __
+
+Migration strategy:
+A) ⭐ Versioned migrations - Each change creates a new migration file
+B) Auto-migrations - Tool generates migrations automatically
+C) Manual SQL scripts - Write migrations manually
+
+Zero-downtime migrations:
+A) ⭐ Yes - Plan for zero-downtime migrations (Production-Ready/Enterprise)
+B) No - Accept maintenance windows (MVP)
+
+If zero-downtime:
+- Strategy: [Expand/Contract, Blue-Green, etc.]
+- Rollback plan: __
+```
+
 ### Phase 2 Output
 
 ```
@@ -230,6 +322,9 @@ Data Volume: [estimates]
 Retention: [policies]
 Migration: [strategy if applicable]
 Data Patterns: [selected patterns with brief details]
+Database Indexes: [list of indexes needed]
+Transaction Isolation: [level + consistency model]
+Schema Migrations: [tool + strategy + zero-downtime approach]
 
 Is this correct? (Yes/No)
 ```

@@ -521,6 +521,47 @@ Example roles: Tech Lead, release manager, PR author, documentation team, etc.
 
 ```
 
+**5.12 Logging Standards**
+
+```
+What logging approach will you use?
+
+Log format:
+A) ⭐ Structured JSON - Machine-readable, easy to parse (recommended)
+B) Plain text - Human-readable, traditional
+C) Both - Different formats for different environments
+
+Log levels:
+- DEBUG: Detailed debugging info (development only)
+- INFO: General information (request start, successful operations)
+- WARN: Warnings (deprecated features, recoverable errors)
+- ERROR: Errors (failed operations, exceptions)
+- FATAL: Critical errors (system failures)
+
+Default log level:
+- Development: __
+- Production: __
+
+Log context to include:
+□ Request ID (for tracing)
+□ User ID (if authenticated)
+□ IP address
+□ User agent
+□ Request path
+□ Response status
+□ Duration
+□ Error stack traces
+
+Log aggregation tool:
+A) ⭐ CloudWatch (AWS)
+B) Datadog
+C) ELK Stack (Elasticsearch, Logstash, Kibana)
+D) Splunk
+E) Other: __
+
+Log retention: __ days
+```
+
 ### Phase 5 Output
 
 ```
@@ -537,6 +578,7 @@ Testing: [coverage % target, what to test, file naming, mocking strategy]
 Complexity: [function length, cyclomatic complexity, parameters, nesting depth limits]
 Git: [commit format (conventional/simple), branch naming convention]
 Versioning: [scheme (SemVer/Date), migration strategy, changelog method, responsibility]
+Logging Standards: [format (JSON/text), levels, context, aggregation tool, retention]
 
 Is this correct? (Yes/No)
 ```
