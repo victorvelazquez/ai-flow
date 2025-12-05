@@ -165,18 +165,25 @@ ai-bootstrap --help          # Show help
 ### Common Flags
 
 ```bash
---ai <tool>              # claude, cursor, copilot, gemini, all
---type <type>            # backend, frontend, mobile, fullstack
---name <name>            # Project name
---description <desc>     # Project description
+--ai <tool>              # claude, cursor, copilot, gemini, all (interactive if omitted)
+--type <type>            # backend, frontend, mobile, fullstack (interactive if omitted)
+--name <name>            # Project name (interactive if omitted)
+--description <desc>     # Project description (interactive if omitted)
 --verbose                # Detailed logging
 --dry-run                # Simulate without writing
 ```
 
-**Example:**
+**Examples:**
 
 ```bash
-ai-bootstrap init . --ai claude --type backend --name "My API"
+# Non-interactive mode (all flags provided)
+ai-bootstrap init . --ai claude --type backend --name "My API" --description "REST API"
+
+# Interactive mode (will prompt for missing values)
+ai-bootstrap init .
+
+# Hybrid mode (some flags, some prompts)
+ai-bootstrap init . --ai claude
 ```
 
 ---
@@ -199,17 +206,29 @@ Each tool gets:
 - Slash commands optimized for that tool
 - Integration with `AGENT.md` (universal config)
 
+**Slash command locations:**
+- **GitHub Copilot:** `.github/prompts/*.prompt.md`
+- **Claude:** `.claude/commands/*.md`
+- **Cursor:** `.cursor/commands/*.md`
+- **Gemini:** `.gemini/commands/*.md`
+
 ---
 
 ## 📋 Available Commands
 
 After initialization, use these slash commands in your AI tool:
 
-**Documentation:**
+**Documentation & Bootstrap:**
 
 - `/bootstrap` - Full 8-phase documentation generation
 - `/bootstrap-phase0-context` - Context discovery (existing projects)
-- `/bootstrap-phase1` through `/phase7` - Individual phases
+- `/bootstrap-phase1-business` - Business requirements
+- `/bootstrap-phase2-data` - Data architecture
+- `/bootstrap-phase3-architecture` - Technical architecture
+- `/bootstrap-phase4-security` - Security & compliance
+- `/bootstrap-phase5-standards` - Code standards
+- `/bootstrap-phase6-testing` - Testing strategy
+- `/bootstrap-phase7-operations` - Deployment & operations
 - `/docs-update` - Update documentation when code changes
 
 **Project Setup (Backend only):**
@@ -232,9 +251,10 @@ After initialization, use these slash commands in your AI tool:
 ## 💡 How It Works
 
 1. **Smart Detection** - Analyzes existing projects in 3 layers (15s to 5min)
-2. **Interactive Questionnaire** - Guides you through 8 phases
+2. **Interactive Questionnaire** - Guides you through 8 phases (choose mode)
 3. **Template Generation** - Creates 12-17 professional documents
 4. **AI Integration** - Configures your AI tool with project context
+5. **Slash Command Setup** - Installs commands from `slash-commands/` to tool-specific paths
 
 **For existing projects:**
 
