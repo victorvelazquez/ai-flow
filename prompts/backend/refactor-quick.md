@@ -163,6 +163,73 @@ No documentation update needed (code-only refactor)
 Time: 4 minutes
 ```
 
+**Git Commit (Optional):**
+
+```bash
+🔧 Git Commit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Refactor complete. Create Git commit?
+
+Pre-commit validation:
+  ✓ Lint passed
+  ✓ Type check passed
+  ✓ Tests passed (24 total)
+
+Commit message:
+  refactor(validators): extract email validation to utils
+
+  Extracted validateEmail() to utils/validators.ts to reduce
+  code duplication across UserController and AuthController.
+
+  Changes:
+  - Created validators.ts with validateEmail()
+  - Updated UserController (2 locations)
+  - Updated AuthController (1 location)
+  - Removed 15 lines of duplicate code
+
+Files changed: 3
+- src/utils/validators.ts (new)
+- src/controllers/UserController.ts
+- src/controllers/AuthController.ts
+
+Commit this refactor? (Y/n)
+```
+
+**User confirms → Create commit:**
+
+```bash
+git add src/utils/ src/controllers/
+git commit -m "refactor(validators): extract email validation to utils
+
+Extracted validateEmail() to utils/validators.ts to reduce
+code duplication across UserController and AuthController.
+
+Changes:
+- Created validators.ts with validateEmail()
+- Updated UserController (2 locations)
+- Updated AuthController (1 location)
+- Removed 15 lines of duplicate code"
+
+# ✅ Committed as: c9d5f31
+```
+
+**Final summary with Git info:**
+
+```bash
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Refactor Complete
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Refactor: Extract email validation to utils
+Commit: c9d5f31
+Files changed: 3
+Tests: ✅ 24 passed
+Time: 4 minutes
+
+ℹ️  Quick refactor complete. No PR needed for internal refactors.
+```
+
 ---
 
 ## Supported Refactor Types
@@ -228,6 +295,310 @@ The full `/feature refactor` mode provides:
 - Detailed planning
 - Comprehensive testing strategy
 - Full documentation update
+
+---
+
+## Git Integration
+
+### Overview
+
+The `/refactor-quick` command integrates with Git to:
+
+- Work on **current branch** (no branch creation for small refactors)
+- Optionally commit refactor with **Conventional Commits** format
+- Single commit at end (after refactor complete)
+- **Never push automatically** (always manual review)
+- **No PR suggestion** (internal refactors rarely need PRs)
+
+### When Git is Used
+
+**Quick Refactors:**
+
+- ✅ Work on current branch (no isolation needed)
+- ✅ Single commit after refactor complete
+- ✅ Commit is **optional** (user decides)
+- ❌ No branch creation (too lightweight)
+- ❌ No PR suggestion (internal change)
+
+**If refactor is large:**
+
+- Suggest using `/feature refactor` instead
+- Larger refactors benefit from branch isolation
+- Complex refactors need PR review
+
+### Conventional Commits Format
+
+All refactor commits follow this structure:
+
+```
+refactor(scope): brief description of refactor
+
+[Detailed explanation of what was refactored and why]
+
+Changes:
+- [Change 1]
+- [Change 2]
+- [Change 3]
+```
+
+**Commit Types:**
+
+- `refactor` - Code restructuring without behavior change (always used)
+- `style` - Code style/formatting only (rarely)
+- `perf` - Performance improvement refactor (if applicable)
+
+**Scopes (examples):**
+
+- `validators` - Validation utilities
+- `utils` - General utilities
+- `controllers` - Controller layer
+- `services` - Service layer
+- `middleware` - Middleware components
+- `models` - Data models
+
+### Pre-Commit Validation
+
+Before committing, the following checks run automatically:
+
+```bash
+1. Lint check (npm run lint)
+2. Type check (npm run type-check or tsc --noEmit)
+3. Tests (npm test)
+```
+
+**If validation fails:**
+
+- Refactor is NOT committed
+- User sees clear error message
+- Must fix validation issues before retrying
+- Can skip with explicit confirmation (not recommended)
+
+### Edge Cases
+
+#### 1. Uncommitted Changes Exist
+
+```
+ℹ️  You have uncommitted changes:
+  M src/app.ts
+  M src/config.ts
+
+Refactor will work on current branch with these changes.
+Consider committing or stashing them first.
+
+Continue? (Y/n)
+```
+
+#### 2. Tests Fail After Refactor
+
+```
+❌ Pre-commit validation failed:
+
+  ✗ Tests failed:
+    auth.test.ts: "should validate email format" FAILED
+
+    Expected: validateEmail to be defined
+    Received: undefined
+
+Likely cause: Import path incorrect in test file.
+
+Options:
+  1. Fix test imports and retry
+  2. Skip commit (manual commit later)
+  3. Skip validation (⚠️  not recommended)
+
+What would you like to do? (1/2/3)
+```
+
+#### 3. Validation Fails
+
+```
+❌ Pre-commit validation failed:
+
+  ✗ Lint errors:
+    src/utils/validators.ts:12:1 - Missing JSDoc comment
+
+Please fix these issues before committing.
+
+Options:
+  1. Fix issues and retry
+  2. Skip commit (commit manually later)
+  3. Skip validation (⚠️  not recommended)
+
+What would you like to do? (1/2/3)
+```
+
+#### 4. Not in a Git Repository
+
+```
+ℹ️  Not a Git repository. Skipping version control.
+
+Refactor complete. Changes applied without Git commit.
+```
+
+#### 5. Detached HEAD State
+
+```
+⚠️  You are in detached HEAD state.
+
+Options:
+  1. Create branch from current commit first
+  2. Checkout existing branch
+  3. Continue without commit
+
+What would you like to do? (1/2/3)
+```
+
+#### 6. Large Refactor Detected
+
+```
+⚠️  Large refactor detected (8 files changed).
+
+This is too complex for /refactor-quick.
+
+Recommendation: Use `/feature refactor` instead for:
+- Branch isolation
+- Detailed planning
+- PR review process
+
+Continue with /refactor-quick anyway? (Y/n)
+```
+
+#### 7. No Tests Available
+
+```
+ℹ️  No test framework detected.
+
+Pre-commit validation will skip test execution.
+Consider adding tests to prevent regressions.
+
+Continue? (Y/n)
+```
+
+#### 8. User Declines Commit
+
+```
+Commit this refactor? (Y/n): n
+
+ℹ️  Skipping commit. You can commit manually:
+
+git add src/utils/ src/controllers/
+git commit -m "refactor(validators): extract email validation"
+
+Refactor complete without commit.
+```
+
+### Workflow Example (Extract Validation)
+
+```bash
+# User runs: /refactor-quick "Extract email validation to utils"
+
+# 1. Scan codebase for email validation patterns
+# 2. Propose refactor plan (3 files, 2 locations)
+# 3. User confirms
+# 4. Execute refactor:
+#    - Create validators.ts
+#    - Extract validateEmail()
+#    - Update UserController
+#    - Update AuthController
+# 5. Run tests automatically
+# 6. Tests pass ✓
+
+# 7. Prompt for commit:
+🔧 Git Commit
+Pre-commit validation:
+  ✓ Lint passed
+  ✓ Type check passed
+  ✓ Tests passed
+
+Commit message:
+  refactor(validators): extract email validation to utils
+  ...
+
+Commit this refactor? (Y/n)
+
+# 8. User confirms → Commit
+git commit -m "..."
+# ✅ Committed as: c9d5f31
+
+# 9. Show final summary:
+✅ Refactor Complete
+Commit: c9d5f31
+Files changed: 3
+Tests: ✅ 24 passed
+Time: 4 minutes
+```
+
+### Configuration
+
+Git integration can be configured in `.ai-bootstrap/core/config.json`:
+
+```json
+{
+  "git": {
+    "enabled": true,
+    "autoCommit": "end",
+    "requireTests": true,
+    "requireLint": true,
+    "allowSkipValidation": false,
+    "autoPush": false
+  }
+}
+```
+
+**Options:**
+
+- `enabled` - Enable/disable Git integration (default: true)
+- `autoCommit` - "end" = prompt after refactor, "off" = never prompt
+- `requireTests` - Fail if tests don't pass (default: true)
+- `requireLint` - Fail if lint errors exist (default: true)
+- `allowSkipValidation` - Allow skipping validation (default: false)
+- `autoPush` - **Never enable** (default: false, not recommended)
+
+### Commit Message Style
+
+**Good commit message:**
+
+```
+refactor(validators): extract email validation to shared utility
+
+Extracted validateEmail() to utils/validators.ts to eliminate
+code duplication in UserController and AuthController.
+
+Changes:
+- Created validators.ts with validateEmail() and isValidEmail()
+- Updated UserController to use shared validator (2 locations)
+- Updated AuthController to use shared validator (1 location)
+- Added unit tests for validators
+- Removed 15 lines of duplicate code
+
+No behavior changes - pure refactor.
+```
+
+**Bad commit message:**
+
+```
+refactor: cleanup
+```
+
+**Why good messages matter:**
+
+- Explains WHAT was refactored
+- Explains WHY refactor was needed
+- Shows impact (files, lines saved)
+- Confirms no behavior change
+- Future developers understand intent
+
+### Differences from `/feature refactor`
+
+| Aspect       | `/refactor-quick` | `/feature refactor`          |
+| ------------ | ----------------- | ---------------------------- |
+| **Branch**   | Current branch    | New branch `refactor/[name]` |
+| **Commits**  | Single commit     | Multiple commits (per phase) |
+| **PR**       | No suggestion     | PR suggestion                |
+| **Scope**    | 1-3 files         | 5+ files                     |
+| **Time**     | 3-5 min           | 15-20 min                    |
+| **Planning** | Minimal           | Detailed spec                |
+| **Docs**     | Minimal           | Complete                     |
 
 ---
 
