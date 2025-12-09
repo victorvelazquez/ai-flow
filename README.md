@@ -129,7 +129,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow
 ```
 
-**Current version:** 1.1.1
+**Current version:** 1.0.0
 
 ---
 
@@ -245,6 +245,8 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-dev-review` - Multi-aspect code review (5 min)
 - `/flow-dev-refactor-quick` - Quick refactorings (3-5 min)
 
+> **Note:** Frontend and Mobile projects include documentation commands (`/flow-docs-gen`, phases, `/flow-docs-sync`) but not workflow commands.
+
 **📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
 
 ---
@@ -276,11 +278,11 @@ After initialization, use these slash commands in your AI tool:
 
 **Backend** (17 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 2 specs, .env.example
 
-**Frontend** (12 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 6 technical docs, 2 specs
+**Frontend** (12 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 3 specs
 
-**Mobile** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 2 specs
+**Mobile** (14 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 8 technical docs, 2 specs
 
-**Fullstack** (~20 docs): Combines backend + frontend with merged templates
+**Fullstack** (~20 docs): Merges backend + frontend templates with priority resolution (fullstack-specific → backend → frontend)
 
 ---
 
