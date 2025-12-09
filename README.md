@@ -120,13 +120,13 @@ The result is interconnected documentation that guides AI assistants and human d
 ## 📦 Installation
 
 ```bash
-npm install -g ai-flow
+npm install -g ai-flow-dev
 ```
 
 Or using uv (Python tool manager):
 
 ```bash
-uv tool install ai-flow
+uv tool install ai-flow-dev
 ```
 
 **Current version:** 1.0.1
