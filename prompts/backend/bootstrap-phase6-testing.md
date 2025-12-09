@@ -1,4 +1,4 @@
-﻿## PHASE 6: Testing Strategy (15-25 min)
+## PHASE 6: Testing Strategy (15-25 min)
 
 > **Order for this phase:**
 >
@@ -432,7 +432,7 @@ Once confirmed, generate:
 
 **1. `docs/testing.md`**
 
-- Use template: `.ai-bootstrap/templates/docs/testing.template.md`
+- Use template: `.ai-flow/templates/docs/testing.template.md`
 - **If MVP scope:** Fill with basic testing strategy: framework selection, smoke tests on critical paths, coverage 15-25%, basic CI setup. Mark advanced sections as "Not implemented yet - expand when moving to Production-Ready"
 - **If Production-Ready:** Fill with comprehensive testing strategy: framework, unit/integration/e2e tests, 60-80% coverage, test data management, mocking, full CI/CD
 - **If Enterprise:** Fill with exhaustive testing strategy: all Production-Ready items + contract tests, load tests, security tests, 80-95% coverage, performance benchmarks

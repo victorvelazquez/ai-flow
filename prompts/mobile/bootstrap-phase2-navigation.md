@@ -573,7 +573,7 @@ After Phase 2, generate/update:
 
 **Next Phase:** Phase 3 - State & Data Management
 
-Read: `.ai-bootstrap/prompts/mobile/bootstrap-phase3-state.md`
+Read: `.ai-flow/prompts/mobile/bootstrap-phase3-state.md`
 
 ---
 

@@ -1,4 +1,4 @@
-﻿## PHASE 7: Operations & Deployment (10 min)
+## PHASE 7: Operations & Deployment (10 min)
 
 > **Order for this phase:** 7.1 → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.7 → 7.8 → 7.9 → 7.10 → 7.11
 
@@ -819,12 +819,12 @@ Once confirmed, generate:
 
 **1. `docs/operations.md`**
 
-- Use template: `.ai-bootstrap/templates/docs/operations.template.md`
+- Use template: `.ai-flow/templates/docs/operations.template.md`
 - Fill with deployment, monitoring, alerting, backup, scaling
 
 **2. `specs/configuration.md`**
 
-- Use template: `.ai-bootstrap/templates/specs/configuration.template.md`
+- Use template: `.ai-flow/templates/specs/configuration.template.md`
 - Fill with environment variables, secrets management, feature flags
 
 **3. `.env.example`**
@@ -936,33 +936,33 @@ For EACH final document:
 
 **1. `docs/business-flows.md`**
 
-- Use template: `.ai-bootstrap/templates/docs/business-flows.template.md`
+- Use template: `.ai-flow/templates/docs/business-flows.template.md`
 - Fill with business flows from Phase 1
 - Generate mermaid diagrams for each flow
 
 **2. `docs/api.md`**
 
-- Use template: `.ai-bootstrap/templates/docs/api.template.md`
+- Use template: `.ai-flow/templates/docs/api.template.md`
 - Auto-generate CRUD endpoints for each entity from Phase 2
 - Apply API conventions from Phase 3 (question 3.5)
 - Include authentication, pagination, error formats
 
 **3. `docs/contributing.md`**
 
-- Use template: `.ai-bootstrap/templates/docs/contributing.template.md`
+- Use template: `.ai-flow/templates/docs/contributing.template.md`
 - Fill with git workflow, commit format from Phase 5
 - Include setup instructions from Phase 3 & 7
 
 **4. `README.md`**
 
-- Use template: `.ai-bootstrap/templates/README.template.md`
+- Use template: `.ai-flow/templates/README.template.md`
 - **CRITICAL:** This aggregates info from ALL phases
 - Re-read ALL previously generated docs before filling
 - Include quick start, tech stack, deployment info
 
 **5. `AGENT.md`**
 
-- Use template: `.ai-bootstrap/templates/AGENT.template.md`
+- Use template: `.ai-flow/templates/AGENT.template.md`
 - **CRITICAL:** This is the master index
 - Lists ALL 15 documents with descriptions
 - Includes quick reference to tech stack and critical rules
@@ -998,7 +998,7 @@ nest new . --skip-git --package-manager npm
 ### Success Message
 
 ```
-✅ AI Bootstrap Complete!
+✅ AI Flow Complete!
 
 Generated 15 documents successfully:
 
@@ -1107,7 +1107,7 @@ When executing this master prompt:
   - [ ] Present suggestions with actions and impacts
 - [ ] **Offer export option (0.3):**
   - [ ] Ask if user wants to export analysis to JSON
-  - [ ] If yes, create .ai-bootstrap/analysis.json with complete analysis
+  - [ ] If yes, create .ai-flow/analysis.json with complete analysis
 - [ ] Let user choose: A) Use detected info, B) Start fresh, C) Review/edit detected info
 - [ ] **Handle suggestions:**
   - [ ] If user selected A (address during bootstrap), integrate suggestions into relevant phases
@@ -1131,7 +1131,7 @@ When executing this master prompt:
 - [ ] Re-read generated documents at start of each new phase
 - [ ] Perform final checkpoint before generating AGENT.md and README.md
 - [ ] Re-read ALL documents before final generation to ensure accuracy
-- [ ] Use templates from `.ai-bootstrap/templates/`
+- [ ] Use templates from `.ai-flow/templates/`
 - [ ] Create tool-specific configs based on AI selection
 - [ ] Validate no placeholders remain
 - [ ] Provide clear next steps

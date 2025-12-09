@@ -1,4 +1,4 @@
-﻿## PHASE 2: Data Architecture (15-20 min)
+## PHASE 2: Data Architecture (15-20 min)
 
 > **Order for this phase:** 2.1 → 2.2 → 2.3 → 2.4 → 2.5 → 2.6 → 2.7
 
@@ -344,7 +344,7 @@ Once confirmed, generate:
 
 **1. `docs/data-model.md`**
 
-- Use template: `.ai-bootstrap/templates/docs/data-model.template.md`
+- Use template: `.ai-flow/templates/docs/data-model.template.md`
 - Fill with all Phase 2 entity and relationship information
 - Include entity catalog, relationships, data patterns
 - Generate entity-relationship diagram (ER diagram) in mermaid format showing all entities and their relationships

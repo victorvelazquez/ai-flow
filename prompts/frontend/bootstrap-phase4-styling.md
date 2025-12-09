@@ -469,7 +469,7 @@ Documents Generated:
 
 Next: Phase 5 - Code Standards
 
-Read: .ai-bootstrap/prompts/frontend/bootstrap-phase5-standards.md
+Read: .ai-flow/prompts/frontend/bootstrap-phase5-standards.md
 ```
 
 ---

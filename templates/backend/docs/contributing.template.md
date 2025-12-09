@@ -155,7 +155,7 @@ The command will:
 3. Ask for confirmation
 4. Automatically update affected documents
 
-**For more information:** See the AI Bootstrap README for detailed usage instructions.
+**For more information:** See the AI Flow README for detailed usage instructions.
 
 ---
 

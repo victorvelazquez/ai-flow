@@ -1,4 +1,4 @@
-# AI Bootstrap - Work Management
+# AI Flow - Work Management
 
 **YOU ARE AN EXPERT PROJECT MANAGER AND WORKFLOW COORDINATOR.**
 
@@ -30,7 +30,7 @@ Manage work in progress efficiently:
 
 ### Step 1: Scan Work Directory
 
-List all items in `.ai-bootstrap/work/` directory
+List all items in `.ai-flow/work/` directory
 
 ### Step 2: Display Active Work
 
@@ -60,7 +60,7 @@ E) Exit
 📋 Work Management
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Active work in .ai-bootstrap/work/:
+Active work in .ai-flow/work/:
 
 1. 🚀 feature-notifications
    Type: feature (new)
@@ -423,8 +423,8 @@ Commit these changes? (Y/n)
 
 Move work directory:
 
-- From: `.ai-bootstrap/work/[name]/`
-- To: `.ai-bootstrap/archive/YYYY-MM/[name]/`
+- From: `.ai-flow/work/[name]/`
+- To: `.ai-flow/archive/YYYY-MM/[name]/`
 
 Use current year-month for organization
 
@@ -474,7 +474,7 @@ Create final summary with:
 ✅ All changes committed
 
 Moving to archive...
-✅ Moved to .ai-bootstrap/archive/2025-01/feature-notifications/
+✅ Moved to .ai-flow/archive/2025-01/feature-notifications/
 
 Updating documentation...
 ✅ Updated docs/api.md (added 3 endpoints)
@@ -524,7 +524,7 @@ Summary:
 - Documentation updated
 - Total time: 18 minutes
 
-Archived: .ai-bootstrap/archive/2025-01/feature-notifications/
+Archived: .ai-flow/archive/2025-01/feature-notifications/
 ```
 
 ---
@@ -567,7 +567,7 @@ Archiving fix-validation-error...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Archived 2 tasks
-.ai-bootstrap/work/ is now clean
+.ai-flow/work/ is now clean
 ```
 
 ---
@@ -955,7 +955,7 @@ Your choice (2):
 
 ### Configuration
 
-Git integration for work management in `.ai-bootstrap/core/config.json`:
+Git integration for work management in `.ai-flow/core/config.json`:
 
 ```json
 {

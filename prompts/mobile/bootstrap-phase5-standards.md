@@ -358,7 +358,7 @@ After Phase 5, generate/update:
 
 **Next Phase:** Phase 6 - Testing Strategy
 
-Read: `.ai-bootstrap/prompts/mobile/bootstrap-phase6-testing.md`
+Read: `.ai-flow/prompts/mobile/bootstrap-phase6-testing.md`
 
 ---
 

@@ -559,7 +559,7 @@ Documents Generated:
 
 Next: Phase 7 - Performance & Deployment
 
-Read: .ai-bootstrap/prompts/frontend/bootstrap-phase7-deployment.md
+Read: .ai-flow/prompts/frontend/bootstrap-phase7-deployment.md
 ```
 
 ---

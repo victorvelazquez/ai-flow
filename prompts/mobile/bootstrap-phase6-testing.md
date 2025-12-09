@@ -479,7 +479,7 @@ After Phase 6, generate/update:
 
 **Next Phase:** Phase 7 - Store Deployment
 
-Read: `.ai-bootstrap/prompts/mobile/bootstrap-phase7-deployment.md`
+Read: `.ai-flow/prompts/mobile/bootstrap-phase7-deployment.md`
 
 ---
 

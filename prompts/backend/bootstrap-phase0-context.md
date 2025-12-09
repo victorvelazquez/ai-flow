@@ -1,4 +1,4 @@
-﻿## PHASE 0: Context Discovery (Optional - Existing Projects)
+## PHASE 0: Context Discovery (Optional - Existing Projects)
 
 > **This phase is ONLY for existing projects that already have code/documentation.**
 > **If starting a new project from scratch, skip directly to Project Scope Selection.**
@@ -36,7 +36,7 @@ Result Synthesis & Pre-population
 
 **Actions:**
 
-1. Check if `.ai-bootstrap/analysis.json` exists
+1. Check if `.ai-flow/analysis.json` exists
 2. If exists:
    - Read `analyzedAt` timestamp
    - Read `filesAnalyzed` with their timestamps
@@ -1508,7 +1508,7 @@ Your choice: __
 ```
 💾 Export Analysis to JSON?
 
-This creates .ai-bootstrap/analysis.json with all detected information:
+This creates .ai-flow/analysis.json with all detected information:
 • Project metadata and tech stack
 • Complete endpoint list with methods, paths, handlers
 • Full entity schemas with relationships
@@ -1651,7 +1651,7 @@ Your choice: __
 ```
 
 ```
-✅ Analysis exported to .ai-bootstrap/analysis.json
+✅ Analysis exported to .ai-flow/analysis.json
 
 File size: 142 KB
 Contains:
@@ -1813,7 +1813,7 @@ Analysis Results:
   ✅ 18 database entities with 45 relationships
   ✅ Security patterns analyzed
   ✅ 7 improvement suggestions generated
-  ✅ Analysis exported to .ai-bootstrap/analysis.json
+  ✅ Analysis exported to .ai-flow/analysis.json
 
 Pre-population Status:
   • 45% of questionnaire answers populated

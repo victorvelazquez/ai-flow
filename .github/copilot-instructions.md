@@ -3,14 +3,14 @@
 - **Project focus:** Ship an npm-distributed CLI that scaffolds AI-ready documentation for backend projects.
 - **Authoritative docs:** Start with `README.md` for product flow and `templates/AGENT.template.md` for global AI conventions; mirror them when updating outputs.
 - **Runtime expectations:** Node.js 18+, TypeScript sources in `src/` compiled to `dist/`; CLI entry is `src/cli.ts`.
-- **Deliverable shape:** `.ai-bootstrap/` tree plus AI-tool specific configs (`.claude`, `.cursor`, `.github/copilot-commands`, etc.) copied from repo templates.
+- **Deliverable shape:** `.ai-flow/` tree plus AI-tool specific configs (`.claude`, `.cursor`, `.github/copilot-commands`, etc.) copied from repo templates.
 
 ## Architecture & Flow
 
 - `src/cli.ts` is the only executable source today; it wires Commander CLI commands (`init`, `check`) to filesystem tasks with `fs-extra`, progress feedback via `ora`, and prompts through `inquirer`.
 - `init` composes helper steps: `createBootstrapStructure` → `copyTemplates` → `copyPrompts` → `copyScripts` → `setupSlashCommands`; stay consistent with that order when extending.
-- Tool selection lives in `AI_TOOLS`; adding a tool requires new slash-command directory, script branch, and inclusion in `.ai-bootstrap/core/config.json` generation.
-- The generated `.ai-bootstrap/templates/**` files are copied verbatim; preserve `{{PLACEHOLDER}}` tokens because downstream AI agents expand them.
+- Tool selection lives in `AI_TOOLS`; adding a tool requires new slash-command directory, script branch, and inclusion in `.ai-flow/core/config.json` generation.
+- The generated `.ai-flow/templates/**` files are copied verbatim; preserve `{{PLACEHOLDER}}` tokens because downstream AI agents expand them.
 - Shell automation lives in `scripts/init.sh`; keep it in sync with CLI changes when touching setup logic.
 
 ## Build & Test Workflow
@@ -34,8 +34,8 @@
 - Read `README.md` for project overview and high-level features.
 - Read `GETTING-STARTED.md` for user-facing tutorials, command workflows, and complete usage examples.
 - Read `templates/copilot-instructions.template.md` to understand expected output format for generated projects.
-- Review `templates/docs/*.template.md` and `templates/specs/*.template.md` before editing; they enforce the doc structure AI Bootstrap guarantees downstream.
-- Check `.ai-bootstrap/core/config.json` schema when modifying initialization metadata; consumers expect keys `version`, `aiTools`, `createdAt`, `backend`, `frontend`.
+- Review `templates/docs/*.template.md` and `templates/specs/*.template.md` before editing; they enforce the doc structure AI Flow guarantees downstream.
+- Check `.ai-flow/core/config.json` schema when modifying initialization metadata; consumers expect keys `version`, `aiTools`, `createdAt`, `backend`, `frontend`.
 - Validate cross-platform behavior: Windows keeps script perms untouched, so avoid Unix-only workflows inside the CLI.
 - Review `prompts/backend/project-scaffold.md` and `prompts/backend/project-roadmap.md` for 0→1 flow automation (scaffold generates code structure, roadmap creates implementation plan with Story Points).
 - Check `prompts/backend/feature.md` for Story Points integration using Fibonacci scale (1, 2, 3, 5, 8, 13, 21); format is "Task • X SP" with checkbox lists.
@@ -43,5 +43,5 @@
 ## Collaboration Tips
 
 - Keep logging consistent with `chalk` semantics used in `src/cli.ts` (info = cyan/white, warnings = yellow, failures = red) to ensure CLI feedback stays predictable.
-- After structural changes, run `ai-bootstrap init ./tmp` locally to smoke-test that templates, prompts, and slash commands land in the right paths.
+- After structural changes, run `ai-flow init ./tmp` locally to smoke-test that templates, prompts, and slash commands land in the right paths.
 - Surface notable behavioral changes in `README.md` “Features” or “Quick Start” sections so downstream AI agents inherit accurate guidance.

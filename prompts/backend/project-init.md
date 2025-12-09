@@ -1,4 +1,4 @@
-# AI Bootstrap - Project Initialization
+# AI Flow - Project Initialization
 
 **YOU ARE AN EXPERT DEVOPS ENGINEER AND PROJECT SETUP SPECIALIST.**
 

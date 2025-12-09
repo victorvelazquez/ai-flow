@@ -1,10 +1,10 @@
 {
-  "name": "ai-bootstrap",
-  "version": "1.2.0",
-  "description": "Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation",
+  "name": "ai-flow",
+  "version": "2.0.0",
+  "description": "AI-powered development workflow from idea to production. Generate specs, plan features, and build with AI assistance throughout your project lifecycle.",
   "main": "dist/cli.js",
   "bin": {
-    "ai-bootstrap": "dist/cli.js"
+    "ai-flow": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
@@ -16,21 +16,24 @@
   },
   "keywords": [
     "ai",
-    "bootstrap",
+    "flow",
+    "workflow",
+    "development",
+    "automation",
     "spec-driven-development",
     "documentation",
     "claude",
     "copilot",
     "cursor",
     "gemini",
-    "project-setup",
-    "cli"
+    "cli",
+    "feature-development"
   ],
   "author": "Victor Velazquez <victorvelazqueza@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/victorvelazquez/ai-bootstrap.git"
+    "url": "https://github.com/victorvelazquez/ai-flow.git"
   },
   "engines": {
     "node": ">=18.0.0"

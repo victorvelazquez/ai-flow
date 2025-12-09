@@ -1,4 +1,4 @@
-# AI Bootstrap - Frontend Master Prompt
+# AI Flow - Frontend Master Prompt
 
 **YOU ARE AN EXPERT FRONTEND ARCHITECT AND DOCUMENTATION SPECIALIST.**
 
@@ -41,21 +41,21 @@ This documentation is **modularized** for better maintainability and performance
 
 Execute phases sequentially by reading each file in order:
 
-1. **Phase 0 (Optional - Existing Projects Only):** Read `.ai-bootstrap/prompts/frontend/bootstrap-phase0-context.md`
-2. **Phase 1 (Discovery & UX):** Read `.ai-bootstrap/prompts/frontend/bootstrap-phase1-discovery.md`
-3. **Phase 2 (Components & Framework):** Read `.ai-bootstrap/prompts/frontend/bootstrap-phase2-components.md`
-4. **Phase 3 (State Management):** Read `.ai-bootstrap/prompts/frontend/bootstrap-phase3-state.md`
-5. **Phase 4 (Styling & Design):** Read `.ai-bootstrap/prompts/frontend/bootstrap-phase4-styling.md`
-6. **Phase 5 (Code Standards):** Read `.ai-bootstrap/prompts/frontend/bootstrap-phase5-standards.md`
-7. **Phase 6 (Testing Strategy):** Read `.ai-bootstrap/prompts/frontend/bootstrap-phase6-testing.md`
-8. **Phase 7 (Performance & Deployment):** Read `.ai-bootstrap/prompts/frontend/bootstrap-phase7-deployment.md`
+1. **Phase 0 (Optional - Existing Projects Only):** Read `.ai-flow/prompts/frontend/bootstrap-phase0-context.md`
+2. **Phase 1 (Discovery & UX):** Read `.ai-flow/prompts/frontend/bootstrap-phase1-discovery.md`
+3. **Phase 2 (Components & Framework):** Read `.ai-flow/prompts/frontend/bootstrap-phase2-components.md`
+4. **Phase 3 (State Management):** Read `.ai-flow/prompts/frontend/bootstrap-phase3-state.md`
+5. **Phase 4 (Styling & Design):** Read `.ai-flow/prompts/frontend/bootstrap-phase4-styling.md`
+6. **Phase 5 (Code Standards):** Read `.ai-flow/prompts/frontend/bootstrap-phase5-standards.md`
+7. **Phase 6 (Testing Strategy):** Read `.ai-flow/prompts/frontend/bootstrap-phase6-testing.md`
+8. **Phase 7 (Performance & Deployment):** Read `.ai-flow/prompts/frontend/bootstrap-phase7-deployment.md`
 
 ### For Individual Phases
 
 You can execute any phase independently by reading its file. For example:
 
 ```
-Read .ai-bootstrap/prompts/frontend/bootstrap-phase3-state.md and execute only Phase 3
+Read .ai-flow/prompts/frontend/bootstrap-phase3-state.md and execute only Phase 3
 ```
 
 ---
@@ -396,13 +396,13 @@ To begin the complete frontend bootstrap process:
 **Ready to start?** Proceed to Phase 1 by reading:
 
 ```
-.ai-bootstrap/prompts/frontend/bootstrap-phase1-discovery.md
+.ai-flow/prompts/frontend/bootstrap-phase1-discovery.md
 ```
 
 Or if you have existing code, start with Phase 0 for automatic detection:
 
 ```
-.ai-bootstrap/prompts/frontend/bootstrap-phase0-context.md
+.ai-flow/prompts/frontend/bootstrap-phase0-context.md
 ```
 
 ---

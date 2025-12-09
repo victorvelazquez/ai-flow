@@ -674,7 +674,7 @@ Documents Generated:
 
 Next: Phase 4 - Styling & Design
 
-Read: .ai-bootstrap/prompts/frontend/bootstrap-phase4-styling.md
+Read: .ai-flow/prompts/frontend/bootstrap-phase4-styling.md
 ```
 
 ---

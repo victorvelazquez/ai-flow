@@ -648,7 +648,7 @@ After Phase 3, generate/update:
 
 **Next Phase:** Phase 4 - Permissions & Native Features
 
-Read: `.ai-bootstrap/prompts/mobile/bootstrap-phase4-permissions.md`
+Read: `.ai-flow/prompts/mobile/bootstrap-phase4-permissions.md`
 
 ---
 

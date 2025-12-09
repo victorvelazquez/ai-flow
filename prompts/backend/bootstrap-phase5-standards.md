@@ -1,4 +1,4 @@
-﻿## PHASE 5: Code Standards (15-20 min)
+## PHASE 5: Code Standards (15-20 min)
 
 > **Order for this phase:** 5.1 → 5.2 → 5.3 → 5.4 → 5.5 → 5.6 → 5.7 → 5.8 → 5.9 → 5.10 → 5.11
 
@@ -601,7 +601,7 @@ Once confirmed, generate:
 
 **1. `docs/code-standards.md`**
 
-- Use template: `.ai-bootstrap/templates/docs/code-standards.template.md`
+- Use template: `.ai-flow/templates/docs/code-standards.template.md`
 - Fill with all code quality rules, naming conventions, formatting
 
 **2. Update `ai-instructions.md`**

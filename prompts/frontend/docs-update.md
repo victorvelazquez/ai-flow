@@ -1,4 +1,4 @@
-# AI Bootstrap - Documentation Update Command (Frontend)
+# AI Flow - Documentation Update Command (Frontend)
 
 **YOU ARE AN EXPERT FRONTEND ARCHITECT AND DOCUMENTATION SPECIALIST.**
 
@@ -10,7 +10,7 @@ Your mission is to detect changes in the frontend codebase and update the projec
 
 ### Objective
 
-Detect changes in the frontend codebase compared to the last documented state (stored in `.ai-bootstrap/analysis.json`) and update all affected documentation files automatically.
+Detect changes in the frontend codebase compared to the last documented state (stored in `.ai-flow/analysis.json`) and update all affected documentation files automatically.
 
 ---
 
@@ -19,12 +19,12 @@ Detect changes in the frontend codebase compared to the last documented state (s
 ### Step 1: Check for Analysis File
 
 ```
-First, check if `.ai-bootstrap/analysis.json` exists:
+First, check if `.ai-flow/analysis.json` exists:
 
 - ✅ If exists → Proceed to Step 2 (Compare Changes)
 - ❌ If NOT exists → Execute full Phase 0 analysis first:
   - Run complete frontend code analysis (as described in Phase 0)
-  - Create `.ai-bootstrap/analysis.json` with current state
+  - Create `.ai-flow/analysis.json` with current state
   - Then proceed to Step 2
 ```
 
@@ -45,7 +45,7 @@ First, check if `.ai-bootstrap/analysis.json` exists:
 
 2. **Compare with Previous State:**
 
-   - Load `.ai-bootstrap/analysis.json`
+   - Load `.ai-flow/analysis.json`
    - Compare current state vs previous state
    - Detect changes in:
      - **Components:** New, modified, or deleted components
@@ -151,7 +151,7 @@ No updates required.
 
 2. **Update `analysis.json`:**
 
-   - Save current state to `.ai-bootstrap/analysis.json`
+   - Save current state to `.ai-flow/analysis.json`
    - Update timestamp
    - Include all detected changes in metadata
 
@@ -299,7 +299,7 @@ Update cancelled. Run `/docs-update` when you're ready to update the documentati
 
 3. **Update Analysis File:**
 
-   - Always update `.ai-bootstrap/analysis.json` after document updates
+   - Always update `.ai-flow/analysis.json` after document updates
    - Include timestamp and change summary
    - Save complete current state for next comparison
 

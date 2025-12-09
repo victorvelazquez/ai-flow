@@ -1,4 +1,4 @@
-# AI Bootstrap - Mobile Master Prompt
+# AI Flow - Mobile Master Prompt
 
 **YOU ARE AN EXPERT MOBILE ARCHITECT AND DOCUMENTATION SPECIALIST.**
 
@@ -41,21 +41,21 @@ This documentation is **modularized** for better maintainability and performance
 
 Execute phases sequentially by reading each file in order:
 
-1. **Phase 0 (Optional - Existing Projects Only):** Read `.ai-bootstrap/prompts/mobile/bootstrap-phase0-context.md`
-2. **Phase 1 (Platform & Framework Selection):** Read `.ai-bootstrap/prompts/mobile/bootstrap-phase1-platform.md`
-3. **Phase 2 (Navigation & Architecture):** Read `.ai-bootstrap/prompts/mobile/bootstrap-phase2-navigation.md`
-4. **Phase 3 (State & Data Management):** Read `.ai-bootstrap/prompts/mobile/bootstrap-phase3-state.md`
-5. **Phase 4 (Permissions & Native Features):** Read `.ai-bootstrap/prompts/mobile/bootstrap-phase4-permissions.md`
-6. **Phase 5 (Code Standards):** Read `.ai-bootstrap/prompts/mobile/bootstrap-phase5-standards.md`
-7. **Phase 6 (Testing Strategy):** Read `.ai-bootstrap/prompts/mobile/bootstrap-phase6-testing.md`
-8. **Phase 7 (Store Deployment):** Read `.ai-bootstrap/prompts/mobile/bootstrap-phase7-deployment.md`
+1. **Phase 0 (Optional - Existing Projects Only):** Read `.ai-flow/prompts/mobile/bootstrap-phase0-context.md`
+2. **Phase 1 (Platform & Framework Selection):** Read `.ai-flow/prompts/mobile/bootstrap-phase1-platform.md`
+3. **Phase 2 (Navigation & Architecture):** Read `.ai-flow/prompts/mobile/bootstrap-phase2-navigation.md`
+4. **Phase 3 (State & Data Management):** Read `.ai-flow/prompts/mobile/bootstrap-phase3-state.md`
+5. **Phase 4 (Permissions & Native Features):** Read `.ai-flow/prompts/mobile/bootstrap-phase4-permissions.md`
+6. **Phase 5 (Code Standards):** Read `.ai-flow/prompts/mobile/bootstrap-phase5-standards.md`
+7. **Phase 6 (Testing Strategy):** Read `.ai-flow/prompts/mobile/bootstrap-phase6-testing.md`
+8. **Phase 7 (Store Deployment):** Read `.ai-flow/prompts/mobile/bootstrap-phase7-deployment.md`
 
 ### For Individual Phases
 
 You can execute any phase independently by reading its file. For example:
 
 ```
-Read .ai-bootstrap/prompts/mobile/bootstrap-phase3-state.md and execute only Phase 3
+Read .ai-flow/prompts/mobile/bootstrap-phase3-state.md and execute only Phase 3
 ```
 
 ---
@@ -412,13 +412,13 @@ To begin the complete mobile bootstrap process:
 **Ready to start?** Proceed to Phase 1 by reading:
 
 ```
-.ai-bootstrap/prompts/mobile/bootstrap-phase1-platform.md
+.ai-flow/prompts/mobile/bootstrap-phase1-platform.md
 ```
 
 Or if you have existing code, start with Phase 0 for automatic detection:
 
 ```
-.ai-bootstrap/prompts/mobile/bootstrap-phase0-context.md
+.ai-flow/prompts/mobile/bootstrap-phase0-context.md
 ```
 
 ---

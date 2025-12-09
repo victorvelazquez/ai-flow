@@ -1,12 +1,12 @@
-# AI Bootstrap
+# AI Flow
 
-[![CI Status](https://github.com/victorvelazquez/ai-bootstrap/actions/workflows/nodejs.yml/badge.svg?branch=main)](https://github.com/victorvelazquez/ai-bootstrap/actions/workflows/nodejs.yml)
+[![CI Status](https://github.com/victorvelazquez/ai-flow/actions/workflows/nodejs.yml/badge.svg?branch=main)](https://github.com/victorvelazquez/ai-flow/actions/workflows/nodejs.yml)
 
 ## English
 
 Transform your idea into a production-ready, AI-documented project (backend, frontend, fullstack, or mobile) in minutes.
 
-AI Bootstrap is an interactive CLI that generates comprehensive professional documentation for backend, frontend, fullstack, and mobile projects. Compatible with Claude, Copilot, Cursor, Gemini, and any AI assistant.
+AI Flow is an interactive CLI that creates comprehensive professional documentation and provides an AI-powered development workflow from idea to production. Compatible with Claude, Copilot, Cursor, Gemini, and any AI assistant.
 
 **Key Features:**
 
@@ -20,8 +20,8 @@ AI Bootstrap is an interactive CLI that generates comprehensive professional doc
 **Quick Start:**
 
 ```bash
-npm install -g ai-bootstrap
-ai-bootstrap init .
+npm install -g ai-flow
+ai-flow init .
 # Then open your AI tool and run: /bootstrap
 ```
 
@@ -45,8 +45,8 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 **Inicio rápido:**
 
 ```bash
-npm install -g ai-bootstrap
-ai-bootstrap init .
+npm install -g ai-flow
+ai-flow init .
 # Luego en tu AI tool: /bootstrap
 ```
 
@@ -70,8 +70,8 @@ Transforme sua ideia em um projeto pronto para produção e documentado para IA 
 **Início rápido:**
 
 ```bash
-npm install -g ai-bootstrap
-ai-bootstrap init .
+npm install -g ai-flow
+ai-flow init .
 # Depois na sua ferramenta de IA: /bootstrap
 ```
 
@@ -79,9 +79,9 @@ ai-bootstrap init .
 
 ---
 
-## 🎯 What is AI Bootstrap?
+## 🎯 What is AI Flow?
 
-AI Bootstrap is an interactive CLI tool that generates comprehensive professional documentation for your project (backend, frontend, fullstack, or mobile) through a guided 8-phase questionnaire. It creates the foundation for AI-assisted development with any AI tool.
+AI Flow is an interactive CLI tool that generates comprehensive professional documentation and provides an AI-powered development workflow throughout your project lifecycle (backend, frontend, fullstack, or mobile). It creates the foundation for AI-assisted development with any AI tool, from initial setup to feature development and maintenance.
 
 **The Problem:** Starting a project requires hours of documentation setup. Existing projects lack proper AI-ready documentation. Without proper docs, AI assistants work inefficiently.
 **The Solution:**
@@ -120,13 +120,13 @@ The result is interconnected documentation that guides AI assistants and human d
 ## 📦 Installation
 
 ```bash
-npm install -g ai-bootstrap
+npm install -g ai-flow
 ```
 
 Or using uv (Python tool manager):
 
 ```bash
-uv tool install ai-bootstrap
+uv tool install ai-flow
 ```
 
 **Current version:** 1.1.1
@@ -140,8 +140,8 @@ uv tool install ai-bootstrap
 mkdir my-awesome-project
 cd my-awesome-project
 
-# 2. Initialize AI Bootstrap
-ai-bootstrap init .
+# 2. Initialize AI Flow
+ai-flow init .
 
 # 3. Open your AI tool and run:
 /bootstrap
@@ -156,10 +156,10 @@ That's it! The AI will guide you through an interactive questionnaire to generat
 ## 🛠️ CLI Commands
 
 ```bash
-ai-bootstrap init [path]     # Initialize project
-ai-bootstrap check           # Verify initialization
-ai-bootstrap --version       # Show version
-ai-bootstrap --help          # Show help
+ai-flow init [path]     # Initialize project
+ai-flow check           # Verify initialization
+ai-flow --version       # Show version
+ai-flow --help          # Show help
 ```
 
 ### Common Flags
@@ -177,27 +177,27 @@ ai-bootstrap --help          # Show help
 
 ```bash
 # Non-interactive mode (all flags provided)
-ai-bootstrap init . --ai claude --type backend --name "My API" --description "REST API"
+ai-flow init . --ai claude --type backend --name "My API" --description "REST API"
 
 # Interactive mode (will prompt for missing values)
-ai-bootstrap init .
+ai-flow init .
 
 # Hybrid mode (some flags, some prompts)
-ai-bootstrap init . --ai claude
+ai-flow init . --ai claude
 ```
 
 ---
 
 ## 🤖 AI Tool Support
 
-AI Bootstrap works with any AI tool. Select during initialization:
+AI Flow works with any AI tool. Select during initialization:
 
 ```bash
-ai-bootstrap init . --ai claude      # Claude Code
-ai-bootstrap init . --ai cursor      # Cursor
-ai-bootstrap init . --ai copilot     # GitHub Copilot
-ai-bootstrap init . --ai gemini      # Gemini
-ai-bootstrap init . --ai all         # All tools (maximum compatibility)
+ai-flow init . --ai claude      # Claude Code
+ai-flow init . --ai cursor      # Cursor
+ai-flow init . --ai copilot     # GitHub Copilot
+ai-flow init . --ai gemini      # Gemini
+ai-flow init . --ai all         # All tools (maximum compatibility)
 ```
 
 Each tool gets:
@@ -309,18 +309,18 @@ AI Bootstrap provides **universal support** with automatic detection for 98% of 
 
 ---
 
-## 🎓 Why Use AI Bootstrap?
+## 🎓 Why Use AI Flow?
 
-**Without AI Bootstrap:**
+**Without AI Flow:**
 
 - ⏱️ 10-20 hours creating docs manually
 - 🤔 AI assistants lack context, make assumptions
 - 🐛 More bugs due to unclear standards
 
-**With AI Bootstrap:**
+**With AI Flow:**
 
 - ⏱️ 90-120 min (new) or 35-70 min (existing)
-- 🤖 AI assistants work with full context
+- 🤖 AI assistants work with full context and continuous workflow
 - ✅ Consistent quality, fewer bugs
 - 💾 Save 10-20 hours per project
 
@@ -328,7 +328,7 @@ AI Bootstrap provides **universal support** with automatic detection for 98% of 
 
 ## 📚 Documentation Philosophy
 
-AI Bootstrap follows: **Documentation as Executable Code**
+AI Flow follows: **Documentation as Executable Code**
 
 - Documents guide AI assistants (like config files guide compilers)
 - `AGENT.md` is the universal entry point
@@ -388,8 +388,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 💬 Support
 
-- **Issues:** [GitHub Issues](https://github.com/victorvelazquez/ai-bootstrap/issues)
-- **Email:** support@ai-bootstrap.dev (if applicable)
+- **Issues:** [GitHub Issues](https://github.com/victorvelazquez/ai-flow/issues)
+- **Email:** support@ai-flow.dev (if applicable)
 
 ---
 
@@ -401,6 +401,6 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
-**Transform your idea into a production-ready backend with AI Bootstrap** 🚀
+**Transform your idea into a production-ready project with AI Flow** 🚀
 
 **Made with ❤️ for the developer community**

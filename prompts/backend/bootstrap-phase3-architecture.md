@@ -1,4 +1,4 @@
-﻿## PHASE 3: System Architecture (15-20 min)
+## PHASE 3: System Architecture (15-20 min)
 
 > **Order for this phase:** 3.1 → 3.2 → 3.3 → 3.4 → 3.5 → 3.6 → 3.7 → 3.8 → 3.9 → 3.10 → 3.11 → 3.12
 
@@ -643,13 +643,13 @@ Once confirmed, generate:
 
 **1. `docs/architecture.md`**
 
-- Use template: `.ai-bootstrap/templates/docs/architecture.template.md`
+- Use template: `.ai-flow/templates/docs/architecture.template.md`
 - Fill with system architecture, patterns, tech stack
 - Include architecture diagram (mermaid format)
 
 **2. `ai-instructions.md`**
 
-- Use template: `.ai-bootstrap/templates/ai-instructions.template.md`
+- Use template: `.ai-flow/templates/ai-instructions.template.md`
 - Fill with tech stack, framework, language, key dependencies
 - Include NEVER/ALWAYS rules specific to chosen stack
 - Generate idiomatic code examples for Controller, Service, Repository, DTO and Module placeholders, strictly following the selected Architecture Pattern (e.g., if Hexagonal, show Ports & Adapters).

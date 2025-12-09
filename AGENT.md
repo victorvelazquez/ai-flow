@@ -2,13 +2,13 @@
 
 > Universal AI Assistant Configuration
 >
-> This file provides context for ALL AI development tools (Claude, Copilot, Cursor, Gemini, etc.) when working with the ai-bootstrap project.
+> This file provides context for ALL AI development tools (Claude, Copilot, Cursor, Gemini, etc.) when working with the ai-flow project.
 
 ---
 
 ## 📋 About This Project
 
-**Project Name:** AI Bootstrap
+**Project Name:** AI Flow
 
 **Description:** Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation. Generates 15 professional documents for backend and frontend projects (new or existing) through a guided 7-phase questionnaire.
 
@@ -92,7 +92,7 @@ All documentation is structured to guide AI assistants in understanding the proj
 ## 🎯 Project Structure
 
 ```
-ai-bootstrap/
+ai-flow/
 ├── src/
 │   ├── cli.ts                 # Main CLI application (~589 lines)
 │   └── fs-utils.ts            # File system utilities
@@ -182,7 +182,7 @@ ai-bootstrap/
 
 **Commands:**
 
-- `init [path] [--ai <tool>] [--type <type>] [--name <name>] [--description <desc>]` - Initialize AI Bootstrap in project
+- `init [path] [--ai <tool>] [--type <type>] [--name <name>] [--description <desc>]` - Initialize AI Flow in project
 - `check` - Verify if project is initialized and show config
 
 **Dependencies:**
@@ -196,11 +196,11 @@ ai-bootstrap/
 
 **CLI Flow:**
 
-1. User runs `ai-bootstrap init .`
-2. Check if already initialized (`.ai-bootstrap/` exists)
+1. User runs `ai-flow init .`
+2. Check if already initialized (`.ai-flow/` exists)
 3. Prompt for AI tool selection if not provided via `--ai` flag
 4. Prompt for project type (backend/frontend) if not provided via `--type` flag
-5. Create `.ai-bootstrap/` structure with core/, prompts/, templates/, scripts/
+5. Create `.ai-flow/` structure with core/, prompts/, templates/, scripts/
 6. Write config.json with version, aiTools, projectType, timestamps
 7. Copy templates from package to project
 8. Copy master prompts (backend/bootstrap.md or frontend/bootstrap.md and phase files)
@@ -215,7 +215,7 @@ ai-bootstrap/
 
 - Binary entry point: `dist/cli.js` (from `src/cli.ts`)
 - Files included in npm package: `dist/`, `prompts/`, `templates/`, `scripts/`
-- Users install globally: `npm install -g ai-bootstrap`
+- Users install globally: `npm install -g ai-flow`
 
 ### Path Resolution Strategy
 
@@ -247,7 +247,7 @@ This works because:
 
 ### Config Structure
 
-**Location:** `.ai-bootstrap/core/config.json`
+**Location:** `.ai-flow/core/config.json`
 
 **Schema:**
 
@@ -284,7 +284,7 @@ npm run lint                            # Run linter
 npm run build
 npm run dev init test-folder --ai cursor
 cd test-folder
-ls -la .ai-bootstrap
+ls -la .ai-flow
 ls -la .cursor/commands
 cd ..
 rm -rf test-folder
@@ -370,7 +370,7 @@ Use Conventional Commits:
 | ---------------------------- | --------------------------------------------------- | ---------------------------------------- |
 | `selectAITool()`             | Interactive AI tool selection or validate --ai flag | `providedTool?: string`                  |
 | `selectProjectType()`        | Interactive project type selection                  | `providedType?: string`                  |
-| `checkIfInitialized()`       | Check if .ai-bootstrap exists                       | `targetPath: string`                     |
+| `checkIfInitialized()`       | Check if .ai-flow exists                       | `targetPath: string`                     |
 | `createBootstrapStructure()` | Create folders and config.json                      | `targetPath, aiTools, projectType, ...`  |
 | `renderTemplates()`          | Copy and render templates to project                | `targetPath, projectData, projectType`   |
 | `copyPrompts()`              | Copy prompts/ to project                            | `targetPath: string`                     |
@@ -419,13 +419,13 @@ Use Conventional Commits:
 
 ### Templates vs Project Documentation
 
-**CRITICAL:** The `templates/` directory contains templates for **user projects**, not for documenting this project (ai-bootstrap). These templates are:
+**CRITICAL:** The `templates/` directory contains templates for **user projects**, not for documenting this project (ai-flow). These templates are:
 
-- Copied to user projects when they run `ai-bootstrap init`
+- Copied to user projects when they run `ai-flow init`
 - Used to generate documentation in user projects
-- NOT used to document ai-bootstrap itself
+- NOT used to document ai-flow itself
 
-**For documenting ai-bootstrap, use:**
+**For documenting ai-flow, use:**
 
 - `README.md` - User-facing docs
 - `CLAUDE.md` - Architecture guide
@@ -447,9 +447,9 @@ Every change should be tested with the **full bootstrap flow**:
 
 ## 📚 Additional Resources
 
-- **Repository:** https://github.com/victorvelazquez/ai-bootstrap
-- **npm Package:** https://www.npmjs.com/package/ai-bootstrap
-- **Issues:** https://github.com/victorvelazquez/ai-bootstrap/issues
+- **Repository:** https://github.com/victorvelazquez/ai-flow
+- **npm Package:** https://www.npmjs.com/package/ai-flow
+- **Issues:** https://github.com/victorvelazquez/ai-flow/issues
 
 ---
 

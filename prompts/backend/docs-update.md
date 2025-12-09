@@ -1,4 +1,4 @@
-# AI Bootstrap - Documentation Update Command
+# AI Flow - Documentation Update Command
 
 **YOU ARE AN EXPERT TECHNICAL ARCHITECT AND DOCUMENTATION SPECIALIST.**
 
@@ -10,7 +10,7 @@ Your mission is to detect changes in the codebase and update the project documen
 
 ### Objective
 
-Detect changes in the codebase compared to the last documented state (stored in `.ai-bootstrap/analysis.json`) and update all affected documentation files automatically.
+Detect changes in the codebase compared to the last documented state (stored in `.ai-flow/analysis.json`) and update all affected documentation files automatically.
 
 ---
 
@@ -19,12 +19,12 @@ Detect changes in the codebase compared to the last documented state (stored in 
 ### Step 1: Check for Analysis File
 
 ```
-First, check if `.ai-bootstrap/analysis.json` exists:
+First, check if `.ai-flow/analysis.json` exists:
 
 - ✅ If exists → Proceed to Step 2 (Compare Changes)
 - ❌ If NOT exists → Execute full Phase 0 analysis first:
   - Run complete code analysis (as described in Phase 0)
-  - Create `.ai-bootstrap/analysis.json` with current state
+  - Create `.ai-flow/analysis.json` with current state
   - Then proceed to Step 2
 ```
 
@@ -43,7 +43,7 @@ First, check if `.ai-bootstrap/analysis.json` exists:
 
 2. **Compare with Previous State:**
 
-   - Load `.ai-bootstrap/analysis.json`
+   - Load `.ai-flow/analysis.json`
    - Compare current state vs previous state
    - Detect changes in:
      - **Endpoints:** New, modified, or deleted endpoints
@@ -338,7 +338,7 @@ flowchart TD
 
 2. **Update `analysis.json`:**
 
-   - Save current state to `.ai-bootstrap/analysis.json`
+   - Save current state to `.ai-flow/analysis.json`
    - Update timestamp
    - Include all detected changes in metadata
 
@@ -469,7 +469,7 @@ Actualización cancelada. Ejecuta `/docs-update` cuando estés listo para actual
 
 3. **Update Analysis File:**
 
-   - Always update `.ai-bootstrap/analysis.json` after document updates
+   - Always update `.ai-flow/analysis.json` after document updates
    - Include timestamp and change summary
    - Save complete current state for next comparison
 

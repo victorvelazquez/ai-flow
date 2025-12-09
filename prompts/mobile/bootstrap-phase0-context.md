@@ -21,7 +21,7 @@ Detect the current mobile stack, architecture patterns, and configuration from e
 
 ### Layer 0: Cache Check (0-2 seconds)
 
-Check if `.ai-bootstrap/cache/mobile-context.json` exists and is fresh (<7 days old).
+Check if `.ai-flow/cache/mobile-context.json` exists and is fresh (<7 days old).
 
 **If found:**
 ```json
@@ -375,7 +375,7 @@ After Phase 0 completes:
 
 Next: Proceed to Phase 1 (Platform & Framework Selection)
 
-Read: .ai-bootstrap/prompts/mobile/bootstrap-phase1-platform.md
+Read: .ai-flow/prompts/mobile/bootstrap-phase1-platform.md
 ```
 
 ---

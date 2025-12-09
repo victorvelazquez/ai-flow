@@ -352,7 +352,7 @@ After Phase 4, generate/update:
 
 **Next Phase:** Phase 5 - Code Standards
 
-Read: `.ai-bootstrap/prompts/mobile/bootstrap-phase5-standards.md`
+Read: `.ai-flow/prompts/mobile/bootstrap-phase5-standards.md`
 
 ---
 

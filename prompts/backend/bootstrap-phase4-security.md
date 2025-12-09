@@ -1,4 +1,4 @@
-﻿## PHASE 4: Security & Authentication (15-20 min)
+## PHASE 4: Security & Authentication (15-20 min)
 
 > **Order for this phase:** 4.1 → 4.2 → 4.3 → 4.4 → 4.5 → 4.6 → 4.7 → 4.8 → 4.9 → 4.10 → 4.11
 
@@ -480,7 +480,7 @@ Once confirmed, generate:
 
 **1. `specs/security.md`**
 
-- Use template: `.ai-bootstrap/templates/specs/security.template.md`
+- Use template: `.ai-flow/templates/specs/security.template.md`
 - Fill with all security policies, authentication, authorization
 
 **2. Update `ai-instructions.md`**

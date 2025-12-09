@@ -472,7 +472,7 @@ Documents Generated:
 
 Next: Phase 6 - Testing Strategy
 
-Read: .ai-bootstrap/prompts/frontend/bootstrap-phase6-testing.md
+Read: .ai-flow/prompts/frontend/bootstrap-phase6-testing.md
 ```
 
 ---

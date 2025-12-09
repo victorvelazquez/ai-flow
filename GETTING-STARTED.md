@@ -1,4 +1,4 @@
-# Getting Started with AI Bootstrap
+# Getting Started with AI Flow
 
 > Complete guide from installation to advanced workflows
 
@@ -14,7 +14,7 @@
 
 ## 🎯 Quick Links
 
-**Already familiar with AI Bootstrap?** Jump directly to:
+**Already familiar with AI Flow?** Jump directly to:
 
 | Link                                                 | Description                             |
 | ---------------------------------------------------- | --------------------------------------- |
@@ -31,7 +31,7 @@
 
 > **Target Audience:** Beginners, first-time users  
 > **Time Required:** 10 minutes  
-> **Goal:** Get AI Bootstrap running and create your first AI-ready documentation
+> **Goal:** Get AI Flow running and create your first AI-ready documentation
 
 ### 1.1 Prerequisites
 
@@ -43,22 +43,22 @@ Before starting, ensure you have:
 
 ### 1.2 Installation
 
-Install AI Bootstrap globally via npm:
+Install AI Flow globally via npm:
 
 ```bash
-npm install -g ai-bootstrap
+npm install -g ai-flow
 ```
 
 Or using uv (Python tool manager):
 
 ```bash
-uv tool install ai-bootstrap
+uv tool install ai-flow
 ```
 
 Verify installation:
 
 ```bash
-ai-bootstrap --version
+ai-flow --version
 # Output: 1.1.1
 ```
 
@@ -73,10 +73,10 @@ mkdir my-awesome-api
 cd my-awesome-api
 ```
 
-#### Step 2: Initialize AI Bootstrap
+#### Step 2: Initialize AI Flow
 
 ```bash
-ai-bootstrap init .
+ai-flow init .
 ```
 
 You'll be asked:
@@ -94,11 +94,11 @@ You'll be asked:
 
 **What happens next:**
 
-- ✅ Creates `.ai-bootstrap/` hidden folder
-- ✅ Copies master prompts to `.ai-bootstrap/prompts/`
-- ✅ Copies document templates to `.ai-bootstrap/templates/`
+- ✅ Creates `.ai-flow/` hidden folder
+- ✅ Copies master prompts to `.ai-flow/prompts/`
+- ✅ Copies document templates to `.ai-flow/templates/`
 - ✅ Installs slash commands (`.claude/commands/`, `.cursor/commands/`, etc.)
-- ✅ Creates configuration file `.ai-bootstrap/core/config.json`
+- ✅ Creates configuration file `.ai-flow/core/config.json`
 
 **Time:** ~30 seconds
 
@@ -113,7 +113,7 @@ Open your AI tool (Claude, Cursor, Copilot, or Gemini) in your project folder an
 **First, choose your mode:**
 
 ```
-🚀 Welcome to AI Bootstrap!
+🚀 Welcome to AI Flow!
 
 How would you like to proceed?
 
@@ -286,7 +286,7 @@ After scaffolding, generate a complete task breakdown:
 
 **Time:** 15-30 minutes (automated)
 
-**Output:** `.ai-bootstrap/roadmap.md` with complete implementation plan
+**Output:** `.ai-flow/roadmap.md` with complete implementation plan
 
 **Example roadmap structure:**
 
@@ -368,7 +368,7 @@ After scaffolding, generate a complete task breakdown:
 - Interconnected (they reference each other)
 - Updated as project evolves
 
-**`.ai-bootstrap/`** - Tool foundation (hidden folder)
+**`.ai-flow/`** - Tool foundation (hidden folder)
 
 - `prompts/` - Master prompt files for bootstrap and workflows
 - `templates/` - Document templates with placeholders
@@ -376,7 +376,7 @@ After scaffolding, generate a complete task breakdown:
 
 ### 1.5 Understanding Bootstrap Modes
 
-AI Bootstrap offers two modes to fit your workflow and time constraints.
+AI Flow offers two modes to fit your workflow and time constraints.
 
 #### Mode A: Interactive (Recommended for Custom Projects)
 
@@ -495,15 +495,15 @@ See [Commands Cheat Sheet](#commands-cheat-sheet) for the complete list.
 ## 📚 Part 2: Core Workflows
 
 > **Target Audience:** Regular users, project maintainers
-> **Goal:** Master everyday AI Bootstrap workflows
+> **Goal:** Master everyday AI Flow workflows
 
 ### 2.1 New vs Existing Projects
 
-AI Bootstrap adapts to your project state with **3-layer smart detection**.
+AI Flow adapts to your project state with **3-layer smart detection**.
 
 #### New Projects: Full Bootstrap
 
-For brand-new projects, AI Bootstrap guides you through all phases with no assumptions:
+For brand-new projects, AI Flow guides you through all phases with no assumptions:
 
 - ✅ You answer every question from scratch
 - ✅ You design architecture, data models, and standards
@@ -514,11 +514,11 @@ For brand-new projects, AI Bootstrap guides you through all phases with no assum
 
 #### Existing Projects: Smart Detection
 
-For existing codebases, AI Bootstrap analyzes your project first (**Phase 0: Context Discovery**):
+For existing codebases, AI Flow analyzes your project first (**Phase 0: Context Discovery**):
 
 **Layer 0: Cache Check (2-5 seconds)**
 
-- Checks `.ai-bootstrap/analysis.json` for previous analysis
+- Checks `.ai-flow/analysis.json` for previous analysis
 - Detects file changes by comparing timestamps
 - **Result:** 0 seconds on re-runs if nothing changed
 
@@ -661,14 +661,14 @@ You can also run phases individually:
 
 ### 2.3 Working with Different AI Tools
 
-AI Bootstrap supports 4 AI tools with tool-specific configurations.
+AI Flow supports 4 AI tools with tool-specific configurations.
 
 #### Claude Code
 
 **Setup:**
 
 ```bash
-ai-bootstrap init . --ai claude
+ai-flow init . --ai claude
 ````
 
 **Generated files:**
@@ -696,7 +696,7 @@ ai-bootstrap init . --ai claude
 **Setup:**
 
 ```bash
-ai-bootstrap init . --ai cursor
+ai-flow init . --ai cursor
 ```
 
 **Generated files:**
@@ -723,7 +723,7 @@ Ctrl+K → /feature "user authentication"
 **Setup:**
 
 ```bash
-ai-bootstrap init . --ai copilot
+ai-flow init . --ai copilot
 ```
 
 **Generated files:**
@@ -750,7 +750,7 @@ ai-bootstrap init . --ai copilot
 **Setup:**
 
 ```bash
-ai-bootstrap init . --ai gemini
+ai-flow init . --ai gemini
 ```
 
 **Generated files:**
@@ -774,7 +774,7 @@ ai-bootstrap init . --ai gemini
 #### All AI Tools (Maximum Compatibility)
 
 ```bash
-ai-bootstrap init . --ai all
+ai-flow init . --ai all
 ```
 
 Sets up configuration for **all 4 AI tools** simultaneously. Perfect for:
@@ -911,7 +911,7 @@ docs/testing.md
 
 ### 3.1 CLI Flags Reference
 
-The `ai-bootstrap init` command accepts multiple flags for automation and customization.
+The `ai-flow init` command accepts multiple flags for automation and customization.
 
 #### Complete Flags Table
 
@@ -949,19 +949,19 @@ The `ai-bootstrap init` command accepts multiple flags for automation and custom
 
 ```bash
 # Interactive (prompts for missing values)
-ai-bootstrap init .
+ai-flow init .
 
 # Specify AI tool only
-ai-bootstrap init . --ai claude
+ai-flow init . --ai claude
 
 # Specify AI tool and project type
-ai-bootstrap init . --ai cursor --type backend
+ai-flow init . --ai cursor --type backend
 ```
 
 **Full automation (no prompts):**
 
 ```bash
-ai-bootstrap init . \
+ai-flow init . \
   --ai copilot \
   --type backend \
   --name "Payment API" \
@@ -972,34 +972,34 @@ ai-bootstrap init . \
 
 ```bash
 # Verbose logging (see all internal operations)
-ai-bootstrap init . --ai claude --verbose
+ai-flow init . --ai claude --verbose
 
 # Dry run (simulate without creating files)
-ai-bootstrap init . --ai all --dry-run
+ai-flow init . --ai all --dry-run
 
 # Combine both
-ai-bootstrap init . --ai gemini --verbose --dry-run
+ai-flow init . --ai gemini --verbose --dry-run
 ```
 
 **Different directories:**
 
 ```bash
 # Relative paths
-ai-bootstrap init ../my-project --ai claude
-ai-bootstrap init ./backend --ai cursor --type backend
+ai-flow init ../my-project --ai claude
+ai-flow init ./backend --ai cursor --type backend
 
 # Absolute paths
-ai-bootstrap init /absolute/path/to/project --ai copilot --type fullstack
+ai-flow init /absolute/path/to/project --ai copilot --type fullstack
 ```
 
 **CI/CD integration:**
 
 ```bash
 # GitHub Actions example
-- name: Initialize AI Bootstrap
+- name: Initialize AI Flow
   run: |
-    npm install -g ai-bootstrap
-    ai-bootstrap init . --ai copilot --type backend --name "${{ github.event.repository.name }}"
+    npm install -g ai-flow
+    ai-flow init . --ai copilot --type backend --name "${{ github.event.repository.name }}"
 ```
 
 ### 3.2 Individual Phase Commands
@@ -1154,14 +1154,14 @@ Phase 7 (Operations/Deployment) → CI/CD (depends on all previous)
    - Update documentation
 
 4. **Auto-Archive** - Save work history
-   - Moves to `.ai-bootstrap/archive/`
+   - Moves to `.ai-flow/archive/`
    - Updates relevant documentation
    - Preserves context for future reference
 
 **Generated Structure:**
 
 ```
-.ai-bootstrap/work/feature-[name]/
+.ai-flow/work/feature-[name]/
 ├── spec.md           # Feature specification
 ├── plan.md           # Implementation plan
 └── tasks.md          # Task checklist
@@ -1181,7 +1181,7 @@ User: Real-time notifications API with WebSocket support
 [AI implements tasks one by one]
 [AI writes tests for each task]
 [AI updates docs/api.md and docs/architecture.md]
-[AI archives to .ai-bootstrap/archive/feature-notifications/]
+[AI archives to .ai-flow/archive/feature-notifications/]
 
 ✅ Feature complete: Real-time notifications API
 📝 Documentation updated: docs/api.md, docs/architecture.md
@@ -1287,7 +1287,7 @@ The command **automatically detects complexity** and adjusts:
 **Structure:**
 
 ```
-.ai-bootstrap/
+.ai-flow/
 ├── work/                    # Active work
 │   ├── feature-notifications/
 │   ├── feature-auth/
@@ -1336,7 +1336,7 @@ The command **automatically detects complexity** and adjusts:
 ⏳ Current task (5/8):
   [ ] Implement room-based broadcasting
 
-📝 Context loaded from: .ai-bootstrap/work/feature-notifications/
+📝 Context loaded from: .ai-flow/work/feature-notifications/
 📄 Files in progress: 12
 🎯 Next step: Complete broadcasting logic
 
@@ -1357,8 +1357,8 @@ Ready to continue! What would you like me to do?
   - CHANGELOG.md (added v1.2.0 notes)
 
 📁 Moving to archive:
-  .ai-bootstrap/work/feature-notifications/
-  → .ai-bootstrap/archive/feature-notifications/
+  .ai-flow/work/feature-notifications/
+  → .ai-flow/archive/feature-notifications/
 
 ✅ ARCHIVED SUCCESSFULLY
 ⏱️ Total time: 2h 15min
@@ -1545,7 +1545,7 @@ Keep documentation synchronized with code changes using `/docs-update`.
 
 **How it works:**
 
-1. Compares current code with last documented state (`.ai-bootstrap/analysis.json`)
+1. Compares current code with last documented state (`.ai-flow/analysis.json`)
 2. Detects changes based on project type
 3. Shows report of documents needing updates
 4. Asks for confirmation
@@ -1647,7 +1647,7 @@ New files: 8
 ✅ specs/configuration.md updated
    - Added 4 new environment variables with descriptions
 
-✅ .ai-bootstrap/analysis.json updated
+✅ .ai-flow/analysis.json updated
    - Saved new baseline for future comparisons
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1671,7 +1671,7 @@ Time: 6 minutes
 
 ### 3.5 Project Scopes
 
-AI Bootstrap adapts documentation depth to your project maturity needs.
+AI Flow adapts documentation depth to your project maturity needs.
 
 #### Scope Comparison
 
@@ -1783,10 +1783,10 @@ Complete list of all available commands organized by category.
 #### CLI Commands (2)
 
 ```bash
-ai-bootstrap init [path] [options]   # Initialize project
-ai-bootstrap check                    # Verify initialization
-ai-bootstrap --version               # Show version (1.1.1)
-ai-bootstrap --help                  # Show help
+ai-flow init [path] [options]   # Initialize project
+ai-flow check                    # Verify initialization
+ai-flow --version               # Show version (1.1.1)
+ai-flow --help                  # Show help
 ```
 
 #### Bootstrap Commands - Backend (9)
@@ -1917,7 +1917,7 @@ nvm use 18
 
 #### Insufficient Permissions
 
-**Error:** `EACCES: permission denied, mkdir '.ai-bootstrap'`
+**Error:** `EACCES: permission denied, mkdir '.ai-flow'`
 
 **Solution:**
 
@@ -1940,7 +1940,7 @@ chmod 755 .
 1. **Verify initialization:**
 
    ```bash
-   ai-bootstrap check
+   ai-flow check
    ```
 
 2. **Check command files exist:**
@@ -1959,12 +1959,12 @@ chmod 755 .
 3. **Reinstall slash commands:**
 
    ```bash
-   ai-bootstrap init . --ai [your-tool]
+   ai-flow init . --ai [your-tool]
    ```
 
 4. **Manual invocation:**
    ```
-   Read .ai-bootstrap/prompts/backend/bootstrap.md and execute
+   Read .ai-flow/prompts/backend/bootstrap.md and execute
    ```
 
 #### AI Tool Not Detecting Config
@@ -2006,13 +2006,13 @@ chmod 755 .
 2. **Verify templates exist:**
 
    ```bash
-   ls .ai-bootstrap/templates/
+   ls .ai-flow/templates/
    ```
 
 3. **Run with verbose logging:**
 
    ```bash
-   ai-bootstrap init . --verbose
+   ai-flow init . --verbose
    ```
 
 4. **Check AI tool output** for error messages
@@ -2026,7 +2026,7 @@ chmod 755 .
 1. **Delete analysis cache:**
 
    ```bash
-   rm .ai-bootstrap/analysis.json
+   rm .ai-flow/analysis.json
    ```
 
 2. **Run docs-update again:**
@@ -2057,7 +2057,7 @@ chmod 755 .
 2. ✅ **Be specific** - More detail = better documentation
 3. ✅ **Use recommendations** - ⭐🔥⚡🏆 markers guide best choices
 4. ✅ **Confirm each phase** - Review before moving to next phase
-5. ✅ **Save progress** - Work saved automatically in `.ai-bootstrap/work/`
+5. ✅ **Save progress** - Work saved automatically in `.ai-flow/work/`
 6. ✅ **Ask for clarification** - AI can explain terms or options
 
 #### After Bootstrap
@@ -2071,7 +2071,7 @@ chmod 755 .
 
 #### Team Collaboration
 
-1. ✅ **Commit `.ai-bootstrap/`** to version control - Team needs templates
+1. ✅ **Commit `.ai-flow/`** to version control - Team needs templates
 2. ✅ **Commit generated docs** - Share knowledge across team
 3. ✅ **Don't commit `analysis.json`** - Add to `.gitignore` (machine-specific cache)
 4. ✅ **Update docs in PRs** - Use `/docs-update` before merging
@@ -2101,8 +2101,8 @@ chmod 755 .
 
 - **[README.md](README.md)** - Project overview, features, installation
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
-- **[GitHub Issues](https://github.com/victorvelazquez/ai-bootstrap/issues)** - Support and bug reports
-- **[GitHub Discussions](https://github.com/victorvelazquez/ai-bootstrap/discussions)** - Community Q&A
+- **[GitHub Issues](https://github.com/victorvelazquez/ai-flow/issues)** - Support and bug reports
+- **[GitHub Discussions](https://github.com/victorvelazquez/ai-flow/discussions)** - Community Q&A
 
 ---
 
@@ -2120,14 +2120,14 @@ chmod 755 .
 1. ❌ **Rushing through questions** - Take time, provide details
 2. ❌ **Ignoring recommendations** - ⭐🔥⚡🏆 markers are research-backed
 3. ❌ **Not updating docs** - Code evolves, docs should too
-4. ❌ **Deleting `.ai-bootstrap/`** - You lose templates and workflows
+4. ❌ **Deleting `.ai-flow/`** - You lose templates and workflows
 5. ❌ **Skipping Phase 0** - Context detection saves 50-60% time
 
 ### Power User Shortcuts
 
 ```bash
 # Automated initialization
-ai-bootstrap init . --ai all --type backend --name "My API" --description "REST API" --verbose
+ai-flow init . --ai all --type backend --name "My API" --description "REST API" --verbose
 
 # Quick feature iteration
 /feature new → Build → /review → /work archive
@@ -2144,6 +2144,6 @@ ai-bootstrap init . --ai all --type backend --name "My API" --description "REST 
 
 ---
 
-**🚀 Ready to transform your development workflow with AI Bootstrap!**
+**🚀 Ready to transform your development workflow with AI Flow!**
 
-For questions or support, visit [GitHub Issues](https://github.com/victorvelazquez/ai-bootstrap/issues).
+For questions or support, visit [GitHub Issues](https://github.com/victorvelazquez/ai-flow/issues).

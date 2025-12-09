@@ -519,7 +519,7 @@ After Phase 1, generate/update:
 
 **Next Phase:** Phase 2 - Navigation & Architecture
 
-Read: `.ai-bootstrap/prompts/mobile/bootstrap-phase2-navigation.md`
+Read: `.ai-flow/prompts/mobile/bootstrap-phase2-navigation.md`
 
 ---
 

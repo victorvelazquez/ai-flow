@@ -21,7 +21,7 @@ Detect the current frontend stack, architecture patterns, and configuration from
 
 ### Layer 0: Cache Check (0-2 seconds)
 
-Check if `.ai-bootstrap/cache/frontend-context.json` exists and is fresh (<7 days old).
+Check if `.ai-flow/cache/frontend-context.json` exists and is fresh (<7 days old).
 
 **If found:**
 ```json
@@ -445,7 +445,7 @@ Please correct any incorrect detections:
 Save detected context for future use:
 
 ```typescript
-// .ai-bootstrap/cache/frontend-context.json
+// .ai-flow/cache/frontend-context.json
 {
   "framework": "React",
   "frameworkVersion": "18.2.0",
@@ -483,7 +483,7 @@ After Phase 0 completes:
 
 Next: Proceed to Phase 1 (Discovery & UX)
 
-Read: .ai-bootstrap/prompts/frontend/bootstrap-phase1-discovery.md
+Read: .ai-flow/prompts/frontend/bootstrap-phase1-discovery.md
 ```
 
 ---

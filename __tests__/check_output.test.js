@@ -46,7 +46,7 @@ describe('check command output', () => {
       stdio: 'pipe'
     }).toString();
 
-    expect(output).toMatch(/✅ Project is initialized with AI Bootstrap/);
+    expect(output).toMatch(/✅ Project is initialized with AI Flow/);
     expect(output).toMatch(/Configuration:/);
     const pkg = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'package.json'), 'utf8'));
     expect(output).toMatch(new RegExp(`Version: ${pkg.version}`));

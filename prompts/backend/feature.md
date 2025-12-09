@@ -1,4 +1,4 @@
-# AI Bootstrap - Feature Development Workflow
+# AI Flow - Feature Development Workflow
 
 **YOU ARE AN EXPERT SOFTWARE ARCHITECT AND IMPLEMENTATION SPECIALIST.**
 
@@ -32,7 +32,7 @@ Ask 3-5 key questions to understand requirements:
 3. **What database entities/models?**
 4. **Special requirements?** (real-time, authentication, etc.)
 
-**Generate:** `.ai-bootstrap/work/feature-[name]/spec.md`
+**Generate:** `.ai-flow/work/feature-[name]/spec.md`
 
 **Example interaction:**
 
@@ -117,7 +117,7 @@ Organize tasks into logical phases:
 - Dependencies between phases
 - Estimated time per phase
 
-**Generate:** `.ai-bootstrap/work/feature-[name]/plan.md`
+**Generate:** `.ai-flow/work/feature-[name]/plan.md`
 
 **Example output (SIMPLE):**
 
@@ -684,7 +684,7 @@ To resume: /work resume feature-[name]
 
 ```
 
-**Generate:** `.ai-bootstrap/work/feature-[name]/tasks.md` (with ✅ checkmarks)
+**Generate:** `.ai-flow/work/feature-[name]/tasks.md` (with ✅ checkmarks)
 
 **Implementation rules:**
 
@@ -705,7 +705,7 @@ Ask 1-2 questions about production considerations:
 
 **Auto-Archive:**
 
-1. Move work to `.ai-bootstrap/archive/YYYY-MM/feature-[name]/`
+1. Move work to `.ai-flow/archive/YYYY-MM/feature-[name]/`
 2. Update affected documentation:
    - `docs/api.md` (if new endpoints)
    - `docs/data-model.md` (if new entities)
@@ -863,7 +863,7 @@ https://github.com/[user]/[repo]/compare/main...feature/auth-jwt-system
 ### During workflow (work directory):
 
 ```
-.ai-bootstrap/work/feature-[name]/
+.ai-flow/work/feature-[name]/
 ├── spec.md          # What is being built
 ├── plan.md          # How it will be built
 ├── tasks.md         # Checklist with ✅
@@ -874,7 +874,7 @@ https://github.com/[user]/[repo]/compare/main...feature/auth-jwt-system
 ### After completion (archive):
 
 ```
-.ai-bootstrap/archive/YYYY-MM/feature-[name]/
+.ai-flow/archive/YYYY-MM/feature-[name]/
 ├── spec.md
 ├── plan.md
 ├── tasks.md
@@ -1099,7 +1099,7 @@ Ready to commit ✅
 
 ### Configuration (Optional)
 
-**File:** `.ai-bootstrap/core/config.json`
+**File:** `.ai-flow/core/config.json`
 
 ```json
 {
@@ -1216,7 +1216,7 @@ Summary:
 📚 Documentation updated:
 - docs/data-model.md (added email field)
 
-📦 Work archived: .ai-bootstrap/archive/2025-01/feature-user-email/
+📦 Work archived: .ai-flow/archive/2025-01/feature-user-email/
 
 Next steps:
 1. Run tests: npm test
@@ -1277,7 +1277,7 @@ PHASE 5 - Testing:
 - docs/data-model.md (added 3 auth entities)
 - specs/security.md (added JWT auth flow)
 
-📦 Work archived: .ai-bootstrap/archive/2025-01/feature-user-auth/
+📦 Work archived: .ai-flow/archive/2025-01/feature-user-auth/
 
 Next steps:
 1. Run tests: npm test

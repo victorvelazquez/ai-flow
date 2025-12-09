@@ -438,7 +438,7 @@ Documents Generated:
 
 Next: Phase 2 - Components & Framework
 
-Read: .ai-bootstrap/prompts/frontend/bootstrap-phase2-components.md
+Read: .ai-flow/prompts/frontend/bootstrap-phase2-components.md
 ```
 
 ---

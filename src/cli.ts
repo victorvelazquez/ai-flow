@@ -190,7 +190,7 @@ async function createBootstrapStructure(targetPath: string, aiTools: string[], p
 
     // Create config file with new projectType field
     const config = {
-      version: '1.2.0',
+      version: PKG_VERSION,
       aiTools: aiTools,
       createdAt: new Date().toISOString(),
       projectType: projectType,
@@ -443,7 +443,7 @@ async function initializeProject(targetPath: string, aiTool?: string, projectTyp
     // Check if already initialized
     const isInitialized = await checkIfInitialized(targetPath);
     if (isInitialized) {
-      console.log(chalk.yellow('\n⚠️  Project already initialized with AI Bootstrap'));
+      console.log(chalk.yellow('\n⚠️  Project already initialized with AI Flow'));
       const { reinitialize } = await inquirer.prompt([
         {
           type: 'confirm',
@@ -495,7 +495,7 @@ async function initializeProject(targetPath: string, aiTool?: string, projectTyp
       finalProjectName = answers.projectName;
     }
 
-    console.log(chalk.cyan('\n📦 Initializing AI Bootstrap...\n'));
+    console.log(chalk.cyan('\n📦 Initializing AI Flow...\n'));
 
     // Create structure
     await createBootstrapStructure(targetPath, aiTools, selectedProjectType, flags?.dryRun, flags?.verbose);
@@ -504,7 +504,7 @@ async function initializeProject(targetPath: string, aiTool?: string, projectTyp
     await setupSlashCommands(targetPath, aiTools, selectedProjectType, flags?.dryRun, flags?.verbose);
 
     const modeText = flags?.dryRun ? 'DRY-RUN' : 'WRITE';
-    console.log(chalk.green('\n✅ AI Bootstrap initialized successfully!'));
+    console.log(chalk.green('\n✅ AI Flow initialized successfully!'));
     console.log(chalk.white('\nSummary:'));
     console.log(chalk.gray(`  Project: ${finalProjectName}`));
     console.log(chalk.gray(`  Version: ${PKG_VERSION}`));
@@ -633,13 +633,13 @@ async function initializeProject(targetPath: string, aiTool?: string, projectTyp
 
 // CLI Commands
 program
-  .name('ai-bootstrap')
-  .description('Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation')
-  .version('1.2.0');
+  .name('ai-flow')
+  .description('AI-powered development workflow from idea to production. Generate specs, plan features, and build with AI assistance.')
+  .version('2.0.0');
 
 program
   .command('init')
-  .description('Initialize AI Bootstrap in current directory')
+  .description('Initialize AI Flow in current directory')
   .argument('[path]', 'Target directory (defaults to current directory)', '.')
   .option('--ai <tool>', 'AI tool to use (claude, cursor, copilot, gemini, all)')
   .option('--type <type>', 'Project type (backend, frontend, fullstack, mobile)')
@@ -659,7 +659,7 @@ program
   .action(async () => {
     const isInitialized = await checkIfInitialized(process.cwd());
     if (isInitialized) {
-      console.log(chalk.green('✅ Project is initialized with AI Bootstrap'));
+      console.log(chalk.green('✅ Project is initialized with AI Flow'));
 
       const configPath = path.join(process.cwd(), '.ai-bootstrap', 'core', 'config.json');
       const config = await fs.readJSON(configPath);
@@ -717,7 +717,7 @@ program
       }
     } else {
       console.log(chalk.yellow('⚠️  Project is not initialized'));
-      console.log(chalk.white('Run: ai-bootstrap init .'));
+      console.log(chalk.white('Run: ai-flow init .'));
     }
   });
 

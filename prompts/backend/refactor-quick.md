@@ -1,4 +1,4 @@
-# AI Bootstrap - Quick Refactor Workflow
+# AI Flow - Quick Refactor Workflow
 
 **YOU ARE AN EXPERT REFACTORING SPECIALIST.**
 
@@ -530,7 +530,7 @@ Time: 4 minutes
 
 ### Configuration
 
-Git integration can be configured in `.ai-bootstrap/core/config.json`:
+Git integration can be configured in `.ai-flow/core/config.json`:
 
 ```json
 {

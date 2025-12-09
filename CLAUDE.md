@@ -10,8 +10,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Flujo principal:**
 
-1. Usuario instala globalmente: `npm install -g ai-bootstrap`
-2. Ejecuta: `ai-bootstrap init .` → Crea `.ai-bootstrap/` con templates, prompts, slash commands
+1. Usuario instala globalmente: `npm install -g ai-flow`
+2. Ejecuta: `ai-flow init .` → Crea `.ai-flow/` con templates, prompts, slash commands
 3. Abre AI tool (Claude/Cursor/Copilot/Gemini) → Ejecuta `/bootstrap`
 4. AI lee `prompts/backend/bootstrap.md` → Hace 7 fases de preguntas
 5. AI genera 15 archivos .md llenando placeholders `{{VARIABLE}}` en templates
@@ -39,7 +39,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 📋 About This Project
 
-**AI Bootstrap** is a CLI tool that generates comprehensive backend documentation through interactive questionnaires.
+**AI Flow** is a CLI tool that generates comprehensive backend documentation through interactive questionnaires.
 
 **Purpose:** Transform project ideas into production-ready backends with professional AI-ready documentation in 90-120 minutes.
 
@@ -50,7 +50,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 🏗️ Project Structure
 
 ```
-ai-bootstrap/
+ai-flow/
 ├── src/
 │   └── cli.ts                 # Main CLI application
 ├── prompts/
@@ -107,7 +107,7 @@ npm run build
 npm run dev init test-folder --ai claude
 
 # Verify created structure
-ls test-folder/.ai-bootstrap
+ls test-folder/.ai-flow
 ls test-folder/.claude/commands
 
 # Test check command
@@ -123,7 +123,7 @@ rm -rf test-folder
 # Prepare for publishing (runs build automatically)
 npm run prepare
 
-# The CLI is globally accessible as 'ai-bootstrap' via bin config in package.json
+# The CLI is globally accessible as 'ai-flow' via bin config in package.json
 ```
 
 ---
@@ -162,7 +162,7 @@ npm run prepare
 
 **Commands:**
 
-- `init [path] [--ai <tool>]` - Initialize AI Bootstrap in project
+- `init [path] [--ai <tool>]` - Initialize AI Flow in project
 - `check` - Verify if project is initialized and show config
 
 **Dependencies:**
@@ -175,10 +175,10 @@ npm run prepare
 
 **CLI Flow:**
 
-1. User runs `ai-bootstrap init .`
-2. Check if already initialized (`.ai-bootstrap/` exists)
+1. User runs `ai-flow init .`
+2. Check if already initialized (`.ai-flow/` exists)
 3. Prompt for AI tool selection if not provided via `--ai` flag
-4. Create `.ai-bootstrap/` structure with core/, prompts/, templates/, scripts/
+4. Create `.ai-flow/` structure with core/, prompts/, templates/, scripts/
 5. Write config.json with version, aiTools, timestamps
 6. Copy templates from package to project
 7. Copy master prompts (backend/bootstrap.md and phase files)
@@ -194,7 +194,7 @@ npm run prepare
 
 - Binary entry point: `dist/cli.js` (from `src/cli.ts`)
 - Files included in npm package: `dist/`, `prompts/`, `templates/`, `scripts/`
-- Users install globally: `npm install -g ai-bootstrap`
+- Users install globally: `npm install -g ai-flow`
 
 ### Template System
 
@@ -224,7 +224,7 @@ npm run prepare
 
 1. AI assistant reads `prompts/backend/bootstrap.md` (7-phase questionnaire)
 2. Collects user responses across all phases
-3. Reads template files from `.ai-bootstrap/templates/`
+3. Reads template files from `.ai-flow/templates/`
 4. Performs string replacement on placeholders with gathered data
 5. Writes generated files to project root and subdirectories
 
@@ -234,7 +234,7 @@ npm run prepare
 
 ### Overview
 
-AI Bootstrap 2.0 introduces structured workflow commands for backend development, inspired by Spec-Kit, OpenSpec, and BMAD-METHOD. These workflows provide:
+AI Flow 2.0 introduces structured workflow commands for backend development, inspired by Spec-Kit, OpenSpec, and BMAD-METHOD. These workflows provide:
 
 - ✅ Structured development process (spec → plan → implementation → archive)
 - ✅ Work-in-progress management with resume capability
@@ -247,7 +247,7 @@ AI Bootstrap 2.0 introduces structured workflow commands for backend development
 **Directory Structure:**
 
 ```
-.ai-bootstrap/
+.ai-flow/
 ├── work/                    # Active work-in-progress
 │   ├── feature-[name]/
 │   │   ├── spec.md         # Requirements
@@ -314,7 +314,7 @@ AI Bootstrap 2.0 introduces structured workflow commands for backend development
 - Time estimates for 1, 2, or 3 developers
 - Mermaid dependency graphs
 - Production readiness checklist (50+ items)
-- Output: `.ai-bootstrap/roadmap.md`
+- Output: `.ai-flow/roadmap.md`
 
 **Feature Workflow (`/feature`):**
 
@@ -390,7 +390,7 @@ AI Bootstrap 2.0 introduces structured workflow commands for backend development
 # Day 2: Generate implementation roadmap
 /project-roadmap
 # → 15-30 minutes automated: Complete task breakdown with Story Points
-# → Output: .ai-bootstrap/roadmap.md with Epics, Features, Dependencies
+# → Output: .ai-flow/roadmap.md with Epics, Features, Dependencies
 
 # Day 3+: Execute features from roadmap
 /feature new "Base application configuration"  # From roadmap Epic 1
@@ -404,7 +404,7 @@ AI Bootstrap 2.0 introduces structured workflow commands for backend development
 # → 4 minutes: Fixed with test case
 
 # Meeting interruption
-# Work saved in .ai-bootstrap/work/
+# Work saved in .ai-flow/work/
 
 # After meeting: Resume
 /work resume feature-notifications
@@ -446,7 +446,7 @@ cat test-project/.claude/commands/refactor-quick.md
 # Test in AI tool
 cd test-project
 # Run: /feature "test feature"
-# Verify: .ai-bootstrap/work/ structure created
+# Verify: .ai-flow/work/ structure created
 ```
 
 ### When to Edit Workflow Files
@@ -603,9 +603,9 @@ try {
 npm run build
 npm run dev init test-folder --ai claude
 cd test-folder
-ls -la .ai-bootstrap
+ls -la .ai-flow
 ls -la .claude/commands
-cat .ai-bootstrap/core/config.json
+cat .ai-flow/core/config.json
 cd ..
 rm -rf test-folder
 ```
@@ -695,7 +695,7 @@ Closes #42
 | Function                     | Purpose                                             | Parameters                              |
 | ---------------------------- | --------------------------------------------------- | --------------------------------------- |
 | `selectAITool()`             | Interactive AI tool selection or validate --ai flag | `providedTool?: string`                 |
-| `checkIfInitialized()`       | Check if .ai-bootstrap exists                       | `targetPath: string`                    |
+| `checkIfInitialized()`       | Check if .ai-flow exists                       | `targetPath: string`                    |
 | `createBootstrapStructure()` | Create folders and config.json                      | `targetPath: string, aiTools: string[]` |
 | `copyTemplates()`            | Copy templates/ to project                          | `targetPath: string`                    |
 | `copyPrompts()`              | Copy prompts/ to project                            | `targetPath: string`                    |
@@ -751,7 +751,7 @@ This works because:
 
 ### Config Structure
 
-**Location:** `.ai-bootstrap/core/config.json`
+**Location:** `.ai-flow/core/config.json`
 
 **Schema:**
 

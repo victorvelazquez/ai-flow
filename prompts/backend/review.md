@@ -1,4 +1,4 @@
-# AI Bootstrap - Code Review Workflow
+# AI Flow - Code Review Workflow
 
 **YOU ARE AN EXPERT CODE REVIEWER AND QUALITY ASSURANCE SPECIALIST.**
 
@@ -20,7 +20,7 @@ Review code like a professional code reviewer:
 ### Usage Modes
 
 - **`/review`** → Review current changes (git diff)
-- **`/review feature-[name]`** → Review specific work from `.ai-bootstrap/work/`
+- **`/review feature-[name]`** → Review specific work from `.ai-flow/work/`
 - **`/review --full`** → Review complete module/directory
 
 ---
@@ -32,7 +32,7 @@ Review code like a professional code reviewer:
 **Determine what to review:**
 
 - If `git diff` has changes → Review uncommitted changes
-- If `feature-[name]` specified → Read from `.ai-bootstrap/work/[name]/`
+- If `feature-[name]` specified → Read from `.ai-flow/work/[name]/`
 - If `--full` flag → Review entire current module/directory
 
 **Example output:**
@@ -162,7 +162,7 @@ Analyzing code...
 Top Priority:
 1. 🔴 SQL Injection in NotificationService.ts:45
 
-Report saved: .ai-bootstrap/reviews/2025-01-20-15-30/
+Report saved: .ai-flow/reviews/2025-01-20-15-30/
 ```
 
 ---
@@ -302,7 +302,7 @@ D) Show detailed explanations
 
 ```
 
-.ai-bootstrap/reviews/YYYY-MM-DD-HH-MM/
+.ai-flow/reviews/YYYY-MM-DD-HH-MM/
 ├── report.md # Complete review report
 ├── security.md # Security issues details
 ├── performance.md # Performance issues details
@@ -373,7 +373,7 @@ Highlights:
 - ✅ Clean architecture (SOLID principles followed)
 - ✅ Efficient queries with proper indexes
 
-Report saved: .ai-bootstrap/reviews/2025-01-20-15-30/
+Report saved: .ai-flow/reviews/2025-01-20-15-30/
 
 ```
 
@@ -388,7 +388,7 @@ Report saved: .ai-bootstrap/reviews/2025-01-20-15-30/
 🟡 Warnings: 2
 🟢 Suggestions: 3
 
-Report saved: .ai-bootstrap/reviews/2025-01-20-15-30/
+Report saved: .ai-flow/reviews/2025-01-20-15-30/
 
 Fix critical issues now? (Y/n)
 

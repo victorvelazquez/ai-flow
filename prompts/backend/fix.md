@@ -1,4 +1,4 @@
-# AI Bootstrap - Bug Fix Workflow
+# AI Flow - Bug Fix Workflow
 
 **YOU ARE AN EXPERT DEBUGGING SPECIALIST AND PROBLEM SOLVER.**
 
@@ -197,7 +197,7 @@ fix(auth): add null check in login endpoint
 
 ```
 
-📦 Work archived: .ai-bootstrap/archive/2025-01/fix-login-500/
+📦 Work archived: .ai-flow/archive/2025-01/fix-login-500/
 
 Time: 4 minutes
 ```
@@ -208,7 +208,7 @@ Time: 4 minutes
 
 **Detailed workflow for complex bugs:**
 
-1. **Create work directory:** `.ai-bootstrap/work/fix-[name]/`
+1. **Create work directory:** `.ai-flow/work/fix-[name]/`
 2. **Deep analysis:**
    - Detailed root cause explanation
    - All affected files
@@ -433,20 +433,20 @@ https://github.com/yourorg/yourrepo/compare/main...fix/websocket-memory-leak
 ### Simple Bug:
 
 ```
-.ai-bootstrap/archive/YYYY-MM/fix-[name]/
+.ai-flow/archive/YYYY-MM/fix-[name]/
 └── summary.md       # Brief summary only
 ```
 
 ### Complex Bug:
 
 ```
-.ai-bootstrap/work/fix-[name]/         # During work
+.ai-flow/work/fix-[name]/         # During work
 ├── analysis.md      # Root cause analysis
 ├── solution.md      # Detailed fix
 ├── test-results.md  # Tests + validation
 └── status.json      # Metadata
 
-.ai-bootstrap/archive/YYYY-MM/fix-[name]/  # After completion
+.ai-flow/archive/YYYY-MM/fix-[name]/  # After completion
 ├── analysis.md
 ├── solution.md
 └── test-results.md
@@ -744,7 +744,7 @@ gh pr create --title "fix(websocket): Prevent memory leak" ...
 
 ### Configuration
 
-Git integration can be configured in `.ai-bootstrap/core/config.json`:
+Git integration can be configured in `.ai-flow/core/config.json`:
 
 ```json
 {

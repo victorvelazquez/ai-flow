@@ -1,4 +1,4 @@
-﻿## PHASE 1: Discovery & Business (15-20 min)
+## PHASE 1: Discovery & Business (15-20 min)
 
 > **Order for this phase:** 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 → 1.7 → 1.8 → 1.9 → 1.10
 
@@ -399,7 +399,7 @@ Once confirmed, generate:
 
 **1. `project-brief.md`**
 
-- Use template: `.ai-bootstrap/templates/project-brief.template.md`
+- Use template: `.ai-flow/templates/project-brief.template.md`
 - Fill with all Phase 1 information
 - Write to project root
 
