@@ -27,7 +27,7 @@
 - **Cross-references:** Always add links between README ↔ GETTING-STARTED when introducing new features or commands.
 - Prefer ASCII in code/templates unless updating files that already rely on emoji (most prompts intentionally include them).
 - When touching prompts (`prompts/backend.md`) keep phase ordering, emoji markers (⭐🔥⚡🏆), and markdown fences intact so slash commands stay valid.
-- Copilot slash prompts live in `slash-commands/copilot/`; any rename must propagate to `.github/copilot-commands` and docs that reference `/bootstrap*` commands.
+- Copilot slash prompts are copied from `prompts/` to `.github/prompts/` during init; any rename must propagate to docs that reference `/bootstrap*` commands.
 
 ## Research Checklist for Agents
 

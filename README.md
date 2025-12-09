@@ -255,7 +255,7 @@ After initialization, use these slash commands in your AI tool:
 2. **Interactive Questionnaire** - Guides you through 8 phases (choose mode)
 3. **Template Generation** - Creates 12-17 professional documents
 4. **AI Integration** - Configures your AI tool with project context
-5. **Slash Command Setup** - Installs commands from `slash-commands/` to tool-specific paths
+5. **Slash Command Setup** - Installs prompts to tool-specific paths (.github/prompts/, .claude/commands/, etc.)
 
 **For existing projects:**
 
