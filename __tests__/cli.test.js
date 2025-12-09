@@ -7,13 +7,13 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const CLI_PATH = path.resolve(PROJECT_ROOT, 'dist', 'cli.js');
 const TSC_PATH = path.resolve(PROJECT_ROOT, 'node_modules', 'typescript', 'bin', 'tsc');
 
-const createTempDir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'ai-bootstrap-test-'));
+const createTempDir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'ai-flow-test-'));
 
 const removeDir = (dir) => {
   fs.rmSync(dir, { recursive: true, force: true });
 };
 
-describe('ai-bootstrap CLI', () => {
+describe('ai-flow CLI', () => {
   let tempDir;
 
   beforeAll(() => {

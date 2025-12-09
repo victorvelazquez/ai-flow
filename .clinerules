@@ -1,7 +1,7 @@
-# AI Bootstrap - Cline Agent Rules
+# AI Flow - Cline Agent Rules
 
 ## Project Identity
-ai-bootstrap: CLI tool that generates 15 backend documentation files via 7-phase questionnaire
+ai-flow: CLI tool that generates 15 backend documentation files via 7-phase questionnaire
 Language: TypeScript (strict mode), Target: Node.js >=18, Module: CommonJS
 Entry: src/cli.ts → dist/cli.js (npm bin)
 
@@ -29,7 +29,7 @@ Path resolution uses __dirname relative to dist/ for package assets
 1. Edit src/cli.ts or templates
 2. npm run build
 3. Test: npm run dev init test-folder --ai claude
-4. Verify: ls test-folder/.ai-bootstrap && ls test-folder/.claude/commands
+4. Verify: ls test-folder/.ai-flow && ls test-folder/.claude/commands
 5. Clean: rm -rf test-folder
 
 ## AI Tool Mapping

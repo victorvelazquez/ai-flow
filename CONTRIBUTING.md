@@ -1,6 +1,6 @@
-# Contributing to AI Bootstrap
+# Contributing to AI Flow
 
-Thank you for your interest in contributing to AI Bootstrap! This document provides guidelines and instructions for contributing to the project.
+Thank you for your interest in contributing to AI Flow! This document provides guidelines and instructions for contributing to the project.
 
 ## 🌟 Ways to Contribute
 
@@ -44,14 +44,14 @@ Thank you for your interest in contributing to AI Bootstrap! This document provi
 2. **Clone your fork:**
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/ai-bootstrap.git
-   cd ai-bootstrap
+   git clone https://github.com/YOUR_USERNAME/ai-flow.git
+   cd ai-flow
    ```
 
 3. **Add upstream remote:**
 
    ```bash
-   git remote add upstream https://github.com/victorvelazquez/ai-bootstrap.git
+   git remote add upstream https://github.com/victorvelazquez/ai-flow.git
    ```
 
 4. **Install dependencies:**
@@ -303,7 +303,7 @@ What actually happens
 
 - OS: [e.g., Windows 11, macOS 14, Ubuntu 22.04]
 - Node.js version: [e.g., 18.20.0]
-- ai-bootstrap version: [e.g., 0.0.1]
+- ai-flow version: [e.g., 0.0.1]
 
 **Additional Context:**
 Error messages, screenshots, logs
@@ -330,7 +330,7 @@ Examples, mockups, references
 ## 📚 Project Structure
 
 ```
-ai-bootstrap/
+ai-flow/
 ├── src/
 │   └── cli.ts              # Main CLI application
 ├── __tests__/              # Test files
@@ -443,7 +443,7 @@ Include:
 
 ## 💬 Community
 
-- **Issues**: [GitHub Issues](https://github.com/victorvelazquez/ai-bootstrap/issues)
+- **Issues**: [GitHub Issues](https://github.com/victorvelazquez/ai-flow/issues)
 - **Email**: victorvelazqueza@gmail.com
 
 ## 📄 License
@@ -462,11 +462,11 @@ Contributors will be:
 
 - Check [README.md](README.md)
 - Check [CLAUDE.md](CLAUDE.md) for architecture
-- Open an [Issue](https://github.com/victorvelazquez/ai-bootstrap/issues)
+- Open an [Issue](https://github.com/victorvelazquez/ai-flow/issues)
 - Ask in your PR or issue
 
 ---
 
-**Thank you for contributing to AI Bootstrap!** 🚀
+**Thank you for contributing to AI Flow!** 🚀
 
 Every contribution, no matter how small, makes a difference. We appreciate your time and effort in making this project better.

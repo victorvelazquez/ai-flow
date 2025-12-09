@@ -467,14 +467,14 @@ For each **CRITICAL** and **IMPORTANT** gap, apply changes to README.md with use
 
 **Current:**
 # Check if initialized
-ai-bootstrap check
+ai-flow check
 
 **New:**
 # Check if initialized
-ai-bootstrap check
+ai-flow check
 
 # Enable verbose output (debugging)
-ai-bootstrap init . --verbose
+ai-flow init . --verbose
 
 **Executing change via replace_string_in_file...**
 → Change applied ✅

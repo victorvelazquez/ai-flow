@@ -286,7 +286,7 @@ After initialization, use these slash commands in your AI tool:
 
 ## 🌍 Supported Languages & Frameworks
 
-AI Bootstrap provides **universal support** with automatic detection for 98% of the market:
+AI Flow provides **universal support** with automatic detection for 98% of the market:
 
 ### Languages Supported (12)
 

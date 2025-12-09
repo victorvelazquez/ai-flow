@@ -44,7 +44,7 @@ Update version string in all relevant files:
 
 ```typescript
 // 1. ASCII banner
-const banner = `AI Bootstrap v${version}`;
+const banner = `AI Flow v${version}`;
 
 // 2. Config object
 const config = { version: "X.X.X" };
@@ -91,13 +91,13 @@ npm publish --access public
 **Prerequisites:**
 
 - User authenticated via `npm login`
-- Package name `ai-bootstrap` available
+- Package name `ai-flow` available
 - No existing version X.X.X in registry
 
 **If publish fails:**
 
 - Check npm authentication: `npm whoami`
-- Verify version doesn't exist: `npm view ai-bootstrap versions`
+- Verify version doesn't exist: `npm view ai-flow versions`
 
 ---
 
@@ -107,10 +107,10 @@ Confirm successful release across platforms:
 
 ### Verification Checklist
 
-- [ ] **npm registry:** Version visible at [npmjs.com/package/ai-bootstrap](https://npmjs.com/package/ai-bootstrap)
-- [ ] **GitHub tags:** Tag `vX.X.X` present in [repository tags](https://github.com/victorvelazquez/ai-bootstrap/tags)
+- [ ] **npm registry:** Version visible at [npmjs.com/package/ai-flow](https://npmjs.com/package/ai-flow)
+- [ ] **GitHub tags:** Tag `vX.X.X` present in [repository tags](https://github.com/victorvelazquez/ai-flow/tags)
 - [ ] **GitHub releases:** Release notes published (optional)
-- [ ] **Installation test:** `npm install -g ai-bootstrap@X.X.X` works
+- [ ] **Installation test:** `npm install -g ai-flow@X.X.X` works
 
 ### Success Output
 

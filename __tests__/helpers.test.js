@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-describe('ai-bootstrap helpers', () => {
+describe('ai-flow helpers', () => {
   it('should create a directory if it does not exist', () => {
     const testDir = path.resolve(__dirname, 'tmp-helper-test');
     if (fs.existsSync(testDir)) fs.rmSync(testDir, { recursive: true, force: true });

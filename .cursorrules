@@ -1,16 +1,16 @@
-# Cursor Configuration for AI Bootstrap
+# Cursor Configuration for AI Flow
 
 ## 📋 Quick Start
 
 **IMPORTANT:** Read `AGENT.md` first for complete project context.
 
-This file contains Cursor-specific preferences and workflows for the ai-bootstrap project.
+This file contains Cursor-specific preferences and workflows for the ai-flow project.
 
 ---
 
 ## 🎯 Project Summary
 
-**Name:** AI Bootstrap
+**Name:** AI Flow
 **Description:** Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation
 **Stack:** Node.js 18+ + TypeScript + Commander.js + Inquirer
 **Version:** 1.0.8
@@ -179,7 +179,7 @@ Use Conventional Commits format:
 npm run build
 npm run dev init test-folder --ai cursor
 cd test-folder
-ls -la .ai-bootstrap
+ls -la .ai-flow
 ls -la .cursor/commands
 cd ..
 rm -rf test-folder
@@ -231,12 +231,12 @@ npm run lint
 
 **Config Structure:**
 
-- Location: `.ai-bootstrap/core/config.json`
+- Location: `.ai-flow/core/config.json`
 - Keys: `version`, `aiTools`, `createdAt`, `projectType`, `backend`, `frontend`
 
 ---
 
 **Always reference `AGENT.md` for complete project understanding.**
 
-**Generated for:** AI Bootstrap development
+**Generated for:** AI Flow development
 **Last Updated:** 2025-01-XX

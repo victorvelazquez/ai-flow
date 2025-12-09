@@ -26,7 +26,7 @@ Standardize all slash commands with a structured naming convention to improve:
 ### Components:
 
 1. **PREFIX** - Tool identifier
-   - Current: `aibs` (from "ai-bootstrap")
+   - Current: `aibs` (from "ai-flow")
    - Future: Subject to change if tool is renamed
    - Purpose: Unique namespace, prevents collision with other tools
 
@@ -221,7 +221,7 @@ Autocomplete shows:
 
 ### If Tool is Renamed
 
-**Current:** ai-bootstrap → PREFIX: `aibs`
+**Current:** ai-flow → PREFIX: `aibs`
 
 **Example rename scenarios:**
 
@@ -350,8 +350,8 @@ New: Run `/aibs-dev-feature` to create new features
 - [ ] Test all renamed commands in Copilot
 - [ ] Test all renamed commands in Gemini
 - [ ] Verify autocomplete works correctly
-- [ ] Test `ai-bootstrap init` generates correct filenames
-- [ ] Test `ai-bootstrap check` verifies new structure
+- [ ] Test `ai-flow init` generates correct filenames
+- [ ] Test `ai-flow check` verifies new structure
 - [ ] Validate all documentation links work
 
 ### Phase 7: Release Preparation
@@ -405,18 +405,18 @@ New: Run `/aibs-dev-feature` to create new features
 
 ### Migration Steps
 
-1. **Update AI Bootstrap:**
+1. **Update AI Flow:**
    ```bash
-   npm install -g ai-bootstrap@2.0.0
+   npm install -g ai-flow@2.0.0
    ```
 
 2. **Reinitialize Projects:**
    ```bash
-   # Backup existing .ai-bootstrap/ folder
-   mv .ai-bootstrap .ai-bootstrap.backup
+   # Backup existing .ai-flow/ folder
+   mv .ai-flow .ai-flow.backup
 
    # Reinitialize with new structure
-   ai-bootstrap init . --ai [your-tool]
+   ai-flow init . --ai [your-tool]
 
    # Copy any custom modifications from backup
    ```
