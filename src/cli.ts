@@ -276,7 +276,6 @@ async function createBootstrapStructure(
     await fs.ensureDir(path.join(bootstrapPath, 'prompts'));
     await fs.ensureDir(path.join(bootstrapPath, 'templates', 'docs'));
     await fs.ensureDir(path.join(bootstrapPath, 'templates', 'specs'));
-    await fs.ensureDir(path.join(bootstrapPath, 'scripts'));
 
     // Create config file with new projectType field
     const config = {
@@ -993,7 +992,7 @@ program
   .description(
     'AI-powered development workflow from idea to production. Generate specs, plan features, and build with AI assistance.'
   )
-  .version('1.0.1');
+  .version('1.0.2');
 
 program
   .command('init')
