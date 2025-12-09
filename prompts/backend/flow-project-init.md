@@ -26,7 +26,7 @@ Before executing this command, ensure:
 
 ---
 
-## Workflow: 2 Steps
+## Workflow: 3 Steps
 
 ### Step 1: Read Documentation & Prepare Directory (1-2 minutes)
 
@@ -40,22 +40,19 @@ Before executing this command, ensure:
 
 Most framework CLIs fail if they detect existing files like `README.md`, `package.json`, `.gitignore`, etc.
 
-**Detect conflicting files:**
+**Strategy: Temporary move → Initialize → Merge back**
 
 ```bash
-# Check for common conflicting files
-ls -la | grep -E '(README|package\.json|\.git|tsconfig\.json|\.eslintrc)'
-```
+# 1. Create temporary backup
+mkdir -p .ai-flow/temp-backup
 
-**If conflicts detected, backup and clear:**
+# 2. Move AI Flow documentation temporarily (NOT deletion)
+mv README.md .ai-flow/temp-backup/ 2>/dev/null || true
+mv package.json .ai-flow/temp-backup/ 2>/dev/null || true
+mv tsconfig.json .ai-flow/temp-backup/ 2>/dev/null || true
+mv .gitignore .ai-flow/temp-backup/ 2>/dev/null || true
 
-```bash
-# Create backup directory
-mkdir -p .ai-flow/backup-$(date +%Y%m%d-%H%M%S)
-
-# Move conflicting files to backup (preserve AI Flow docs)
-mv README.md package.json tsconfig.json .gitignore .ai-flow/backup-*/
-# Keep .ai-flow/ directory intact
+# 3. Keep .ai-flow/ directory intact with all documentation
 ```
 
 **Display summary:**
@@ -72,9 +69,9 @@ mv README.md package.json tsconfig.json .gitignore .ai-flow/backup-*/
 Target Directory: {{PWD}}
 
 ⚠️  IMPORTANT: 
-   • This will initialize the project in the CURRENT directory
-   • Conflicting files backed up to .ai-flow/backup-*/
-   • .ai-flow/ directory will be preserved
+   • Files temporarily moved to .ai-flow/temp-backup/
+   • Will merge AI Flow docs with framework files after init
+   • .ai-flow/ directory preserved with all documentation
 
 Continue? (Y/n)
 ```
@@ -98,7 +95,7 @@ Please specify the framework to use:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏗️  Step 2/2: Initialize Project
+🏗️  Step 2/3: Initialize Project
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -221,29 +218,60 @@ unzip -o project.zip && rm project.zip
 
 ---
 
-**Post-Initialization: Restore AI Flow Documentation**
++### Step 3: Merge AI Flow Documentation with Framework Files (2-3 minutes)
 
-After framework initialization completes:
+After framework initialization completes, intelligently merge the documentation:
 
-1. **Preserve framework README (if created):**
-   ```bash
-   mv README.md README.framework.md
-   ```
+**3.1 README Strategy:**
 
-2. **Restore AI Flow documentation from backup:**
-   ```bash
-   # Restore AI instructions and project brief
-   cp .ai-flow/backup-*/ai-instructions.md .
-   cp .ai-flow/backup-*/project-brief.md .
-   
-   # Restore original README if you want to keep it
-   cp .ai-flow/backup-*/README.md .
-   ```
+```bash
+# 1. Rename framework README to preserve it
+mv README.md docs/README.framework.md
 
-3. **Merge or choose README strategy:**
-   - **Option A:** Keep framework README, link to AI docs
-   - **Option B:** Keep AI Flow README, reference framework docs
-   - **Option C:** Merge both READMEs
+# 2. Use AI Flow README as main (already linked to all docs)
+# The README from ai-flow init already references:
+# - ai-instructions.md
+# - project-brief.md  
+# - All specs/ and docs/ files
+# Keep it as the main README.md (it's in .ai-flow/temp-backup/)
+
+# 3. Copy back AI Flow README
+cp .ai-flow/temp-backup/README.md .
+```
+
+**3.2 Merge package.json (if applicable):**
+
+```bash
+# For Node.js projects only:
+# Framework created package.json with scripts, dependencies
+
+# Strategy: Keep framework package.json, add AI Flow metadata
+# Read both files and merge:
+# - Keep framework: scripts, dependencies, devDependencies
+# - Add from AI Flow backup: name, description, keywords, author
+```
+
+**3.3 Merge tsconfig.json/config files:**
+
+```bash
+# Keep framework configuration (optimized for the framework)
+# AI Flow backup likely didn't have project-specific config anyway
+```
+
+**3.4 Merge .gitignore:**
+
+```bash
+# Combine both .gitignore files
+cat .gitignore .ai-flow/temp-backup/.gitignore | sort -u > .gitignore.merged
+mv .gitignore.merged .gitignore
+```
+
+**3.5 Clean up temp backup:**
+
+```bash
+# Remove temporary backup (already merged)
+rm -rf .ai-flow/temp-backup
+```
 
 **Success Output:**
 
@@ -257,13 +285,17 @@ After framework initialization completes:
 Generated structure:
 {{LIST_KEY_FILES}}
 
-📋 Backup location: .ai-flow/backup-{{TIMESTAMP}}/
+📋 Documentation merged:
+   ✅ README.md (AI Flow - links to all docs)
+   ✅ docs/README.framework.md (Framework reference)
+   ✅ package.json (Framework + AI Flow metadata)
+   ✅ .gitignore (Combined rules)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Next steps:
-1. Review generated files (README.framework.md, package.json, etc.)
-2. Decide on README strategy (AI Flow vs Framework)
+1. Review merged files (README.md is your main entry point)
+2. Check docs/README.framework.md for framework-specific setup
 3. Run /flow-project-roadmap to plan implementation
 4. Start development with /feature commands
 ```
