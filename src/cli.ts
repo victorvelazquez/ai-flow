@@ -110,7 +110,7 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
   console.log(
     chalk.cyan('    ║') +
       chalk.bold.cyan(
-        '          █████╗ ██╗    ██████╗  ██████╗  ██████╗ ████████╗'
+        '          █████╗ ██╗    ███████╗██╗      ██████╗ ██╗    ██╗'
       ) +
       '        ' +
       chalk.cyan('║')
@@ -118,7 +118,7 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
   console.log(
     chalk.cyan('    ║') +
       chalk.bold.cyan(
-        '         ██╔══██╗██║    ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝'
+        '         ██╔══██╗██║    ██╔════╝██║     ██╔═══██╗██║    ██║'
       ) +
       '        ' +
       chalk.cyan('║')
@@ -126,31 +126,31 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
   console.log(
     chalk.cyan('    ║') +
       chalk.bold.cyan(
-        '         ███████║██║    ██████╔╝██║   ██║██║   ██║   ██║'
+        '         ███████║██║    █████╗  ██║     ██║   ██║██║ █╗ ██║'
       ) +
-      '           ' +
+      '        ' +
       chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
       chalk.bold.cyan(
-        '         ██╔══██║██║    ██╔══██╗██║   ██║██║   ██║   ██║'
+        '         ██╔══██║██║    ██╔══╝  ██║     ██║   ██║██║███╗██║'
       ) +
-      '           ' +
+      '        ' +
       chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
       chalk.bold.cyan(
-        '         ██║  ██║██║    ██████╔╝╚██████╔╝╚██████╔╝   ██║'
+        '         ██║  ██║██║    ██║     ███████╗╚██████╔╝╚███╔███╔╝'
       ) +
-      '           ' +
+      '        ' +
       chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-      chalk.cyan('         ╚═╝  ╚═╝╚═╝    ╚═════╝  ╚═════╝  ╚═════╝    ╚═╝') +
-      '           ' +
+      chalk.cyan('         ╚═╝  ╚═╝╚═╝    ╚═╝     ╚══════╝ ╚═════╝  ╚══╝╚══╝') +
+      '         ' +
       chalk.cyan('║')
   );
   console.log(
@@ -160,9 +160,9 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
   );
   console.log(
     chalk.cyan('    ║') +
-      '               ' +
-      chalk.white('✨ AI-Ready Documentation in Minutes') +
-      '                ' +
+      '           ' +
+      chalk.white('✨ From Idea to Production with AI Guidance') +
+      '             ' +
       chalk.cyan('║')
   );
   console.log(
