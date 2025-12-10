@@ -21,7 +21,7 @@
 **Project Type:** CLI Tool (npm package)
 **Architecture:** Single-file CLI with modular helper functions
 **Primary Language:** TypeScript (strict mode)
-**Runtime:** Node.js >=18.0.0
+**Runtime:** Node.js >=20.0.0
 **Module System:** CommonJS
 **Framework:** Commander.js (CLI) + Inquirer (prompts)
 **Build Tool:** TypeScript Compiler (tsc)
@@ -184,7 +184,7 @@ ai-flow/
 
 - TypeScript compiles to CommonJS (`module: "commonjs"` in tsconfig.json)
 - Uses `__dirname`-based path resolution to copy assets
-- Target: ES2020 with Node.js >=18.0.0
+- Target: ES2022 with Node.js >=20.0.0
 
 **Commands:**
 

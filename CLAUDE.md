@@ -156,7 +156,7 @@ npm run prepare
 
 - TypeScript compiles to CommonJS (`module: "commonjs"` in tsconfig.json)
 - Uses `__dirname`-based path resolution to copy assets
-- Target: ES2020 with Node.js >=18.0.0
+- Target: ES2022 with Node.js >=20.0.0
 
 **Commands:**
 

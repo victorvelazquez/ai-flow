@@ -10,14 +10,14 @@ Analyze the project to verify if README.md accurately documents all user-facing 
 
 Execute all steps sequentially to ensure comprehensive README validation and apply approved changes.
 
-| Step | Action                  | Focus                                    | Requires Approval     |
-| ---- | ----------------------- | ---------------------------------------- | ------------------ |
-| 1    | **Inventory CLI**       | Commands, flags, options from source     | No                 |
-| 2    | **Inventory Artifacts** | Generated files, slash commands, configs | No                 |
-| 3    | **Cross-Reference**     | Compare inventory vs README content      | No                 |
-| 4    | **Identify Gaps**       | Missing, inaccurate, or outdated info    | No                 |
-| 5    | **Generate Report**     | Prioritized recommendations with content | No                 |
-| 6    | **Apply Updates**       | Ask confirmation and apply each change   | Yes (per change)   |
+| Step | Action                  | Focus                                    | Requires Approval |
+| ---- | ----------------------- | ---------------------------------------- | ----------------- |
+| 1    | **Inventory CLI**       | Commands, flags, options from source     | No                |
+| 2    | **Inventory Artifacts** | Generated files, slash commands, configs | No                |
+| 3    | **Cross-Reference**     | Compare inventory vs README content      | No                |
+| 4    | **Identify Gaps**       | Missing, inaccurate, or outdated info    | No                |
+| 5    | **Generate Report**     | Prioritized recommendations with content | No                |
+| 6    | **Apply Updates**       | Ask confirmation and apply each change   | Yes (per change)  |
 
 ---
 
@@ -71,8 +71,8 @@ Flags Found:
 - --dry-run: Simulate without writing files (optional)
 
 Requirements:
-- Node.js: >=18.0.0
-- Version: 1.0.8
+- Node.js: >=20.0.0
+- Version: 1.0.6
 ```
 
 ---
@@ -233,7 +233,7 @@ Categorize all discrepancies found.
 
 For each gap:
 
-```markdown
+````markdown
 ### Gap: [Name]
 
 **Priority:** CRITICAL | IMPORTANT | NICE-TO-HAVE
@@ -254,9 +254,11 @@ For each gap:
 ```markdown
 [Exact markdown content, ready to paste into README]
 ```
+````
 
 **Location:** [After which section/line to add it]
-```
+
+````
 
 ---
 
@@ -352,19 +354,19 @@ After updates, verify:
 ## 📝 Conclusion
 
 [Summary of current state and recommended action priority]
-```
+````
 
 ---
 
 ## Execution Model
 
-| Step | Action              | User Interaction |
-| ---- | ------------------- | ---------------- |
-| 1    | Inventory CLI       | Automatic        |
-| 2    | Inventory artifacts | Automatic        |
-| 3    | Cross-reference     | Automatic        |
-| 4    | Identify gaps       | Automatic        |
-| 5    | Generate report     | Automatic        |
+| Step | Action              | User Interaction   |
+| ---- | ------------------- | ------------------ |
+| 1    | Inventory CLI       | Automatic          |
+| 2    | Inventory artifacts | Automatic          |
+| 3    | Cross-reference     | Automatic          |
+| 4    | Identify gaps       | Automatic          |
+| 5    | Generate report     | Automatic          |
 | 6    | Apply updates       | Approve per change |
 
 ## Constraints
@@ -406,27 +408,34 @@ For each **CRITICAL** and **IMPORTANT** gap, apply changes to README.md with use
 **For each gap from Step 5:**
 
 1. **Display the change:**
+
    ```markdown
    ## Proposed Change [N/Total]
-   
+
    **Gap:** [Title]
    **Priority:** [CRITICAL/IMPORTANT]
    **Section:** [Where to add]
-   
+
    **Current:**
    ```
+
    [Current README content or "Not present"]
-   ```
-   
+
+   ````
+
    **New:**
    ```markdown
    [Proposed markdown content]
-   ```
-   
+   ````
+
    **Apply this change?** [Tool will prompt for approval]
+
+   ```
+
    ```
 
 2. **Execute if approved:**
+
    - Use file editing tools to apply the change
    - If adding new content: Use surrounding context as anchor
    - If correcting existing: Replace old with new (preserve context)
@@ -436,14 +445,17 @@ For each **CRITICAL** and **IMPORTANT** gap, apply changes to README.md with use
 ### Change Execution Strategy
 
 **For additions (new sections):**
+
 - Find anchor point (e.g., "## 🛠️ CLI Commands" heading)
 - Replace: anchor + old content → anchor + old content + new content
 
 **For corrections (fix existing):**
+
 - Find exact old text (include 3+ lines before/after as context)
 - Replace: old incorrect text → new correct text
 
 **For updates (enhance existing):**
+
 - Find section to enhance (full section with surrounding lines)
 - Replace: old section → enhanced section
 
@@ -464,13 +476,16 @@ After all changes:
 ## 📊 Update Summary
 
 ✅ **Applied:** 2/3 changes
+
 - ✓ Missing --verbose flag (CRITICAL)
 - ✓ Wrong Copilot path (CRITICAL)
 
-⏭️ **Skipped:** 1/3 changes  
+⏭️ **Skipped:** 1/3 changes
+
 - • Add troubleshooting section (IMPORTANT)
 
 📝 **Next Steps:**
+
 - Review changes: `git diff README.md`
 - Test accuracy: Re-read updated sections
 - To revert all: `git checkout README.md`
@@ -481,4 +496,3 @@ After all changes:
 
 **Reference:** User-facing documentation standards  
 **Last Updated:** 2025-01-XX
-

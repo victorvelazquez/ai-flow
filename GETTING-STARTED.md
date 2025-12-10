@@ -1929,7 +1929,7 @@ See [README.md](README.md#-supported-languages--frameworks) for complete tables.
 
 #### Node.js Version Error
 
-**Error:** `Error: Node.js version must be >=18.0.0`
+**Error:** `Error: Node.js version must be >=20.0.0`
 
 **Solution:**
 
@@ -2176,4 +2176,3 @@ ai-flow init . --ai all --type backend --name "My API" --description "REST API" 
 **🚀 Ready to transform your development workflow with AI Flow!**
 
 For questions or support, visit [GitHub Issues](https://github.com/victorvelazquez/ai-flow/issues).
-

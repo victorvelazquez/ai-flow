@@ -110,7 +110,7 @@ The result is interconnected documentation that guides AI assistants and human d
 
 ## 📋 Prerequisites
 
-- **Node.js:** 18.0.0 or higher ([Download](https://nodejs.org/))
+- **Node.js:** 20.0.0 or higher ([Download](https://nodejs.org/))
 - **npm:** Included with Node.js
 
 ---
@@ -366,7 +366,7 @@ AI Flow follows: **Documentation as Executable Code**
 
 **Common issues:**
 
-- Node.js version must be ≥18.0.0
+- Node.js version must be ≥20.0.0
 - Check folder permissions if CLI can't write files
 - Verify slash command files exist for your AI tool
 
