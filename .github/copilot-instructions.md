@@ -37,7 +37,8 @@
 - Review `templates/docs/*.template.md` and `templates/specs/*.template.md` before editing; they enforce the doc structure AI Flow guarantees downstream.
 - Check `.ai-flow/core/config.json` schema when modifying initialization metadata; consumers expect keys `version`, `aiTools`, `createdAt`, `backend`, `frontend`.
 - Validate cross-platform behavior: Windows keeps script perms untouched, so avoid Unix-only workflows inside the CLI.
-- Review `prompts/backend/flow-project-init.md` and `prompts/backend/flow-project-roadmap.md` for 0→1 flow automation (init generates project structure, roadmap creates implementation plan with Story Points).
+- Review `prompts/backend/flow-bootstrap-phase-8.md` for project initialization logic (detects state, initializes framework, generates final docs).
+- Review `prompts/backend/flow-bootstrap-phase-9.md` for roadmap generation (creates implementation plan with Story Points, Epics, Features).
 - Check `prompts/backend/feature.md` for Story Points integration using Fibonacci scale (1, 2, 3, 5, 8, 13, 21); format is "Task • X SP" with checkbox lists.
 
 ## Collaboration Tips
@@ -45,3 +46,4 @@
 - Keep logging consistent with `chalk` semantics used in `src/cli.ts` (info = cyan/white, warnings = yellow, failures = red) to ensure CLI feedback stays predictable.
 - After structural changes, run `ai-flow init ./tmp` locally to smoke-test that templates, prompts, and slash commands land in the right paths.
 - Surface notable behavioral changes in `README.md` “Features” or “Quick Start” sections so downstream AI agents inherit accurate guidance.
+

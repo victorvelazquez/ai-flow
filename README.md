@@ -22,7 +22,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Then open your AI tool and run: /flow-docs-gen
+# Then open your AI tool and run: /flow-bootstrap
 ```
 
 📚 **[Complete Guide →](GETTING-STARTED.md)**
@@ -47,7 +47,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Luego en tu herramienta IA: /flow-docs-gen
+# Luego en tu herramienta IA: /flow-bootstrap
 ```
 
 📚 **[Guía Completa →](GETTING-STARTED.md)**
@@ -72,7 +72,7 @@ Transforme sua ideia em um projeto pronto para produção e documentado para IA 
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Em seguida, na sua ferramenta de IA: /flow-docs-gen
+# Em seguida, na sua ferramenta de IA: /flow-bootstrap
 ```
 
 📚 **[Guia Completo →](GETTING-STARTED.md)**
@@ -103,9 +103,7 @@ The result is interconnected documentation that guides AI assistants and human d
   - **Smart Auto-Suggest:** Only 6 critical questions, AI suggests best practices (15-25 min)
 - 🔍 **Smart 3-Layer Detection** - Analyzes existing projects in 15s-5min
 - 💾 **Intelligent Caching** - 0 seconds on re-runs with no changes
-- 💡 **Slash Commands** - Easy execution with `/flow-docs-gen`, `/flow-dev-feature`, `/flow-dev-fix`
-- ⏱️ **Time Efficient** - Save 10-20 hours per projectth no changes
-- 💡 **Slash Commands** - Easy execution with `/flow-docs-gen`, `/flow-dev-feature`, `/flow-dev-fix`
+- 💡 **Slash Commands** - Easy execution with `/flow-bootstrap`, `/flow-dev-feature`, `/flow-dev-fix`
 - ⏱️ **Time Efficient** - Save 10-20 hours per project
 
 ---
@@ -144,7 +142,7 @@ cd my-awesome-project
 ai-flow init .
 
 # 3. Open your AI tool and run:
-/flow-docs-gen
+/flow-bootstrap
 ```
 
 That's it! The AI will guide you through an interactive questionnaire to generate all documentation.
@@ -221,21 +219,18 @@ After initialization, use these slash commands in your AI tool:
 
 **Documentation & Bootstrap:**
 
-- `/flow-docs-gen` - Full 8-phase documentation generation
-- `/flow-docs-gen-phase-0-context` - Context discovery (existing projects)
-- `/flow-docs-gen-phase-1-business` - Business requirements
-- `/flow-docs-gen-phase-2-data` - Data architecture
-- `/flow-docs-gen-phase-3-architecture` - Technical architecture
-- `/flow-docs-gen-phase-4-security` - Security & compliance
-- `/flow-docs-gen-phase-5-standards` - Code standards
-- `/flow-docs-gen-phase-6-testing` - Testing strategy
-- `/flow-docs-gen-phase-7-operations` - Deployment & operations
+- `/flow-bootstrap` - Full 9-phase project bootstrap (includes docs + setup + roadmap)
+- `/flow-bootstrap-phase-0` - Context discovery (existing projects)
+- `/flow-bootstrap-phase-1` - Business requirements
+- `/flow-bootstrap-phase-2` - Data architecture
+- `/flow-bootstrap-phase-3` - Technical architecture
+- `/flow-bootstrap-phase-4` - Security & compliance
+- `/flow-bootstrap-phase-5` - Code standards
+- `/flow-bootstrap-phase-6` - Testing strategy
+- `/flow-bootstrap-phase-7` - Deployment & operations
+- `/flow-bootstrap-phase-8` - Project setup & final documentation
+- `/flow-bootstrap-phase-9` - Implementation roadmap with Story Points (Backend only, optional)
 - `/flow-docs-sync` - Update documentation when code changes
-
-**Project Setup (Backend only):**
-
-- `/flow-project-init` - Initialize project with framework (5-10 min, auto-executed by /flow-docs-gen)
-- `/flow-project-roadmap` - Create implementation roadmap with Story Points (15-30 min)
 
 **Workflows (Backend only):**
 
@@ -245,7 +240,7 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-dev-review` - Multi-aspect code review (5 min)
 - `/flow-dev-refactor-quick` - Quick refactorings (3-5 min)
 
-> **Note:** Frontend and Mobile projects include documentation commands (`/flow-docs-gen`, phases, `/flow-docs-sync`) but not workflow commands.
+> **Note:** Frontend and Mobile projects include bootstrap commands (`/flow-bootstrap`, phases, `/flow-docs-sync`) but not workflow commands.
 
 **📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
 
@@ -254,10 +249,11 @@ After initialization, use these slash commands in your AI tool:
 ## 💡 How It Works
 
 1. **Smart Detection** - Analyzes existing projects in 3 layers (15s to 5min)
-2. **Interactive Questionnaire** - Guides you through 8 phases (choose mode)
+2. **Interactive Questionnaire** - Guides you through 8-9 phases (choose mode)
 3. **Template Generation** - Creates 12-17 professional documents
-4. **AI Integration** - Configures your AI tool with project context
-5. **Slash Command Setup** - Installs prompts to tool-specific paths (.github/prompts/, .claude/commands/, etc.)
+4. **Implementation Roadmap** - Optional Phase 9 generates Story Point estimates
+5. **AI Integration** - Configures your AI tool with project context
+6. **Slash Command Setup** - Installs prompts to tool-specific paths (.github/prompts/, .claude/commands/, etc.)
 
 **For existing projects:**
 

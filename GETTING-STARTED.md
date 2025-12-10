@@ -111,7 +111,7 @@ You'll be asked:
 Open your AI tool (Claude, Cursor, Copilot, or Gemini) in your project folder and type:
 
 ```
-/flow-docs-gen
+/flow-bootstrap
 ```
 
 **First, choose your mode:**
@@ -146,6 +146,8 @@ Your choice (A/B): __
 - **Phase 5:** Code Standards (quality rules, conventions)
 - **Phase 6:** Testing Strategy (test types, coverage)
 - **Phase 7:** Operations & Deployment (CI/CD, monitoring)
+- **Phase 8:** Project Setup & Final Documentation (framework init, AGENT.md, README.md)
+- **Phase 9:** Implementation Roadmap (Backend only, optional - Story Points, Epics, Features)
 
 **Mode B - Smart Auto-Suggest (6 critical questions only):**
 
@@ -238,59 +240,71 @@ my-awesome-api/
 
 **Frontend projects** (12 documents), **Mobile projects** (15 documents), **Fullstack projects** (~20 documents) - see [Project Type Comparison](#project-type-comparison) for details.
 
-#### Step 6: Initialize Project (Automatic)
+#### Step 6: Phase 8 - Project Setup (Automatic)
 
-**This step is now AUTOMATIC** - `/flow-docs-gen` will ask if you want to continue with project initialization.
+**Phase 8 is now INTEGRATED** into `/flow-bootstrap` - it automatically runs after Phase 7!
 
-If you chose "Yes" at the end of `/flow-docs-gen`, the project is already initialized! ✅
+**What Phase 8 does:**
 
-If you need to run it manually (or if the session was interrupted):
+1. 🔍 **Detects project state** - Checks if framework already initialized
+2. 🚀 **Offers framework initialization** - For new projects, asks if you want to run framework CLI
+3. 📝 **Generates final documentation:**
+   - `docs/business-flows.md` - Business process flows with Mermaid diagrams
+   - `docs/api.md` - Complete API reference (auto-generated from entities)
+   - `docs/contributing.md` - Git workflow and contribution guidelines
+4. 📖 **Creates AGENT.md** - Master documentation index (single source of truth for AI)
+5. 📄 **Generates README.md** - Comprehensive project overview (merges with framework README if exists)
+6. 🤖 **Creates AI tool configs** - `.clauderules`, `.cursorrules`, `.github/copilot-instructions.md`
+7. 🗺️ **Offers Phase 9** - Optional: Generate implementation roadmap with Story Points
 
-```
-/flow-project-init
-```
+**Time:** 10-15 minutes (automated)
 
-**What this does:**
+**Framework initialization:**
 
-- ✅ Reads your tech stack from ai-instructions.md
-- ✅ Executes the official framework CLI in current directory
-- ✅ Creates base project files (package.json, tsconfig.json, main entry point, etc.)
-- ✅ Installs initial dependencies
-- ✅ Project is immediately runnable (npm start, python manage.py runserver, etc.)
+- If **new project**: Offers to run official CLI (NestJS, Django, FastAPI, etc.)
+- If **existing project**: Skips initialization, generates docs only
+- **Smart merge**: If framework creates README.md, merges it with AI Flow's comprehensive version
 
-**Time:** 5-10 minutes (automated)
-
-**Output:** Clean framework initialization with:
-
-- Configuration files (package.json, tsconfig.json, etc.)
-- Entry point (main.ts, app.py, Program.cs, etc.)
-- Basic framework structure
-- Dependencies installed
-- **Ready to run!** ✨
-
-**Note:** This does NOT create your architecture layers - those are built incrementally with `/flow-dev-feature` commands.
-
-#### Step 7: Generate Implementation Roadmap (Backend only)
-
-After scaffolding, generate a complete task breakdown:
+**Output after Phase 8:**
 
 ```
-/flow-project-roadmap
+.ai-flow/
+  ├── AGENT.md              ⭐ Master index (start here!)
+  ├── README.md             📄 Project overview
+  ├── docs/
+  │   ├── business-flows.md
+  │   ├── api.md
+  │   └── contributing.md
+  └── [tool configs]      🤖 .clauderules, .cursorrules, etc.
 ```
 
-**What this does:**
+**Note:** Framework initialization does NOT create your architecture layers - those are built incrementally with `/flow-dev-feature` commands.
+
+#### Step 7: Phase 9 - Implementation Roadmap (Backend only, Optional)
+
+**Phase 9 is OPTIONAL** - offered at the end of Phase 8 for backend projects!
+
+**What Phase 9 does:**
 
 - ✅ Analyzes ALL documentation (entities, endpoints, flows, security)
-- ✅ Breaks down into Epics, Features, and Tasks
-- ✅ Estimates Story Points (Fibonacci scale: 1, 2, 3, 5, 8, 13, 21)
+- ✅ Defines Epics organized by domain
+- ✅ Breaks down Features with Story Point estimations (Fibonacci scale: 1, 2, 3, 5, 8, 13, 21)
+- ✅ Creates Task breakdown with acceptance criteria
 - ✅ Calculates time estimates (1 dev, 2 devs, 3 devs)
-- ✅ Identifies dependencies and optimal execution order
-- ✅ Generates Mermaid dependency graph
+- ✅ Generates dependency graph (Mermaid)
+- ✅ Identifies optimal execution order and parallelization opportunities
 - ✅ Creates ready-to-execute `/flow-dev-feature` commands
 
 **Time:** 15-30 minutes (automated)
 
 **Output:** `.ai-flow/roadmap.md` with complete implementation plan
+
+**When to use:**
+
+- ✅ You want a detailed implementation plan before starting
+- ✅ You need time/cost estimates for stakeholders
+- ✅ You're working with a team and need task distribution
+- ❌ Skip if you prefer to start coding immediately
 
 **Example roadmap structure:**
 
@@ -398,8 +412,8 @@ AI Flow offers two modes to fit your workflow and time constraints.
 
 ```
 
-/flow-docs-gen → Mode A → Phase 1 (10 questions) → Phase 2 (7 questions) → ... → Phase 7 (11 questions)
-→ Quick Summary + Extended Report → Documentation Generated
+/flow-bootstrap → Mode A → Phase 1 (10 questions) → Phase 2 (7 questions) → ... → Phase 7 (11 questions)
+→ Phase 8 (project setup + final docs) → Quick Summary + Extended Report → Documentation Generated
 
 ```
 
@@ -429,7 +443,7 @@ Based on your 6 answers, the AI automatically suggests:
 
 ```
 
-/flow-docs-gen → Mode B → 6 critical questions → AI generates suggestions
+/flow-bootstrap → Mode B → 6 critical questions → AI generates suggestions
 → Quick Summary + Extended Report → Review (Accept/Customize/Change Mode)
 → Documentation Generated
 
@@ -474,8 +488,8 @@ After initialization, you have access to **26+ slash commands**:
 
 ```
 
-/flow-docs-gen # Run full process (choose mode)
-/flow-docs-gen-phase-1-business # Run only Phase 1
+/flow-bootstrap # Run full process (choose mode)
+/flow-bootstrap-phase-1-business # Run only Phase 1
 /flow-docs-sync # Update docs when code changes
 
 ```
@@ -587,11 +601,11 @@ For existing codebases, AI Flow analyzes your project first (**Phase 0: Context 
 
 #### Full Bootstrap Command
 
-The `/flow-docs-gen` command orchestrates all 8 phases:
+The `/flow-bootstrap` command orchestrates all 8 phases:
 
 ```
 
-/flow-docs-gen
+/flow-bootstrap
 
 ```
 
@@ -616,14 +630,14 @@ You can also run phases individually:
 
 ```
 
-/flow-docs-gen-phase-0-context # Context discovery (existing only)
-/flow-docs-gen-phase-1-business # Discovery & Business
-/flow-docs-gen-phase-2-data # Data Architecture
-/flow-docs-gen-phase-3-architecture # System Architecture
-/flow-docs-gen-phase-4-security # Security & Auth
-/flow-docs-gen-phase-5-standards # Code Standards
-/flow-docs-gen-phase-6-testing # Testing Strategy
-/flow-docs-gen-phase-7-operations # Operations & Deployment
+/flow-bootstrap-phase-0-context # Context discovery (existing only)
+/flow-bootstrap-phase-1-business # Discovery & Business
+/flow-bootstrap-phase-2-data # Data Architecture
+/flow-bootstrap-phase-3-architecture # System Architecture
+/flow-bootstrap-phase-4-security # Security & Auth
+/flow-bootstrap-phase-5-standards # Code Standards
+/flow-bootstrap-phase-6-testing # Testing Strategy
+/flow-bootstrap-phase-7-operations # Operations & Deployment
 
 ```
 
@@ -631,14 +645,14 @@ You can also run phases individually:
 
 ```
 
-/flow-docs-gen-phase-0-context # Context discovery
-/flow-docs-gen-phase-1-discovery # Discovery & UX
-/flow-docs-gen-phase-2-components # Components & Framework
-/flow-docs-gen-phase-3-state # State Management
-/flow-docs-gen-phase-4-styling # Styling & Design
-/flow-docs-gen-phase-5-standards # Code Standards
-/flow-docs-gen-phase-6-testing # Testing Strategy
-/flow-docs-gen-phase-7-deployment # Deployment
+/flow-bootstrap-phase-0-context # Context discovery
+/flow-bootstrap-phase-1-discovery # Discovery & UX
+/flow-bootstrap-phase-2-components # Components & Framework
+/flow-bootstrap-phase-3-state # State Management
+/flow-bootstrap-phase-4-styling # Styling & Design
+/flow-bootstrap-phase-5-standards # Code Standards
+/flow-bootstrap-phase-6-testing # Testing Strategy
+/flow-bootstrap-phase-7-deployment # Deployment
 
 ```
 
@@ -646,14 +660,14 @@ You can also run phases individually:
 
 ```
 
-/flow-docs-gen-phase-0-context # Context discovery
-/flow-docs-gen-phase-1-platform # Platform & Framework
-/flow-docs-gen-phase-2-navigation # Navigation & Architecture
-/flow-docs-gen-phase-3-state # State & Data Management
-/flow-docs-gen-phase-4-permissions # Permissions & Native Features
-/flow-docs-gen-phase-5-standards # Code Standards
-/flow-docs-gen-phase-6-testing # Testing Strategy
-/flow-docs-gen-phase-7-deployment # Deployment
+/flow-bootstrap-phase-0-context # Context discovery
+/flow-bootstrap-phase-1-platform # Platform & Framework
+/flow-bootstrap-phase-2-navigation # Navigation & Architecture
+/flow-bootstrap-phase-3-state # State & Data Management
+/flow-bootstrap-phase-4-permissions # Permissions & Native Features
+/flow-bootstrap-phase-5-standards # Code Standards
+/flow-bootstrap-phase-6-testing # Testing Strategy
+/flow-bootstrap-phase-7-deployment # Deployment
 
 ````
 
@@ -690,7 +704,7 @@ ai-flow init . --ai claude
 **Usage:**
 
 ```
-/flow-docs-gen                    # In Claude chat
+/flow-bootstrap                    # In Claude chat
 /flow-dev-feature "real-time notifications"
 /flow-dev-review
 ```
@@ -718,7 +732,7 @@ ai-flow init . --ai cursor
 **Usage:**
 
 ```
-/flow-docs-gen                    # In Cursor chat
+/flow-bootstrap                    # In Cursor chat
 Ctrl+K → /flow-dev-feature "user authentication"
 ```
 
@@ -745,7 +759,7 @@ ai-flow init . --ai copilot
 **Usage:**
 
 ```
-/flow-docs-gen                    # In Copilot chat (or GitHub Web)
+/flow-bootstrap                    # In Copilot chat (or GitHub Web)
 /flow-dev-feature "payment processing"
 ```
 
@@ -771,7 +785,7 @@ ai-flow init . --ai gemini
 **Usage:**
 
 ```
-/flow-docs-gen
+/flow-bootstrap
 /flow-dev-work resume feature-notifications
 ```
 
@@ -1016,31 +1030,31 @@ Run specific bootstrap phases independently for targeted updates.
 
 ```
 # Security policies changed
-/flow-docs-gen-phase-4-security
+/flow-bootstrap-phase-4-security
 
 # New testing requirements
-/flow-docs-gen-phase-6-testing
+/flow-bootstrap-phase-6-testing
 ```
 
 **Scenario 2: Onboard team members**
 
 ```
 # New backend developer joins
-/flow-docs-gen-phase-3-architecture
-/flow-docs-gen-phase-5-standards
+/flow-bootstrap-phase-3-architecture
+/flow-bootstrap-phase-5-standards
 
 # New DevOps engineer joins
-/flow-docs-gen-phase-7-operations
+/flow-bootstrap-phase-7-operations
 ```
 
 **Scenario 3: Deep dive into complex areas**
 
 ```
 # Large data model redesign
-/flow-docs-gen-phase-2-data
+/flow-bootstrap-phase-2-data
 
 # Architecture refactoring
-/flow-docs-gen-phase-3-architecture
+/flow-bootstrap-phase-3-architecture
 ```
 
 #### Phase Command Reference
@@ -1048,43 +1062,46 @@ Run specific bootstrap phases independently for targeted updates.
 **All project types:**
 
 ```
-/flow-docs-gen-phase-0-context          # Context Discovery (existing projects)
+/flow-bootstrap-phase-0-context          # Context Discovery (existing projects)
 ```
 
 **Backend-specific:**
 
 ```
-/flow-docs-gen-phase-1-business         # Discovery & Business (15-20 min)
-/flow-docs-gen-phase-2-data             # Data Architecture (15-20 min)
-/flow-docs-gen-phase-3-architecture     # System Architecture (15-20 min)
-/flow-docs-gen-phase-4-security         # Security & Auth (15-20 min)
-/flow-docs-gen-phase-5-standards        # Code Standards (15-20 min)
-/flow-docs-gen-phase-6-testing          # Testing Strategy (15-25 min)
-/flow-docs-gen-phase-7-operations       # Operations & Deployment (10 min)
+/flow-bootstrap-phase-1-business         # Discovery & Business (15-20 min)
+/flow-bootstrap-phase-2-data             # Data Architecture (15-20 min)
+/flow-bootstrap-phase-3-architecture     # System Architecture (15-20 min)
+/flow-bootstrap-phase-4-security         # Security & Auth (15-20 min)
+/flow-bootstrap-phase-5-standards        # Code Standards (15-20 min)
+/flow-bootstrap-phase-6-testing          # Testing Strategy (15-25 min)
+/flow-bootstrap-phase-7-operations       # Operations & Deployment (10 min)
+/flow-bootstrap-phase-8                  # Project Setup & Final Docs (10-15 min)
 ```
 
 **Frontend-specific:**
 
 ```
-/flow-docs-gen-phase-1-discovery        # Discovery & UX
-/flow-docs-gen-phase-2-components       # Components & Framework
-/flow-docs-gen-phase-3-state            # State Management
-/flow-docs-gen-phase-4-styling          # Styling & Design
-/flow-docs-gen-phase-5-standards        # Code Standards
-/flow-docs-gen-phase-6-testing          # Testing Strategy
-/flow-docs-gen-phase-7-deployment       # Deployment
+/flow-bootstrap-phase-1-discovery        # Discovery & UX
+/flow-bootstrap-phase-2-components       # Components & Framework
+/flow-bootstrap-phase-3-state            # State Management
+/flow-bootstrap-phase-4-styling          # Styling & Design
+/flow-bootstrap-phase-5-standards        # Code Standards
+/flow-bootstrap-phase-6-testing          # Testing Strategy
+/flow-bootstrap-phase-7-deployment       # Deployment
+/flow-bootstrap-phase-8                  # Project Setup & Final Docs (10-15 min)
 ```
 
 **Mobile-specific:**
 
 ```
-/flow-docs-gen-phase-1-platform         # Platform & Framework
-/flow-docs-gen-phase-2-navigation       # Navigation & Architecture
-/flow-docs-gen-phase-3-state            # State & Data Management
-/flow-docs-gen-phase-4-permissions      # Permissions & Native Features
-/flow-docs-gen-phase-5-standards        # Code Standards
-/flow-docs-gen-phase-6-testing          # Testing Strategy
-/flow-docs-gen-phase-7-deployment       # Deployment
+/flow-bootstrap-phase-1-platform         # Platform & Framework
+/flow-bootstrap-phase-2-navigation       # Navigation & Architecture
+/flow-bootstrap-phase-3-state            # State & Data Management
+/flow-bootstrap-phase-4-permissions      # Permissions & Native Features
+/flow-bootstrap-phase-5-standards        # Code Standards
+/flow-bootstrap-phase-6-testing          # Testing Strategy
+/flow-bootstrap-phase-7-deployment       # Deployment
+/flow-bootstrap-phase-8                  # Project Setup & Final Docs (10-15 min)
 ```
 
 #### Phase Dependencies
@@ -1107,19 +1124,26 @@ Phase 5 (Standards) → Code quality rules
 Phase 6 (Testing) → Test strategy (depends on Phases 2-5)
     ↓
 Phase 7 (Operations/Deployment) → CI/CD (depends on all previous)
+    ↓
+Phase 8 (Project Setup & Final Docs) → Framework init, AGENT.md, README.md
+    ↓
+Phase 9 (Implementation Roadmap) → Optional (Backend only) - Story Points, Epics, Features
 ```
 
 **Example: Updating only architecture and testing**
 
 ```bash
 # 1. Update architecture decisions
-/flow-docs-gen-phase-3-architecture
+/flow-bootstrap-phase-3-architecture
 
 # 2. Update testing to match new architecture
-/flow-docs-gen-phase-6-testing
+/flow-bootstrap-phase-6-testing
 
 # 3. Update operations for new deployment pattern
-/flow-docs-gen-phase-7-operations
+/flow-bootstrap-phase-7-operations
+
+# 4. Regenerate final docs and README
+/flow-bootstrap-phase-8
 ```
 
 ### 3.3 Workflow Commands
@@ -1774,13 +1798,13 @@ You can upgrade scope after initial bootstrap:
 
 ```bash
 # Initially chose MVP, now need Production-Ready
-/flow-docs-gen-phase-6-testing    # Expand testing strategy
-/flow-docs-gen-phase-7-operations # Add CI/CD and monitoring
+/flow-bootstrap-phase-6-testing    # Expand testing strategy
+/flow-bootstrap-phase-7-operations # Add CI/CD and monitoring
 
 # Upgrading to Enterprise
-/flow-docs-gen-phase-4-security   # Add compliance docs
-/flow-docs-gen-phase-6-testing    # Add e2e tests
-/flow-docs-gen-phase-7-operations # Add disaster recovery
+/flow-bootstrap-phase-4-security   # Add compliance docs
+/flow-bootstrap-phase-6-testing    # Add e2e tests
+/flow-bootstrap-phase-7-operations # Add disaster recovery
 ```
 
 ---
@@ -1803,50 +1827,43 @@ ai-flow --help                  # Show help
 #### Bootstrap Commands - Backend (9)
 
 ```
-/flow-docs-gen                           # Full 8-phase process (90-120 min)
-/flow-docs-gen-phase-0-context           # Context discovery (existing only)
-/flow-docs-gen-phase-1-business          # Discovery & Business
-/flow-docs-gen-phase-2-data              # Data Architecture
-/flow-docs-gen-phase-3-architecture      # System Architecture
-/flow-docs-gen-phase-4-security          # Security & Auth
-/flow-docs-gen-phase-5-standards         # Code Standards
-/flow-docs-gen-phase-6-testing           # Testing Strategy
-/flow-docs-gen-phase-7-operations        # Operations & Deployment
+/flow-bootstrap                           # Full 8-phase process (90-120 min)
+/flow-bootstrap-phase-0-context           # Context discovery (existing only)
+/flow-bootstrap-phase-1-business          # Discovery & Business
+/flow-bootstrap-phase-2-data              # Data Architecture
+/flow-bootstrap-phase-3-architecture      # System Architecture
+/flow-bootstrap-phase-4-security          # Security & Auth
+/flow-bootstrap-phase-5-standards         # Code Standards
+/flow-bootstrap-phase-6-testing           # Testing Strategy
+/flow-bootstrap-phase-7-operations        # Operations & Deployment
 ```
 
 #### Bootstrap Commands - Frontend (9)
 
 ```
-/flow-docs-gen                           # Full 8-phase process
-/flow-docs-gen-phase-0-context           # Context discovery
-/flow-docs-gen-phase-1-discovery         # Discovery & UX
-/flow-docs-gen-phase-2-components        # Components & Framework
-/flow-docs-gen-phase-3-state             # State Management
-/flow-docs-gen-phase-4-styling           # Styling & Design
-/flow-docs-gen-phase-5-standards         # Code Standards
-/flow-docs-gen-phase-6-testing           # Testing Strategy
-/flow-docs-gen-phase-7-deployment        # Deployment
+/flow-bootstrap                           # Full 8-phase process
+/flow-bootstrap-phase-0-context           # Context discovery
+/flow-bootstrap-phase-1-discovery         # Discovery & UX
+/flow-bootstrap-phase-2-components        # Components & Framework
+/flow-bootstrap-phase-3-state             # State Management
+/flow-bootstrap-phase-4-styling           # Styling & Design
+/flow-bootstrap-phase-5-standards         # Code Standards
+/flow-bootstrap-phase-6-testing           # Testing Strategy
+/flow-bootstrap-phase-7-deployment        # Deployment
 ```
 
 #### Bootstrap Commands - Mobile (9)
 
 ```
-/flow-docs-gen                           # Full 8-phase process
-/flow-docs-gen-phase-0-context           # Context discovery
-/flow-docs-gen-phase-1-platform          # Platform & Framework
-/flow-docs-gen-phase-2-navigation        # Navigation & Architecture
-/flow-docs-gen-phase-3-state             # State & Data Management
-/flow-docs-gen-phase-4-permissions       # Permissions & Native Features
-/flow-docs-gen-phase-5-standards         # Code Standards
-/flow-docs-gen-phase-6-testing           # Testing Strategy
-/flow-docs-gen-phase-7-deployment        # Deployment
-```
-
-#### Project Setup - Backend Only (2)
-
-```
-/flow-project-init                  # Initialize with framework (5-10 min, auto-run by /flow-docs-gen)
-/flow-project-roadmap               # Generate implementation plan (15-30 min)
+/flow-bootstrap                           # Full 8-phase process
+/flow-bootstrap-phase-0-context           # Context discovery
+/flow-bootstrap-phase-1-platform          # Platform & Framework
+/flow-bootstrap-phase-2-navigation        # Navigation & Architecture
+/flow-bootstrap-phase-3-state             # State & Data Management
+/flow-bootstrap-phase-4-permissions       # Permissions & Native Features
+/flow-bootstrap-phase-5-standards         # Code Standards
+/flow-bootstrap-phase-6-testing           # Testing Strategy
+/flow-bootstrap-phase-7-deployment        # Deployment
 ```
 
 #### Workflow Commands - Backend Only (5)
@@ -1867,14 +1884,14 @@ ai-flow --help                  # Show help
 /frontend-docs-update               # Fullstack: frontend only
 ```
 
-**Total Commands:** 26+ (varies by project type)
+**Total Commands:** 25+ (varies by project type)
 
 ### Project Type Comparison
 
 | Feature                 | Backend        | Frontend       | Mobile       | Fullstack   |
 | ----------------------- | -------------- | -------------- | ------------ | ----------- |
 | **Documents Generated** | 17             | 12             | 15           | ~20         |
-| **Bootstrap Phases**    | 8 (0-7)        | 8 (0-7)        | 8 (0-7)      | 16 (both)   |
+| **Bootstrap Phases**    | 8 (0-8)        | 8 (0-8)        | 8 (0-8)      | 16 (both)   |
 | **Workflow Commands**   | ✅ 5           | ❌ None        | ❌ None      | ✅ 5        |
 | **Context Detection**   | ✅ 3-layer     | ✅ 3-layer     | ✅ 3-layer   | ✅ 3-layer  |
 | **Languages Supported** | 12             | JavaScript/TS  | Native/Cross | Both        |
@@ -1944,7 +1961,7 @@ chmod 755 .
 
 #### Slash Commands Not Working
 
-**Problem:** `/flow-docs-gen` command not recognized in AI tool
+**Problem:** `/flow-bootstrap` command not recognized in AI tool
 
 **Solution:**
 
@@ -1975,7 +1992,7 @@ chmod 755 .
 
 4. **Manual invocation:**
    ```
-   Read .ai-flow/prompts/backend/flow-docs-gen.md and execute
+   Read .ai-flow/prompts/backend/flow-bootstrap.md and execute
    ```
 
 #### AI Tool Not Detecting Config
@@ -2006,7 +2023,7 @@ chmod 755 .
 
 #### Documentation Not Generated
 
-**Problem:** `/flow-docs-gen` completes but files missing
+**Problem:** `/flow-bootstrap` completes but files missing
 
 **Solution:**
 
@@ -2049,7 +2066,7 @@ chmod 755 .
 
 3. **Force full re-analysis:**
    ```
-   /flow-docs-gen-phase-0-context
+   /flow-bootstrap-phase-0-context
    ```
 
 ### Best Practices
@@ -2151,7 +2168,7 @@ ai-flow init . --ai all --type backend --name "My API" --description "REST API" 
 /flow-docs-sync → Review changes → Commit
 
 # Team onboarding
-/flow-docs-gen-phase-3-architecture → Share with new dev
+/flow-bootstrap-phase-3-architecture → Share with new dev
 ```
 
 ---
@@ -2159,3 +2176,4 @@ ai-flow init . --ai all --type backend --name "My API" --description "REST API" 
 **🚀 Ready to transform your development workflow with AI Flow!**
 
 For questions or support, visit [GitHub Issues](https://github.com/victorvelazquez/ai-flow/issues).
+
