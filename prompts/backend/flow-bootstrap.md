@@ -99,9 +99,22 @@ Ask these 6 questions one by one with progress indicator:
 
    - What are the top 3 measurable objectives for this project?
 
-4. **System Type**
+4. **System Type** (Critical for auto-suggestions)
 
-   - What type of system are you building? (E-commerce/SaaS/CRM/Social/etc.)
+   - What type of system are you building?
+
+   **Options:**
+
+   - A) E-commerce (Product catalog, cart, checkout)
+   - B) SaaS (Multi-tenant, subscriptions, RBAC)
+   - C) CRM (Contacts, leads, sales pipeline)
+   - D) Social Network (Users, posts, feeds, messaging)
+   - E) Content Management (Articles, media, publishing)
+   - F) Project Management (Projects, tasks, boards)
+   - G) API Platform (API keys, rate limiting, webhooks)
+   - H) Marketplace (Buyers, sellers, listings)
+   - I) IoT Platform (Devices, sensors, commands)
+   - J) Other (will use generic defaults)
 
 5. **Core Data Entities** (if new project - skip if Phase 0 detected)
 
@@ -110,81 +123,94 @@ Ask these 6 questions one by one with progress indicator:
 6. **Backend Framework** (if new project - skip if Phase 0 detected)
    - Which backend framework will you use? (NestJS/FastAPI/Spring Boot/etc.)
 
-### Step 2: Auto-Generate Suggestions
+### Step 2: Auto-Generate Intelligent Suggestions
 
-Based on the 6 critical answers, automatically suggest values for the remaining 65 questions using this logic:
+Based on the 6 critical answers, automatically generate comprehensive suggestions using AI reasoning.
 
-**Auto-Suggestion Decision Tree:**
+**Suggestion Logic:**
 
-```
-// Phase 1 (Business) - Auto-suggest based on system type
-IF system_type == "E-commerce":
-  target_users = "B2C + Mobile/Web apps"
-  core_features = ["Authentication", "Product catalog", "Shopping cart", "Checkout", "Order management"]
+For each phase, suggest defaults based on:
 
-IF system_type == "SaaS":
-  target_users = "B2B + API consumers"
-  core_features = ["Authentication with SSO", "Multi-tenant workspaces", "RBAC", "Subscription billing"]
+- **System Type** - E-commerce needs cart/checkout, SaaS needs multi-tenancy, etc.
+- **Framework** - NestJS → Prisma, FastAPI → SQLAlchemy, Django → Django ORM
+- **Scope** - MVP → simple setup, Production → robust setup, Enterprise → full observability
 
-// Phase 2 (Data) - Auto-suggest based on entities and system type
-database = "PostgreSQL" (default for most projects)
-orm = MATCH framework:
-  NestJS → "Prisma"
-  FastAPI → "SQLAlchemy"
-  Spring Boot → "Hibernate/JPA"
+**What Gets Auto-Generated:**
 
-// Phase 3 (Architecture) - Auto-suggest based on framework
-api_style = "REST" (standard)
-architecture_pattern = "Clean Architecture" (modular, testable)
+**Phase 1 (Business):**
 
-// Phase 4 (Security) - Best practices
-auth_method = "JWT"
-authorization = "RBAC"
-password_policy = "8+ chars, bcrypt 12 rounds"
+- ✅ Target users based on system type
+- ✅ Core features typical for the system type
+- ✅ Success metrics appropriate for the domain
 
-// Phase 5 (Code Standards) - Based on framework
-formatter = MATCH framework:
-  NestJS/Node.js → "Prettier + ESLint"
-  Python → "Black + pylint"
-  Java → "Spotless + Checkstyle"
+**Phase 2 (Data):**
 
-// Phase 6 (Testing) - Based on scope
-IF scope == "MVP":
-  coverage_target = "15-25%"
-  test_types = ["Integration only"]
-ELSE:
-  coverage_target = "60-80%"
-  test_types = ["Unit (70%)", "Integration (20%)", "E2E (10%)"]
+- ✅ Database: PostgreSQL (most common)
+- ✅ ORM: Match framework idiomatically
+- ✅ Caching: Redis for Production/Enterprise
+- ✅ Search: Elasticsearch only for Enterprise
 
-// Phase 7 (Operations) - Based on scope
-IF scope == "MVP":
-  deployment = "PaaS (Heroku/Railway)"
-  monitoring = "Basic (Sentry for errors)"
-ELSE:
-  deployment = "Cloud (AWS/GCP)"
-  monitoring = "Full (Datadog APM + Sentry)"
-```
+**Phase 3 (Architecture):**
+
+- ✅ Pattern: Monolith (MVP) → Clean Architecture (Production) → Microservices (Enterprise)
+- ✅ API: REST only (MVP) → REST + GraphQL (Production) → + gRPC (Enterprise)
+- ✅ Scaling strategy based on scope
+
+**Phase 4 (Security):**
+
+- ✅ Auth: JWT for MVP/Production, OAuth2 + SSO for Enterprise
+- ✅ Authorization: RBAC standard, ABAC for Enterprise
+- ✅ Password policies per scope
+- ✅ Rate limiting and CORS enabled
+
+**Phase 5 (Code Standards):**
+
+- ✅ Formatter/Linter matching framework (Prettier+ESLint, Black+pylint, etc.)
+- ✅ Git workflow: GitHub Flow (MVP), Git Flow (Production)
+- ✅ Conventional Commits
+
+**Phase 6 (Testing):**
+
+- ✅ Framework matching tech stack
+- ✅ Coverage: 20% (MVP), 70% (Production), 85% (Enterprise)
+- ✅ Test types distribution
+
+**Phase 7 (Operations):**
+
+- ✅ Deployment: PaaS (MVP), Cloud (Production), Multi-region (Enterprise)
+- ✅ CI/CD: GitHub Actions
+- ✅ Monitoring: Basic (MVP), APM (Production), Full observability (Enterprise)
 
 ### Step 3: Present Summary for Review
 
-After auto-generating all suggestions, present a two-tier summary:
+After auto-generating all suggestions, present a clear summary:
 
-#### **Quick Summary (1 paragraph max)**
+#### **Quick Summary (1 paragraph)**
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ Configuration Complete - Quick Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Your [System Type] backend will use [Framework] with [Database], following Clean Architecture with [X] entities ([list main entities]). Security includes JWT auth with RBAC, bcrypt passwords, and rate limiting. Code follows [Language] best practices with [Formatter/Linter], targeting [X]% test coverage. Deployment to [Platform] with [Monitoring] for production readiness.
+Your [System Type] backend will use [Framework] with [Database], following
+[Architecture Pattern] with [X] entities ([entity names]). Security includes
+[Auth Method] with [Authorization], [Password Policy]. Code follows
+[Formatter] + [Linter], targeting [Coverage Target] test coverage. Deployment
+to [Deployment Platform] with [Monitoring] for production readiness.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Example:**
+**Example (E-commerce + NestJS + Production):**
 
 ```
-Your E-commerce backend will use NestJS (TypeScript) with PostgreSQL and Prisma, following Clean Architecture with 8 entities (User, Product, Category, Cart, Order, Payment, Address, Review). Security includes JWT auth with RBAC (admin, user roles), bcrypt passwords, and rate limiting on all endpoints. Code follows TypeScript strict mode with Prettier + ESLint, targeting 60-80% test coverage with Jest. Deployment to Heroku for MVP with Sentry error tracking for production readiness.
+Your E-commerce backend will use NestJS with PostgreSQL, following Clean
+Architecture with 8 entities (User, Product, Category, Cart, Order, Payment,
+Address, Review). Security includes JWT + Refresh Tokens with RBAC,
+12+ characters bcrypt 12 rounds. Code follows Prettier + ESLint +
+@typescript-eslint, targeting 70% test coverage. Deployment to Cloud
+(AWS/GCP/Azure) with APM (Datadog/New Relic) + Sentry for production
+readiness.
 ```
 
 #### **Extended Report (Organized by Phase)**
@@ -195,67 +221,43 @@ Your E-commerce backend will use NestJS (TypeScript) with PostgreSQL and Prisma,
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Phase 1: Business & Discovery**
-• System Type: [E-commerce]
-• Target Users: External end-users (B2C) + Mobile/Web apps
-• Core Features: Authentication, Product catalog with search/filters, Shopping cart, Checkout and payment, Order management, Inventory tracking, Admin dashboard
-• Scope: V1 includes auth + catalog + cart + checkout; V2 defers advanced analytics, third-party integrations
-• Constraints: Time (MVP by Q2 2025)
-• Success Metrics: 1k→10k users, <200ms response, 99% uptime
+• System Type: [From user input]
+• Target Users: [AI-suggested based on system type]
+• Core Features: [AI-suggested based on system type]
+• Success Metrics: [AI-suggested based on system type]
 
 **Phase 2: Data Architecture**
-• Database: PostgreSQL 15 (ACID, relational, JSON support)
-• ORM: Prisma 5.x (type-safe, auto-migrations)
-• Entities: User, Product, Category, Cart, Order, OrderItem, Payment, Address
-• Relationships: User→Order (1:N), Order→OrderItem (1:N), User→Cart (1:N), Category→Product (1:N)
-• Data Volume: Low (<10k records), Moderate growth, Low complexity (text-based)
-• Retention: Keep forever (no auto-deletion)
+• Database: [AI-suggested from scope]
+• ORM: [AI-suggested from framework]
+• Caching: [AI-suggested from scope]
+• Core Entities: [From user input]
 
 **Phase 3: System Architecture**
-• Framework: NestJS 10.x (TypeScript, enterprise-ready)
-• Language: TypeScript 5.3 with strict mode
-• API Style: REST with OpenAPI/Swagger auto-docs
-• Architecture: Clean Architecture (feature-based modules)
-• External Services: SendGrid (email), Stripe (payments), AWS S3 (file storage)
-• Caching: None for MVP (defer to V2)
-• Background Jobs: None for MVP
+• Framework: [From user input]
+• Pattern: [AI-suggested from scope]
+• API Style: [AI-suggested from scope]
+• Scaling: [AI-suggested from scope]
 
-**Phase 4: Security & Authentication**
-• Auth Method: JWT (stateless, scalable)
-• Token Config: 15min access, 7d refresh, RS256 algorithm
-• Authorization: RBAC with roles (admin, user, moderator)
-• Password Policy: 8+ chars, uppercase + lowercase + number, bcrypt 12 rounds
-• Rate Limiting: 5/15min (auth), 100/min (read), 30/min (write)
-• CORS: Specific origins (https://myapp.com + localhost:3000 for dev)
-• Encryption: TLS 1.2+ in transit, AES-256 for PII fields at rest
-• Compliance: GDPR (if EU users) - data export, deletion rights
+**Phase 4: Security**
+• Authentication: [AI-suggested from scope]
+• Authorization: [AI-suggested from scope]
+• Password Policy: [AI-suggested from scope]
 
 **Phase 5: Code Standards**
-• Formatter: Prettier + ESLint (2 spaces, single quotes, semicolons)
-• Naming: kebab-case files, PascalCase classes, camelCase functions
-• Structure: Feature-based modules (users/, products/, orders/)
-• Documentation: JSDoc for public APIs and complex logic
-• Error Handling: Centralized exception handler with custom error classes
-• Logging: Winston with JSON structured logs
-• Git Workflow: Feature branch + PR with 1 reviewer approval
-• Commits: Conventional Commits (feat/fix/docs/chore)
+• Formatter: [AI-suggested from framework]
+• Linter: [AI-suggested from framework]
+• Git Workflow: [AI-suggested from scope]
 
-**Phase 6: Testing Strategy**
-• Framework: Jest (unit + integration + e2e)
-• Coverage Target: 60-80% overall
-• Test Distribution: 70% unit, 20% integration, 10% e2e
-• Test Database: In-memory SQLite for fast tests
-• Mocking: External APIs, payment gateways, email service
-• CI Integration: GitHub Actions with automated test runs on PR
+**Phase 6: Testing**
+• Coverage Target: [AI-suggested from scope]
+• Framework: [AI-suggested from framework]
 
-**Phase 7: Operations & Deployment**
-• Platform: Heroku (PaaS for fast MVP deployment)
-• Containerization: Docker + Docker Compose for local dev
-• Environments: Development (local), Staging (Heroku pipeline), Production (Heroku)
-• CI/CD: GitHub Actions (test → build → deploy to staging → manual approval → production)
-• Monitoring: Sentry for error tracking, basic console logs
-• Health Checks: /health endpoint with database connectivity check
-• Backups: Daily automated PostgreSQL backups (Heroku addon)
+**Phase 7: Operations**
+• Deployment: [AI-suggested from scope]
+• Monitoring: [AI-suggested from scope]
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 These suggestions can be customized during document review.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -289,7 +291,7 @@ Your choice (A/B/C): __
 
 ### Step 5: Generate Documentation
 
-Generate all 17 documents using the confirmed values (either auto-suggested or user-customized).
+Generate all 17 documents using the confirmed values (either AI-suggested or user-customized).
 
 ---
 
@@ -882,4 +884,3 @@ _Version: 4.0 (Phase 9 integrated - Implementation Roadmap with Story Points)_
 _Last Updated: 2025-12-09_
 _Version: 3.0 (Unified workflow: Phase 8 integrates project setup + final docs generation)_
 _AI Flow - Transform your idea into production-ready code in minutes_
-
