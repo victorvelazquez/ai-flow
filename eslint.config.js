@@ -1,12 +1,7 @@
-const { FlatCompat } = require('@eslint/eslintrc');
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import tsParser from '@typescript-eslint/parser';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
 
-const tsParser = require('@typescript-eslint/parser');
-const tsPlugin = require('@typescript-eslint/eslint-plugin');
-
-module.exports = [
+export default [
   {
     files: ['src/**/*.ts'],
     languageOptions: {
