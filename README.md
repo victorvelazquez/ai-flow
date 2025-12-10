@@ -182,6 +182,13 @@ ai-flow init .
 
 # Hybrid mode (some flags, some prompts)
 ai-flow init . --ai claude
+
+# Enable verbose output (detailed logging)
+ai-flow init . --verbose
+ai-flow check --verbose
+
+# Simulate initialization without writing files (dry-run)
+ai-flow init . --dry-run --verbose
 ```
 
 ---
@@ -216,6 +223,10 @@ Each tool gets:
 ## 📋 Available Commands
 
 After initialization, use these slash commands in your AI tool:
+
+**Backend Projects:** 17 commands  
+**Frontend/Mobile Projects:** 11 commands (bootstrap + docs-sync)  
+**Fullstack Projects:** Combined backend + frontend commands
 
 **Documentation & Bootstrap:**
 
@@ -272,7 +283,7 @@ After initialization, use these slash commands in your AI tool:
 
 ## 🎯 Generated Documentation
 
-**Backend** (17 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 2 specs, .env.example
+**Backend** (17 docs): AGENT.md, ai-instructions.md, copilot-instructions.md (for GitHub Copilot), project-brief.md, README.md, 9 technical docs, 2 specs, .env.example, .clauderules, .cursorrules
 
 **Frontend** (12 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 3 specs
 
@@ -368,7 +379,12 @@ AI Flow follows: **Documentation as Executable Code**
 
 - Node.js version must be ≥20.0.0
 - Check folder permissions if CLI can't write files
-- Verify slash command files exist for your AI tool
+- Verify slash command files exist for your AI tool:
+  - **GitHub Copilot:** `.github/prompts/*.prompt.md`
+  - **Claude:** `.claude/commands/*.md`
+  - **Cursor:** `.cursor/commands/*.md`
+  - **Gemini:** `.gemini/commands/*.md`
+  - If missing, re-run: `ai-flow init . --ai <your-tool>`
 
 **📚 See [GETTING-STARTED.md](GETTING-STARTED.md#troubleshooting) for detailed troubleshooting guide**
 
