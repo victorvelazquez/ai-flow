@@ -239,7 +239,7 @@ async function selectProjectType(
   // v1.4.0: Interactive selection for backend/frontend/fullstack/mobile
   const answer = await inquirer.prompt([
     {
-      type: 'list',
+      type: 'rawlist',
       name: 'projectType',
       message: 'What type of project are you bootstrapping?',
       choices: [
