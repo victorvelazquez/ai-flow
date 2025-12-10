@@ -37,7 +37,7 @@
     "url": "https://github.com/victorvelazquez/ai-flow.git"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "chalk": "^5.6.2",
