@@ -206,6 +206,7 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
         name: tool.name,
         value: tool.value,
       })),
+      default: 1,
     },
   ]);
 
@@ -248,6 +249,7 @@ async function selectProjectType(
         { name: '🚀 Full Stack Application', value: 'fullstack' },
         { name: '📱 Mobile Application', value: 'mobile' },
       ],
+      default: 1,
     },
   ]);
   return answer.projectType;
