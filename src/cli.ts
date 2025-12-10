@@ -199,15 +199,13 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
 
   const { selectedTool } = await inquirer.prompt([
     {
-      type: 'list',
+      type: 'rawlist',
       name: 'selectedTool',
       message: 'Select your AI tool:',
       choices: AI_TOOLS.map((tool) => ({
         name: tool.name,
         value: tool.value,
       })),
-      pageSize: 15,
-      loop: false,
     },
   ]);
 
