@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (12-17 docs per project type)
+- 🚀 Complete professional documentation (11-17 docs per project type)
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 Multi-AI support with slash commands
@@ -35,7 +35,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (12-17 docs por tipo)
+- 🚀 Documentación profesional completa (11-17 docs por tipo)
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
 - 🤖 Compatible con Claude, Copilot, Cursor, Gemini
@@ -59,7 +59,7 @@ ai-flow init .
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (12-17 docs por tipo)
+- 🚀 Documentação profissional completa (11-17 docs por tipo)
 - ⚡ **Dois modos:** Interativo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
 - 🌍 Suporte universal - 12 linguagens, 60+ frameworks, 35+ ORMs
 - 🤖 Compatível com Claude, Copilot, Cursor, Gemini
@@ -97,7 +97,7 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, any AI tool
-- 📚 **Professional Documentation** - 12-17 docs per project type
+- 📚 **Professional Documentation** - 11-17 docs per project type
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, 71 questions (90-120 min)
   - **Smart Auto-Suggest:** Only 6 critical questions, AI suggests best practices (15-25 min)
@@ -274,9 +274,9 @@ After initialization, use these slash commands in your AI tool:
 
 **Backend** (17 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 2 specs, .env.example
 
-**Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 3 specs
+**Frontend** (12 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 3 specs
 
-**Mobile** (14 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 8 technical docs, 2 specs
+**Mobile** (11 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 8 technical docs, 2 specs
 
 **Fullstack** (~20 docs): Merges backend + frontend templates with priority resolution (fullstack-specific → backend → frontend)
 
