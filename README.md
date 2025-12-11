@@ -133,7 +133,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-**Current version:** 1.1.1
+**Current version:** 2.0.0
 
 ---
 
@@ -320,13 +320,13 @@ After initialization, use these slash commands in your AI tool:
 
 ## 🎯 Generated Documentation
 
-**Backend** (17 docs): AGENT.md, ai-instructions.md, copilot-instructions.md (for GitHub Copilot), project-brief.md, README.md, 9 technical docs, 2 specs, .env.example, .clauderules, .cursorrules
+**Backend** (14 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 technical docs and 2 specs
 
-**Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 3 specs
+**Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, plus 8 technical docs and 3 specs
 
-**Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 8 technical docs, 2 specs
+**Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, plus 7 technical docs and 2 specs
 
-**Fullstack** (4+ docs): ai-instructions.md, project-brief.md, README.md, configuration spec + inherits from backend/frontend as needed
+**Fullstack** (4 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md
 
 ### 📁 Generated Structure
 
@@ -490,6 +490,3 @@ MIT License - See [LICENSE](LICENSE) for details.
 **Transform your idea into a production-ready project with AI Flow** 🚀
 
 **Made with ❤️ for the developer community**
-
-
-
