@@ -37,7 +37,7 @@
 
 Before starting, ensure you have:
 
-- **Node.js:** 18.0.0 or higher ([Download](https://nodejs.org/))
+- **Node.js:** 20.0.0 or higher ([Download](https://nodejs.org/))
 - **npm:** Included with Node.js
 - **An AI tool:** Claude, Cursor, GitHub Copilot, or Gemini
 
