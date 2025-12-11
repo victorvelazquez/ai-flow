@@ -8,4 +8,3 @@ export async function assertDirWritable(dir: string): Promise<void> {
   await fs.writeFile(probe, 'x');
   await fs.remove(probe);
 }
-

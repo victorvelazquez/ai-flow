@@ -90,22 +90,16 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
     const tool = AI_TOOLS.find((t) => t.value === providedTool);
     if (!tool) {
       console.error(chalk.red(`❌ Invalid AI tool: ${providedTool}`));
-      console.log(
-        chalk.yellow('Available options: claude, cursor, copilot, gemini, all')
-      );
+      console.log(chalk.yellow('Available options: claude, cursor, copilot, gemini, all'));
       process.exit(EXIT.INVALID_ARGS);
     }
-    return providedTool === 'all'
-      ? ['claude', 'cursor', 'copilot', 'gemini']
-      : [providedTool];
+    return providedTool === 'all' ? ['claude', 'cursor', 'copilot', 'gemini'] : [providedTool];
   }
 
   // Display banner
   console.log('\n');
   console.log(
-    chalk.cyan(
-      '    ╔═══════════════════════════════════════════════════════════════════╗'
-    )
+    chalk.cyan('    ╔═══════════════════════════════════════════════════════════════════╗')
   );
   console.log(
     chalk.cyan('    ║') +
@@ -114,41 +108,31 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
   );
   console.log(
     chalk.cyan('    ║') +
-      chalk.bold.cyan(
-        '          █████╗ ██╗    ███████╗██╗      ██████╗ ██╗    ██╗'
-      ) +
+      chalk.bold.cyan('          █████╗ ██╗    ███████╗██╗      ██████╗ ██╗    ██╗') +
       '        ' +
       chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-      chalk.bold.cyan(
-        '         ██╔══██╗██║    ██╔════╝██║     ██╔═══██╗██║    ██║'
-      ) +
+      chalk.bold.cyan('         ██╔══██╗██║    ██╔════╝██║     ██╔═══██╗██║    ██║') +
       '        ' +
       chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-      chalk.bold.cyan(
-        '         ███████║██║    █████╗  ██║     ██║   ██║██║ █╗ ██║'
-      ) +
+      chalk.bold.cyan('         ███████║██║    █████╗  ██║     ██║   ██║██║ █╗ ██║') +
       '        ' +
       chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-      chalk.bold.cyan(
-        '         ██╔══██║██║    ██╔══╝  ██║     ██║   ██║██║███╗██║'
-      ) +
+      chalk.bold.cyan('         ██╔══██║██║    ██╔══╝  ██║     ██║   ██║██║███╗██║') +
       '        ' +
       chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-      chalk.bold.cyan(
-        '         ██║  ██║██║    ██║     ███████╗╚██████╔╝╚███╔███╔╝'
-      ) +
+      chalk.bold.cyan('         ██║  ██║██║    ██║     ███████╗╚██████╔╝╚███╔███╔╝') +
       '        ' +
       chalk.cyan('║')
   );
@@ -176,25 +160,19 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
       chalk.cyan('║')
   );
   console.log(
-    chalk.cyan(
-      '    ╚═══════════════════════════════════════════════════════════════════╝'
-    )
+    chalk.cyan('    ╚═══════════════════════════════════════════════════════════════════╝')
   );
   console.log('\n');
   console.log(chalk.white('    📂 Project Setup'));
   console.log(
-    chalk.gray(
-      '    ────────────────────────────────────────────────────────────────────'
-    )
+    chalk.gray('    ────────────────────────────────────────────────────────────────────')
   );
   console.log(chalk.gray(`    Working Directory: ${process.cwd()}`));
   console.log(chalk.gray(`    Version: ${PKG_VERSION}`));
   console.log('\n');
   console.log(chalk.white('    🤖 Select your AI development tool:'));
   console.log(
-    chalk.gray(
-      '    ────────────────────────────────────────────────────────────────────'
-    )
+    chalk.gray('    ────────────────────────────────────────────────────────────────────')
   );
 
   const { selectedTool } = await inquirer.prompt([
@@ -210,9 +188,7 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
     },
   ]);
 
-  return selectedTool === 'all'
-    ? ['claude', 'cursor', 'copilot', 'gemini']
-    : [selectedTool];
+  return selectedTool === 'all' ? ['claude', 'cursor', 'copilot', 'gemini'] : [selectedTool];
 }
 
 async function selectProjectType(
@@ -223,9 +199,7 @@ async function selectProjectType(
     const valid = ['backend', 'frontend', 'fullstack', 'mobile'];
     if (!valid.includes(providedType)) {
       console.error(chalk.red(`❌ Invalid project type: ${providedType}`));
-      console.log(
-        chalk.yellow('Available options: backend, frontend, fullstack, mobile')
-      );
+      console.log(chalk.yellow('Available options: backend, frontend, fullstack, mobile'));
       process.exit(EXIT.INVALID_ARGS);
     }
     return providedType as 'backend' | 'frontend' | 'fullstack' | 'mobile';
@@ -295,15 +269,8 @@ async function createBootstrapStructure(
       mobile: projectType === 'mobile',
     };
 
-    await fs.writeJSON(
-      path.join(bootstrapPath, 'core', 'config.json'),
-      config,
-      { spaces: 2 }
-    );
-    logVerbose(
-      `Wrote ${path.join(bootstrapPath, 'core', 'config.json')}`,
-      verbose
-    );
+    await fs.writeJSON(path.join(bootstrapPath, 'core', 'config.json'), config, { spaces: 2 });
+    logVerbose(`Wrote ${path.join(bootstrapPath, 'core', 'config.json')}`, verbose);
 
     spinner.succeed('Created .ai-flow structure');
   } catch (error) {
@@ -338,10 +305,7 @@ async function renderTemplates(
         const stat = await fs.stat(fullPath);
         if (stat.isDirectory()) {
           files = files.concat(await walk(fullPath));
-        } else if (
-          entry.endsWith('.template.md') ||
-          entry.endsWith('.template')
-        ) {
+        } else if (entry.endsWith('.template.md') || entry.endsWith('.template')) {
           files.push(fullPath);
         }
       }
@@ -354,7 +318,7 @@ async function renderTemplates(
     // Always include root templates (AGENT.template.md)
     const rootTemplatesSource = path.join(ROOT_DIR, 'templates');
     const processedFiles = new Map<string, { file: string; base: string }>();
-    
+
     // Only scan root level files (not subdirectories)
     const allRootItems = await fs.readdir(rootTemplatesSource);
     for (const item of allRootItems) {
@@ -418,19 +382,11 @@ async function renderTemplates(
     for (const [relPath, { file: templateFile }] of processedFiles) {
       // Skip AI tool-specific config files if the tool is not selected
       const fileName = path.basename(relPath);
-      if (
-        fileName === '.clauderules' &&
-        !aiTools.includes('claude') &&
-        !aiTools.includes('all')
-      ) {
+      if (fileName === '.clauderules' && !aiTools.includes('claude') && !aiTools.includes('all')) {
         logVerbose(`Skipping ${relPath} (Claude not selected)`, verbose);
         continue;
       }
-      if (
-        fileName === '.cursorrules' &&
-        !aiTools.includes('cursor') &&
-        !aiTools.includes('all')
-      ) {
+      if (fileName === '.cursorrules' && !aiTools.includes('cursor') && !aiTools.includes('all')) {
         logVerbose(`Skipping ${relPath} (Cursor not selected)`, verbose);
         continue;
       }
@@ -460,11 +416,7 @@ async function renderTemplates(
   }
 }
 
-async function copyPrompts(
-  targetPath: string,
-  dryRun?: boolean,
-  verbose?: boolean
-): Promise<void> {
+async function copyPrompts(targetPath: string, dryRun?: boolean, verbose?: boolean): Promise<void> {
   const spinner = ora('Copying master prompts...').start();
 
   try {
@@ -528,9 +480,7 @@ async function setupSlashCommands(
           for (const file of files) {
             const srcFile = path.join(promptsSource, file);
             const base = file.replace(/\.md$/, '');
-            const destName = prefix
-              ? `${prefix}${base}.prompt.md`
-              : `${base}.prompt.md`;
+            const destName = prefix ? `${prefix}${base}.prompt.md` : `${base}.prompt.md`;
             const destFile = path.join(promptsTarget, destName);
             if (!dryRun) await fs.copyFile(srcFile, destFile);
             logVerbose(`Installed ${destFile}`, verbose);
@@ -597,9 +547,7 @@ async function initializeProject(
     // Check if already initialized
     const isInitialized = await checkIfInitialized(targetPath);
     if (isInitialized) {
-      console.log(
-        chalk.yellow('\n⚠️  Project already initialized with AI Flow')
-      );
+      console.log(chalk.yellow('\n⚠️  Project already initialized with AI Flow'));
       const { reinitialize } = await inquirer.prompt([
         {
           type: 'confirm',
@@ -637,8 +585,7 @@ async function initializeProject(
       process.exit(EXIT.INVALID_ARGS);
     }
     let finalProjectName = projectName;
-    let finalProjectDescription =
-      projectDescription || 'TBD - Run /flow-build to define';
+    let finalProjectDescription = projectDescription || 'TBD - Run /flow-build to define';
 
     if (!finalProjectName) {
       const answers = await inquirer.prompt([
@@ -648,8 +595,7 @@ async function initializeProject(
           message: 'Project name (you can refine it in /flow-build):',
           default: inferredName,
           validate: (input: string) =>
-            isValidName(input) ||
-            'Enter 2-100 chars: letters, numbers, space, - _ .',
+            isValidName(input) || 'Enter 2-100 chars: letters, numbers, space, - _ .',
         },
       ]);
       finalProjectName = answers.projectName;
@@ -695,43 +641,23 @@ async function initializeProject(
     const toolsText =
       aiTools.length === 1
         ? aiTools[0]
-        : `${aiTools.slice(0, -1).join(', ')} and ${
-            aiTools[aiTools.length - 1]
-          }`;
+        : `${aiTools.slice(0, -1).join(', ')} and ${aiTools[aiTools.length - 1]}`;
 
     if (selectedProjectType === 'fullstack') {
       if (aiTools.includes('claude')) {
         console.log(chalk.cyan('  1. Open Claude Code'));
-        console.log(
-          chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)')
-        );
-        console.log(
-          chalk.cyan(
-            '  3. Run: /frontend-flow-build (for frontend documentation)'
-          )
-        );
+        console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
+        console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
         console.log(chalk.gray('     Each will guide you through 9 phases\n'));
       } else if (aiTools.includes('cursor')) {
         console.log(chalk.cyan('  1. Open Cursor'));
-        console.log(
-          chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)')
-        );
-        console.log(
-          chalk.cyan(
-            '  3. Run: /frontend-flow-build (for frontend documentation)'
-          )
-        );
+        console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
+        console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
         console.log(chalk.gray('     Each will guide you through 9 phases\n'));
       } else {
         console.log(chalk.cyan(`  1. Open your AI tool (${toolsText})`));
-        console.log(
-          chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)')
-        );
-        console.log(
-          chalk.cyan(
-            '  3. Run: /frontend-flow-build (for frontend documentation)'
-          )
-        );
+        console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
+        console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
         console.log(chalk.gray('     Each will guide you through 9 phases\n'));
       }
 
@@ -743,49 +669,29 @@ async function initializeProject(
         )
       );
       console.log(
-        chalk.gray(
-          '    /backend-flow-build-phase-0-context     - Backend context discovery'
-        )
+        chalk.gray('    /backend-flow-build-phase-0-context     - Backend context discovery')
       );
       console.log(
-        chalk.gray(
-          '    /backend-flow-build-phase-1-business    - Backend discovery & business'
-        )
+        chalk.gray('    /backend-flow-build-phase-1-business    - Backend discovery & business')
       );
       console.log(
-        chalk.gray(
-          '    /backend-flow-build-phase-2-data        - Backend data architecture'
-        )
+        chalk.gray('    /backend-flow-build-phase-2-data        - Backend data architecture')
       );
       console.log(
-        chalk.gray(
-          '    /backend-flow-build-phase-3-architecture - Backend system architecture'
-        )
+        chalk.gray('    /backend-flow-build-phase-3-architecture - Backend system architecture')
       );
       console.log(
-        chalk.gray(
-          '    /backend-flow-build-phase-4-security    - Backend security & auth'
-        )
+        chalk.gray('    /backend-flow-build-phase-4-security    - Backend security & auth')
       );
       console.log(
-        chalk.gray(
-          '    /backend-flow-build-phase-5-standards    - Backend code standards'
-        )
+        chalk.gray('    /backend-flow-build-phase-5-standards    - Backend code standards')
+      );
+      console.log(chalk.gray('    /backend-flow-build-phase-6-testing     - Backend testing'));
+      console.log(
+        chalk.gray('    /backend-flow-build-phase-7-operations  - Backend operations + tools')
       );
       console.log(
-        chalk.gray(
-          '    /backend-flow-build-phase-6-testing     - Backend testing'
-        )
-      );
-      console.log(
-        chalk.gray(
-          '    /backend-flow-build-phase-7-operations  - Backend operations + tools'
-        )
-      );
-      console.log(
-        chalk.gray(
-          '    /backend-flow-docs-sync                  - Update backend documentation\n'
-        )
+        chalk.gray('    /backend-flow-docs-sync                  - Update backend documentation\n')
       );
       console.log(chalk.gray('  Frontend commands:'));
       console.log(
@@ -794,45 +700,25 @@ async function initializeProject(
         )
       );
       console.log(
-        chalk.gray(
-          '    /frontend-flow-build-phase-0-context    - Frontend context discovery'
-        )
+        chalk.gray('    /frontend-flow-build-phase-0-context    - Frontend context discovery')
       );
       console.log(
-        chalk.gray(
-          '    /frontend-flow-build-phase-1-discovery  - Frontend discovery & UX'
-        )
+        chalk.gray('    /frontend-flow-build-phase-1-discovery  - Frontend discovery & UX')
       );
       console.log(
-        chalk.gray(
-          '    /frontend-flow-build-phase-2-components  - Frontend components & framework'
-        )
+        chalk.gray('    /frontend-flow-build-phase-2-components  - Frontend components & framework')
       );
       console.log(
-        chalk.gray(
-          '    /frontend-flow-build-phase-3-state       - Frontend state management'
-        )
+        chalk.gray('    /frontend-flow-build-phase-3-state       - Frontend state management')
       );
       console.log(
-        chalk.gray(
-          '    /frontend-flow-build-phase-4-styling     - Frontend styling & design'
-        )
+        chalk.gray('    /frontend-flow-build-phase-4-styling     - Frontend styling & design')
       );
       console.log(
-        chalk.gray(
-          '    /frontend-flow-build-phase-5-standards  - Frontend code standards'
-        )
+        chalk.gray('    /frontend-flow-build-phase-5-standards  - Frontend code standards')
       );
-      console.log(
-        chalk.gray(
-          '    /frontend-flow-build-phase-6-testing    - Frontend testing'
-        )
-      );
-      console.log(
-        chalk.gray(
-          '    /frontend-flow-build-phase-7-deployment - Frontend deployment'
-        )
-      );
+      console.log(chalk.gray('    /frontend-flow-build-phase-6-testing    - Frontend testing'));
+      console.log(chalk.gray('    /frontend-flow-build-phase-7-deployment - Frontend deployment'));
       console.log(
         chalk.gray(
           '    /frontend-flow-docs-sync                  - Update frontend documentation\n'
@@ -842,141 +728,75 @@ async function initializeProject(
       if (aiTools.includes('claude')) {
         console.log(chalk.cyan('  1. Open Claude Code'));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(
-          chalk.gray('     This will start the 9-phase interactive setup\n')
-        );
+        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
       } else if (aiTools.includes('cursor')) {
         console.log(chalk.cyan('  1. Open Cursor'));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(
-          chalk.gray('     This will start the 9-phase interactive setup\n')
-        );
+        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
       } else {
         console.log(chalk.cyan(`  1. Open your AI tool (${toolsText})`));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(
-          chalk.gray('     This will start the 9-phase interactive setup\n')
-        );
+        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
       }
 
       console.log(chalk.white('Available slash commands:'));
       console.log(
-        chalk.gray(
-          '  /flow-build                    - Full 7-phase documentation generation'
-        )
+        chalk.gray('  /flow-build                    - Full 7-phase documentation generation')
       );
       console.log(
-        chalk.gray(
-          '  /flow-build-phase-0-context     - Context Discovery (existing projects)'
-        )
+        chalk.gray('  /flow-build-phase-0-context     - Context Discovery (existing projects)')
       );
+      console.log(chalk.gray('  /flow-build-phase-1-platform    - Platform & Framework Selection'));
+      console.log(chalk.gray('  /flow-build-phase-2-navigation  - Navigation & Architecture'));
+      console.log(chalk.gray('  /flow-build-phase-3-state       - State & Data Management'));
+      console.log(chalk.gray('  /flow-build-phase-4-permissions  - Permissions & Native Features'));
+      console.log(chalk.gray('  /flow-build-phase-5-standards   - Code Standards'));
+      console.log(chalk.gray('  /flow-build-phase-6-testing     - Testing Strategy'));
+      console.log(chalk.gray('  /flow-build-phase-7-deployment  - Store Deployment'));
       console.log(
-        chalk.gray(
-          '  /flow-build-phase-1-platform    - Platform & Framework Selection'
-        )
-      );
-      console.log(
-        chalk.gray(
-          '  /flow-build-phase-2-navigation  - Navigation & Architecture'
-        )
-      );
-      console.log(
-        chalk.gray('  /flow-build-phase-3-state       - State & Data Management')
-      );
-      console.log(
-        chalk.gray(
-          '  /flow-build-phase-4-permissions  - Permissions & Native Features'
-        )
-      );
-      console.log(
-        chalk.gray('  /flow-build-phase-5-standards   - Code Standards')
-      );
-      console.log(
-        chalk.gray('  /flow-build-phase-6-testing     - Testing Strategy')
-      );
-      console.log(
-        chalk.gray('  /flow-build-phase-7-deployment  - Store Deployment')
-      );
-      console.log(
-        chalk.gray(
-          '  /flow-docs-sync                  - Update documentation when code changes\n'
-        )
+        chalk.gray('  /flow-docs-sync                  - Update documentation when code changes\n')
       );
     } else {
       if (aiTools.includes('claude')) {
         console.log(chalk.cyan('  1. Open Claude Code'));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(
-          chalk.gray('     This will start the 9-phase interactive setup\n')
-        );
+        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
       } else if (aiTools.includes('cursor')) {
         console.log(chalk.cyan('  1. Open Cursor'));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(
-          chalk.gray('     This will start the 9-phase interactive setup\n')
-        );
+        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
       } else {
         console.log(chalk.cyan(`  1. Open your AI tool (${toolsText})`));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(
-          chalk.gray('     This will start the 9-phase interactive setup\n')
-        );
+        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
       }
 
       console.log(chalk.white('Available slash commands:'));
       console.log(
-        chalk.gray(
-          '  /flow-build                    - Full 7-phase documentation generation'
-        )
+        chalk.gray('  /flow-build                    - Full 7-phase documentation generation')
       );
       console.log(
-        chalk.gray(
-          '  /flow-build-phase-0-context     - Context Discovery (existing projects)'
-        )
+        chalk.gray('  /flow-build-phase-0-context     - Context Discovery (existing projects)')
       );
       if (selectedProjectType === 'backend') {
-        console.log(
-          chalk.gray('  /flow-build-phase-1-business    - Discovery & Business')
-        );
-        console.log(
-          chalk.gray('  /flow-build-phase-2-data        - Data Architecture')
-        );
-        console.log(
-          chalk.gray('  /flow-build-phase-3-architecture - System Architecture')
-        );
-        console.log(
-          chalk.gray('  /flow-build-phase-4-security    - Security & Auth')
-        );
-        console.log(
-          chalk.gray('  /flow-build-phase-5-standards    - Code Standards')
-        );
+        console.log(chalk.gray('  /flow-build-phase-1-business    - Discovery & Business'));
+        console.log(chalk.gray('  /flow-build-phase-2-data        - Data Architecture'));
+        console.log(chalk.gray('  /flow-build-phase-3-architecture - System Architecture'));
+        console.log(chalk.gray('  /flow-build-phase-4-security    - Security & Auth'));
+        console.log(chalk.gray('  /flow-build-phase-5-standards    - Code Standards'));
         console.log(chalk.gray('  /flow-build-phase-6-testing     - Testing'));
-        console.log(
-          chalk.gray('  /flow-build-phase-7-operations  - Operations + Tools')
-        );
+        console.log(chalk.gray('  /flow-build-phase-7-operations  - Operations + Tools'));
       } else {
-        console.log(
-          chalk.gray('  /flow-build-phase-1-discovery   - Discovery & UX')
-        );
-        console.log(
-          chalk.gray('  /flow-build-phase-2-components - Components & Framework')
-        );
-        console.log(
-          chalk.gray('  /flow-build-phase-3-state      - State Management')
-        );
-        console.log(
-          chalk.gray('  /flow-build-phase-4-styling     - Styling & Design')
-        );
-        console.log(
-          chalk.gray('  /flow-build-phase-5-standards   - Code Standards')
-        );
+        console.log(chalk.gray('  /flow-build-phase-1-discovery   - Discovery & UX'));
+        console.log(chalk.gray('  /flow-build-phase-2-components - Components & Framework'));
+        console.log(chalk.gray('  /flow-build-phase-3-state      - State Management'));
+        console.log(chalk.gray('  /flow-build-phase-4-styling     - Styling & Design'));
+        console.log(chalk.gray('  /flow-build-phase-5-standards   - Code Standards'));
         console.log(chalk.gray('  /flow-build-phase-6-testing     - Testing'));
         console.log(chalk.gray('  /flow-build-phase-7-deployment - Deployment'));
       }
       console.log(
-        chalk.gray(
-          '  /flow-docs-sync                  - Update documentation when code changes\n'
-        )
+        chalk.gray('  /flow-docs-sync                  - Update documentation when code changes\n')
       );
     }
 
@@ -988,15 +808,10 @@ async function initializeProject(
       );
     }
     console.log(
-      chalk.yellow(
-        '💡 Tip: You can run individual phases if you want to work step-by-step\n'
-      )
+      chalk.yellow('💡 Tip: You can run individual phases if you want to work step-by-step\n')
     );
   } catch (error) {
-    console.error(
-      chalk.red('\n❌ Initialization failed:'),
-      fsErrorMessage(error)
-    );
+    console.error(chalk.red('\n❌ Initialization failed:'), fsErrorMessage(error));
     process.exit(EXIT.FS_ERROR);
   }
 }
@@ -1013,19 +828,10 @@ program
   .command('init')
   .description('Initialize AI Flow in current directory')
   .argument('[path]', 'Target directory (defaults to current directory)', '.')
-  .option(
-    '--ai <tool>',
-    'AI tool to use (claude, cursor, copilot, gemini, all)'
-  )
-  .option(
-    '--type <type>',
-    'Project type (backend, frontend, fullstack, mobile)'
-  )
+  .option('--ai <tool>', 'AI tool to use (claude, cursor, copilot, gemini, all)')
+  .option('--type <type>', 'Project type (backend, frontend, fullstack, mobile)')
   .option('--name <name>', 'Project name (skip interactive prompt)')
-  .option(
-    '--description <desc>',
-    'Project description (skip interactive prompt)'
-  )
+  .option('--description <desc>', 'Project description (skip interactive prompt)')
   .option('--verbose', 'Enable verbose logging')
   .option('--dry-run', 'Simulate without writing files')
   .action(
@@ -1062,12 +868,7 @@ program
     if (isInitialized) {
       console.log(chalk.green('✅ Project is initialized with AI Flow'));
 
-      const configPath = path.join(
-        process.cwd(),
-        '.ai-flow',
-        'core',
-        'config.json'
-      );
+      const configPath = path.join(process.cwd(), '.ai-flow', 'core', 'config.json');
       const config = await fs.readJSON(configPath);
 
       // Detect project type (support both old and new config format)
@@ -1076,28 +877,26 @@ program
         (config.backend && !config.frontend
           ? 'backend'
           : config.frontend && !config.backend
-          ? 'frontend'
-          : config.mobile
-          ? 'mobile'
-          : 'backend');
+            ? 'frontend'
+            : config.mobile
+              ? 'mobile'
+              : 'backend');
       const projectTypeDisplay =
         projectType === 'backend'
           ? '🔧 Backend'
           : projectType === 'frontend'
-          ? '🎨 Frontend'
-          : projectType === 'fullstack'
-          ? '🚀 Full Stack'
-          : projectType === 'mobile'
-          ? '📱 Mobile'
-          : '🔧 Backend';
+            ? '🎨 Frontend'
+            : projectType === 'fullstack'
+              ? '🚀 Full Stack'
+              : projectType === 'mobile'
+                ? '📱 Mobile'
+                : '🔧 Backend';
 
       console.log(chalk.white('\nConfiguration:'));
       console.log(chalk.gray(`  Version: ${config.version}`));
       console.log(chalk.gray(`  Project Type: ${projectTypeDisplay}`));
       console.log(chalk.gray(`  AI Tools: ${config.aiTools.join(', ')}`));
-      console.log(
-        chalk.gray(`  Created: ${new Date(config.createdAt).toLocaleString()}`)
-      );
+      console.log(chalk.gray(`  Created: ${new Date(config.createdAt).toLocaleString()}`));
       console.log(chalk.gray(`  Working Dir: ${process.cwd()}`));
 
       // Show correct prompts path based on project type
@@ -1133,28 +932,12 @@ program
       if (projectType === 'fullstack') {
         if (config.aiTools.includes('claude')) {
           console.log(chalk.cyan('  1. Open Claude Code'));
-          console.log(
-            chalk.cyan(
-              '  2. Run: /backend-flow-build (for backend documentation)'
-            )
-          );
-          console.log(
-            chalk.cyan(
-              '  3. Run: /frontend-flow-build (for frontend documentation)'
-            )
-          );
+          console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
+          console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
         } else if (config.aiTools.includes('cursor')) {
           console.log(chalk.cyan('  1. Open Cursor'));
-          console.log(
-            chalk.cyan(
-              '  2. Run: /backend-flow-build (for backend documentation)'
-            )
-          );
-          console.log(
-            chalk.cyan(
-              '  3. Run: /frontend-flow-build (for frontend documentation)'
-            )
-          );
+          console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
+          console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
         } else {
           const toolsText =
             config.aiTools.length === 1
@@ -1163,16 +946,8 @@ program
                   config.aiTools[config.aiTools.length - 1]
                 }`;
           console.log(chalk.cyan(`  1. Open your AI tool (${toolsText})`));
-          console.log(
-            chalk.cyan(
-              '  2. Run: /backend-flow-build (for backend documentation)'
-            )
-          );
-          console.log(
-            chalk.cyan(
-              '  3. Run: /frontend-flow-build (for frontend documentation)'
-            )
-          );
+          console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
+          console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
         }
       } else {
         if (config.aiTools.includes('claude')) {
@@ -1199,8 +974,3 @@ program
   });
 
 program.parse();
-
-
-
-
-
