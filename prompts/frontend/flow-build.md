@@ -4,6 +4,80 @@
 
 Your mission is to guide the user through creating **comprehensive, production-ready documentation** for their frontend project through an interactive questionnaire that follows the dependency-aware order specified below.
 
+---
+
+## 🎯 Ejecución de Fase Específica
+
+**IMPORTANTE:** Detectar si el usuario especificó una fase para ejecutar.
+
+### Detectar Argumento de Fase
+
+Buscar en el mensaje del usuario patrones como:
+
+- "fase 0", "fase 1", "fase 2", ..., "fase 8"
+- "phase 0", "phase 1", etc.
+- "ejecutar fase N"
+- "run phase N"
+
+### Comportamiento
+
+**Si se detecta "fase N" (donde N = 0-8):**
+
+1. **Validar que la fase existe para frontend:**
+   - Fase 0: Context Discovery (opcional, solo proyectos existentes)
+   - Fase 1: Discovery & UX Requirements
+   - Fase 2: Components & Framework
+   - Fase 3: State Management
+   - Fase 4: Styling & Design
+   - Fase 5: Code Standards
+   - Fase 6: Testing Strategy
+   - Fase 7: Performance & Deployment
+   - Fase 8: Project Setup & Final Documentation
+
+2. **Si la fase es válida:**
+   - Leer el archivo: `.ai-flow/prompts/frontend/flow-build-phase-N.md`
+   - Ejecutar SOLO esa fase
+   - NO continuar con otras fases
+   - Al finalizar, informar al usuario que puede continuar con la siguiente fase usando `/flow-build fase N+1`
+
+3. **Si la fase es inválida:**
+   - Mostrar mensaje de error amigable
+   - Listar las fases válidas (0-8) con descripción de una línea
+
+**Si NO se detecta "fase N":**
+
+- Ejecutar el flujo completo normal (todas las fases en orden)
+- Comenzar con Scope Selection (MVP/Production-Ready/Enterprise)
+- Ejecutar Phases 0-8 según corresponda
+
+### Ejemplo de Lista de Fases Válidas
+
+Si el usuario especifica una fase inválida, mostrar:
+
+```
+❌ Fase inválida. Las fases válidas para frontend son:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 Fases Disponibles - Frontend
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  /flow-build fase 0  - Context Discovery (solo proyectos existentes)
+  /flow-build fase 1  - Discovery & UX (tipo de app, usuarios, journeys)
+  /flow-build fase 2  - Components & Framework (React/Vue/Angular, estructura)
+  /flow-build fase 3  - State Management (Redux/MobX/Context, patrones)
+  /flow-build fase 4  - Styling & Design (CSS/Tailwind/Styled, theming)
+  /flow-build fase 5  - Code Standards (convenciones, formato, git workflow)
+  /flow-build fase 6  - Testing Strategy (tipos de tests, coverage, CI)
+  /flow-build fase 7  - Performance & Deployment (optimización, deployment)
+  /flow-build fase 8  - Project Setup & Final Documentation (inicializar proyecto)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 Tip: Usa /flow-build sin argumentos para ejecutar todas las fases en orden.
+```
+
+---
+
 ## Important Instructions
 
 1. **Ask for Project Scope FIRST** - Before Phase 1, ask the user to select: MVP, Production-Ready, or Enterprise
@@ -244,6 +318,7 @@ Read .ai-flow/prompts/frontend/flow-build-phase-3-state.md and execute only Phas
 **Phases included:** 1, 2, 3, 4 (core only)
 
 **What's simplified:**
+
 - Minimal styling (just basic Tailwind or CSS Modules)
 - Simple state management (Context API or component state)
 - Basic component structure (flat or simple feature-based)
@@ -259,6 +334,7 @@ Read .ai-flow/prompts/frontend/flow-build-phase-3-state.md and execute only Phas
 **Phases included:** All (1-7)
 
 **What's included:**
+
 - Full tech stack selection
 - Comprehensive state management
 - Professional styling with design tokens
@@ -275,6 +351,7 @@ Read .ai-flow/prompts/frontend/flow-build-phase-3-state.md and execute only Phas
 **Phases included:** All (1-7) with extended questions
 
 **Additional coverage:**
+
 - Monorepo considerations
 - Micro-frontend architecture
 - Advanced caching strategies
@@ -330,12 +407,14 @@ Based on scope selection, execute applicable phase files in order.
 After completing all phases, generate the complete documentation set:
 
 **Core Documents (All Scopes):**
+
 - `AGENT.md` - Universal AI assistant configuration
 - `ai-instructions.md` - Tech stack and development rules
 - `project-brief.md` - Project overview and objectives
 - `README.md` - Quick start guide
 
 **Documentation (Production/Enterprise):**
+
 - `docs/architecture.md` - System architecture
 - `docs/components.md` - Component patterns
 - `docs/state-management.md` - State management guide
@@ -346,6 +425,7 @@ After completing all phases, generate the complete documentation set:
 - `docs/contributing.md` - Contribution guidelines
 
 **Specifications (Enterprise):**
+
 - `specs/accessibility.md` - Accessibility requirements
 - `specs/configuration.md` - Environment and configuration
 
@@ -378,30 +458,35 @@ Users can re-run individual phases to update documentation:
 The questionnaire adapts based on the UI framework selected in Phase 2:
 
 **React:**
+
 - State: Zustand, Redux Toolkit, Jotai
 - Forms: React Hook Form, Formik
 - Styling: Tailwind, Styled Components, Emotion
 - Testing: React Testing Library
 
 **Vue:**
+
 - State: Pinia, Vuex
 - Forms: VeeValidate, FormKit
 - Styling: Tailwind, Scoped CSS
 - Testing: Vue Test Utils
 
 **Angular:**
+
 - State: NgRx, Akita, Elf
 - Forms: Reactive Forms, Template-driven Forms
 - Styling: Angular Material, Tailwind
 - Testing: Jasmine/Karma, Jest
 
 **Svelte:**
+
 - State: Svelte Stores, XState
 - Forms: Svelte Forms Lib
 - Styling: Tailwind, Scoped CSS
 - Testing: Svelte Testing Library
 
 **Solid:**
+
 - State: Solid Store, Solid Signal
 - Forms: Modular Forms
 - Styling: Tailwind, Solid Styled
@@ -436,7 +521,3 @@ Or if you have existing code, start with Phase 0 for automatic detection:
 **Last Updated:** 2025-01-XX
 
 **Version:** 1.2.0 (Frontend MVP)
-
-
-
-

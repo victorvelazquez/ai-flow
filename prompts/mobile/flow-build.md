@@ -4,6 +4,80 @@
 
 Your mission is to guide the user through creating **comprehensive, production-ready documentation** for their mobile application through an interactive questionnaire that follows the dependency-aware order specified below.
 
+---
+
+## 🎯 Ejecución de Fase Específica
+
+**IMPORTANTE:** Detectar si el usuario especificó una fase para ejecutar.
+
+### Detectar Argumento de Fase
+
+Buscar en el mensaje del usuario patrones como:
+
+- "fase 0", "fase 1", "fase 2", ..., "fase 8"
+- "phase 0", "phase 1", etc.
+- "ejecutar fase N"
+- "run phase N"
+
+### Comportamiento
+
+**Si se detecta "fase N" (donde N = 0-8):**
+
+1. **Validar que la fase existe para mobile:**
+   - Fase 0: Context Discovery (opcional, solo proyectos existentes)
+   - Fase 1: Platform & Framework Selection
+   - Fase 2: Navigation & Architecture
+   - Fase 3: State & Data Management
+   - Fase 4: Permissions & Native Features
+   - Fase 5: Code Standards
+   - Fase 6: Testing Strategy
+   - Fase 7: Store Deployment
+   - Fase 8: Project Setup & Final Documentation
+
+2. **Si la fase es válida:**
+   - Leer el archivo: `.ai-flow/prompts/mobile/flow-build-phase-N.md`
+   - Ejecutar SOLO esa fase
+   - NO continuar con otras fases
+   - Al finalizar, informar al usuario que puede continuar con la siguiente fase usando `/flow-build fase N+1`
+
+3. **Si la fase es inválida:**
+   - Mostrar mensaje de error amigable
+   - Listar las fases válidas (0-8) con descripción de una línea
+
+**Si NO se detecta "fase N":**
+
+- Ejecutar el flujo completo normal (todas las fases en orden)
+- Comenzar con Scope Selection (MVP/Production-Ready/Enterprise)
+- Ejecutar Phases 0-8 según corresponda
+
+### Ejemplo de Lista de Fases Válidas
+
+Si el usuario especifica una fase inválida, mostrar:
+
+```
+❌ Fase inválida. Las fases válidas para mobile son:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 Fases Disponibles - Mobile
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  /flow-build fase 0  - Context Discovery (solo proyectos existentes)
+  /flow-build fase 1  - Platform & Framework (iOS/Android, React Native/Flutter)
+  /flow-build fase 2  - Navigation & Architecture (navegación, estructura)
+  /flow-build fase 3  - State & Data Management (estado, storage, sync)
+  /flow-build fase 4  - Permissions & Native Features (permisos, cámara, GPS)
+  /flow-build fase 5  - Code Standards (convenciones, formato, git workflow)
+  /flow-build fase 6  - Testing Strategy (tipos de tests, coverage, CI)
+  /flow-build fase 7  - Store Deployment (App Store, Play Store, signing)
+  /flow-build fase 8  - Project Setup & Final Documentation (inicializar proyecto)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 Tip: Usa /flow-build sin argumentos para ejecutar todas las fases en orden.
+```
+
+---
+
 ## Important Instructions
 
 1. **Ask for Project Scope FIRST** - Before Phase 1, ask the user to select: MVP, Production-Ready, or Enterprise
@@ -253,6 +327,7 @@ Read .ai-flow/prompts/mobile/flow-build-phase-3-state.md and execute only Phase 
 **Phases included:** 1, 2, 3, 4 (core only)
 
 **What's simplified:**
+
 - Single platform (iOS or Android)
 - Basic navigation (Stack only)
 - Simple state management (Context API or Provider)
@@ -270,6 +345,7 @@ Read .ai-flow/prompts/mobile/flow-build-phase-3-state.md and execute only Phase 
 **Phases included:** All (1-7)
 
 **What's included:**
+
 - Multi-platform support (iOS + Android)
 - Complete navigation system
 - Comprehensive state management
@@ -288,6 +364,7 @@ Read .ai-flow/prompts/mobile/flow-build-phase-3-state.md and execute only Phase 
 **Phases included:** All (1-7) with extended questions
 
 **Additional coverage:**
+
 - Cross-platform optimization
 - Advanced architecture patterns (Clean Architecture, MVVM)
 - Complex offline synchronization
@@ -348,12 +425,14 @@ Based on scope selection, execute applicable phase files in order.
 After completing all phases, generate the complete documentation set:
 
 **Core Documents (All Scopes):**
+
 - `AGENT.md` - Universal AI assistant configuration
 - `ai-instructions.md` - Tech stack and development rules
 - `project-brief.md` - Project overview and objectives
 - `README.md` - Quick start guide
 
 **Documentation (Production/Enterprise):**
+
 - `docs/architecture.md` - System architecture
 - `docs/navigation.md` - Navigation patterns
 - `docs/state-management.md` - State management guide
@@ -366,6 +445,7 @@ After completing all phases, generate the complete documentation set:
 - `docs/contributing.md` - Contribution guidelines
 
 **Specifications (Enterprise):**
+
 - `specs/build-configuration.md` - Build and CI/CD configuration
 - `specs/deployment.md` - Deployment procedures
 - `specs/configuration.md` - Environment and configuration
@@ -400,24 +480,28 @@ Users can re-run individual phases to update documentation:
 The questionnaire adapts based on the framework selected in Phase 1:
 
 **React Native:**
+
 - State: Redux Toolkit, Zustand, MobX, Context API
 - Navigation: React Navigation, React Native Navigation
 - Storage: AsyncStorage, MMKV, WatermelonDB
 - Testing: Jest, React Native Testing Library, Detox
 
 **Flutter:**
+
 - State: Provider, Riverpod, Bloc, GetX
 - Navigation: Navigator 2.0, GoRouter, AutoRoute
 - Storage: SharedPreferences, Hive, Isar, SQLite
 - Testing: Flutter Test, Integration Test, Maestro
 
 **Native iOS (Swift):**
+
 - Architecture: MVVM, VIPER, Clean Architecture
 - Navigation: UINavigationController, Coordinator Pattern
 - Storage: Core Data, Realm, UserDefaults
 - Testing: XCTest, Quick/Nimble
 
 **Native Android (Kotlin):**
+
 - Architecture: MVVM, MVI, Clean Architecture
 - Navigation: Navigation Component, Jetpack Compose Navigation
 - Storage: Room, DataStore, SharedPreferences
@@ -452,8 +536,3 @@ Or if you have existing code, start with Phase 0 for automatic detection:
 **Last Updated:** 2025-01-XX
 
 **Version:** 1.4.0 (Mobile MVP)
-
-
-
-
-

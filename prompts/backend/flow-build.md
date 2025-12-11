@@ -4,6 +4,83 @@
 
 Your mission is to guide the user through creating **comprehensive, production-ready documentation** for their backend project through an interactive questionnaire that follows the dependency-aware order specified below.
 
+---
+
+## 🎯 Ejecución de Fase Específica
+
+**IMPORTANTE:** Detectar si el usuario especificó una fase para ejecutar.
+
+### Detectar Argumento de Fase
+
+Buscar en el mensaje del usuario patrones como:
+
+- "fase 0", "fase 1", "fase 2", ..., "fase 9"
+- "phase 0", "phase 1", etc.
+- "ejecutar fase N"
+- "run phase N"
+
+### Comportamiento
+
+**Si se detecta "fase N" (donde N = 0-9):**
+
+1. **Validar que la fase existe para backend:**
+   - Fase 0: Context Discovery (opcional, solo proyectos existentes)
+   - Fase 1: Discovery & Business
+   - Fase 2: Data Architecture
+   - Fase 3: System Architecture
+   - Fase 4: Security & Authentication
+   - Fase 5: Code Standards
+   - Fase 6: Testing Strategy
+   - Fase 7: Operations & Deployment
+   - Fase 8: Project Setup & Final Documentation
+   - Fase 9: Implementation Roadmap (opcional)
+
+2. **Si la fase es válida:**
+   - Leer el archivo: `.ai-flow/prompts/backend/flow-build-phase-N.md`
+   - Ejecutar SOLO esa fase
+   - NO continuar con otras fases
+   - Al finalizar, informar al usuario que puede continuar con la siguiente fase usando `/flow-build fase N+1`
+
+3. **Si la fase es inválida:**
+   - Mostrar mensaje de error amigable
+   - Listar las fases válidas (0-9) con descripción de una línea
+
+**Si NO se detecta "fase N":**
+
+- Ejecutar el flujo completo normal (todas las fases en orden)
+- Comenzar con Mode Selection (Interactive vs Smart Auto-Suggest)
+- Continuar con Scope Selection (MVP/Production-Ready/Enterprise)
+- Ejecutar Phases 0-9 según corresponda
+
+### Ejemplo de Lista de Fases Válidas
+
+Si el usuario especifica una fase inválida, mostrar:
+
+```
+❌ Fase inválida. Las fases válidas para backend son:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 Fases Disponibles - Backend
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  /flow-build fase 0  - Context Discovery (solo proyectos existentes)
+  /flow-build fase 1  - Discovery & Business (problema, usuarios, objetivos)
+  /flow-build fase 2  - Data Architecture (entidades, relaciones, database)
+  /flow-build fase 3  - System Architecture (tech stack, patrones, APIs)
+  /flow-build fase 4  - Security & Authentication (auth, autorización, compliance)
+  /flow-build fase 5  - Code Standards (convenciones, formato, git workflow)
+  /flow-build fase 6  - Testing Strategy (tipos de tests, coverage, CI)
+  /flow-build fase 7  - Operations & Deployment (deployment, monitoreo, logging)
+  /flow-build fase 8  - Project Setup & Final Documentation (inicializar proyecto)
+  /flow-build fase 9  - Implementation Roadmap (plan con Story Points - opcional)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 Tip: Usa /flow-build sin argumentos para ejecutar todas las fases en orden.
+```
+
+---
+
 ## Important Instructions
 
 1. **Ask for Questionnaire Mode FIRST** - Before anything else, ask the user to select: Interactive Mode or Smart Auto-Suggest Mode (see "Mode Selection" section below)
@@ -87,24 +164,19 @@ Ask these 6 questions one by one with progress indicator:
 **Critical Questions:**
 
 1. **Project Name & Description** (if new project - skip if Phase 0 detected)
-
    - What is the project name?
    - Provide a short description (1 sentence)
 
 2. **Project Overview**
-
    - What problem does this backend system solve? (2-3 sentences)
 
 3. **Business Objectives**
-
    - What are the top 3 measurable objectives for this project?
 
 4. **System Type** (Critical for auto-suggestions)
-
    - What type of system are you building?
 
    **Options:**
-
    - A) E-commerce (Product catalog, cart, checkout)
    - B) SaaS (Multi-tenant, subscriptions, RBAC)
    - C) CRM (Contacts, leads, sales pipeline)
@@ -117,7 +189,6 @@ Ask these 6 questions one by one with progress indicator:
    - J) Other (will use generic defaults)
 
 5. **Core Data Entities** (if new project - skip if Phase 0 detected)
-
    - List the main entities/models your system needs (e.g., User, Product, Order)
 
 6. **Backend Framework** (if new project - skip if Phase 0 detected)
