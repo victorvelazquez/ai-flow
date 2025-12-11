@@ -16,14 +16,14 @@
 
 **Already familiar with AI Flow?** Jump directly to:
 
-| Link                                          | Description                                                        |
-| --------------------------------------------- | ------------------------------------------------------------------ |
-| [Build Modes](#15-understanding-build-modes)  | Interactive vs Smart Auto-Suggest                                  |
-| [CLI Flags Reference](#cli-flags-reference)   | All `init` command flags                                           |
-| [Commands Cheat Sheet](#commands-cheat-sheet) | All 26+ commands organized                                         |
-| [Workflow Commands](#33-workflow-commands)    | `/flow-dev-feature`, `/flow-dev-fix`, `/flow-dev-review` workflows |
-| [Troubleshooting](#troubleshooting)           | Common issues and solutions                                        |
-| [Best Practices](#best-practices)             | Expert tips and recommendations                                    |
+| Link                                          | Description                                                                  |
+| --------------------------------------------- | ---------------------------------------------------------------------------- |
+| [Build Modes](#15-understanding-build-modes)  | Interactive vs Smart Auto-Suggest                                            |
+| [CLI Flags Reference](#cli-flags-reference)   | All `init` command flags                                                     |
+| [Commands Cheat Sheet](#commands-cheat-sheet) | All 26+ commands organized                                                   |
+| [Workflow Commands](#33-workflow-commands)    | `/flow-dev-feature`, `/flow-dev-fix`, `/flow-dev-commit`, `/flow-dev-review` |
+| [Troubleshooting](#troubleshooting)           | Common issues and solutions                                                  |
+| [Best Practices](#best-practices)             | Expert tips and recommendations                                              |
 
 ---
 
@@ -59,7 +59,7 @@ Verify installation:
 
 ```bash
 ai-flow --version
-# Output: 2.0.0
+# Output: 2.0.1
 ```
 
 _Note: Package name is `ai-flow-dev`, but the CLI command remains `ai-flow`_
@@ -503,6 +503,7 @@ After initialization, you have access to **26+ slash commands**:
 
 /flow-dev-feature # Create/modify features (15-20 min)
 /flow-dev-fix # Fix bugs (3-15 min, adaptive)
+/flow-dev-commit # Automate commits with Conventional Commits (3-5 min)
 /flow-dev-work # Manage work in progress
 /flow-dev-review # Multi-aspect code review (5 min)
 /flow-dev-refactor # Quick refactorings (3-5 min)
@@ -1302,7 +1303,185 @@ The command **automatically detects complexity** and adjusts:
 ⏱️ Actual time: 14 minutes
 ```
 
-#### 3.3.3 `/flow-dev-work` - Work Management
+#### 3.3.3 `/flow-dev-commit` - Commit Automation
+
+**Time:** 3-5 minutes  
+**Purpose:** Automatically analyze changes, group them intelligently, and create atomic commits following Conventional Commits standard.
+
+**Usage:**
+
+```bash
+/flow-dev-commit                       # Full auto workflow (detect → group → commit → push)
+```
+
+**Workflow (4 Automatic Steps):**
+
+**Step 1: Detect Changes (Automatic)**
+
+- Scans all staged and unstaged changes
+- Analyzes file types and patterns
+- No user confirmation needed
+
+**Step 2: Intelligent Grouping (Automatic)**
+
+Groups files by functional relationship:
+
+- **Feature Complete** - Entity + Service + Controller + Tests + Docs
+- **Refactoring** - Helper + Tests + Files using it
+- **Configuration** - Docker, env, CI/CD files
+- **Tests/Docs** - Only if independent from features
+
+**Step 3: Generate Commits (Requires Allow per commit)**
+
+Creates commits following Conventional Commits:
+
+```
+<type>(<scope>): <description>
+
+Types: feat, fix, docs, style, refactor, perf, test, chore, ci
+Scope: Detected dynamically (users, products, auth, core, etc.)
+Description: Imperative mood, English, max 72 chars
+```
+
+**Step 4: Finalize**
+
+- Shows `git log` automatically
+- Prepares `git push` (requires Allow)
+
+**Key Features:**
+
+- ✅ **Framework-agnostic** - Works with any backend stack (NestJS, Django, Go, ASP.NET, etc.)
+- ✅ **Dynamic scopes** - Detects entity/module names from project structure
+- ✅ **Atomic commits** - One logical change per commit
+- ✅ **Zero friction** - No menus or prompts (except git command confirmations)
+- ✅ **Dependency detection** - Groups related files automatically
+
+**Example (NestJS):**
+
+```
+/flow-dev-commit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 Step 1/4: Detecting Changes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Changes detected:
+- Source code: 8 files
+- Tests: 3 files
+- Documentation: 1 file
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚡ Step 2/4: Intelligent Grouping
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 Group 1: Feature Complete
+   Type: feat
+   Scope: products
+   Description: implement product management with CRUD operations
+   Files (7):
+   ✓ src/modules/products/entities/product.entity.ts
+   ✓ src/modules/products/dto/create-product.dto.ts
+   ✓ src/modules/products/products.service.ts
+   ✓ src/modules/products/products.controller.ts
+   ✓ src/modules/products/__tests__/products.service.spec.ts
+   ✓ docs/api.md
+
+📦 Group 2: Configuration
+   Type: chore
+   Scope: docker
+   Description: update database connection settings
+   Files (2):
+   ✓ docker-compose.yml
+   ✓ .env.template
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Step 3/4: Creating Commits
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Commit 1/2: Feature Complete
+
+git add src/modules/products/entities/product.entity.ts ... && git commit -m "feat(products): implement product management with CRUD operations"
+
+Click "Allow" to execute →
+
+✅ Commit created: feat(products): implement product management with CRUD operations
+
+Commit 2/2: Configuration
+
+git add docker-compose.yml .env.template && git commit -m "chore(docker): update database connection settings"
+
+Click "Allow" to execute →
+
+✅ Commit created: chore(docker): update database connection settings
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Step 4/4: Summary & Push
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 2 commits created following Conventional Commits
+
+📋 Commit History:
+* a3b4c5d feat(products): implement product management with CRUD operations
+* f6g7h8i chore(docker): update database connection settings
+
+🚀 Ready to push to remote
+
+git push origin main
+
+Click "Allow" to execute →
+
+⏱️ Total time: 4 minutes
+```
+
+**Example (Multi-Framework Support):**
+
+```
+// Django/Python
+apps/products/models.py
+apps/products/serializers.py
+apps/products/views.py
+→ Commit: feat(products): add product CRUD endpoints
+
+// Go
+internal/domain/product.go
+internal/service/product_service.go
+internal/handler/product_handler.go
+→ Commit: feat(products): implement product management
+
+// ASP.NET Core/C#
+Domain/Entities/Product.cs
+Application/Services/ProductService.cs
+API/Controllers/ProductController.cs
+→ Commit: feat(products): implement product management system
+```
+
+**Grouping Intelligence:**
+
+The command automatically detects:
+
+1. **Entity relationships** - Finds service, controller, DTOs for an entity
+2. **Dependencies** - Groups helper with files that import it
+3. **Test coverage** - Includes tests in feature commits
+4. **Documentation** - Includes related docs in feature commits
+5. **Configuration** - Separates config changes from features
+
+**When to use:**
+
+- ✅ After completing a feature
+- ✅ After fixing multiple bugs
+- ✅ Before creating a pull request
+- ✅ When you have multiple unrelated changes
+- ✅ To maintain clean commit history
+
+**Benefits:**
+
+- 🎯 **Consistent commit messages** across team
+- 📊 **Better changelog generation** with conventional commits
+- 🔍 **Easier code review** with atomic commits
+- 📚 **Clear project history** with descriptive messages
+- ⚡ **Time saved** - No manual grouping or message writing
+
+#### 3.3.4 `/flow-dev-work` - Work Management
 
 **Purpose:** Manage work in progress, resume interrupted tasks, archive completed work.
 
@@ -1396,7 +1575,7 @@ Ready to continue! What would you like me to do?
 📊 Final stats: 8/8 tasks, 12 files, 342 lines added
 ```
 
-#### 3.3.4 `/flow-dev-review` - Code Review
+#### 3.3.5 `/flow-dev-review` - Code Review
 
 **Time:** 5 minutes  
 **Purpose:** Professional multi-aspect code review with prioritized findings.
@@ -1504,7 +1683,7 @@ Overall score: 7/10 (Good, but fix critical issues)
 ⏱️ Review time: 5 minutes
 ```
 
-#### 3.3.5 `/flow-dev-refactor` - Quick Refactorings
+#### 3.3.6 `/flow-dev-refactor` - Quick Refactorings
 
 **Time:** 3-5 minutes  
 **Purpose:** Small refactorings without the overhead of full feature workflow.

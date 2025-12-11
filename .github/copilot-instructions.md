@@ -27,6 +27,7 @@
 - Prefer ASCII in code/templates unless updating files that already rely on emoji (most prompts intentionally include them).
 - When touching prompts (`prompts/backend.md`) keep phase ordering, emoji markers (⭐🔥⚡🏆), and markdown fences intact so slash commands stay valid.
 - Copilot slash prompts are copied from `prompts/` to `.github/prompts/` during init; any rename must propagate to docs that reference `/build*` commands.
+- **Workflow commands** (`/flow-dev-feature`, `/flow-dev-fix`, `/flow-dev-commit`, `/flow-dev-work`, `/flow-dev-review`, `/flow-dev-refactor`) are backend-only and provide structured development workflows.
 
 ## Research Checklist for Agents
 

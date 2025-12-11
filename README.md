@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4+ docs)
+- 🚀 Complete professional documentation (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 3 docs)
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 Multi-AI support with slash commands
@@ -37,7 +37,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4+ docs)
+- 🚀 Documentación profesional completa (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 3 docs)
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
 - 🤖 Compatible con Claude, Copilot, Cursor, Gemini
@@ -63,7 +63,7 @@ ai-flow init .
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 4+ docs)
+- 🚀 Documentação profissional completa (Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 3 docs)
 - ⚡ **Dois modos:** Interativo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
 - 🌍 Suporte universal - 12 linguagens, 60+ frameworks, 35+ ORMs
 - 🤖 Compatível com Claude, Copilot, Cursor, Gemini
@@ -103,13 +103,13 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, any AI tool
-- 📚 **Professional Documentation** - Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 4+ docs
+- 📚 **Professional Documentation** - Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 3 docs
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, 71 questions (90-120 min)
   - **Smart Auto-Suggest:** Only 6 critical questions, AI suggests best practices (15-25 min)
 - 🔍 **Smart 3-Layer Detection** - Analyzes existing projects in 15s-5min
 - 💾 **Intelligent Caching** - 0 seconds on re-runs with no changes
-- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-dev-feature`, `/flow-dev-fix`
+- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-dev-feature`, `/flow-dev-commit`
 - ⏱️ **Time Efficient** - Save 10-20 hours per project
 
 ---
@@ -133,7 +133,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-**Current version:** 2.0.0
+**Current version:** 2.0.1
 
 ---
 
@@ -300,6 +300,7 @@ After initialization, use these slash commands in your AI tool:
 
 - `/flow-dev-feature` - Create/modify features (15-20 min)
 - `/flow-dev-fix` - Fix bugs (3-15 min, adaptive)
+- `/flow-dev-commit` - Automate commits with Conventional Commits (3-5 min)
 - `/flow-dev-work` - Manage work in progress
 - `/flow-dev-review` - Multi-aspect code review (5 min)
 - `/flow-dev-refactor` - Quick refactorings (3-5 min)
@@ -336,11 +337,11 @@ After initialization, use these slash commands in your AI tool:
 
 ## 🎯 Generated Documentation
 
-**Backend** (14 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 technical docs and 2 specs
+**Backend** (14 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, plus 8 technical docs and 2 specs
 
-**Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, plus 8 technical docs and 3 specs
+**Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 9 technical docs and 3 specs
 
-**Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, plus 7 technical docs and 2 specs
+**Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 8 technical docs and 2 specs
 
 **Fullstack** (4 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md
 
