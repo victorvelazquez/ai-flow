@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-12-11
+
+### Fixed
+
+- **BREAKING CHANGE:** Templates are now correctly copied to `.ai-flow/templates/` during `init` instead of being rendered directly to project root
+  - Templates preserve `{{PLACEHOLDER}}` tokens for Phase 8 rendering
+  - Project root remains clean until `/flow-build` Phase 8 execution
+  - Updated tests to verify new template location behavior
+  - This change ensures the correct workflow: init → /flow-build phases 0-7 → Phase 8 generates docs in root
+
+### Changed
+
+- Updated version from 2.1.0 to 3.0.0
+
+### Migration Guide for v3.0.0
+
+**If you're upgrading from v2.x:**
+
+1. Delete your existing `.ai-flow/` directory
+2. Run `ai-flow init` again to recreate with correct structure
+3. Templates will now be in `.ai-flow/templates/` (not project root)
+4. Execute `/flow-build` to generate documentation in project root
+
+**Why this change?**
+v2.x incorrectly generated all documentation files immediately during `init`, before the AI workflow could collect project information through phases 0-7. v3.0.0 fixes this critical bug by deferring documentation generation to Phase 8, as originally designed.
+
 ## [2.1.0] - 2025-01-29
 
 ### Added
@@ -18,13 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated version from 2.0.1 to 2.1.0
-
-### Fixed
-
-- **CRITICAL:** Templates are now correctly copied to `.ai-flow/templates/` during `init` instead of being rendered directly to project root
-  - Templates preserve `{{PLACEHOLDER}}` tokens for Phase 8 rendering
-  - Project root remains clean until `/flow-build` Phase 8 execution
-  - Updated tests to verify new template location behavior
 
 ## [2.0.1] - 2025-01-29
 
@@ -184,6 +203,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive testing suite with Jest
 - ESM support with Node.js 20+
 
+[3.0.0]: https://github.com/victorvelazquez/ai-flow/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/victorvelazquez/ai-flow/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/victorvelazquez/ai-flow/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/victorvelazquez/ai-flow/compare/v1.4.0...v2.0.0
