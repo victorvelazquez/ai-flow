@@ -98,12 +98,23 @@ describe('ai-flow CLI', () => {
     const frontendPromptPath = path.join(tempDir, '.cursor', 'commands', 'flow-build.md');
     expect(fs.existsSync(frontendPromptPath)).toBe(true);
 
-    // Verify frontend templates are copied to project root
-    const frontendTemplatePath = path.join(tempDir, 'ai-instructions.md');
+    // Verify frontend templates are copied to .ai-flow/templates/ (not project root)
+    const frontendTemplatePath = path.join(
+      tempDir,
+      '.ai-flow',
+      'templates',
+      'ai-instructions.template.md'
+    );
     expect(fs.existsSync(frontendTemplatePath)).toBe(true);
 
-    // Verify frontend-specific template exists
-    const componentsTemplatePath = path.join(tempDir, 'docs', 'components.md');
+    // Verify frontend-specific template exists in .ai-flow/templates/
+    const componentsTemplatePath = path.join(
+      tempDir,
+      '.ai-flow',
+      'templates',
+      'docs',
+      'components.template.md'
+    );
     expect(fs.existsSync(componentsTemplatePath)).toBe(true);
   });
 
@@ -204,11 +215,23 @@ describe('ai-flow CLI', () => {
     expect(fs.existsSync(backendPromptPath)).toBe(true);
     expect(fs.existsSync(frontendPromptPath)).toBe(true);
 
-    // Verify templates from both backend and frontend are copied
+    // Verify templates from both backend and frontend are copied to .ai-flow/templates/
     // Backend templates
-    const backendTemplatePath = path.join(tempDir, 'docs', 'api.md');
+    const backendTemplatePath = path.join(
+      tempDir,
+      '.ai-flow',
+      'templates',
+      'docs',
+      'api.template.md'
+    );
     // Frontend templates
-    const frontendTemplatePath = path.join(tempDir, 'docs', 'components.md');
+    const frontendTemplatePath = path.join(
+      tempDir,
+      '.ai-flow',
+      'templates',
+      'docs',
+      'components.template.md'
+    );
 
     // At least one should exist (depending on processing order)
     const templatesExist =
@@ -286,12 +309,18 @@ describe('ai-flow CLI', () => {
     expect(fs.existsSync(mobilePromptPath)).toBe(true);
 
     // Verify mobile templates are copied (templates are copied directly to templates/, not templates/mobile/)
-    // Templates are processed and .template.md is removed
-    const mobileTemplatePath = path.join(tempDir, 'README.md');
+    // Templates are copied to .ai-flow/templates/ WITHOUT rendering
+    const mobileTemplatePath = path.join(tempDir, '.ai-flow', 'templates', 'README.template.md');
     expect(fs.existsSync(mobileTemplatePath)).toBe(true);
 
-    // Verify mobile-specific template exists
-    const mobileSpecificTemplatePath = path.join(tempDir, 'docs', 'navigation.md');
+    // Verify mobile-specific template exists in .ai-flow/templates/
+    const mobileSpecificTemplatePath = path.join(
+      tempDir,
+      '.ai-flow',
+      'templates',
+      'docs',
+      'navigation.template.md'
+    );
     expect(fs.existsSync(mobileSpecificTemplatePath)).toBe(true);
   });
 

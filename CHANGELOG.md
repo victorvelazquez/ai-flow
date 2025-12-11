@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated version from 2.0.1 to 2.1.0
 
+### Fixed
+
+- **CRITICAL:** Templates are now correctly copied to `.ai-flow/templates/` during `init` instead of being rendered directly to project root
+  - Templates preserve `{{PLACEHOLDER}}` tokens for Phase 8 rendering
+  - Project root remains clean until `/flow-build` Phase 8 execution
+  - Updated tests to verify new template location behavior
+
 ## [2.0.1] - 2025-01-29
 
 ### Changed
@@ -159,7 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **BREAKING:** Renamed project commands to flow-project-* prefix
+- **BREAKING:** Renamed project commands to flow-project-\* prefix
 - **BREAKING:** Standardized command naming to /flow- prefix pattern
 - Updated banner to display AI FLOW branding
 

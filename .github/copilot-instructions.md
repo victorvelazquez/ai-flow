@@ -9,8 +9,9 @@
 
 - `src/cli.ts` is the only executable source today; it wires Commander CLI commands (`init`, `check`) to filesystem tasks with `fs-extra`, progress feedback via `ora`, and prompts through `inquirer`.
 - `init` composes helper steps: `createBuildStructure` → `copyTemplates` → `copyPrompts` → `setupSlashCommands`; stay consistent with that order when extending.
+- Templates are copied WITHOUT rendering to `.ai-flow/templates/` during init; Phase 8 renders them to project root.
 - Tool selection lives in `AI_TOOLS`; adding a tool requires new slash-command directory, script branch, and inclusion in `.ai-flow/core/config.json` generation.
-- The generated `.ai-flow/templates/**` files are copied verbatim; preserve `{{PLACEHOLDER}}` tokens because downstream AI agents expand them.
+- The templates in `.ai-flow/templates/**` are copied verbatim with `{{PLACEHOLDER}}` tokens; Phase 8 AI agents render and expand them.
 
 ## Build & Test Workflow
 

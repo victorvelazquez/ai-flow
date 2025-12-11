@@ -279,22 +279,23 @@ async function createBootstrapStructure(
   }
 }
 
-async function renderTemplates(
+async function copyTemplates(
   targetPath: string,
-  projectData: { name: string; description: string },
   projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' = 'backend',
-  aiTools: string[] = [],
   dryRun?: boolean,
   verbose?: boolean
 ): Promise<void> {
-  const spinner = ora('Generating documentation from templates...').start();
+  const spinner = ora('Copying templates to .ai-flow/templates/...').start();
   try {
-    // All generated files go to project root, not .ai-flow/templates/
+    // Templates are copied WITHOUT rendering to .ai-flow/templates/
+    // Phase 8 will render them to project root
     if (dryRun) {
-      spinner.succeed('Documentation generated from templates (dry-run)');
+      spinner.succeed('Templates copied (dry-run)');
       return;
     }
     await assertDirWritable(targetPath);
+
+    const destTemplatesPath = path.join(targetPath, '.ai-flow', 'templates');
 
     // Find all .template.md and .template files in a directory and subfolders
     const walk = async (dir: string): Promise<string[]> => {
@@ -324,8 +325,7 @@ async function renderTemplates(
       const fullPath = path.join(rootTemplatesSource, item);
       const stat = await fs.stat(fullPath);
       if (stat.isFile() && item.endsWith('.template.md')) {
-        const relPath = item.replace('.template.md', '.md').replace('.template', '');
-        processedFiles.set(relPath, { file: fullPath, base: rootTemplatesSource });
+        processedFiles.set(item, { file: fullPath, base: rootTemplatesSource });
       }
     }
 
@@ -366,10 +366,7 @@ async function renderTemplates(
     for (const { source, base } of templateSources) {
       const files = await walk(source);
       for (const file of files) {
-        const relPath = path
-          .relative(base, file)
-          .replace('.template.md', '.md')
-          .replace('.template', '');
+        const relPath = path.relative(base, file);
         // Only add if not already processed (first occurrence wins)
         if (!processedFiles.has(relPath)) {
           processedFiles.set(relPath, { file, base });
@@ -377,39 +374,15 @@ async function renderTemplates(
       }
     }
 
-    // Render each template
+    // Copy each template WITHOUT rendering to .ai-flow/templates/
     for (const [relPath, { file: templateFile }] of processedFiles) {
-      // Skip AI tool-specific config files if the tool is not selected
-      const fileName = path.basename(relPath);
-      if (fileName === '.clauderules' && !aiTools.includes('claude') && !aiTools.includes('all')) {
-        logVerbose(`Skipping ${relPath} (Claude not selected)`, verbose);
-        continue;
-      }
-      if (fileName === '.cursorrules' && !aiTools.includes('cursor') && !aiTools.includes('all')) {
-        logVerbose(`Skipping ${relPath} (Cursor not selected)`, verbose);
-        continue;
-      }
-
-      // All files go to project root with their relative path structure
-      const destPath = path.join(targetPath, relPath);
+      // Preserve original file structure with .template extension
+      const destPath = path.join(destTemplatesPath, relPath);
       await fs.ensureDir(path.dirname(destPath));
-      const templateContent = await fs.readFile(templateFile, 'utf8');
-      // Render with EJS, leaving {{PLACEHOLDER}} for everything except name/description
-      const rendered = ejs.render(
-        templateContent,
-        {
-          PROJECT_NAME: projectData.name,
-          PROJECT_DESCRIPTION: projectData.description,
-          PROJECT_TYPE: projectType,
-          GENERATION_DATE: new Date().toISOString().split('T')[0],
-          PLACEHOLDER: '{{PLACEHOLDER}}',
-        },
-        { delimiter: '?' }
-      );
-      await fs.writeFile(destPath, rendered, 'utf8');
-      logVerbose(`Rendered ${destPath}`, verbose);
+      await fs.copy(templateFile, destPath);
+      logVerbose(`Copied ${relPath}`, verbose);
     }
-    spinner.succeed('Documentation generated from templates');
+    spinner.succeed('Templates copied');
   } catch (error) {
     spinner.fail(fsErrorMessage(error));
     throw error;
@@ -613,14 +586,7 @@ async function initializeProject(
       flags?.dryRun,
       flags?.verbose
     );
-    await renderTemplates(
-      targetPath,
-      { name: finalProjectName!, description: finalProjectDescription! },
-      selectedProjectType,
-      aiTools,
-      flags?.dryRun,
-      flags?.verbose
-    );
+    await copyTemplates(targetPath, selectedProjectType, flags?.dryRun, flags?.verbose);
     await copyPrompts(targetPath, flags?.dryRun, flags?.verbose);
     await setupSlashCommands(
       targetPath,
