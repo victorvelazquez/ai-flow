@@ -43,25 +43,37 @@ describe('slash commands installation', () => {
 
   it('installs Copilot prompts with .prompt.md suffix', () => {
     runInit('copilot');
-    const file = path.join(tempDir, '.github', 'prompts', 'flow-build-phase-1.prompt.md');
+    const file = path.join(tempDir, '.github', 'prompts', 'flow-build.prompt.md');
     expect(fs.existsSync(file)).toBe(true);
+    // Phase files should NOT be copied as individual commands
+    const phaseFile = path.join(tempDir, '.github', 'prompts', 'flow-build-phase-1.prompt.md');
+    expect(fs.existsSync(phaseFile)).toBe(false);
   });
 
   it('installs Claude commands', () => {
     runInit('claude');
-    const file = path.join(tempDir, '.claude', 'commands', 'flow-build-phase-1.md');
+    const file = path.join(tempDir, '.claude', 'commands', 'flow-build.md');
     expect(fs.existsSync(file)).toBe(true);
+    // Phase files should NOT be copied as individual commands
+    const phaseFile = path.join(tempDir, '.claude', 'commands', 'flow-build-phase-1.md');
+    expect(fs.existsSync(phaseFile)).toBe(false);
   });
 
   it('installs Cursor commands', () => {
     runInit('cursor');
-    const file = path.join(tempDir, '.cursor', 'commands', 'flow-build-phase-1.md');
+    const file = path.join(tempDir, '.cursor', 'commands', 'flow-build.md');
     expect(fs.existsSync(file)).toBe(true);
+    // Phase files should NOT be copied as individual commands
+    const phaseFile = path.join(tempDir, '.cursor', 'commands', 'flow-build-phase-1.md');
+    expect(fs.existsSync(phaseFile)).toBe(false);
   });
 
   it('installs Gemini commands', () => {
     runInit('gemini');
-    const file = path.join(tempDir, '.gemini', 'commands', 'flow-build-phase-1.md');
+    const file = path.join(tempDir, '.gemini', 'commands', 'flow-build.md');
     expect(fs.existsSync(file)).toBe(true);
+    // Phase files should NOT be copied as individual commands
+    const phaseFile = path.join(tempDir, '.gemini', 'commands', 'flow-build-phase-1.md');
+    expect(fs.existsSync(phaseFile)).toBe(false);
   });
 });
