@@ -10,7 +10,7 @@
 
 **Project Name:** AI Flow
 
-**Description:** Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation. Generates 15 professional documents for backend and frontend projects (new or existing) through a guided 7-phase questionnaire.
+**Description:** Interactive CLI tool to build AI-ready projects with comprehensive documentation. Generates 15 professional documents for backend and frontend projects (new or existing) through a guided 9-phase questionnaire.
 
 **Problem We're Solving:** Starting a new project requires hours of documentation setup. Existing projects often lack proper AI-ready documentation. Without proper docs, AI assistants work inefficiently and make inconsistent decisions.
 
@@ -105,21 +105,21 @@ ai-flow/
 ├── dist/                      # Compiled output (CommonJS)
 │   ├── cli.js
 │   └── *.js, *.d.ts, *.map
-├── prompts/                   # Bootstrap prompts (for user projects)
-│   ├── backend/               # Backend bootstrap prompts
-│   │   ├── bootstrap.md       # 7-phase master questionnaire
-│   │   ├── bootstrap-phase*.md
+├── prompts/                   # build prompts (for user projects)
+│   ├── backend/               # Backend build prompts
+│   │   ├── flow-build.md       # 9-phase master questionnaire
+│   │   ├── flow-build-phase-*.md
 │   │   └── docs-update.md
-│   └── frontend/              # Frontend bootstrap prompts
-│       ├── bootstrap.md
-│       └── bootstrap-phase*.md
+│   └── frontend/              # Frontend build prompts
+│       ├── flow-build.md
+│       └── flow-build-phase-*.md
 ├── templates/                 # Document templates (for user projects)
 │   ├── backend/               # Backend templates
 │   ├── frontend/              # Frontend templates
 │   └── shared/                # Shared templates (AGENT.md)
 ├── __tests__/                 # Test files
 │   ├── cli.test.js
-│   ├── bootstrap.test.js
+│   ├── build.test.js
 │   └── ...
 ├── .github/
 │   ├── copilot-instructions.md # Copilot playbook
@@ -209,7 +209,7 @@ ai-flow/
 5. Create `.ai-flow/` structure with core/, prompts/, templates/
 6. Write config.json with version, aiTools, projectType, timestamps
 7. Copy templates from package to project
-8. Copy master prompts (backend/bootstrap.md or frontend/bootstrap.md and phase files)
+8. Copy Master prompts (backend/flow-build.md or frontend/flow-build.md and phase files)
 9. Set up slash commands in tool-specific directories:
    - Claude → `.claude/commands/`
    - Cursor → `.cursor/commands/`
@@ -355,11 +355,11 @@ Use Conventional Commits:
 | File                                      | Purpose                                         | When to Edit                                        |
 | ----------------------------------------- | ----------------------------------------------- | --------------------------------------------------- |
 | `src/cli.ts`                              | CLI entry point, all commands, file operations  | Adding commands, changing initialization logic      |
-| `prompts/backend/bootstrap.md`            | 7-phase master questionnaire                    | Improving questions, adding phases, changing flow   |
+| `prompts/backend/flow-build.md`           | 9-phase master questionnaire                    | Improving questions, adding phases, changing flow   |
 | `prompts/backend/project-scaffold.md`     | Complete project structure generation (0→1)     | Modifying scaffold phases, adding framework support |
 | `prompts/backend/flow-project-roadmap.md` | Implementation roadmap with Story Points        | Changing roadmap format, SP scale, epic structure   |
 | `prompts/backend/feature.md`              | Feature workflow with Story Points              | Updating SP estimates, task format, phase structure |
-| `prompts/frontend/bootstrap.md`           | Frontend 7-phase questionnaire                  | Frontend-specific improvements                      |
+| `prompts/frontend/flow-build.md`          | Frontend 9-phase questionnaire                  | Frontend-specific improvements                      |
 | `templates/*.template.md`                 | Document templates with placeholders            | Enhancing generated docs, changing structure        |
 | `package.json`                            | Dependencies, scripts, bin config               | Changing commands, adding dependencies              |
 | `tsconfig.json`                           | TypeScript compilation settings                 | Changing target, module system                      |
@@ -372,16 +372,16 @@ Use Conventional Commits:
 
 ### Key Functions in src/cli.ts
 
-| Function                     | Purpose                                             | Parameters                               |
-| ---------------------------- | --------------------------------------------------- | ---------------------------------------- |
-| `selectAITool()`             | Interactive AI tool selection or validate --ai flag | `providedTool?: string`                  |
-| `selectProjectType()`        | Interactive project type selection                  | `providedType?: string`                  |
-| `checkIfInitialized()`       | Check if .ai-flow exists                            | `targetPath: string`                     |
-| `createBootstrapStructure()` | Create folders and config.json                      | `targetPath, aiTools, projectType, ...`  |
-| `renderTemplates()`          | Copy and render templates to project                | `targetPath, projectData, projectType`   |
-| `copyPrompts()`              | Copy prompts/ to project                            | `targetPath: string`                     |
-| `setupSlashCommands()`       | Install slash commands for selected tools           | `targetPath, aiTools, projectType`       |
-| `initializeProject()`        | Main init orchestration                             | `targetPath, aiTool?, projectType?, ...` |
+| Function                 | Purpose                                             | Parameters                               |
+| ------------------------ | --------------------------------------------------- | ---------------------------------------- |
+| `selectAITool()`         | Interactive AI tool selection or validate --ai flag | `providedTool?: string`                  |
+| `selectProjectType()`    | Interactive project type selection                  | `providedType?: string`                  |
+| `checkIfInitialized()`   | Check if .ai-flow exists                            | `targetPath: string`                     |
+| `createBuildStructure()` | Create folders and config.json                      | `targetPath, aiTools, projectType, ...`  |
+| `renderTemplates()`      | Copy and render templates to project                | `targetPath, projectData, projectType`   |
+| `copyPrompts()`          | Copy prompts/ to project                            | `targetPath: string`                     |
+| `setupSlashCommands()`   | Install slash commands for selected tools           | `targetPath, aiTools, projectType`       |
+| `initializeProject()`    | Main init orchestration                             | `targetPath, aiTool?, projectType?, ...` |
 
 ---
 
@@ -441,10 +441,10 @@ Use Conventional Commits:
 
 ### Testing Philosophy
 
-Every change should be tested with the **full bootstrap flow**:
+Every change should be tested with the **full build flow**:
 
 1. Initialize a test project
-2. Run `/bootstrap` command in AI tool
+2. Run `/flow-build` command in AI tool
 3. Verify generated documents are correct
 4. Check all placeholders are filled
 5. Ensure documentation is coherent

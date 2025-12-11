@@ -122,10 +122,10 @@ Templates Found: 15 files
 - specs/*.template.md (2 files)
 
 Slash Commands:
-- claude/: 8 files (bootstrap.md + 7 phases)
-- copilot/: 8 files (bootstrap.prompt.md + 7 phases)
-- cursor/: 8 files (bootstrap.md + 7 phases)
-- gemini/: 8 files (bootstrap.md + 7 phases)
+- claude/: 9 files (flow-build.md + 8 phases)
+- copilot/: 9 files (flow-build.prompt.md + 8 phases)
+- cursor/: 9 files (flow-build.md + 8 phases)
+- gemini/: 9 files (flow-build.md + 8 phases)
 
 Published to npm: dist, prompts, templates, slash-commands
 ```

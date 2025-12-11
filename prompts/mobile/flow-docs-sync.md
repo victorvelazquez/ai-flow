@@ -34,7 +34,7 @@ First, check if `.ai-flow/analysis.json` exists:
 
 1. **Perform Current Code Analysis:**
 
-   - Execute the same analysis as Phase 0 (mobile/flow-bootstrap-phase-0-context.md):
+   - Execute the same analysis as Phase 0 (mobile/flow-build-phase-0-context.md):
      - File structure analysis
      - Screen and component detection
      - Navigation pattern detection
@@ -355,7 +355,7 @@ Update cancelled. Run `/flow-docs-sync` when you're ready to update the document
 2. **Follow Existing Patterns:**
 
    - Use same format as existing documentation
-   - Follow conventions established in original bootstrap
+   - Follow conventions established in original build
    - Maintain consistency with existing docs
 
 3. **Update Analysis File:**
@@ -630,6 +630,7 @@ Documentation synchronized successfully.
 ---
 
 **BEGIN EXECUTION when user runs `/flow-docs-sync`**
+
 
 
 

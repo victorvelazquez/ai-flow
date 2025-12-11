@@ -123,8 +123,8 @@ Templates Found:
 - Shared: 1 file (AGENT.template.md)
 
 Prompts:
-- Backend: 9 files (bootstrap.md + 8 phase files)
-- Frontend: 9 files (bootstrap.md + 8 phase files)
+- Backend: 9 files (flow-build.md + 8 phase files)
+- Frontend: 9 files (flow-build.md + 8 phase files)
 
 Slash Commands Created:
 - claude/: 9 files per project type

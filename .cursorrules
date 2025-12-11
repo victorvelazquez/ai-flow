@@ -11,9 +11,9 @@ This file contains Cursor-specific preferences and workflows for the ai-flow pro
 ## 🎯 Project Summary
 
 **Name:** AI Flow
-**Description:** Interactive CLI tool to bootstrap AI-ready projects with comprehensive documentation
+**Description:** Interactive CLI tool to build AI-ready projects with comprehensive documentation
 **Stack:** Node.js 18+ + TypeScript + Commander.js + Inquirer
-**Version:** 1.0.8
+**Version:** 2.0.0
 
 ---
 
@@ -68,7 +68,7 @@ Read these files in order:
 
 - `src/cli.ts` - All CLI logic (Commander.js + Inquirer)
 - `templates/` - Document templates (for user projects, not this project)
-- `prompts/` - Bootstrap prompts (for user projects)
+- `prompts/` - Build prompts (for user projects)
 - `dist/` - Compiled output (CommonJS)
 - `.github/prompts/` - Development workflow commands
 
@@ -194,7 +194,7 @@ rm -rf test-folder
 
 **For Prompt Changes:**
 
-1. Edit `prompts/backend/bootstrap.md` or phase files
+1. Edit `prompts/backend/flow-build.md` or phase files
 2. Rebuild and initialize test project
 3. Run through full questionnaire flow
 

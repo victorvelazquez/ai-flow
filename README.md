@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 17 docs, Frontend: 15 docs, Mobile: 14 docs, Fullstack: 4+ docs)
+- 🚀 Complete professional documentation (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4+ docs)
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 Multi-AI support with slash commands
@@ -24,7 +24,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Then open your AI tool and run: /flow-bootstrap
+# Then open your AI tool and run: /flow-build
 ```
 
 📚 **[Complete Guide →](GETTING-STARTED.md)**
@@ -37,7 +37,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 17 docs, Frontend: 15 docs, Mobile: 14 docs, Fullstack: 4+ docs)
+- 🚀 Documentación profesional completa (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4+ docs)
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
 - 🤖 Compatible con Claude, Copilot, Cursor, Gemini
@@ -51,7 +51,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Luego en tu herramienta IA: /flow-bootstrap
+# Luego en tu herramienta IA: /flow-build
 ```
 
 📚 **[Guía Completa →](GETTING-STARTED.md)**
@@ -63,7 +63,7 @@ ai-flow init .
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 17, Frontend: 15, Mobile: 14, Fullstack: 4+ docs)
+- 🚀 Documentação profissional completa (Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 4+ docs)
 - ⚡ **Dois modos:** Interativo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
 - 🌍 Suporte universal - 12 linguagens, 60+ frameworks, 35+ ORMs
 - 🤖 Compatível com Claude, Copilot, Cursor, Gemini
@@ -78,7 +78,7 @@ Transforme sua ideia em um projeto pronto para produção e documentado para IA 
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Em seguida, na sua ferramenta de IA: /flow-bootstrap
+# Em seguida, na sua ferramenta de IA: /flow-build
 ```
 
 📚 **[Guia Completo →](GETTING-STARTED.md)**
@@ -103,13 +103,13 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, any AI tool
-- 📚 **Professional Documentation** - Backend: 17, Frontend: 15, Mobile: 14, Fullstack: 4+ docs
+- 📚 **Professional Documentation** - Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 4+ docs
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, 71 questions (90-120 min)
   - **Smart Auto-Suggest:** Only 6 critical questions, AI suggests best practices (15-25 min)
 - 🔍 **Smart 3-Layer Detection** - Analyzes existing projects in 15s-5min
 - 💾 **Intelligent Caching** - 0 seconds on re-runs with no changes
-- 💡 **Slash Commands** - Easy execution with `/flow-bootstrap`, `/flow-dev-feature`, `/flow-dev-fix`
+- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-dev-feature`, `/flow-dev-fix`
 - ⏱️ **Time Efficient** - Save 10-20 hours per project
 
 ---
@@ -148,7 +148,7 @@ cd my-awesome-project
 ai-flow init .
 
 # 3. Open your AI tool and run:
-/flow-bootstrap
+/flow-build
 ```
 
 That's it! The AI will guide you through an interactive questionnaire to generate all documentation.
@@ -164,6 +164,20 @@ ai-flow init [path]     # Initialize project
 ai-flow check           # Verify initialization
 ai-flow --version       # Show version
 ai-flow --help          # Show help
+```
+
+**Example `check` output:**
+
+```bash
+$ ai-flow check
+
+✓ .ai-flow/core/config.json found
+✓ AI tools configured: claude
+✓ Project type: backend
+✓ Documentation complete: 17 files
+✓ Slash commands installed: .claude/commands/
+
+✅ All checks passed! Your project is ready for AI-assisted development.
 ```
 
 ### Common Flags
@@ -245,23 +259,25 @@ Each tool gets:
 
 After initialization, use these slash commands in your AI tool:
 
+> **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
+
 **Backend Projects:** 17 commands  
-**Frontend/Mobile Projects:** 11 commands (bootstrap + docs-sync)  
+**Frontend/Mobile Projects:** 11 commands (build + docs-sync)  
 **Fullstack Projects:** Combined backend + frontend commands
 
-**Documentation & Bootstrap:**
+**Documentation & Build:**
 
-- `/flow-bootstrap` - Full 9-phase project bootstrap (includes docs + setup + roadmap)
-- `/flow-bootstrap-phase-0` - Context discovery (existing projects)
-- `/flow-bootstrap-phase-1` - Business requirements
-- `/flow-bootstrap-phase-2` - Data architecture
-- `/flow-bootstrap-phase-3` - Technical architecture
-- `/flow-bootstrap-phase-4` - Security & compliance
-- `/flow-bootstrap-phase-5` - Code standards
-- `/flow-bootstrap-phase-6` - Testing strategy
-- `/flow-bootstrap-phase-7` - Deployment & operations
-- `/flow-bootstrap-phase-8` - Project setup & final documentation
-- `/flow-bootstrap-phase-9` - Implementation roadmap with Story Points (Backend only, optional)
+- `/flow-build` - Full 9-phase project build (includes docs + setup + roadmap)
+- `/flow-build-phase-0` - Context discovery (existing projects)
+- `/flow-build-phase-1` - Business requirements
+- `/flow-build-phase-2` - Data architecture
+- `/flow-build-phase-3` - Technical architecture
+- `/flow-build-phase-4` - Security & compliance
+- `/flow-build-phase-5` - Code standards
+- `/flow-build-phase-6` - Testing strategy
+- `/flow-build-phase-7` - Deployment & operations
+- `/flow-build-phase-8` - Project setup & final documentation
+- `/flow-build-phase-9` - Implementation roadmap with Story Points (Backend only, optional)
 - `/flow-docs-sync` - Update documentation when code changes
 
 **Workflows (Backend only):**
@@ -270,9 +286,9 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-dev-fix` - Fix bugs (3-15 min, adaptive)
 - `/flow-dev-work` - Manage work in progress
 - `/flow-dev-review` - Multi-aspect code review (5 min)
-- `/flow-dev-refactor-quick` - Quick refactorings (3-5 min)
+- `/flow-dev-refactor` - Quick refactorings (3-5 min)
 
-> **Note:** Frontend and Mobile projects include bootstrap commands (`/flow-bootstrap`, phases, `/flow-docs-sync`) but not workflow commands.
+> **Note:** Frontend and Mobile projects include build commands (`/flow-build`, phases, `/flow-docs-sync`) but not workflow commands.
 
 **📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
 
@@ -308,9 +324,44 @@ After initialization, use these slash commands in your AI tool:
 
 **Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 9 technical docs, 3 specs
 
-**Mobile** (14 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 8 technical docs, 2 specs
+**Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, 8 technical docs, 2 specs
 
 **Fullstack** (4+ docs): ai-instructions.md, project-brief.md, README.md, configuration spec + inherits from backend/frontend as needed
+
+### 📁 Generated Structure
+
+After running `ai-flow init`, your project will have:
+
+```
+project-root/
+├── AGENT.md                    # Universal AI entry point (all tools)
+├── README.md                   # Project documentation
+├── docs/                       # Technical documentation
+│   ├── architecture.md
+│   ├── api.md                 # (Backend only)
+│   ├── database.md            # (Backend only)
+│   ├── deployment.md
+│   ├── security.md
+│   └── ...
+├── specs/                      # Specifications
+│   ├── features.md
+│   ├── requirements.md
+│   └── ...
+├── .ai-flow/                   # Internal metadata
+│   └── core/
+│       └── config.json        # AI Flow configuration
+├── .github/prompts/            # GitHub Copilot commands
+├── .claude/commands/           # Claude commands (if selected)
+├── .cursor/commands/           # Cursor commands (if selected)
+├── .gemini/commands/           # Gemini commands (if selected)
+└── ... (your project files)
+```
+
+**Key locations:**
+
+- Documentation lives at **project root** (`docs/`, `specs/`, `AGENT.md`)
+- `.ai-flow/` is internal metadata (don't edit manually)
+- Slash commands are tool-specific (`.github/prompts/`, `.claude/commands/`, etc.)
 
 ---
 
@@ -439,3 +490,6 @@ MIT License - See [LICENSE](LICENSE) for details.
 **Transform your idea into a production-ready project with AI Flow** 🚀
 
 **Made with ❤️ for the developer community**
+
+
+

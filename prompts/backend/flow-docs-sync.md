@@ -464,7 +464,7 @@ Actualización cancelada. Ejecuta `/flow-docs-sync` cuando estés listo para act
 2. **Follow Existing Patterns:**
 
    - Use same format as existing documentation
-   - Follow conventions established in original bootstrap
+   - Follow conventions established in original build
    - Maintain consistency with existing docs
 
 3. **Update Analysis File:**
@@ -523,4 +523,5 @@ Documentación sincronizada exitosamente.
 ---
 
 **BEGIN EXECUTION when user runs `/flow-docs-sync`**
+
 

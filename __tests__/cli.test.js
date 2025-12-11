@@ -40,7 +40,7 @@ describe("ai-flow CLI", () => {
     }
   });
 
-  it("initializes the bootstrap structure when an AI tool is supplied (backend default)", () => {
+  it("initializes the build structure when an AI tool is supplied (backend default)", () => {
     execFileSync(
       "node",
       [
@@ -106,7 +106,7 @@ describe("ai-flow CLI", () => {
       tempDir,
       ".cursor",
       "commands",
-      "flow-bootstrap.md"
+      "flow-build.md"
     );
     expect(fs.existsSync(frontendPromptPath)).toBe(true);
 
@@ -226,13 +226,13 @@ describe("ai-flow CLI", () => {
       tempDir,
       ".cursor",
       "commands",
-      "backend-flow-bootstrap.md"
+      "backend-flow-build.md"
     );
     const frontendPromptPath = path.join(
       tempDir,
       ".cursor",
       "commands",
-      "frontend-flow-bootstrap.md"
+      "frontend-flow-build.md"
     );
     expect(fs.existsSync(backendPromptPath)).toBe(true);
     expect(fs.existsSync(frontendPromptPath)).toBe(true);
@@ -292,8 +292,8 @@ describe("ai-flow CLI", () => {
     expect(output).toContain("Full Stack");
     expect(output).toContain("Backend Prompts");
     expect(output).toContain("Frontend Prompts");
-    expect(output).toContain("/backend-flow-bootstrap");
-    expect(output).toContain("/frontend-flow-bootstrap");
+    expect(output).toContain("/backend-flow-build");
+    expect(output).toContain("/frontend-flow-build");
   });
 
   it("initializes mobile project when --type mobile is supplied", () => {
@@ -331,7 +331,7 @@ describe("ai-flow CLI", () => {
       tempDir,
       ".cursor",
       "commands",
-      "flow-bootstrap.md"
+      "flow-build.md"
     );
     expect(fs.existsSync(mobilePromptPath)).toBe(true);
 
@@ -388,5 +388,6 @@ describe("ai-flow CLI", () => {
     expect(output).toContain("mobile");
   });
 });
+
 
 

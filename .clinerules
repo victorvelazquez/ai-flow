@@ -1,31 +1,36 @@
 # AI Flow - Cline Agent Rules
 
 ## Project Identity
-ai-flow: CLI tool that generates 15 backend documentation files via 7-phase questionnaire
+
+ai-flow: CLI tool that generates 15 backend documentation files via 9-phase questionnaire
 Language: TypeScript (strict mode), Target: Node.js >=18, Module: CommonJS
 Entry: src/cli.ts → dist/cli.js (npm bin)
 
 ## Critical Architecture
+
 - src/cli.ts = All CLI logic (Commander + Inquirer, ~329 lines)
-- templates/*.template.md = 15 files with {{PLACEHOLDER}} format
-- prompts/backend/bootstrap.md = 7-phase master questionnaire
-- dist/cli.js uses __dirname to copy assets from installed package
+- templates/\*.template.md = 15 files with {{PLACEHOLDER}} format
+- prompts/backend/flow-build.md = 9-phase master questionnaire
+- dist/cli.js uses \_\_dirname to copy assets from installed package
 
 ## Key Commands
-npm run dev init <path> --ai <tool>  # Development (ts-node, no build)
-npm run build                         # TypeScript → dist/
-npm start init <path>                 # Run built CLI
-npm run dev check                     # Verify initialization
+
+npm run dev init <path> --ai <tool> # Development (ts-node, no build)
+npm run build # TypeScript → dist/
+npm start init <path> # Run built CLI
+npm run dev check # Verify initialization
 
 ## Critical Rules
+
 NEVER write to files without reading first (Read → Edit pattern)
 NEVER create new files when editing existing ones
 NEVER use fs-extra Write on existing files (use Edit tool)
 Templates use {{VARIABLE_NAME}} format
 Slash commands copy from prompts/backend/ to .{tool}/commands/
-Path resolution uses __dirname relative to dist/ for package assets
+Path resolution uses \_\_dirname relative to dist/ for package assets
 
 ## Development Workflow
+
 1. Edit src/cli.ts or templates
 2. npm run build
 3. Test: npm run dev init test-folder --ai claude
@@ -33,6 +38,7 @@ Path resolution uses __dirname relative to dist/ for package assets
 5. Clean: rm -rf test-folder
 
 ## AI Tool Mapping
+
 claude → .claude/commands/
 cursor → .cursor/commands/
 copilot → .github/copilot-commands/
@@ -40,12 +46,14 @@ gemini → .gemini/commands/
 all → expands to all 4 tools
 
 ## Common Tasks
+
 Add AI tool: Update AI_TOOLS array in cli.ts + setupSlashCommands() case
 Add template: Create templates/{name}.template.md with {{PLACEHOLDERS}}
-Update questionnaire: Edit prompts/backend/bootstrap.md
-Add phase: Create bootstrap-phase{N}.md files
+Update questionnaire: Edit prompts/backend/flow-build.md
+Add phase: Create flow-build-phase-{N}.md files
 
 ## References
+
 Full context: CLAUDE.md (850 lines)
 User docs: README.md
 Generated project config: AGENT.md template (templates/AGENT.template.md)

@@ -336,14 +336,14 @@ ai-flow/
 ├── __tests__/              # Test files
 │   ├── cli.test.js
 │   ├── helpers.test.js
-│   └── bootstrap.test.js
+│   └── build.test.js
 ├── templates/              # Document templates
 │   ├── AGENT.template.md
 │   ├── docs/
 │   └── specs/
 ├── prompts/                # Master prompts
 │   └── backend/
-│       └── bootstrap.md    # Master prompt + phase files
+│       └── flow-build.md    # Master prompt + phase files
 │   ├── claude/
 │   ├── cursor/
 │   ├── copilot/
@@ -422,7 +422,7 @@ Include:
 ### High Priority
 
 - [ ] E2E test suite
-- [ ] Frontend bootstrap support
+- [ ] Frontend build support
 - [ ] Performance optimizations
 - [ ] Additional language translations
 

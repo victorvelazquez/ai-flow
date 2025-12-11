@@ -99,7 +99,7 @@ This file contains Claude Code-specific preferences and workflows.
 
 ## 💡 Claude-Specific Tips
 
-- Use `/bootstrap` command for starting documentation generation
+- Use `/flow-build` command for starting documentation generation
 - Use plan mode for architectural decisions
 - Reference `AGENT.md` for any clarifications
 - Ask user before making breaking changes
