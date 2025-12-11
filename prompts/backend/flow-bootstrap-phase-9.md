@@ -265,16 +265,16 @@ Story Points | Complexity | Typical Time | Examples
 
 **Use this table to add time estimates to each task:**
 
-| Story Points | Time Estimate (solo dev) | Time Range | Example Task                               |
-| ------------ | ------------------------ | ---------- | ------------------------------------------ |
-| **1 SP**     | 1-2 hours                | (~1-2h)    | Add enum value, simple config change       |
-| **2 SP**     | 3-4 hours                | (~3-4h)    | Write 5-8 unit tests, basic validation     |
-| **3 SP**     | 4-8 hours                | (~4-8h)    | Simple CRUD endpoint, basic entity         |
-| **5 SP**     | 1-2 days                 | (~1-2d)    | Complex endpoint with business logic       |
-| **8 SP**     | 2-3 days                 | (~2-3d)    | Auth flow, complex validation              |
-| **13 SP**    | 1 week                   | (~1w)      | Complete module with full test coverage    |
-| **21 SP**    | 2 weeks                  | (~2w)      | Major feature with integration             |
-| **34 SP**    | 3 weeks                  | (~3w)      | Multiple related features (Epic-level)     |
+| Story Points | Time Estimate (solo dev) | Time Range | Example Task                            |
+| ------------ | ------------------------ | ---------- | --------------------------------------- |
+| **1 SP**     | 1-2 hours                | (~1-2h)    | Add enum value, simple config change    |
+| **2 SP**     | 3-4 hours                | (~3-4h)    | Write 5-8 unit tests, basic validation  |
+| **3 SP**     | 4-8 hours                | (~4-8h)    | Simple CRUD endpoint, basic entity      |
+| **5 SP**     | 1-2 days                 | (~1-2d)    | Complex endpoint with business logic    |
+| **8 SP**     | 2-3 days                 | (~2-3d)    | Auth flow, complex validation           |
+| **13 SP**    | 1 week                   | (~1w)      | Complete module with full test coverage |
+| **21 SP**    | 2 weeks                  | (~2w)      | Major feature with integration          |
+| **34 SP**    | 3 weeks                  | (~3w)      | Multiple related features (Epic-level)  |
 
 > **Note:** Time assumes AI-assisted development (GitHub Copilot, Claude, etc.). Without AI assistance, multiply time estimates by 2-3x.
 >
@@ -320,11 +320,13 @@ Story Points | Complexity | Typical Time | Examples
 **Parallelization Rules ([P] marker):**
 
 ✅ **Use [P] when:**
+
 - Tasks target different files
 - No shared dependencies between tasks
 - Can run simultaneously (e.g., independent entities, different modules)
 
 ❌ **Don't use [P] when:**
+
 - Task depends on another incomplete task
 - Same file is modified by multiple tasks
 - Shared resource (DB migration, config file, shared service)
@@ -356,95 +358,89 @@ For each Epic:
 
 **Feature Template:**
 
-````markdown
-### Feature {{NUMBER}}: {{FEATURE_NAME}} • {{SP}} SP
+```markdown
+### Feature {{NUMBER}}: {{FEATURE_NAME}} • {{SP}} SP (~{{TIME}})
 
-⏱️ **Est. Time:** {{TIME_RANGE}}
-🎯 **Priority:** {{PRIORITY}}
-📋 **Dependencies:** {{DEPENDENCIES}}
+**Scope:** {{ENTITY}} entity + {{ENDPOINT_COUNT}} endpoints + {{TEST_COUNT}} tests
 
-**Scope:**
+**Tasks:**
 
-- {{ENDPOINT_1}} ({{METHOD}})
-- {{ENDPOINT_2}} ({{METHOD}})
-- Entity: {{ENTITY_NAME}}
-- Tests: {{TEST_COUNT}} ({{TEST_TYPES}})
+- [ ] T0XX [P] Write {{ENTITY}} entity tests • 2 SP (~3-4h) → tests/unit/{{ENTITY}}.spec.ts
+- [ ] T0YY Create {{ENTITY}} entity • 2 SP (~3-4h) → src/entities/{{ENTITY}}.ts
+- [ ] T0ZZ Create I{{REPOSITORY}} interface • 1 SP (~1-2h) → src/repositories/I{{REPOSITORY}}.ts
+- [ ] T0AA Implement {{REPOSITORY}} • 2 SP (~3-4h) → src/repositories/{{REPOSITORY}}.ts (after T0YY, T0ZZ)
+- [ ] T0BB Implement {{SERVICE}} business logic • 3 SP (~4-8h) → src/services/{{SERVICE}}.ts (after T0AA)
+- [ ] T0CC Create {{CONTROLLER}} endpoints • 2 SP (~3-4h) → src/controllers/{{CONTROLLER}}.ts (after T0BB)
+- [ ] T0DD [P] Write integration tests • 2 SP (~3-4h) → tests/integration/{{CONTROLLER}}.spec.ts
+- [ ] T0EE [P] Update API docs • 1 SP (~1h) → docs/api.md
 
-**Tasks:** (Test-First ordering, execution sequence, hybrid estimation)
+**Parallel:** T0XX, T0DD, T0EE can run together
 
-- [ ] [T0XX] [P] Write unit tests for {{ENTITY}} entity validation ({{COUNT}} tests) • {{SP}} SP (~{{TIME}})
-      File: tests/unit/entities/{{ENTITY}}.entity.spec.ts
-      Tests: {{TEST_SCENARIOS}}
-      Dependencies: None (can run parallel with other test tasks)
+**Done when:** All endpoints work + tests pass + coverage ≥ {{COVERAGE}}%
 
-- [ ] [T0YY] Create {{ENTITY}} entity with validation • {{SP}} SP (~{{TIME}})
-      File: src/entities/{{ENTITY}}.entity.ts
-      Implements: {{VALIDATION_RULES}}
-      Dependencies: None
-
-- [ ] [T0ZZ] Create I{{REPOSITORY}} interface • {{SP}} SP (~{{TIME}})
-      File: src/repositories/interfaces/I{{REPOSITORY}}.ts
-      Methods: {{REPOSITORY_METHODS}}
-      Dependencies: T0YY (needs {{ENTITY}} entity type)
-
-- [ ] [T0AA] Implement {{REPOSITORY}} with {{ORM}} • {{SP}} SP (~{{TIME}})
-      File: src/repositories/{{REPOSITORY}}.ts
-      Implements: All CRUD methods from I{{REPOSITORY}} interface
-      Dependencies: T0YY (entity), T0ZZ (interface)
-
-- [ ] [T0BB] Implement {{SERVICE}} service with business logic • {{SP}} SP (~{{TIME}})
-      File: src/services/{{SERVICE}}.service.ts
-      Business Logic: {{SERVICE_LOGIC}}
-      Dependencies: T0AA (repository)
-
-- [ ] [T0CC] Create {{CONTROLLER}} controller • {{SP}} SP (~{{TIME}})
-      File: src/controllers/{{CONTROLLER}}.controller.ts
-      Endpoints: {{ENDPOINT_1}}, {{ENDPOINT_2}}
-      Dependencies: T0BB (service)
-
-- [ ] [T0DD] Write unit tests for {{SERVICE}} service ({{COUNT}} tests) • {{SP}} SP (~{{TIME}})
-      File: tests/unit/services/{{SERVICE}}.service.spec.ts
-      Tests: {{SERVICE_TEST_SCENARIOS}}
-      Dependencies: T0BB (service implementation)
-
-- [ ] [T0EE] Write integration tests for {{ENDPOINT_1}}, {{ENDPOINT_2}} ({{COUNT}} tests) • {{SP}} SP (~{{TIME}})
-      File: tests/integration/controllers/{{CONTROLLER}}.spec.ts
-      Tests: {{INTEGRATION_TEST_SCENARIOS}}
-      Dependencies: T0CC (controller)
-
-- [ ] [T0FF] Update API documentation • {{SP}} SP (~{{TIME}})
-      File: docs/api.md
-      Add: {{ENDPOINT_1}}, {{ENDPOINT_2}} with request/response schemas
-      Dependencies: T0CC (endpoints implemented)
-
-- [ ] [T0GG] Update data model documentation • {{SP}} SP (~{{TIME}})
-      File: docs/data-model.md
-      Add: {{ENTITY}} schema, relationships, validation rules
-      Dependencies: T0YY (entity complete)
-
-**Acceptance Criteria:**
-
-- [ ] All endpoints return correct responses
-- [ ] {{VALIDATION_RULES}} are enforced
-- [ ] Test coverage ≥ {{COVERAGE_TARGET}}%
-- [ ] API documentation is updated
-- [ ] Code passes linting and type-check
-
-**Ready-to-execute command:**
-
-```bash
-/feature new "{{FEATURE_NAME}}"
+**Start:** `/feature new "{{FEATURE_NAME}}"`
 ```
-````
 
-````
+`````
 
-**Example Feature Breakdown:**
+**Example (Real Project):**
+
+````markdown
+### Feature 2.1: User Entity & Repository • 12 SP (~2-3d)
+
+**Scope:** User entity + CRUD endpoints + 12 tests
+
+**Tasks:**
+
+- [ ] T001 [P] Write User entity validation tests • 2 SP (~3-4h) → tests/unit/User.entity.spec.ts
+- [ ] T002 Create User entity (email, password, role) • 2 SP (~3-4h) → src/entities/User.entity.ts
+- [ ] T003 Create IUserRepository interface • 1 SP (~1-2h) → src/repositories/IUserRepository.ts
+- [ ] T004 Implement UserRepository with Prisma • 2 SP (~3-4h) → src/repositories/UserRepository.ts (after T002, T003)
+- [ ] T005 Implement UserService business logic • 3 SP (~4-8h) → src/services/UserService.ts (after T004)
+- [ ] T006 Create UserController (CRUD endpoints) • 2 SP (~3-4h) → src/controllers/UserController.ts (after T005)
+- [ ] T007 [P] Write integration tests (4 tests) • 2 SP (~3-4h) → tests/integration/UserController.spec.ts
+- [ ] T008 [P] Update API docs • 1 SP (~1h) → docs/api.md
+
+**Parallel tasks:** T001, T007, T008 (different files)
+
+**Done when:** GET/POST/PUT/DELETE /users working + 12 tests pass + coverage ≥ 80%
+`````
+
+---
+
+**Example (Simplified Format):**
+
+```markdown
+### Feature 2.1: User Entity & Repository • 12 SP (~2-3d)
+
+**Scope:** User entity + CRUD endpoints + 12 tests
+
+**Tasks:**
+
+- [ ] T001 [P] Write User entity validation tests • 2 SP (~3-4h) → tests/unit/User.entity.spec.ts
+- [ ] T002 Create User entity (email, password, role) • 2 SP (~3-4h) → src/entities/User.entity.ts
+- [ ] T003 Create IUserRepository interface • 1 SP (~1-2h) → src/repositories/IUserRepository.ts
+- [ ] T004 Implement UserRepository with Prisma • 2 SP (~3-4h) → src/repositories/UserRepository.ts (after T002, T003)
+- [ ] T005 Implement UserService business logic • 3 SP (~4-8h) → src/services/UserService.ts (after T004)
+- [ ] T006 Create UserController (CRUD endpoints) • 2 SP (~3-4h) → src/controllers/UserController.ts (after T005)
+- [ ] T007 [P] Write integration tests (4 tests) • 2 SP (~3-4h) → tests/integration/UserController.spec.ts
+- [ ] T008 [P] Update API docs • 1 SP (~1h) → docs/api.md
+
+**Parallel tasks:** T001, T007, T008 (different files)
+
+**Done when:** GET/POST/PUT/DELETE /users working + 12 tests pass + coverage ≥ 80%
+
+**Start:** `/feature new "User Entity & Repository"`
+```
+
+---
+
+**Original Feature Breakdown Example:**
 
 ```markdown
 ## 💾 Epic 2: Data Layer • 34 SP
 
-### Feature 2.1: User Entity & Repository • 5 SP
+### Feature 2.1: User Entity & Repository (Detailed Version) • 5 SP
 
 ⏱️ **Est. Time:** 1-2 days (~12-16h total)
 🎯 **Priority:** P0
@@ -452,6 +448,7 @@ For each Epic:
 🏷️ **User Story:** [US1] As a system, I need to store user data securely
 
 **Scope:**
+
 - Entity: User (id, email, username, passwordHash, role, createdAt, updatedAt)
 - Repository: IUserRepository with CRUD operations
 - Validation: Email format, username constraints, password strength
@@ -505,15 +502,16 @@ For each Epic:
 - [ ] All 12 tests passing (8 unit + 4 integration)
 
 **Task Execution Graph:**
+```
 
-```
 T001 [P] ──┐
-           ├──> T002 ──┬──> T003 ──> T004 ──┬──> T006
-           │           │                     │
-           │           └──> T005 ────────────┘
-           │                                 │
-           └─────────────────────────────────┴──> T007
-```
+├──> T002 ──┬──> T003 ──> T004 ──┬──> T006
+│ │ │
+│ └──> T005 ────────────┘
+│ │
+└─────────────────────────────────┴──> T007
+
+````
 
 **Parallelization Notes:**
 - T001 can run parallel to other test tasks (different file)
@@ -798,14 +796,14 @@ With 3 developers: ~9 weeks (47% time savings)
 
 ### Step 9.5: Generate Roadmap Document (2-5 minutes - automatic)
 
-**Generate `.ai-flow/roadmap.md` with complete implementation plan:**
+**Generate `roadmap.md` with complete implementation plan:**
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📝 Step 9.5/6: Generating Roadmap Document
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Writing to .ai-flow/roadmap.md...
+Writing to roadmap.md...
 ```
 
 **Roadmap Document Structure:**
@@ -1169,7 +1167,7 @@ Update this roadmap as you complete features:
 
 ```
 ✅ Roadmap document generated
-✅ Location: .ai-flow/roadmap.md
+✅ Location: roadmap.md
 ✅ Total: {{TOTAL_EPICS}} Epics, {{TOTAL_FEATURES}} Features, {{TOTAL_TASKS}} Tasks
 ✅ Estimated: {{TOTAL_SP}} Story Points (~{{TOTAL_WEEKS}} weeks)
 ```
@@ -1194,7 +1192,7 @@ Update this roadmap as you complete features:
 ✅ Estimated time: {{SOLO_WEEKS}} weeks (1 dev) | {{TWO_DEV_WEEKS}} weeks (2 devs)
 ✅ Dependency graph: Generated
 ✅ Execution order: Optimized for parallelization
-✅ Roadmap document: .ai-flow/roadmap.md
+✅ Roadmap document: roadmap.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎯 What This Roadmap Guarantees
@@ -1223,14 +1221,14 @@ Update this roadmap as you complete features:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. **Open the roadmap**
-   └─ Open .ai-flow/roadmap.md in your editor
+   └─ Open roadmap.md in your editor
 
 2. **Review and adjust priorities**
    └─ Decide which features are MVP vs future phases
    └─ Adjust P0/P1/P2/P3 priorities if needed
 
 3. **Commit the roadmap**
-   └─ git add .ai-flow/roadmap.md
+   └─ git add roadmap.md
    └─ git commit -m "docs: add implementation roadmap with Story Points"
 
 4. **Start implementation**
@@ -1268,7 +1266,7 @@ Update this roadmap as you complete features:
 
 Ready to start building? 🚀
 
-Open .ai-flow/roadmap.md and let's ship this! 💪
+Open roadmap.md and let's ship this! 💪
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -1282,10 +1280,10 @@ A) ✅ Start implementing first feature now (recommended)
    → Will execute: /feature new "{{FIRST_FEATURE_NAME}}"
 
 B) 📋 Review roadmap first
-   → Will open .ai-flow/roadmap.md
+   → Will open roadmap.md
 
 C) ✏️ Customize roadmap
-   → Will open .ai-flow/roadmap.md for editing
+   → Will open roadmap.md for editing
 
 Your choice (A/B/C): __
 ```
@@ -1404,7 +1402,7 @@ Please fix documentation and re-run Phase 9
 
 **9.5 Generate Roadmap Document:**
 
-- [ ] Create `.ai-flow/roadmap.md`
+- [ ] Create `roadmap.md`
 - [ ] Include project overview
 - [ ] Include Story Points reference table
 - [ ] Include Epic overview table
@@ -1450,4 +1448,3 @@ Please fix documentation and re-run Phase 9
 **CONTINUE TO:** End (Phase 9 is the final phase)
 
 **SUCCESS:** Complete implementation roadmap with Story Points generated! Ready to start building! 🚀
-
