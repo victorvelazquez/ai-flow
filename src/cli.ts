@@ -282,6 +282,7 @@ async function createBootstrapStructure(
 async function copyTemplates(
   targetPath: string,
   projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' = 'backend',
+  aiTools: string[] = [],
   dryRun?: boolean,
   verbose?: boolean
 ): Promise<void> {
@@ -376,6 +377,17 @@ async function copyTemplates(
 
     // Copy each template WITHOUT rendering to .ai-flow/templates/
     for (const [relPath, { file: templateFile }] of processedFiles) {
+      // Skip AI tool-specific config files if the tool is not selected
+      const fileName = path.basename(relPath);
+      if (fileName === '.clauderules.template' && !aiTools.includes('claude') && !aiTools.includes('all')) {
+        logVerbose(`Skipping ${relPath} (Claude not selected)`, verbose);
+        continue;
+      }
+      if (fileName === '.cursorrules.template' && !aiTools.includes('cursor') && !aiTools.includes('all')) {
+        logVerbose(`Skipping ${relPath} (Cursor not selected)`, verbose);
+        continue;
+      }
+
       // Preserve original file structure with .template extension
       const destPath = path.join(destTemplatesPath, relPath);
       await fs.ensureDir(path.dirname(destPath));
@@ -586,7 +598,7 @@ async function initializeProject(
       flags?.dryRun,
       flags?.verbose
     );
-    await copyTemplates(targetPath, selectedProjectType, flags?.dryRun, flags?.verbose);
+    await copyTemplates(targetPath, selectedProjectType, aiTools, flags?.dryRun, flags?.verbose);
     await copyPrompts(targetPath, flags?.dryRun, flags?.verbose);
     await setupSlashCommands(
       targetPath,
