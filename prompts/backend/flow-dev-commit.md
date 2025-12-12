@@ -36,17 +36,30 @@ Automate commit creation with:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
+**CRITICAL: Execute ALL detection methods in parallel to catch:**
+
+- Modified files (unstaged/staged)
+- **NEW untracked files** (not detected by get_changed_files)
+- Deleted files
+
 **Execute these tools automatically in parallel (NO user confirmation):**
 
 ```typescript
-// Gather all changes
+// 1. Standard Git Changes (modified/staged files)
 await Promise.all([
   get_changed_files({ sourceControlState: ['unstaged'] }),
   get_changed_files({ sourceControlState: ['staged'] }),
   get_changed_files({}), // All states
 ]);
 
-// Search for modified files by extension
+// 2. CRITICAL: Detect untracked files (new files never added to git)
+await run_in_terminal({
+  command: 'git status --porcelain',
+  explanation: 'Detect untracked files (??), modified (M), added (A), deleted (D)',
+  isBackground: false,
+});
+
+// 3. Search for modified files by extension (backup detection)
 await Promise.all([
   file_search({ query: '**/*.{ts,js,tsx,jsx}', maxResults: 200 }),
   file_search({ query: '**/*.{cs,fs,vb}', maxResults: 200 }),
@@ -54,7 +67,7 @@ await Promise.all([
   file_search({ query: '**/*.{md,json,yaml,yml}', maxResults: 100 }),
 ]);
 
-// Detect code patterns
+// 4. Detect code patterns (helps with grouping)
 await Promise.all([
   grep_search({
     query: 'class|interface|type|struct|enum',
@@ -67,6 +80,41 @@ await Promise.all([
     maxResults: 150,
   }),
 ]);
+```
+
+**Parse `git status --porcelain` output:**
+
+```typescript
+// Output format:
+// ?? file.ts       → Untracked (new file)
+// M  file.ts       → Modified (staged)
+//  M file.ts       → Modified (unstaged)
+// A  file.ts       → Added (staged)
+// D  file.ts       → Deleted (staged)
+// ?? src/          → Untracked directory
+
+// Parse logic:
+const parseGitStatus = (output: string) => {
+  const lines = output.split('\n').filter(Boolean);
+  const files = {
+    untracked: [],
+    modified: [],
+    added: [],
+    deleted: [],
+  };
+
+  lines.forEach((line) => {
+    const status = line.slice(0, 2);
+    const filePath = line.slice(3);
+
+    if (status === '??') files.untracked.push(filePath);
+    else if (status.includes('M')) files.modified.push(filePath);
+    else if (status.includes('A')) files.added.push(filePath);
+    else if (status.includes('D')) files.deleted.push(filePath);
+  });
+
+  return files;
+};
 ```
 
 **If NO changes detected:**
@@ -84,15 +132,25 @@ Working directory is clean.
 ```
 ✅ Changes detected:
 
-Unstaged: [N] files
-Staged: [N] files
+Untracked: [N] files (new files never added to git)
+Unstaged: [N] files (modified files not staged)
+Staged: [N] files (files ready to commit)
+Deleted: [N] files
 
 File types:
 - Source code: [N] files
 - Tests: [N] files
 - Documentation: [N] files
 - Configuration: [N] files
+
+Examples:
+?? .gitignore (untracked)
+?? src/ (untracked directory)
+ M README.md (modified, unstaged)
+A  package.json (added, staged)
 ```
+
+**IMPORTANT:** Untracked files (`??`) are NEW files that must be detected with `git status --porcelain` because `get_changed_files()` does NOT see them.
 
 ---
 
@@ -503,12 +561,14 @@ Click "Allow" to execute →
 
 Error: [error message]
 
-Suggestions:
-- Run: git pull origin [branch] --rebase
-- Resolve conflicts if any
-- Run: /flow-dev-commit again to retry
-```
+| Step   | Actions                                                                    | User Interaction       |
+| ------ | -------------------------------------------------------------------------- | ---------------------- |
+| Step 1 | `get_changed_files()`, `git status --porcelain`, `file_search()`, `grep_search()` | Automatic (read-only)  |
+| Step 2 | Analyze and group files                                                    | Automatic              |
+| Step 3 | `git add` + `git commit` (per group)                                       | Click Allow per commit |
+| Step 4 | `git log` (automatic) + `git push` (manual)                                | Auto log / Allow push  |
 
+**CRITICAL:** Always run `git status --porcelain` in Step 1 to detect untracked files (`??`) that `get_changed_files()` cannot see.
 ---
 
 ## 🎯 Execution Model
@@ -553,6 +613,7 @@ Universal patterns that work across languages/frameworks:
 **Changes detected:**
 
 ```
+
 src/modules/products/entities/product.entity.ts
 src/modules/products/dto/create-product.dto.ts
 src/modules/products/dto/update-product.dto.ts
@@ -560,16 +621,17 @@ src/modules/products/dto/product-response.dto.ts
 src/modules/products/products.service.ts
 src/modules/products/products.controller.ts
 src/modules/products/products.module.ts
-src/modules/products/__tests__/products.service.spec.ts
-src/modules/products/__tests__/products.controller.spec.ts
+src/modules/products/**tests**/products.service.spec.ts
+src/modules/products/**tests**/products.controller.spec.ts
 docs/api.md (products section)
-```
+
+````
 
 **Commits generated (1 commit):**
 
 ```bash
 git add src/modules/products/entities/product.entity.ts src/modules/products/dto/create-product.dto.ts src/modules/products/dto/update-product.dto.ts src/modules/products/dto/product-response.dto.ts src/modules/products/products.service.ts src/modules/products/products.controller.ts src/modules/products/products.module.ts src/modules/products/__tests__/products.service.spec.ts src/modules/products/__tests__/products.controller.spec.ts docs/api.md && git commit -m "feat(products): implement product management with CRUD operations"
-```
+````
 
 ### Example 2: Refactoring Across Modules
 

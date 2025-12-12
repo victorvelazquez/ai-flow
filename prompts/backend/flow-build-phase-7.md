@@ -985,6 +985,8 @@ Phase 8 will:
 - 📄 Generate README.md (with intelligent merge if needed)
 - 🤖 Create tool-specific configs (based on AI selection)
 
+> ⚠️ **CRITICAL:** README.md MUST NOT exist yet. It will be generated in Phase 8 step 8.5 AFTER framework initialization to avoid conflicts.
+
 Continue to Phase 8? (yes/no)
 ```
 

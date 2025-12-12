@@ -454,8 +454,12 @@ Document has been created with all Phase 2 information.
 → If no: Type "continue" to proceed to Phase 3.
 ```
 
-**If user edits file:**
+**If user edits the file:**
 Execute `read_file('docs/data-model.md')` to refresh context before continuing.
+
+---
+
+> ⚠️ **CRITICAL:** DO NOT generate README.md in Phase 2. README.md is ONLY generated in Phase 8 (step 8.5) after framework initialization.
 
 ---
 

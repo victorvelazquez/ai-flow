@@ -697,6 +697,8 @@ Execute `read_file()` for both documents to refresh context before continuing.
 
 **Proceed to Phase 4 only after documents are validated.**
 
+> ⚠️ **CRITICAL:** DO NOT generate README.md in this phase. README.md is ONLY generated in Phase 8 (step 8.5) after framework initialization.
+
 ---
 
 ## PHASE 4: Security & Authentication (15-20 min)

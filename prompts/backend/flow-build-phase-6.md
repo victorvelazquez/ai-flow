@@ -454,7 +454,9 @@ Re-read file to refresh context before continuing.
 
 ---
 
-**Proceed to Phase 7 only after document is validated.**
+**Proceed to Phase 7 only after documents are validated.**
+
+> ⚠️ **CRITICAL:** DO NOT generate README.md in this phase. README.md is ONLY generated in Phase 8 (step 8.5) after framework initialization.
 
 ---
 
