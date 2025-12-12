@@ -18,12 +18,118 @@ Create, modify, or refactor complete functionalities with automatic documentatio
 - **`/feature new`** → New functionality from scratch
 - **`/feature change`** → Modify existing functionality
 - **`/feature refactor`** → Refactor existing code
+- **`/feature HU-XXX-XXX`** → Implement specific User Story (from Phase 10)
+- **`/feature Feature Name`** → Implement feature from roadmap.md (Phase 9)
+
+---
+
+## Quick Examples
+
+### With User Story (Recommended)
+
+```bash
+/feature HU-001-001  # Auto-loads: acceptance criteria, tasks, tests, DoD
+# ✅ 0 questions asked, 5 SP, ~1.5h
+```
+
+### With Roadmap Feature
+
+```bash
+/feature User Entity Repository  # Auto-loads: tasks from roadmap.md
+# ✅ 0 questions asked, 12 SP, ~2-3h
+```
+
+### Interactive Mode
+
+```bash
+/feature new  # AI asks 5 questions, generates plan
+# ⏱️ 2-3 min questions, then implementation
+```
 
 ---
 
 ## Workflow: 4 Phases (15-20 minutes)
 
-### Phase 1: Quick Specification (2-3 minutes)
+### Phase 0: Detect Input Mode (5 seconds - automatic)
+
+**Check if User Story ID or Feature name provided:**
+
+```typescript
+const input = getArguments(); // From /feature [args]
+
+if (input.match(/^HU-\d{3}-\d{3}$/)) {
+  mode = 'USER_STORY';
+  storyId = input; // e.g., HU-001-001
+  // Load from user-stories/EP-XXX/HU-XXX-XXX.md
+} else if (fs.existsSync('roadmap.md')) {
+  // Search for Feature in roadmap.md matching input
+  const roadmapContent = readFile('roadmap.md');
+  const featureMatch = roadmapContent.match(new RegExp(`### Feature.*${input}.*• (\d+) SP`));
+  if (featureMatch) {
+    mode = 'ROADMAP_FEATURE';
+    featureName = input;
+    // Extract tasks from roadmap.md
+  } else {
+    mode = 'INTERACTIVE'; // Fallback to manual questions
+  }
+} else {
+  mode = 'INTERACTIVE'; // No roadmap/user-stories found
+}
+```
+
+**Mode behavior:**
+
+| Mode              | Source                              | Skip Phase 1             |
+| ----------------- | ----------------------------------- | ------------------------ |
+| `USER_STORY`      | `user-stories/EP-XXX/HU-XXX-XXX.md` | ✅ Yes (auto-load spec)  |
+| `ROADMAP_FEATURE` | `roadmap.md` Feature section        | ✅ Yes (auto-load tasks) |
+| `INTERACTIVE`     | Manual questions                    | ❌ No (ask user)         |
+
+---
+
+### Phase 1: Quick Specification (2-3 minutes or AUTO-SKIP)
+
+**IF mode = `USER_STORY`:** _(Skip questions, load from file)_
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Feature Workflow  |  Phase 1/4: Specification (AUTO-LOADED)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Loading User Story: HU-001-001
+
+Source: user-stories/EP-001/HU-001-001.md
+
+✅ Title: Login básico con email y contraseña
+✅ Priority: Alta (P0)
+✅ Story Points: 5 SP
+✅ Acceptance Criteria: 3 scenarios (Gherkin)
+✅ Technical Tasks: 6 tasks
+✅ Test Cases: 8 QA test cases
+✅ Definition of Done: 9 items
+
+Skipping manual questions (spec already defined)...
+```
+
+**IF mode = `ROADMAP_FEATURE`:** _(Skip questions, load from roadmap)_
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Feature Workflow  |  Phase 1/4: Specification (AUTO-LOADED)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🗺️ Loading Feature from roadmap.md: User Entity & Repository
+
+✅ Epic: 2 - Data Layer
+✅ Priority: P0
+✅ Story Points: 12 SP (~2-3d)
+✅ Tasks: 8 tasks (T001-T008)
+✅ Dependencies: None (foundational)
+
+Skipping manual questions (roadmap already defined)...
+```
+
+**IF mode = `INTERACTIVE`:** _(Ask manual questions)_
 
 Ask 3-5 key questions to understand requirements:
 
@@ -35,6 +141,16 @@ Ask 3-5 key questions to understand requirements:
 **Generate:** `.ai-flow/work/NNN-feature-name/spec.md`
 
 **Example:** `.ai-flow/work/003-user-authentication/spec.md`
+
+**IF loaded from User Story (HU-XXX-XXX):**
+
+- Copy `user-stories/EP-XXX/HU-XXX-XXX.md` → `.ai-flow/work/NNN-HU-XXX-XXX/spec.md`
+- Include: User Story format, Acceptance Criteria (Gherkin), Technical Tasks, Test Cases, DoD
+
+**IF loaded from roadmap.md Feature:**
+
+- Extract Feature section → `.ai-flow/work/NNN-feature-name/spec.md`
+- Include: Scope, Tasks (T001-T00N), Dependencies, Ready-to-execute command
 
 **Example interaction:**
 
@@ -85,7 +201,81 @@ Creating: .ai-flow/work/003-[feature-name]/
 - "Payment Processing" → `004-payment-processing`
 - "Real-Time Notifications" → `005-real-time-notifications`
 
-#### Step 2.2: Analyze Project Context
+#### Step 2.2: Analyze Project Context & Load Tasks
+
+**IF mode = `USER_STORY` or `ROADMAP_FEATURE`:** _(Reuse existing tasks)_
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 Technical Plan (LOADED from User Story HU-001-001)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Story Points: 5 SP (from roadmap.md)
+✅ Tasks: 6 technical tasks (inherited)
+✅ Test Cases: 8 QA test cases (from acceptance criteria)
+✅ Acceptance Criteria: 3 scenarios (Gherkin Given/When/Then)
+
+**Tasks from User Story:** (execution order with hybrid estimation)
+
+- [ ] [T-001-001] Write User entity tests • 1 SP (~1-2h)
+      File: tests/unit/User.spec.ts
+      Dependencies: None
+
+- [ ] [T-001-002] Create User entity • 1 SP (~1-2h)
+      File: src/domain/entities/User.ts
+      Dependencies: T-001-001
+
+- [ ] [T-001-003] Implement AuthService login method • 2 SP (~3-4h)
+      File: src/services/AuthService.ts
+      Dependencies: T-001-002
+
+- [ ] [T-001-004] Create POST /api/auth/login endpoint • 1 SP (~1-2h)
+      File: src/controllers/AuthController.ts
+      Dependencies: T-001-003
+
+- [ ] [T-001-005] Write integration tests • 2 SP (~3-4h)
+      File: tests/integration/auth.spec.ts
+      Dependencies: T-001-003
+
+- [ ] [T-001-006] Validate against Definition of Done • trivial (~15 min)
+      - Code review approved
+      - Tests passing (unit + integration)
+      - QA test cases executed (8/8)
+      - Documentation updated
+      - Lint/format clean
+      Dependencies: T-001-005
+
+**Acceptance Criteria Validation:**
+
+Will verify implementation against:
+
+✅ Scenario 1: Login exitoso
+   Dado que el usuario tiene credenciales válidas
+   Cuando ingresa email y contraseña correctos
+   Entonces recibe JWT token y accede al sistema
+
+✅ Scenario 2: Credenciales inválidas
+   Dado que el usuario ingresa credenciales incorrectas
+   Cuando intenta iniciar sesión
+   Entonces recibe error 401 con mensaje claro
+
+✅ Scenario 3: Rate limiting
+   Dado que el usuario falla login 5 veces en 15 minutos
+   Cuando intenta login nuevamente
+   Entonces recibe error 429 (Too Many Requests)
+
+**QA Test Cases to Execute:**
+
+After implementation, run 8 test cases:
+- TC-001-001: Login exitoso (Happy Path)
+- TC-001-002: Credenciales inválidas (Error Case)
+- TC-001-003: Rate limiting (Edge Case)
+- [... 5 more test cases from User Story]
+
+Ready to implement? (Y/n)
+```
+
+**IF mode = `INTERACTIVE`:** _(Generate plan from scratch)_
 
 Based on the project's detected stack and existing patterns, auto-generate a technical plan.
 
@@ -116,15 +306,15 @@ Count total tasks needed based on spec. Then classify:
 
 Estimate complexity using industry-standard Fibonacci Story Points:
 
-| Story Points | Complexity | Typical Time | Example Task                         |
-| ------------ | ---------- | ------------ | ------------------------------------ |
-| **1 SP**     | Trivial    | 1-2 hours    | Add simple field, update enum        |
-| **2 SP**     | Very Small | 2-4 hours    | Basic validation, simple test        |
-| **3 SP**     | Small      | 4-8 hours    | Simple CRUD endpoint, basic entity   |
-| **5 SP**     | Medium     | 1-2 days     | Complex endpoint with business logic |
-| **8 SP**     | Complex    | 2-3 days     | Auth flow, complex validation        |
-| **13 SP**    | Large      | 1 week       | Complete module with full tests      |
-| **21 SP**    | Very Large | 2 weeks      | Major feature with integration       |
+| Story Points | Complexity | Typical Time | Example Task                           |
+| ------------ | ---------- | ------------ | -------------------------------------- |
+| **1 SP**     | Trivial    | 1-2 hours    | Add simple field, update enum          |
+| **2 SP**     | Very Small | 2-4 hours    | Basic validation, simple test          |
+| **3 SP**     | Small      | 4-8 hours    | Simple CRUD endpoint, basic entity     |
+| **5 SP**     | Medium     | 1-2 days     | Complex endpoint with business logic   |
+| **8 SP**     | Complex    | 2-3 days     | Auth flow, complex validation          |
+| **13 SP**    | Large      | 1 week       | Complete module with full tests        |
+| **21 SP**    | Very Large | 2 weeks      | Major feature with integration         |
 | **34 SP**    | Epic       | 3 weeks      | Multiple related features (Epic-level) |
 
 > **Note:** Times assume experienced developer with AI assistance.
@@ -134,16 +324,16 @@ Estimate complexity using industry-standard Fibonacci Story Points:
 
 **Use this table to add precise time estimates to each task:**
 
-| Story Points | Time Estimate (solo dev) | Time Range      | Example Task                          |
-|--------------|--------------------------|-----------------|---------------------------------------|
-| **1 SP**     | 1-2 hours                | (~1-2h)         | Add enum value, simple config change  |
-| **2 SP**     | 3-4 hours                | (~3-4h)         | Write 5-8 unit tests, basic validation|
-| **3 SP**     | 4-8 hours                | (~4-8h)         | Simple CRUD endpoint, basic entity    |
-| **5 SP**     | 1-2 days                 | (~1-2d)         | Complex endpoint with business logic  |
-| **8 SP**     | 2-3 days                 | (~2-3d)         | Auth flow, complex validation         |
-| **13 SP**    | 1 week                   | (~1w)           | Complete module with full test coverage|
-| **21 SP**    | 2 weeks                  | (~2w)           | Major feature with integration        |
-| **34 SP**    | 3 weeks                  | (~3w)           | Multiple related features (Epic-level)|
+| Story Points | Time Estimate (solo dev) | Time Range | Example Task                            |
+| ------------ | ------------------------ | ---------- | --------------------------------------- |
+| **1 SP**     | 1-2 hours                | (~1-2h)    | Add enum value, simple config change    |
+| **2 SP**     | 3-4 hours                | (~3-4h)    | Write 5-8 unit tests, basic validation  |
+| **3 SP**     | 4-8 hours                | (~4-8h)    | Simple CRUD endpoint, basic entity      |
+| **5 SP**     | 1-2 days                 | (~1-2d)    | Complex endpoint with business logic    |
+| **8 SP**     | 2-3 days                 | (~2-3d)    | Auth flow, complex validation           |
+| **13 SP**    | 1 week                   | (~1w)      | Complete module with full test coverage |
+| **21 SP**    | 2 weeks                  | (~2w)      | Major feature with integration          |
+| **34 SP**    | 3 weeks                  | (~3w)      | Multiple related features (Epic-level)  |
 
 > **Note:** Time assumes AI-assisted development (Copilot/Claude). Without AI, multiply by 2-3x.
 > For team velocity adjustment, track actual time vs estimates after 2-3 features.
@@ -178,11 +368,13 @@ Estimate complexity using industry-standard Fibonacci Story Points:
 **Parallelization Rules ([P] marker):**
 
 ✅ **Use [P] when:**
+
 - Tasks target different files
 - No shared dependencies
 - Can run simultaneously (e.g., independent entities, different test suites)
 
 ❌ **Don't use [P] when:**
+
 - Task depends on another incomplete task
 - Same file is modified
 - Shared resource (DB migration, config file)
@@ -351,17 +543,19 @@ Based on your project (Node.js + Express + PostgreSQL):
 **Task Execution Graph (Phase 1):**
 
 ```
+
 T001 [P] ──┐
 T003 [P] ──┼──> (Tests can run parallel)
 T005 [P] ──┘
 
 T002 ──┬──> T004
-       ├──> T006
-       ├──> T007 (needs T002, T004, T006)
-       ├──> T008 ──> T009
-       │
-       └──> T010 (needs T004)
-            T011 (needs T006)
+├──> T006
+├──> T007 (needs T002, T004, T006)
+├──> T008 ──> T009
+│
+└──> T010 (needs T004)
+T011 (needs T006)
+
 ```
 
 **Parallelization Notes (Phase 1):**
@@ -426,6 +620,7 @@ T002 ──┬──> T004
 **Task Execution Graph (Phase 2):**
 
 ```
+
 T012 [P] ──┐
 T014 [P] ──┼──> (Test suites can run parallel)
 T016 [P] ──┘
@@ -436,6 +631,7 @@ T015 (TokenService) ──> T020 (Token rotation)
 T017 (EmailService) ──> T021 (Email verification)
 T018 (Password utils) ──> T013 (used by AuthService)
 T019 (JWT utils) ──> T013 (used by AuthService)
+
 ```
 
 **Parallelization Notes (Phase 2):**
@@ -485,6 +681,7 @@ T019 (JWT utils) ──> T013 (used by AuthService)
 **Task Execution Graph (Phase 3):**
 
 ```
+
 T022 [P] ──┐
 T024 [P] ──┘──> (Test suites can run parallel)
 
@@ -492,9 +689,10 @@ T013 (AuthService) ──> T023 (AuthController)
 T015 (TokenService) ──> T025 (Auth middleware)
 
 T026 (Validators) ──┐
-T027 (DTOs)        ├──> T028 (Routes)
-T023 (Controller)  ┘
+T027 (DTOs) ├──> T028 (Routes)
+T023 (Controller) ┘
 T025 (Middleware) ─┘
+
 ```
 
 ## Phase 4: Integration • 3 SP (~15-20 min)
@@ -529,9 +727,11 @@ T025 (Middleware) ─┘
 **Task Execution Graph (Phase 4):**
 
 ```
+
 T030, T031, T033 [P] ──> (Can run parallel - different concerns)
 
 T028 ──> T029 ──> T032 (Sequential: routes → DI → registration)
+
 ```
 
 ## Phase 5: Testing & Docs • 2 SP (~10-15 min)
@@ -571,6 +771,7 @@ T028 ──> T029 ──> T032 (Sequential: routes → DI → registration)
 **Task Execution Graph (Phase 5):**
 
 ```
+
 T001-T033 ──> T034 (Run all tests) ──> T035 (E2E flow test)
 
 T036 [P] ──┐
@@ -578,6 +779,7 @@ T037 [P] ──┼──> (Documentation updates can run parallel)
 T038 [P] ──┘
 
 T039 (env example) ──> (Independent, can run anytime)
+
 ```
 
 **Parallelization Notes (Phase 5):**
@@ -1069,7 +1271,53 @@ To resume: /work resume feature-[name]
 - Validate each task before marking complete
 - Update status.json after each task/phase
 
-### Phase 4: Security Check + Auto-Archive (1-2 minutes)
+### Phase 4: Security Check + Validation + Auto-Archive (1-2 minutes)
+
+**IF mode = `USER_STORY`:** *(Validate against Definition of Done)*
+
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Definition of Done Validation (from HU-001-001)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Validating User Story completion...
+
+✅ Código implementado siguiendo ai-instructions.md
+✅ Code review aprobado (mín 1 revisor) [Simulated: Auto-approved by AI]
+✅ Tests unitarios escritos (cobertura > 80%) [Coverage: 92%]
+✅ Tests de integración pasando [8/8 passing]
+✅ Casos de prueba QA ejecutados y aprobados (8/8)
+✅ TC-001-001: Login exitoso (Happy Path)
+✅ TC-001-002: Credenciales inválidas (Error Case)
+✅ TC-001-003: Rate limiting (Edge Case)
+... [5 more test cases]
+✅ Documentación técnica actualizada (docs/api.md)
+✅ Sin errores de lint ni formateo
+⚠️ Deploy a staging exitoso [SKIP: Local development]
+⚠️ Product Owner aprobó la funcionalidad [SKIP: Manual step]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Acceptance Criteria Verification
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Scenario 1: Login exitoso
+Test: TC-001-001 passed
+Verified: JWT token returned with valid exp, user_id, role
+
+✅ Scenario 2: Credenciales inválidas
+Test: TC-001-002 passed
+Verified: 401 status with clear error message
+
+✅ Scenario 3: Rate limiting
+Test: TC-001-003 passed
+Verified: 429 status after 5 failed attempts in 15 minutes
+
+All acceptance criteria met! ✅
+
+```
+
+**IF mode = `ROADMAP_FEATURE` or `INTERACTIVE`:** *(Standard security check)*
 
 **Security Quick Check:**
 Ask 1-2 questions about production considerations:
@@ -1147,6 +1395,34 @@ Commit? (Y/n): \_\_
 ✅ Feature Complete!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+**IF mode = `USER_STORY`:**
+
+```
+Summary:
+
+- User Story: HU-001-001 - Login básico con email y contraseña
+- Epic: EP-001 - Autenticación y Seguridad
+- Priority: Alta (P0)
+- Story Points: 5 SP (estimated) → 4.8 SP (actual)
+- Time: 1.5 hours (estimated: 6-8h with AI assistance)
+- Files: 6 created, 2 modified
+- Tests: 8 added (all passing ✅)
+
+✅ Acceptance Criteria: 3/3 verified
+✅ Test Cases: 8/8 executed and passed
+✅ Definition of Done: 7/9 completed (2 manual steps pending)
+
+Dependencies resolved:
+✅ Blocks: HU-001-002 (OAuth login) - Ready to start
+✅ Blocks: HU-002-001 (User CRUD) - Ready to start
+
+📖 User Story Status: COMPLETED ✅
+   File: user-stories/EP-001/HU-001-001.md updated with completion date
+```
+
+**IF mode = `ROADMAP_FEATURE` or `INTERACTIVE`:**
+
+```
 Summary:
 
 - Feature: JWT authentication system
@@ -1154,6 +1430,7 @@ Summary:
 - Tests: 47 added (all passing ✅)
 - Time: 2.5 hours
 - Complexity: COMPLEX (52 tasks, 5 phases)
+```
 
 📦 Git Summary:
 Branch: feature/auth-jwt-system
@@ -1693,5 +1970,63 @@ Next steps:
 
 ---
 
-**BEGIN EXECUTION when user runs `/feature`, `/feature new`, `/feature change`, or `/feature refactor`**
+## Common Use Cases
 
+### 1. Sprint Development (with User Stories)
+
+```bash
+/feature HU-001-001  # Login: 5 SP, 1.5h
+/feature HU-001-002  # OAuth: 3 SP, 1h
+/feature HU-002-001  # User CRUD: 8 SP, 2h
+# Sprint: 16 SP in 4.5h
+```
+
+### 2. Rapid Prototyping (with roadmap)
+
+```bash
+/feature User Entity Repository     # 12 SP
+/feature Product Entity Repository  # 8 SP
+/feature Order Entity Repository    # 5 SP
+# Data layer: 25 SP in ~2 days
+```
+
+### 3. Feature Not Planned (interactive)
+
+```bash
+/feature new
+# AI asks: What to build?
+> Real-time notifications with WebSockets
+# Generates: 24 tasks, 13 SP, ~3h
+```
+
+### 4. Bug Fix or Quick Change
+
+```bash
+/feature change
+# AI asks: What to modify?
+> Add rate limiting to login endpoint
+# Updates: middleware, tests, docs (~30 min)
+```
+
+### 5. Code Quality Improvement
+
+```bash
+/feature refactor
+# AI asks: What to refactor?
+> Extract duplicate validation logic to shared module
+# Refactors: 6 files, tests pass, docs updated (~1h)
+```
+
+---
+
+## Key Benefits by Mode
+
+| Mode            | Setup   | Validation    | Best For    |
+| --------------- | ------- | ------------- | ----------- |
+| **HU-XXX-XXX**  | 0 min   | Gherkin + DoD | Scrum teams |
+| **Roadmap**     | 0 min   | Standard      | Quick impl  |
+| **Interactive** | 2-3 min | Standard      | Exploration |
+
+---
+
+**BEGIN EXECUTION when user runs `/feature`, `/feature new`, `/feature change`, or `/feature refactor`**
