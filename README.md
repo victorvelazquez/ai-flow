@@ -283,6 +283,7 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-build fase 7` - Operations & Deployment
 - `/flow-build fase 8` - Project Setup & Final Documentation
 - `/flow-build fase 9` - Implementation Roadmap (opcional)
+- `/flow-build fase 10` - User Stories Generation (opcional, requiere Fase 9)
 
 **Fases disponibles (Frontend/Mobile):**
 
