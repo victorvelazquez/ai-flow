@@ -1042,7 +1042,7 @@ When executing this master prompt:
   - [ ] Present suggestions with actions and impacts
 - [ ] **Offer export option (0.3):**
   - [ ] Ask if user wants to export analysis to JSON
-  - [ ] If yes, create .ai-flow/cache/docs-docs-analysis.json with complete analysis
+  - [ ] If yes, create .ai-flow/cache/docs-analysis.json with complete analysis
 - [ ] Let user choose: A) Use detected info, B) Start fresh, C) Review/edit detected info
 - [ ] **Handle suggestions:**
   - [ ] If user selected A (address during build), integrate suggestions into relevant phases

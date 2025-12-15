@@ -1554,7 +1554,7 @@ Your choice: __
 ```
 💾 Export Analysis to JSON?
 
-This creates .ai-flow/cache/docs-docs-analysis.json with all detected information:
+This creates .ai-flow/cache/docs-analysis.json with all detected information:
 • Project metadata and tech stack
 • Complete endpoint list with methods, paths, handlers
 • Full entity schemas with relationships
