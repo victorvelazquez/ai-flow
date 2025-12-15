@@ -60,15 +60,15 @@ const input = getArguments(); // From /feature [args]
 if (input.match(/^HU-\d{3}-\d{3}$/)) {
   mode = 'USER_STORY';
   storyId = input; // e.g., HU-001-001
-  // Load from user-stories/EP-XXX/HU-XXX-XXX.md
-} else if (fs.existsSync('roadmap.md')) {
-  // Search for Feature in roadmap.md matching input
-  const roadmapContent = readFile('roadmap.md');
+  // Load from docs/user-stories/EP-XXX/HU-XXX-XXX.md
+} else if (fs.existsSync('docs/roadmap.md')) {
+  // Search for Feature in docs/roadmap.md matching input
+  const roadmapContent = readFile('docs/roadmap.md');
   const featureMatch = roadmapContent.match(new RegExp(`### Feature.*${input}.*• (\d+) SP`));
   if (featureMatch) {
     mode = 'ROADMAP_FEATURE';
     featureName = input;
-    // Extract tasks from roadmap.md
+    // Extract tasks from docs/roadmap.md
   } else {
     mode = 'INTERACTIVE'; // Fallback to manual questions
   }
@@ -79,11 +79,11 @@ if (input.match(/^HU-\d{3}-\d{3}$/)) {
 
 **Mode behavior:**
 
-| Mode              | Source                              | Skip Phase 1             |
-| ----------------- | ----------------------------------- | ------------------------ |
-| `USER_STORY`      | `user-stories/EP-XXX/HU-XXX-XXX.md` | ✅ Yes (auto-load spec)  |
-| `ROADMAP_FEATURE` | `roadmap.md` Feature section        | ✅ Yes (auto-load tasks) |
-| `INTERACTIVE`     | Manual questions                    | ❌ No (ask user)         |
+| Mode              | Source                                   | Skip Phase 1             |
+| ----------------- | ---------------------------------------- | ------------------------ |
+| `USER_STORY`      | `docs/user-stories/EP-XXX/HU-XXX-XXX.md` | ✅ Yes (auto-load spec)  |
+| `ROADMAP_FEATURE` | `docs/roadmap.md` Feature section        | ✅ Yes (auto-load tasks) |
+| `INTERACTIVE`     | Manual questions                         | ❌ No (ask user)         |
 
 ---
 
@@ -98,7 +98,7 @@ if (input.match(/^HU-\d{3}-\d{3}$/)) {
 
 📖 Loading User Story: HU-001-001
 
-Source: user-stories/EP-001/HU-001-001.md
+Source: .ai-flow/user-stories/EP-001/HU-001-001.md
 
 ✅ Title: Login básico con email y contraseña
 ✅ Priority: Alta (P0)
@@ -118,7 +118,7 @@ Skipping manual questions (spec already defined)...
 🚀 Feature Workflow  |  Phase 1/4: Specification (AUTO-LOADED)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🗺️ Loading Feature from roadmap.md: User Entity & Repository
+🗺️ Loading Feature from docs/roadmap.md: User Entity & Repository
 
 ✅ Epic: 2 - Data Layer
 ✅ Priority: P0
@@ -144,10 +144,10 @@ Ask 3-5 key questions to understand requirements:
 
 **IF loaded from User Story (HU-XXX-XXX):**
 
-- Copy `user-stories/EP-XXX/HU-XXX-XXX.md` → `.ai-flow/work/NNN-HU-XXX-XXX/spec.md`
+- Copy `docs/user-stories/EP-XXX/HU-XXX-XXX.md` → `.ai-flow/work/NNN-HU-XXX-XXX/spec.md`
 - Include: User Story format, Acceptance Criteria (Gherkin), Technical Tasks, Test Cases, DoD
 
-**IF loaded from roadmap.md Feature:**
+**IF loaded from docs/roadmap.md Feature:**
 
 - Extract Feature section → `.ai-flow/work/NNN-feature-name/spec.md`
 - Include: Scope, Tasks (T001-T00N), Dependencies, Ready-to-execute command
@@ -1417,7 +1417,7 @@ Dependencies resolved:
 ✅ Blocks: HU-002-001 (User CRUD) - Ready to start
 
 📖 User Story Status: COMPLETED ✅
-   File: user-stories/EP-001/HU-001-001.md updated with completion date
+   File: .ai-flow/user-stories/EP-001/HU-001-001.md updated with completion date
 ```
 
 **IF mode = `ROADMAP_FEATURE` or `INTERACTIVE`:**

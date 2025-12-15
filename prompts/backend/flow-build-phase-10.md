@@ -30,7 +30,7 @@ Generate executable User Stories following agile best practices with:
 
 Before executing Phase 10, verify:
 
-- ✅ Phase 9 completed (`roadmap.md` exists)
+- ✅ Phase 9 completed (`docs/roadmap.md` exists)
 - ✅ All Phase 1-8 documentation exists
 - ✅ Roadmap contains Epics, Features, and Tasks
 
@@ -70,6 +70,8 @@ if (!args || args.length === 0) {
       /flow-build fase 10              → Generate all (or Sprint 1)
       /flow-build fase 10 EP-001       → Generate Epic 001 User Stories
       /flow-build fase 10 HU-001-001   → Generate specific User Story
+    
+    Output location: docs/user-stories/
   `);
   exit();
 }
@@ -90,7 +92,7 @@ Mode: [ALL | EPIC: EP-001 | STORY: HU-001-001]
 ```
 Loading project context...
 
-✅ roadmap.md (5 Epics, 18 Features, 89 SP)
+✅ docs/roadmap.md (5 Epics, 18 Features, 89 SP)
 ✅ project-brief.md (business context)
 ✅ ai-instructions.md (tech stack, patterns)
 ✅ docs/data-model.md (entities, relationships)
@@ -100,12 +102,12 @@ Loading project context...
 ✅ docs/testing.md (test strategy)
 ```
 
-**If roadmap.md NOT found:**
+**If docs/roadmap.md NOT found:**
 
 ```
-❌ Error: roadmap.md not found
+❌ Error: docs/roadmap.md not found
 
-Phase 10 requires roadmap.md from Phase 9.
+Phase 10 requires docs/roadmap.md from Phase 9.
 
 Options:
 1. ✅ Generate roadmap first: /flow-build fase 9
@@ -129,7 +131,7 @@ Your choice (1): _
 📋 Scope Selection
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Found 5 Epics with 18 Features in roadmap.md
+Found 5 Epics with 18 Features in docs/roadmap.md
 
 Total Story Points: 89 SP (~4-5 weeks for 1 dev)
 
@@ -185,7 +187,7 @@ Generating...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Created:
-📁 user-stories/
+📁 .ai-flow/user-stories/
   ├── EP-001/
   │   ├── HU-001-001.md ✅
   │   ├── HU-001-002.md ✅
@@ -202,7 +204,7 @@ Total: 8 User Stories (34 SP)
 🚀 Ready to start Sprint 1!
 
 Next steps:
-1. Review User Stories in user-stories/ folder
+1. Review User Stories in .ai-flow/user-stories/ folder
 2. Start implementing: /flow-dev-feature HU-001-001
 3. Generate more Epics later: /flow-build fase 10 EP-003
 ```
@@ -216,7 +218,7 @@ Next steps:
 📖 Generating User Stories for EP-001
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Loading Epic from roadmap.md...
+Loading Epic from docs/roadmap.md...
 
 Epic: EP-001 - Autenticación y Seguridad
 Priority: P0 (Critical)
@@ -246,7 +248,7 @@ Generating...
 ✅ EP-001 User Stories Generated
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Location: user-stories/EP-001/
+Location: .ai-flow/user-stories/EP-001/
 
 Files created:
 - HU-001-001.md (5 SP, 6 tasks, 8 test cases)
@@ -271,7 +273,7 @@ Next: Start implementing with /flow-dev-feature HU-001-001
 
 Checking if file exists...
 
-⚠️ user-stories/EP-001/HU-001-001.md already exists
+⚠️ .ai-flow/user-stories/EP-001/HU-001-001.md already exists
 
 File size: 4.2 KB
 Last modified: 2025-12-10 15:30
@@ -294,9 +296,9 @@ Your choice (2): _
 
 Backup current file? (Y/n): Y
 
-✅ Backup created: user-stories/EP-001/.backup/HU-001-001.2025-12-12.md
+✅ Backup created: docs/user-stories/EP-001/.backup/HU-001-001.2025-12-12.md
 
-Loading context from roadmap.md...
+Loading context from docs/roadmap.md...
 - Epic: EP-001 Autenticación
 - Feature: 1.1 Login básico (5 SP)
 - Priority: P0
@@ -311,8 +313,8 @@ Changes:
 + Refreshed Definition of Done
 ~ No changes to technical tasks
 
-Location: user-stories/EP-001/HU-001-001.md
-Backup: user-stories/EP-001/.backup/HU-001-001.2025-12-12.md
+Location: .ai-flow/user-stories/EP-001/HU-001-001.md
+Backup: .ai-flow/user-stories/EP-001/.backup/HU-001-001.2025-12-12.md
 
 [If file doesn't exist - New User Story]
 
@@ -322,7 +324,7 @@ Context from roadmap:
 - Epic: EP-001 Autenticación
 - Feature: 1.1 Login básico (5 SP)
 - Priority: P0 (Critical)
-- Tasks: 6 (from roadmap.md)
+- Tasks: 6 (from docs/roadmap.md)
 
 Generating User Story with:
 ✅ User Story format (Como/Quiero/Para)
@@ -335,7 +337,7 @@ Generating User Story with:
 
 ✅ HU-001-001.md created successfully!
 
-Location: user-stories/EP-001/HU-001-001.md
+Location: .ai-flow/user-stories/EP-001/HU-001-001.md
 Size: 4.2 KB
 Tasks: 6
 Test Cases: 8
@@ -398,7 +400,7 @@ EP-{{XXX}}: {{EPIC_NAME}}
 
 ## Tareas Técnicas
 
-> **Source:** Inherited from roadmap.md Feature {{FEATURE_NUMBER}}
+> **Source:** Inherited from docs/roadmap.md Feature {{FEATURE_NUMBER}}
 
 ### Backend
 
@@ -539,24 +541,24 @@ EP-{{XXX}}: {{EPIC_NAME}}
 
 ### Step 10.4: Update Roadmap with Links
 
-**After generating User Stories, update roadmap.md to add links:**
+**After generating User Stories, update docs/roadmap.md to add links:**
 
 ```
-Updating roadmap.md with User Story links...
+Updating docs/roadmap.md with User Story links...
 
 ✅ Updated Feature 1.1 with link to HU-001-001
 ✅ Updated Feature 1.2 with link to HU-001-002
 ✅ Updated Feature 1.3 with link to HU-001-003
 
-roadmap.md updated successfully!
+docs/roadmap.md updated successfully!
 ```
 
-**Updated roadmap.md format:**
+**Updated docs/roadmap.md format:**
 
 ```markdown
 ### Feature 1.1: Login básico • 5 SP (~6-8h)
 
-**User Story:** 📖 [HU-001-001](./user-stories/EP-001/HU-001-001.md)
+**User Story:** 📖 [HU-001-001](./.ai-flow/user-stories/EP-001/HU-001-001.md)
 
 **Status:** ⚪ Not Started
 
@@ -586,7 +588,7 @@ roadmap.md updated successfully!
 
 ### **3. Technical Tasks**
 
-- **Inherit from roadmap:** Use Tasks from roadmap.md Feature
+- **Inherit from roadmap:** Use Tasks from docs/roadmap.md Feature
 - **Add file paths:** Exact location where code goes
 - **Add dependencies:** Which tasks block others
 - **Keep Story Points:** From roadmap estimation
@@ -633,7 +635,7 @@ roadmap.md updated successfully!
 - ❌ Skip acceptance criteria
 - ❌ Generate test cases without criteria
 - ❌ Use generic DoD (personalize per story if needed)
-- ❌ Forget to update roadmap.md with links
+- ❌ Forget to update docs/roadmap.md with links
 
 ### **ALWAYS:**
 
@@ -642,7 +644,7 @@ roadmap.md updated successfully!
 - ✅ Derive 1-2 test cases per scenario
 - ✅ Link back to Epic and Feature
 - ✅ Include technical context from docs
-- ✅ Update roadmap.md with User Story links
+- ✅ Update docs/roadmap.md with User Story links
 - ✅ Create backup before regenerating
 
 ---
@@ -662,18 +664,18 @@ Total Tasks: {{TASKS}}
 Total Test Cases: {{TC}}
 
 Files created:
-📁 user-stories/
+📁 docs/user-stories/
   ├── EP-001/ (5 stories, 13 SP)
   ├── EP-002/ (3 stories, 21 SP)
   └── EP-003/ (4 stories, 18 SP)
 
 Updated:
-✅ roadmap.md (added User Story links)
+✅ docs/roadmap.md (added User Story links)
 
 🚀 Ready to start development!
 
 Next steps:
-1. Review User Stories in user-stories/ folder
+1. Review User Stories in docs/user-stories/ folder
 2. Start implementing: /flow-dev-feature HU-001-001
 3. Track progress: /flow-dev-work
 4. Generate more stories: /flow-build fase 10 EP-004
