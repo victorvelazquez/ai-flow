@@ -788,14 +788,14 @@ With 3 developers: ~9 weeks (47% time savings)
 
 ### Step 9.5: Generate Roadmap Document (2-5 minutes - automatic)
 
-**Generate `roadmap.md` with complete implementation plan:**
+**Generate `docs/roadmap.md` with complete implementation plan:**
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📝 Step 9.5/6: Generating Roadmap Document
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Writing to roadmap.md...
+Writing to docs/roadmap.md...
 ```
 
 **Roadmap Document Structure:**
@@ -1159,7 +1159,7 @@ Update this roadmap as you complete features:
 
 ```
 ✅ Roadmap document generated
-✅ Location: roadmap.md
+✅ Location: docs/roadmap.md
 ✅ Total: {{TOTAL_EPICS}} Epics, {{TOTAL_FEATURES}} Features, {{TOTAL_TASKS}} Tasks
 ✅ Estimated: {{TOTAL_SP}} Story Points (~{{TOTAL_WEEKS}} weeks)
 ```
@@ -1184,7 +1184,7 @@ Update this roadmap as you complete features:
 ✅ Estimated time: {{SOLO_WEEKS}} weeks (1 dev) | {{TWO_DEV_WEEKS}} weeks (2 devs)
 ✅ Dependency graph: Generated
 ✅ Execution order: Optimized for parallelization
-✅ Roadmap document: roadmap.md
+✅ Roadmap document: docs/roadmap.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎯 What This Roadmap Guarantees
@@ -1213,14 +1213,14 @@ Update this roadmap as you complete features:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. **Open the roadmap**
-   └─ Open roadmap.md in your editor
+   └─ Open docs/roadmap.md in your editor
 
 2. **Review and adjust priorities**
    └─ Decide which features are MVP vs future phases
    └─ Adjust P0/P1/P2/P3 priorities if needed
 
 3. **Commit the roadmap**
-   └─ git add roadmap.md
+   └─ git add docs/roadmap.md
    └─ git commit -m "docs: add implementation roadmap with Story Points"
 
 4. **Start implementation**
@@ -1258,7 +1258,7 @@ Update this roadmap as you complete features:
 
 Ready to start building? 🚀
 
-Open roadmap.md and let's ship this! 💪
+Open docs/roadmap.md and let's ship this! 💪
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -1276,10 +1276,10 @@ B) ✅ Start implementing from roadmap directly
    → Will execute: /flow-dev-feature {{FIRST_FEATURE_ID}}
 
 C) 📋 Review roadmap first
-   → Will open roadmap.md
+   → Will open docs/roadmap.md
 
 D) ✏️ Customize roadmap
-   → Will open roadmap.md for editing
+   → Will open docs/roadmap.md for editing
 
 Your choice (A/B/C/D): __
 ```
@@ -1396,7 +1396,7 @@ Please fix documentation and re-run Phase 9
 
 **9.5 Generate Roadmap Document:**
 
-- [ ] Create `roadmap.md`
+- [ ] Create `docs/roadmap.md`
 - [ ] Include project overview
 - [ ] Include Story Points reference table
 - [ ] Include Epic overview table
