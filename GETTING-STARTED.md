@@ -2167,7 +2167,7 @@ Complete list of all available commands organized by category.
 ```bash
 ai-flow init [path] [options]   # Initialize project
 ai-flow check                    # Verify initialization
-ai-flow --version               # Show version (2.0.0)
+ai-flow --version               # Show version (2.1.1)
 ai-flow --help                  # Show help
 ```
 

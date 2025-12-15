@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 3 docs)
+- 🚀 Complete professional documentation (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4 docs)
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 Multi-AI support with slash commands
@@ -37,7 +37,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 3 docs)
+- 🚀 Documentación profesional completa (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4 docs)
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
 - 🤖 Compatible con Claude, Copilot, Cursor, Gemini
@@ -63,7 +63,7 @@ ai-flow init .
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 3 docs)
+- 🚀 Documentação profissional completa (Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 4 docs)
 - ⚡ **Dois modos:** Interativo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
 - 🌍 Suporte universal - 12 linguagens, 60+ frameworks, 35+ ORMs
 - 🤖 Compatível com Claude, Copilot, Cursor, Gemini
@@ -103,7 +103,7 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, any AI tool
-- 📚 **Professional Documentation** - Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 3 docs
+- 📚 **Professional Documentation** - Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 4 docs
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, 71 questions (90-120 min)
   - **Smart Auto-Suggest:** Only 6 critical questions, AI suggests best practices (15-25 min)
@@ -261,7 +261,7 @@ After initialization, use these slash commands in your AI tool:
 
 > **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
 
-**Backend Projects:** 17 commands  
+**Backend Projects:** 19 commands  
 **Frontend/Mobile Projects:** 2 commands (build + docs-sync)  
 **Fullstack Projects:** Combined backend + frontend commands
 
