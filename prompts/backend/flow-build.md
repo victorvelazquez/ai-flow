@@ -733,12 +733,12 @@ As your project evolves, your documentation may become out of sync with your cod
 
 **How it works:**
 
-1. Compares current code state with last documented state (`.ai-flow/analysis.json`)
+1. Compares current code state with last documented state (`.ai-flow/cache/docs-analysis.json`)
 2. Detects changes in endpoints, entities, dependencies, architecture, configuration
 3. Shows report of documents that need updating
 4. Asks for confirmation to update all detected documents
 5. Updates documents incrementally (only changed sections)
-6. Updates `analysis.json` with new state
+6. Updates `docs-analysis.json` with new state
 
 **When to use:**
 

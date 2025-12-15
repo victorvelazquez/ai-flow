@@ -36,6 +36,3 @@ logs/
 tmp/
 temp/
 *.tmp
-
-# AI Flow cache
-.ai-flow/cache/

@@ -33,7 +33,7 @@ Skip expensive analysis if source files haven't changed since last run.
 
 ```bash
 # Read cache timestamp
-cat .ai-flow/cache/docs-analysis.json
+cat cache/docs-analysis.json
 ```
 
 **Cache structure:**
@@ -832,7 +832,7 @@ Re-analyze edited files to confirm gaps were resolved correctly.
 
 ### Cache Update
 
-Writing analysis results to `.ai-flow/cache/docs-analysis.json` for next run...
+Writing analysis results to `cache/docs-analysis.json` for next run...
 ✅ Cache updated
 
 ---

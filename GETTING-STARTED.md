@@ -2441,10 +2441,9 @@ chmod 755 .
 
 1. ✅ **Commit `.ai-flow/`** to version control - Team needs templates
 2. ✅ **Commit generated docs** - Share knowledge across team
-3. ✅ **Don't commit `analysis.json`** - Add to `.gitignore` (machine-specific cache)
-4. ✅ **Update docs in PRs** - Use `/flow-docs-sync` before merging
-5. ✅ **Use same AI tool** - Or use `--ai all` for compatibility
-6. ✅ **Review together** - Use `/flow-dev-review` for pair programming
+3. ✅ **Update docs in PRs** - Use `/flow-docs-sync` before merging
+4. ✅ **Use same AI tool** - Or use `--ai all` for compatibility
+5. ✅ **Review together** - Use `/flow-dev-review` for pair programming
 
 #### Documentation Maintenance
 

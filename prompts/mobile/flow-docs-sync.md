@@ -10,7 +10,7 @@ Your mission is to detect changes in the mobile codebase and update the project 
 
 ### Objective
 
-Detect changes in the mobile codebase compared to the last documented state (stored in `.ai-flow/analysis.json`) and update all affected documentation files automatically.
+Detect changes in the mobile codebase compared to the last documented state (stored in `.ai-flow/cache/docs-analysis.json`) and update all affected documentation files automatically.
 
 ---
 
@@ -19,12 +19,12 @@ Detect changes in the mobile codebase compared to the last documented state (sto
 ### Step 1: Check for Analysis File
 
 ```
-First, check if `.ai-flow/analysis.json` exists:
+First, check if `.ai-flow/cache/docs-analysis.json` exists:
 
 - ✅ If exists → Proceed to Step 2 (Compare Changes)
 - ❌ If NOT exists → Execute full Phase 0 analysis first:
   - Run complete mobile code analysis (as described in Phase 0)
-  - Create `.ai-flow/analysis.json` with current state
+  - Create `.ai-flow/cache/docs-analysis.json` with current state
   - Then proceed to Step 2
 ```
 
@@ -47,7 +47,7 @@ First, check if `.ai-flow/analysis.json` exists:
 
 2. **Compare with Previous State:**
 
-   - Load `.ai-flow/analysis.json`
+   - Load `.ai-flow/cache/docs-analysis.json`
    - Compare current state vs previous state
    - Detect changes in:
      - **Screens:** New, modified, or deleted screens
@@ -173,9 +173,9 @@ No updates required.
    - Update app store configuration if app.json or build config changed
    - Maintain existing configuration
 
-2. **Update `analysis.json`:**
+2. **Update `docs-analysis.json`:**
 
-   - Save current state to `.ai-flow/analysis.json`
+   - Save current state to `.ai-flow/cache/docs-analysis.json`
    - Update timestamp
    - Include all detected changes in metadata
 
@@ -208,7 +208,7 @@ No updates required.
 📝 specs/build-configuration.md
 - Updated build.gradle configuration
 
-✅ analysis.json updated with new state
+✅ docs-analysis.json updated with new state
 ```
 
 ### Step 5: Handle Cancellation
@@ -360,7 +360,7 @@ Update cancelled. Run `/flow-docs-sync` when you're ready to update the document
 
 3. **Update Analysis File:**
 
-   - Always update `.ai-flow/analysis.json` after document updates
+   - Always update `.ai-flow/cache/docs-analysis.json` after document updates
    - Include timestamp and change summary
    - Save complete current state for next comparison
 
@@ -588,7 +588,7 @@ graph TB
 
 5. **Error Handling:**
    - If document doesn't exist, create it following template
-   - If analysis.json is corrupted, regenerate it
+   - If docs-analysis.json is corrupted, regenerate it
    - If comparison fails, show error and suggest full Phase 0 re-run
 
 ---
@@ -622,7 +622,7 @@ AI:
 - Added new permission (Location)
 - Updated permission handling section
 
-✅ analysis.json updated with new state
+✅ docs-analysis.json updated with new state
 
 Documentation synchronized successfully.
 ```

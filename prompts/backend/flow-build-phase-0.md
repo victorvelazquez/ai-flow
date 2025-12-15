@@ -6,6 +6,7 @@
 ### 🎯 Objective
 
 Efficiently analyze existing projects using a **layered, incremental approach** that:
+
 - ✅ Minimizes context usage (50-75% reduction)
 - ✅ Supports ALL major backend languages and frameworks
 - ✅ Provides smart caching for instant re-runs
@@ -36,7 +37,7 @@ Result Synthesis & Pre-population
 
 **Actions:**
 
-1. Check if `.ai-flow/analysis.json` exists
+1. Check if `.ai-flow/cache/docs-analysis.json` exists
 2. If exists:
    - Read `analyzedAt` timestamp
    - Read `filesAnalyzed` with their timestamps
@@ -448,6 +449,7 @@ This scans directory organization and file counts without reading code.
 **Language-specific directory patterns:**
 
 **Node.js/TypeScript:**
+
 ```
 Scanning directories:
 • src/**/* or app/**/* or lib/**/*
@@ -465,6 +467,7 @@ Counting files by pattern:
 ```
 
 **Python:**
+
 ```
 Scanning directories:
 • app/**/*.py or src/**/*.py
@@ -479,6 +482,7 @@ Counting files by pattern:
 ```
 
 **PHP:**
+
 ```
 Scanning directories:
 • app/**/*.php or src/**/*.php
@@ -492,6 +496,7 @@ Counting files by pattern:
 ```
 
 **Java:**
+
 ```
 Scanning directories:
 • src/main/java/**/*.java
@@ -506,6 +511,7 @@ Counting files by pattern:
 ```
 
 **C#/.NET:**
+
 ```
 Scanning directories:
 • **/*.cs (excluding obj/, bin/)
@@ -520,6 +526,7 @@ Counting files by pattern:
 ```
 
 **Go:**
+
 ```
 Scanning directories:
 • **/*.go (excluding vendor/)
@@ -533,6 +540,7 @@ Counting files by pattern:
 ```
 
 **Ruby:**
+
 ```
 Scanning directories:
 • app/**/*.rb
@@ -559,56 +567,68 @@ Counting files by pattern:
 **Based on detected ORM:**
 
 **Prisma:**
+
 - Read `prisma/schema.prisma`
 - Extract model names only (regex: `model (\w+)`)
 - Count total models
 - Count relationships (count occurrences of `@relation`)
 
 **TypeORM:**
+
 - Glob `*.entity.{ts,js}`
 - Extract entity names from `@Entity()` decorator (regex, no full parsing)
 - Count entities
 
 **Sequelize:**
+
 - Glob `models/**/*.{ts,js}`
 - Count model files
 
 **Mongoose:**
+
 - Glob `*.schema.{ts,js}` or `models/**/*.{ts,js}`
 - Search for `new Schema(` pattern
 - Count schemas
 
 **Django:**
+
 - Read `*/models.py` files
 - Extract class names inheriting from `models.Model` (regex)
 - Count models
 
 **SQLAlchemy:**
+
 - Read `**/models.py` or `**/*_model.py`
 - Extract classes with `Base` or `db.Model` (regex)
 - Count models
 
 **Eloquent (Laravel):**
+
 - Glob `app/Models/**/*.php`
 - Count model files
 
 **Doctrine (Symfony/PHP):**
+
 - Glob `src/Entity/**/*.php`
 - Count entity files
 
 **Hibernate/JPA (Java):**
+
 - Glob `**/*Entity.java`
 - Count entity files
 
 **Entity Framework (.NET):**
+
 - Glob `**/Models/**/*.cs` or `**/Entities/**/*.cs`
 - Count entity files
 
 **GORM (Go):**
+
 - Search for `type.*struct` in `models/**/*.go`
 - Count structs
 
 **ActiveRecord (Ruby):**
+
 - Glob `app/models/**/*.rb`
 - Count model files
 
@@ -639,6 +659,7 @@ Checking docs/ directory...
 ```
 
 **Maturity Level:**
+
 - 🌱 **Minimal:** 0-1 docs → Suggest **MVP or Production-Ready scope**
 - 🌿 **Basic:** 2-4 docs → Suggest **Production-Ready scope**
 - 🌳 **Comprehensive:** 5-7 docs → Suggest **Production-Ready or Enterprise scope**
@@ -781,11 +802,11 @@ function selectFilesToAnalyze(files: string[], category: string, maxFiles: numbe
     services: 9,
     entities: 10,
     repositories: 8,
-    dto: 7
+    dto: 7,
   };
 
   // Group by module/feature
-  const byModule = groupBy(files, file => file.split('/')[1]);
+  const byModule = groupBy(files, (file) => file.split('/')[1]);
 
   // Sample proportionally from each module
   const samples = [];
@@ -851,6 +872,7 @@ Your choice: __
 **Node.js/TypeScript:**
 
 **API Endpoints (NestJS):**
+
 ```typescript
 // Sample up to 30 controller files
 const controllerFiles = glob('**/*.controller.{ts,js}').slice(0, 30);
@@ -867,7 +889,7 @@ for (const file of controllerFiles) {
     ...content.matchAll(/@Post\(['"](.+?)['"]\)\s+(\w+)/g),
     ...content.matchAll(/@Put\(['"](.+?)['"]\)\s+(\w+)/g),
     ...content.matchAll(/@Delete\(['"](.+?)['"]\)\s+(\w+)/g),
-    ...content.matchAll(/@Patch\(['"](.+?)['"]\)\s+(\w+)/g)
+    ...content.matchAll(/@Patch\(['"](.+?)['"]\)\s+(\w+)/g),
   ];
 
   for (const [fullMatch, path, handlerName, method] of routes) {
@@ -875,13 +897,14 @@ for (const file of controllerFiles) {
       method: method,
       path: `${basePath}/${path}`,
       handler: handlerName,
-      file: file
+      file: file,
     });
   }
 }
 ```
 
 **API Endpoints (Express):**
+
 ```typescript
 const routeFiles = glob('**/routes/**/*.{ts,js}').slice(0, 20);
 
@@ -890,16 +913,17 @@ for (const file of routeFiles) {
 
   const routes = [
     ...content.matchAll(/router\.(get|post|put|delete|patch)\(['"](.+?)['"],\s*(\w+)/g),
-    ...content.matchAll(/app\.(get|post|put|delete|patch)\(['"](.+?)['"],\s*(\w+)/g)
+    ...content.matchAll(/app\.(get|post|put|delete|patch)\(['"](.+?)['"],\s*(\w+)/g),
   ];
 
   for (const [, method, path, handler] of routes) {
-    endpoints.push({method: method.toUpperCase(), path, handler, file});
+    endpoints.push({ method: method.toUpperCase(), path, handler, file });
   }
 }
 ```
 
 **Entities (Prisma):**
+
 ```typescript
 // Read prisma/schema.prisma
 const schema = readFile('prisma/schema.prisma');
@@ -915,9 +939,9 @@ for (const [, modelName, body] of models) {
     fields: fields.map(([, name, type, decorator]) => ({
       name,
       type,
-      decorator
+      decorator,
     })),
-    relationships: [...body.matchAll(/@relation\(([^)]+)\)/g)].map(m => m[1])
+    relationships: [...body.matchAll(/@relation\(([^)]+)\)/g)].map((m) => m[1]),
   };
 
   entities.push(entity);
@@ -927,6 +951,7 @@ for (const [, modelName, body] of models) {
 **Python:**
 
 **API Endpoints (FastAPI):**
+
 ```python
 # Sample router files
 routerFiles = glob('**/*routes.py', '**/*router.py')[:20]
@@ -947,6 +972,7 @@ for file in routerFiles:
 ```
 
 **Entities (Django):**
+
 ```python
 # Read models.py files
 modelFiles = glob('**/models.py')[:15]
@@ -970,6 +996,7 @@ for file in modelFiles:
 **PHP:**
 
 **API Endpoints (Laravel):**
+
 ```php
 // Read routes/api.php and routes/web.php
 $routeFiles = ['routes/api.php', 'routes/web.php'];
@@ -992,6 +1019,7 @@ foreach ($routeFiles as $file) {
 ```
 
 **Entities (Eloquent):**
+
 ```php
 // Glob app/Models/*.php
 $modelFiles = glob('app/Models/*.php');
@@ -1014,6 +1042,7 @@ foreach ($modelFiles as $file) {
 **Java:**
 
 **API Endpoints (Spring Boot):**
+
 ```java
 // Glob **/*Controller.java (sample 25)
 List<String> controllerFiles = glob("**/*Controller.java").subList(0, 25);
@@ -1040,6 +1069,7 @@ for (String file : controllerFiles) {
 ```
 
 **Entities (JPA/Hibernate):**
+
 ```java
 // Glob **/*Entity.java
 List<String> entityFiles = glob("**/*Entity.java").subList(0, 30);
@@ -1069,6 +1099,7 @@ for (String file : entityFiles) {
 **C#/.NET:**
 
 **API Endpoints (ASP.NET Core):**
+
 ```csharp
 // Glob **/*Controller.cs
 var controllerFiles = Directory.GetFiles(".", "*Controller.cs", SearchOption.AllDirectories).Take(25);
@@ -1095,6 +1126,7 @@ foreach (var file in controllerFiles) {
 ```
 
 **Entities (Entity Framework):**
+
 ```csharp
 // Glob **/Models/**/*.cs or **/Entities/**/*.cs
 var entityFiles = Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories)
@@ -1125,6 +1157,7 @@ foreach (var file in entityFiles) {
 **Go:**
 
 **API Endpoints (Gin):**
+
 ```go
 // Read handler files
 handlerFiles := filepath.Glob("**/handlers/**/*.go")[:20]
@@ -1148,6 +1181,7 @@ for _, file := range handlerFiles {
 ```
 
 **Entities (GORM):**
+
 ```go
 // Read model files
 modelFiles := filepath.Glob("**/models/**/*.go")[:20]
@@ -1180,6 +1214,7 @@ for _, file := range modelFiles {
 **Ruby:**
 
 **API Endpoints (Rails):**
+
 ```ruby
 # Read routes.rb
 routes_file = 'config/routes.rb'
@@ -1214,6 +1249,7 @@ end
 ```
 
 **Entities (ActiveRecord):**
+
 ```ruby
 # Glob app/models/*.rb
 model_files = Dir.glob('app/models/**/*.rb')[0..20]
@@ -1242,6 +1278,7 @@ end
 **Rust:**
 
 **API Endpoints (Actix):**
+
 ```rust
 // Read handler files
 let handler_files: Vec<_> = glob("**/handlers/**/*.rs").unwrap().take(15).collect();
@@ -1264,6 +1301,7 @@ for file in handler_files {
 ```
 
 **Entities (Diesel):**
+
 ```rust
 // Read schema.rs and models.rs
 let schema = fs::read_to_string("src/schema.rs").ok();
@@ -1287,12 +1325,14 @@ if let Some(schema_content) = schema {
 **Scan for security patterns across all languages:**
 
 **Authentication:**
+
 - JWT libraries: `jsonwebtoken`, `@nestjs/jwt`, `pyjwt`, `jjwt`, etc.
 - Session libraries: `express-session`, `django.contrib.sessions`
 - OAuth libraries: `passport`, `authlib`, `spring-security-oauth2`
 - Password hashing: `bcrypt`, `argon2`, `password_hash` (PHP)
 
 **Validation:**
+
 - `class-validator`, `joi`, `zod` (Node.js)
 - `pydantic`, `marshmallow` (Python)
 - Laravel validation rules (PHP)
@@ -1300,16 +1340,19 @@ if let Some(schema_content) = schema {
 - Data Annotations (.NET)
 
 **Rate Limiting:**
+
 - `express-rate-limit`, `@nestjs/throttler`
 - `django-ratelimit`, `slowapi`
 - Bucket4j (Java)
 
 **CORS:**
+
 - `cors` package (Node.js)
 - `django-cors-headers` (Python)
 - Spring CORS configuration (Java)
 
 **Security Headers:**
+
 - `helmet` (Node.js)
 - `django-csp`
 - OWASP Java Encoder
@@ -1395,7 +1438,7 @@ Sample Endpoints:
   • GET /api/users/:id → UsersController.findOne
   • POST /api/products → ProductsController.create
   • PUT /api/orders/:id → OrdersController.update
-  [View full list in analysis.json]
+  [View full list in docs-analysis.json]
 
 🗄️  Database Entities: [18 detected]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1407,7 +1450,7 @@ Core Entities:
   • Order (10 fields, 4 relationships)
     - Relationships: ManyToOne → User, OneToMany → OrderItems, etc.
 
-  [+15 more entities - see analysis.json for full schema]
+  [+15 more entities - see docs-analysis.json for full schema]
 
 🔒 Security Patterns:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1492,13 +1535,16 @@ Your choice: __
 ```
 
 **If user selects A:**
+
 - Mark suggestions to be addressed in relevant phases
 - When reaching those phases, reference: "Earlier analysis detected X, let's configure it now"
 
 **If user selects B:**
+
 - Create `suggestions.md` with all recommendations formatted for reference
 
 **If user selects C:**
+
 - Continue without suggestions
 
 ---
@@ -1508,7 +1554,7 @@ Your choice: __
 ```
 💾 Export Analysis to JSON?
 
-This creates .ai-flow/analysis.json with all detected information:
+This creates .ai-flow/cache/docs-docs-analysis.json with all detected information:
 • Project metadata and tech stack
 • Complete endpoint list with methods, paths, handlers
 • Full entity schemas with relationships
@@ -1592,13 +1638,13 @@ Your choice: __
       "source": "prisma",
       "file": "prisma/schema.prisma",
       "fields": [
-        {"name": "id", "type": "String", "required": true, "primary": true},
-        {"name": "email", "type": "String", "required": true, "unique": true},
-        {"name": "password", "type": "String", "required": true}
+        { "name": "id", "type": "String", "required": true, "primary": true },
+        { "name": "email", "type": "String", "required": true, "unique": true },
+        { "name": "password", "type": "String", "required": true }
       ],
       "relationships": [
-        {"type": "OneToMany", "target": "Order", "field": "orders"},
-        {"type": "OneToMany", "target": "Review", "field": "reviews"}
+        { "type": "OneToMany", "target": "Order", "field": "orders" },
+        { "type": "OneToMany", "target": "Review", "field": "reviews" }
       ]
     }
     // ... 17 more
@@ -1638,7 +1684,7 @@ Your choice: __
     "count": 87,
     "paths": [
       "src/users/users.controller.ts",
-      "src/products/products.controller.ts",
+      "src/products/products.controller.ts"
       // ... all analyzed files
     ],
     "timestamps": {
@@ -1651,7 +1697,7 @@ Your choice: __
 ```
 
 ```
-✅ Analysis exported to .ai-flow/analysis.json
+✅ Analysis exported to .ai-flow/cache/docs-analysis.json
 
 File size: 142 KB
 Contains:
@@ -1813,7 +1859,7 @@ Analysis Results:
   ✅ 18 database entities with 45 relationships
   ✅ Security patterns analyzed
   ✅ 7 improvement suggestions generated
-  ✅ Analysis exported to .ai-flow/analysis.json
+  ✅ Analysis exported to .ai-flow/cache/docs-analysis.json
 
 Pre-population Status:
   • 45% of questionnaire answers populated
@@ -1836,7 +1882,5 @@ Press Enter to continue to Project Scope Selection...
 **After Phase 0 completes, ALWAYS proceed to Project Scope Selection before Phase 1.**
 
 ---
+
 ## PHASE 1: Discovery & Business (15-20 min)
-
-
-

@@ -10,7 +10,7 @@ Your mission is to detect changes in the codebase and update the project documen
 
 ### Objective
 
-Detect changes in the codebase compared to the last documented state (stored in `.ai-flow/analysis.json`) and update all affected documentation files automatically.
+Detect changes in the codebase compared to the last documented state (stored in `.ai-flow/cache/docs-analysis.json`) and update all affected documentation files automatically.
 
 ---
 
@@ -19,12 +19,12 @@ Detect changes in the codebase compared to the last documented state (stored in 
 ### Step 1: Check for Analysis File
 
 ```
-First, check if `.ai-flow/analysis.json` exists:
+First, check if `.ai-flow/cache/docs-analysis.json` exists:
 
 - ✅ If exists → Proceed to Step 2 (Compare Changes)
 - ❌ If NOT exists → Execute full Phase 0 analysis first:
   - Run complete code analysis (as described in Phase 0)
-  - Create `.ai-flow/analysis.json` with current state
+  - Create `.ai-flow/cache/docs-analysis.json` with current state
   - Then proceed to Step 2
 ```
 
@@ -33,7 +33,6 @@ First, check if `.ai-flow/analysis.json` exists:
 **Reuse Phase 0 Analysis Logic:**
 
 1. **Perform Current Code Analysis:**
-
    - Execute the same analysis as Phase 0 (section 0.1):
      - File structure analysis
      - AST-based code parsing (endpoints, entities, dependencies)
@@ -42,8 +41,7 @@ First, check if `.ai-flow/analysis.json` exists:
    - Generate current state snapshot
 
 2. **Compare with Previous State:**
-
-   - Load `.ai-flow/analysis.json`
+   - Load `.ai-flow/cache/docs-analysis.json`
    - Compare current state vs previous state
    - Detect changes in:
      - **Endpoints:** New, modified, or deleted endpoints
@@ -96,6 +94,7 @@ When regenerating or updating diagrams in documentation files, follow these **cr
 **Diagram Type:** `erDiagram`
 
 **Requirements:**
+
 1. Show ALL entities and their relationships
 2. Include field types and constraints (PK, FK, UK)
 3. Add descriptions for complex or business-critical fields
@@ -103,6 +102,7 @@ When regenerating or updating diagrams in documentation files, follow these **cr
 5. Keep entity order logical (core entities first, then related)
 
 **Quality Checklist:**
+
 - [ ] Code fence is exactly ` ```mermaid ` (lowercase, no spaces)
 - [ ] All entities from database are represented
 - [ ] All foreign key relationships are shown
@@ -113,6 +113,7 @@ When regenerating or updating diagrams in documentation files, follow these **cr
 - [ ] Diagram renders without errors
 
 **Example:**
+
 ````markdown
 ```mermaid
 erDiagram
@@ -156,6 +157,7 @@ erDiagram
 **Diagram Type:** `graph TD` (or `graph LR`)
 
 **Requirements:**
+
 1. Show ALL major system components (services, databases, caches, queues)
 2. Label connections with protocols/methods (HTTPS, gRPC, REST, etc.)
 3. Use consistent styling (databases as cylinders, services as boxes)
@@ -164,6 +166,7 @@ erDiagram
 6. Include deployment context (load balancers, CDN) if relevant
 
 **Quality Checklist:**
+
 - [ ] Code fence is exactly ` ```mermaid ` (lowercase, no spaces)
 - [ ] All services/components from codebase are shown
 - [ ] Database connections are labeled
@@ -175,6 +178,7 @@ erDiagram
 - [ ] Diagram renders without errors
 
 **Example:**
+
 ````markdown
 ```mermaid
 graph TD
@@ -203,6 +207,7 @@ graph TD
 **Diagram Type:** `flowchart TD` (or `flowchart LR`)
 
 **Requirements:**
+
 1. Start with `([Start Terminal])`
 2. End with `([End Terminal])`
 3. Use `{Diamond}` for ALL decision points
@@ -212,6 +217,7 @@ graph TD
 7. Use consistent styling for node types
 
 **Quality Checklist:**
+
 - [ ] Code fence is exactly ` ```mermaid ` (lowercase, no spaces)
 - [ ] Flow starts with a terminal node
 - [ ] Flow ends with terminal node(s)
@@ -224,6 +230,7 @@ graph TD
 - [ ] Diagram renders without errors
 
 **Example:**
+
 ````markdown
 ```mermaid
 flowchart TD
@@ -250,19 +257,22 @@ flowchart TD
 ### Common Formatting Rules (ALL Diagrams)
 
 **CRITICAL - Code Fence Syntax:**
-```
+
+````
 ✅ CORRECT: ```mermaid
 ❌ WRONG:   ```Mermaid (capital M)
 ❌ WRONG:   ``` mermaid (extra space)
 ❌ WRONG:   ``mermaid (missing backtick)
-```
+````
 
 **Indentation:**
+
 - Start Mermaid syntax at column 0 (no leading spaces/tabs)
 - Only indent within Mermaid syntax according to Mermaid rules
 - Do NOT indent the entire code block
 
 **Validation Steps:**
+
 1. After generating/updating diagram, verify syntax at https://mermaid.live/
 2. Check that diagram renders in VS Code markdown preview
 3. Verify all nodes and relationships are present
@@ -270,6 +280,7 @@ flowchart TD
 5. Test that styling is applied correctly
 
 **When Updating Existing Diagrams:**
+
 1. Read the current diagram first
 2. Identify what needs to be added/removed/modified
 3. Maintain existing styling and layout patterns
@@ -286,7 +297,6 @@ flowchart TD
 1. **For each document that needs updating:**
 
    **A) `docs/api.md`** (if endpoints changed):
-
    - Read current `docs/api.md`
    - Identify new/modified endpoints from analysis
    - Add new endpoints following existing API conventions
@@ -296,7 +306,6 @@ flowchart TD
    - Regenerate affected sections only
 
    **B) `docs/data-model.md`** (if entities changed):
-
    - Read current `docs/data-model.md`
    - Update entity definitions with new fields
    - Update relationships if changed
@@ -304,41 +313,35 @@ flowchart TD
    - Maintain all existing content that hasn't changed
 
    **C) `ai-instructions.md`** (if dependencies changed):
-
    - Read current `ai-instructions.md`
    - Add new dependencies to appropriate sections
    - Update version numbers if changed
    - Maintain all existing rules and patterns
 
    **D) `docs/architecture.md`** (if architecture changed):
-
    - Read current `docs/architecture.md`
    - Update architecture diagram (mermaid) if structure changed
    - Update module descriptions
    - Maintain all existing content
 
    **E) `specs/configuration.md`** (if env vars changed):
-
    - Read current `specs/configuration.md`
    - Add new environment variables
    - Update descriptions if changed
    - Maintain existing variables
 
    **F) `.env.example`** (if env vars changed):
-
    - Read current `.env.example`
    - Add new environment variables with example values
    - Maintain existing variables
 
    **G) `specs/security.md`** (if security patterns changed):
-
    - Read current `specs/security.md`
    - Update security policies if authentication/authorization changed
    - Maintain existing policies
 
-2. **Update `analysis.json`:**
-
-   - Save current state to `.ai-flow/analysis.json`
+2. **Update `docs-analysis.json`:**
+   - Save current state to `.ai-flow/cache/docs-analysis.json`
    - Update timestamp
    - Include all detected changes in metadata
 
@@ -359,7 +362,7 @@ flowchart TD
 - Agregada dependencia "@nestjs/swagger"
 - Actualizada sección de herramientas
 
-✅ analysis.json actualizado con nuevo estado
+✅ docs-analysis.json actualizado con nuevo estado
 ```
 
 ### Step 5: Handle Cancellation
@@ -456,32 +459,28 @@ Actualización cancelada. Ejecuta `/flow-docs-sync` cuando estés listo para act
 ## Important Rules
 
 1. **Incremental Updates Only:**
-
    - Only modify sections that changed
    - Preserve all existing content that hasn't changed
    - Maintain document structure and formatting
 
 2. **Follow Existing Patterns:**
-
    - Use same format as existing documentation
    - Follow conventions established in original build
    - Maintain consistency with existing docs
 
 3. **Update Analysis File:**
-
-   - Always update `.ai-flow/analysis.json` after document updates
+   - Always update `.ai-flow/cache/docs-analysis.json` after document updates
    - Include timestamp and change summary
    - Save complete current state for next comparison
 
 4. **Mermaid Diagrams:**
-
    - Regenerate ER diagrams when entities change
    - Regenerate architecture diagrams when structure changes
    - Use mermaid format for all diagrams
 
 5. **Error Handling:**
    - If document doesn't exist, create it following template
-   - If analysis.json is corrupted, regenerate it
+   - If docs-analysis.json is corrupted, regenerate it
    - If comparison fails, show error and suggest full Phase 0 re-run
 
 ---
@@ -515,7 +514,7 @@ AI:
 - Agregado campo "avatarUrl" (String, nullable) a entidad User
 - Actualizado diagrama ER (mermaid) con nuevo campo
 
-✅ analysis.json actualizado con nuevo estado
+✅ docs-analysis.json actualizado con nuevo estado
 
 Documentación sincronizada exitosamente.
 ```
@@ -523,5 +522,3 @@ Documentación sincronizada exitosamente.
 ---
 
 **BEGIN EXECUTION when user runs `/flow-docs-sync`**
-
-

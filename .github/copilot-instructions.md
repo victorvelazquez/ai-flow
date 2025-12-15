@@ -30,6 +30,30 @@
 - Copilot slash prompts are copied from `prompts/` to `.github/prompts/` during init; any rename must propagate to docs that reference `/build*` commands.
 - **Workflow commands** (`/flow-dev-feature`, `/flow-dev-fix`, `/flow-dev-commit`, `/flow-dev-work`, `/flow-dev-review`, `/flow-dev-refactor`) are backend-only and provide structured development workflows.
 
+## Cache Files Structure (CRITICAL - Do NOT confuse contexts)
+
+**TWO SEPARATE CONTEXTS exist for `.ai-flow/cache/` files:**
+
+### Context 1: This Repository (`ai-flow`)
+
+- **Location:** `ai-flow/cache/docs-analysis.json`
+- **Purpose:** Cache for maintaining THIS project's documentation (README.md, GETTING-STARTED.md)
+- **Used by:** `/flow3.docs.prompt` command executed ON this repo
+- **Git tracking:** YES - committed to track documentation state of AI Flow itself
+
+### Context 2: User Projects (after installing ai-flow)
+
+- **Location:** `user-project/.ai-flow/cache/docs-analysis.json`
+- **Purpose:** Cache for maintaining USER's project documentation
+- **Used by:** `/flow.docs.sync.prompt` Commands executed by USERS in THEIR projects
+- **Git tracking:** User decides (typically .gitignored)
+
+**Key difference:**
+
+- This repo uses `cache/docs-analysis.json` (root level, no .ai-flow/)
+- User projects use `.ai-flow/cache/docs-analysis.json` (inside .ai-flow/ structure)
+- Both use same filename now: `docs-analysis.json`
+
 ## Research Checklist for Agents
 
 - Read `README.md` for project overview and high-level features.
