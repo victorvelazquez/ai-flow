@@ -311,7 +311,7 @@ AI Flow 2.0 introduces structured workflow commands for backend development, ins
 - Time estimates for 1, 2, or 3 developers
 - Mermaid dependency graphs
 - Production readiness checklist (50+ items)
-- Output: `.ai-flow/roadmap.md`
+- Output: `docs/roadmap.md`
 
 **Feature Workflow (`/feature`):**
 
@@ -387,7 +387,7 @@ AI Flow 2.0 introduces structured workflow commands for backend development, ins
 # Day 2: Generate implementation roadmap
 /flow-project-roadmap
 # → 15-30 minutes automated: Complete task breakdown with Story Points
-# → Output: .ai-flow/roadmap.md with Epics, Features, Dependencies
+# → Output: docs/roadmap.md with Epics, Features, Dependencies
 
 # Day 3+: Execute features from roadmap
 /feature new "Base application configuration"  # From roadmap Epic 1
@@ -560,11 +560,11 @@ cd test-project
 
 ```typescript
 try {
-  const spinner = ora("Creating structure...").start();
+  const spinner = ora('Creating structure...').start();
   await fs.ensureDir(path);
-  spinner.succeed("Created structure");
+  spinner.succeed('Created structure');
 } catch (error) {
-  spinner.fail("Failed to create structure");
+  spinner.fail('Failed to create structure');
   throw error;
 }
 ```
@@ -707,8 +707,8 @@ Closes #42
 **Solution:** Use `__dirname` to resolve the packaged assets relative to `dist/cli.js`
 
 ```typescript
-const ROOT_DIR = path.resolve(__dirname, "..");
-const templatesSource = path.join(ROOT_DIR, "templates");
+const ROOT_DIR = path.resolve(__dirname, '..');
+const templatesSource = path.join(ROOT_DIR, 'templates');
 ```
 
 This works because:
