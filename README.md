@@ -10,7 +10,8 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4 docs)
+- 🚀 Complete professional documentation (Backend: 15 docs, Frontend: 16 docs, Mobile: 14 docs, Fullstack: 4 docs)
+- 🧠 **Smart Description Refinement:** Detects ambiguity and iteratively guides you to a professional project definition.
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 Multi-AI support with slash commands
@@ -37,7 +38,8 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4 docs)
+- 🚀 Documentación profesional completa (Backend: 15 docs, Frontend: 16 docs, Mobile: 14 docs, Fullstack: 4 docs)
+- 🧠 **Refinamiento Inteligente:** Detecta ambigüedad y te guía iterativamente hacia una descripción profesional.
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
 - 🤖 Compatible with Claude, Copilot, Cursor, Gemini, Antigravity
@@ -63,7 +65,8 @@ ai-flow init .
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 4 docs)
+- 🚀 Documentação profissional completa (Backend: 15, Frontend: 16, Mobile: 14, Fullstack: 4 docs)
+- 🧠 **Refinamento Inteligente:** Detecta ambiguidade e guia você para uma descrição profissional.
 - ⚡ **Dois modos:** Interactivo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
 - 🌍 Suporte universal - 12 linguagens, 60+ frameworks, 35+ ORMs
 - 🤖 Compatível com Claude, Copilot, Cursor, Gemini, Antigravity
@@ -102,9 +105,10 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, Antigravity, any AI tool
-- 📚 **Professional Documentation** - Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 4 docs
+- 📚 **Professional Documentation** - Backend: 15, Frontend: 16, Mobile: 14, Fullstack: 4 docs
+- 🧠 **Smart Description Refinement** - AI detects vague inputs and helps you rich the context (WHO, WHAT, WHY).
 - ⚡ **Two Questionnaire Modes:**
-  - **Interactive Mode:** Full control, 71 questions (90-120 min)
+  - **Interactive Mode:** Full control, all phases (90-120 min)
   - **Smart Auto-Suggest:** Only 6 critical questions, AI suggests best practices (15-25 min)
 - 🔍 **Smart 3-Layer Detection** - Analyzes existing projects in 15s-5min
 - 💾 **Intelligent Caching** - 0 seconds on re-runs with no changes
@@ -258,9 +262,9 @@ After initialization, use these slash commands in your AI tool:
 
 > **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
 
-**Backend Projects:** 8 commands  
-**Frontend Projects:** 2 commands  
-**Mobile Projects:** 2 commands  
+**Backend Projects:** 19 commands  
+**Frontend Projects:** 11 commands  
+**Mobile Projects:** 11 commands  
 **Fullstack Projects:** Combined backend + frontend commands
 
 **Documentation & Build:**
@@ -334,11 +338,11 @@ After initialization, use these slash commands in your AI tool:
 
 ## 🎯 Generated Documentation
 
-**Backend** (17 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 technical docs and 2 specs
+**Backend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
 
-**Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 9 technical docs and 3 specs
+**Frontend** (16 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 13 technical docs/specs.
 
-**Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 8 technical docs and 2 specs
+**Mobile** (14 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 11 technical docs/specs.
 
 **Fullstack** (4 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 1 spec
 

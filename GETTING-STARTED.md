@@ -137,7 +137,7 @@ Your choice (A/B): __
 **Mode A - Interactive (8-phase questionnaire):**
 
 - **Phase 0:** Context Discovery (existing projects only - analyzes your code)
-- **Phase 1:** Discovery & Business (what problem are you solving?)
+- **Phase 1:** Discovery & Business (Smart Description Refinement: WHO, WHAT, WHY, DOMAIN)
 - **Phase 2:** Data Architecture or Components (database design or UI components)
 - **Phase 3:** System Architecture (tech stack, patterns)
 - **Phase 4:** Security & Authentication (auth strategy, compliance)
@@ -236,7 +236,7 @@ my-awesome-api/
 └── README.md                 # Project overview
 ```
 
-**Frontend projects** (15 documents), **Mobile projects** (13 documents), **Fullstack projects** (4 documents) - see [Project Type Comparison](#project-type-comparison) for details.
+**Backend projects** (15 documents), **Frontend projects** (16 documents), **Mobile projects** (14 documents), **Fullstack projects** (4 documents) - see [Project Type Comparison](#project-type-comparison) for details.
 
 #### Step 6: Phase 8 - Project Setup (Automatic)
 
@@ -642,9 +642,9 @@ C) ❌ Switch to Interactive Mode
 | Feature     | Interactive Mode | Smart Auto-Suggest      |
 | ----------- | ---------------- | ----------------------- |
 | Time        | 90-120 min (new) | 15-25 min               |
-| Questions   | 71 questions     | 6 questions             |
+| Phases      | 8-11 Phases      | 6 Critical Questions    |
+| Description | Smart Refinement | Smart Refinement        |
 | Control     | Full control     | Review & customize      |
-| Best for    | Custom projects  | MVPs, standard projects |
 | Learning    | Deep dive        | Quick overview          |
 | Flexibility | Maximum          | High (can customize)    |
 
