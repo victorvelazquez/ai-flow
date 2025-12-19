@@ -11,6 +11,44 @@
 **Regions:** {{DEPLOYMENT_REGIONS}}
 
 **Container:** {{#IF_DOCKER}}Yes - Docker{{ELSE}}No{{/IF_DOCKER}}
+
+### Deployment Strategy
+
+**Strategy:** {{DEPLOYMENT_STRATEGY}}
+
+{{#IF BLUE_GREEN}}
+**Blue-Green Deployment:**
+- Active environment: {{ACTIVE_ENVIRONMENT}}
+- Standby environment: {{STANDBY_ENVIRONMENT}}
+- Switch mechanism: {{SWITCH_MECHANISM}}
+- Rollback time: < {{ROLLBACK_TIME}} seconds
+{{/IF}}
+
+{{#IF CANARY}}
+**Canary Deployment:**
+- Initial canary percentage: {{CANARY_INITIAL_PERCENTAGE}}%
+- Rollout increments: {{CANARY_INCREMENTS}}
+- Success criteria: {{CANARY_SUCCESS_CRITERIA}}
+- Automatic rollback: {{CANARY_AUTO_ROLLBACK}}
+{{/IF}}
+
+{{#IF ROLLING}}
+**Rolling Deployment:**
+- Max unavailable: {{ROLLING_MAX_UNAVAILABLE}}
+- Max surge: {{ROLLING_MAX_SURGE}}
+- Health check: {{ROLLING_HEALTH_CHECK}}
+{{/IF}}
+
+### Rollback Plan
+
+**Trigger:** {{ROLLBACK_TRIGGER}}
+
+**Process:**
+{{#EACH ROLLBACK_STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}}
+{{/EACH}}
+
+**Rollback Time:** < {{ROLLBACK_TARGET_TIME}} minutes
 ---
 ## 🌍 Environments
 

@@ -295,6 +295,38 @@ Not Allowed: Controller → Repository (bypasses service)
   - Fallback: {{FALLBACK_STRATEGY}}
 {{/EACH}}
 ---
+## ⚙️ Background Processing
+
+{{#IF BACKGROUND_JOBS_ENABLED}}
+**Queue System:** {{QUEUE_SYSTEM}}
+
+**Job Types:**
+{{#EACH JOB_TYPE}}
+### {{JOB_NAME}}
+
+- **Purpose:** {{JOB_PURPOSE}}
+- **Trigger:** {{JOB_TRIGGER}}
+- **Priority:** {{JOB_PRIORITY}}
+- **Retry Strategy:** {{JOB_RETRY_STRATEGY}}
+- **Timeout:** {{JOB_TIMEOUT}}
+
+{{/EACH}}
+
+**Dead Letter Queue:** {{#IF DLQ_ENABLED}}Enabled{{ELSE}}Disabled{{/IF}}
+
+**Monitoring:**
+- Dashboard: {{QUEUE_DASHBOARD}}
+- Alerts: {{QUEUE_ALERTS}}
+
+**Example:**
+```{{LANGUAGE}}
+{{BACKGROUND_JOB_EXAMPLE}}
+```
+
+{{ELSE}}
+**Background Processing:** Not implemented - All operations are synchronous
+{{/IF}}
+---
 ## 🔌 Real-time Communication
 
 {{#IF REALTIME_ENABLED}}
@@ -344,7 +376,41 @@ Not Allowed: Controller → Repository (bypasses service)
 **Real-time Communication:** Not implemented
 {{/IF}}
 ---
-## 📨 Message Broker Patterns
+## � File Storage
+
+{{#IF FILE_STORAGE_ENABLED}}
+**Storage Type:** {{FILE_STORAGE_TYPE}}
+
+**Provider:** {{FILE_STORAGE_PROVIDER}}
+
+**Configuration:**
+- Bucket/Container: {{FILE_STORAGE_BUCKET}}
+- Region: {{FILE_STORAGE_REGION}}
+- CDN: {{FILE_CDN_ENABLED}}
+
+**Allowed File Types:**
+{{#EACH ALLOWED_FILE_TYPE}}
+- {{FILE_TYPE}} (max: {{MAX_SIZE}})
+{{/EACH}}
+
+**Max File Size:** {{MAX_FILE_SIZE}} MB
+
+**Upload Process:**
+1. Client requests presigned URL / upload endpoint
+2. File uploaded to {{FILE_STORAGE_PROVIDER}}
+3. Metadata stored in database
+4. {{#IF FILE_CDN_ENABLED}}CDN URL returned{{ELSE}}Direct URL returned{{/IF}}
+
+**Security:**
+- Presigned URLs: {{PRESIGNED_URL_EXPIRY}} expiry
+- Access control: {{FILE_ACCESS_CONTROL}}
+- Virus scanning: {{VIRUS_SCANNING_ENABLED}}
+
+{{ELSE}}
+**File Storage:** Not implemented
+{{/IF}}
+---
+## �📨 Message Broker Patterns
 
 {{#IF MESSAGE_BROKER}}
 **Broker:** {{MESSAGE_BROKER_NAME}}
