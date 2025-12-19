@@ -44,6 +44,11 @@ const AI_TOOLS: AIToolChoice[] = [
     description: '',
   },
   {
+    name: 'Antigravity',
+    value: 'antigravity',
+    description: '',
+  },
+  {
     name: 'All AI Tools',
     value: 'all',
     description: '',
@@ -89,10 +94,14 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
     const tool = AI_TOOLS.find((t) => t.value === providedTool);
     if (!tool) {
       console.error(chalk.red(`❌ Invalid AI tool: ${providedTool}`));
-      console.log(chalk.yellow('Available options: claude, cursor, copilot, gemini, all'));
+      console.log(
+        chalk.yellow('Available options: claude, cursor, copilot, gemini, antigravity, all')
+      );
       process.exit(EXIT.INVALID_ARGS);
     }
-    return providedTool === 'all' ? ['claude', 'cursor', 'copilot', 'gemini'] : [providedTool];
+    return providedTool === 'all'
+      ? ['claude', 'cursor', 'copilot', 'gemini', 'antigravity']
+      : [providedTool];
   }
 
   // If no TTY available (non-interactive mode, e.g., in tests), default to copilot
@@ -188,7 +197,9 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
     default: 'copilot',
   });
 
-  return selectedTool === 'all' ? ['claude', 'cursor', 'copilot', 'gemini'] : [selectedTool];
+  return selectedTool === 'all'
+    ? ['claude', 'cursor', 'copilot', 'gemini', 'antigravity']
+    : [selectedTool];
 }
 
 async function selectProjectType(
@@ -514,6 +525,19 @@ async function setupSlashCommands(
             if (!dryRun) await fs.copyFile(srcFile, destFile);
             logVerbose(`Installed ${destFile}`, verbose);
           }
+        } else if (tool === 'antigravity') {
+          const workflowsTarget = path.join(targetPath, '.agent', 'workflows');
+          if (!dryRun) {
+            await assertDirWritable(workflowsTarget);
+            await fs.ensureDir(workflowsTarget);
+          }
+          for (const file of files) {
+            const srcFile = path.join(promptsSource, file);
+            const destName = prefix ? `${prefix}${file}` : file;
+            const destFile = path.join(workflowsTarget, destName);
+            if (!dryRun) await fs.copyFile(srcFile, destFile);
+            logVerbose(`Installed ${destFile}`, verbose);
+          }
         }
       }
     }
@@ -692,6 +716,10 @@ async function initializeProject(
         console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
       } else if (aiTools.includes('cursor')) {
         console.log(chalk.cyan('  1. Open Cursor'));
+        console.log(chalk.cyan('  2. Run: /flow-build'));
+        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
+      } else if (aiTools.includes('antigravity')) {
+        console.log(chalk.cyan('  1. Use Antigravity commands'));
         console.log(chalk.cyan('  2. Run: /flow-build'));
         console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
       } else {
