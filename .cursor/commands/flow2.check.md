@@ -3,9 +3,7 @@
 Execute comprehensive quality checks before creating a pull request. Automate verification of code quality, formatting, build integrity, dependencies, and tests.
 
 **Display Behavior:** Show step title (`## Step N/6: Name`) in your response BEFORE executing commands in that step.
-
 ---
-
 ## Workflow Overview
 
 Execute all steps sequentially. Stop only if critical issues are found.
@@ -18,9 +16,7 @@ Execute all steps sequentially. Stop only if critical issues are found.
 | 4    | **Deps**     | `npm outdated`, `npm audit`   | No                |
 | 5    | **Tests**    | `npm test` + CLI validation   | No                |
 | 6    | **Summary**  | Report results                | No                |
-
 ---
-
 ## 🔍 Step 1/6: Lint
 
 ```bash
@@ -39,9 +35,7 @@ npm run lint
 ✅ 0 errors, 2 warnings
 ⚠️ src/cli.ts:45 - unused variable 'temp'
 ```
-
 ---
-
 ## 🎨 Step 2/6: Format
 
 ```bash
@@ -64,9 +58,7 @@ npm run format:check
   - __tests__/cli.test.js
 💡 Run: npm run format
 ```
-
 ---
-
 ## 🏗️ Step 3/6: Build
 
 ```bash
@@ -87,9 +79,7 @@ npm run build
   - src/cli.ts:125 - Type 'string' not assignable to 'number'
   - src/fs-utils.ts:45 - Property 'xyz' does not exist
 ```
-
 ---
-
 ## 📦 Step 4/6: Deps
 
 ```bash
@@ -122,9 +112,7 @@ npm audit
   - @types/inquirer: 8.2.12 (types, 5 major versions behind)
   → Action: Downgrade inquirer to 8.x OR upgrade @types/inquirer to 9.x
 ```
-
 ---
-
 ## 🧪 Step 5/6: Tests
 
 ```bash
@@ -159,9 +147,7 @@ npm test
   Error [ERR_REQUIRE_ESM]: require() of ES Module inquirer not supported
   → Action: Check Step 4/6 for ESM/CommonJS compatibility issues
 ```
-
 ---
-
 ## 📊 Step 6/6: Summary
 
 Provide comprehensive execution report:
@@ -177,9 +163,7 @@ Provide comprehensive execution report:
 
 📊 Total time: ~3 min
 ```
-
 ---
-
 ## Execution Model
 
 | Steps | Action         | User Interaction |
@@ -227,9 +211,9 @@ Provide comprehensive execution report:
 - Complete summary at end
 
 **Estimated Time:** 3-5 minutes (fully automated)
-
 ---
-
 **Reference:** Project quality standards  
 **Last Updated:** 2025-12-11
+
+
 

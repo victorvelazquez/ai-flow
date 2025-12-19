@@ -3,9 +3,7 @@
 Analyze and automatically update project documentation (README.md, GETTING-STARTED.md, CONTRIBUTING.md) to ensure accuracy with source code, templates, and prompts. Focus exclusively on user-facing features.
 
 **Display Behavior:** Show step title (`## Step N/7: Name`) in your response BEFORE executing actions in that step.
-
 ---
-
 ## Workflow Overview
 
 Execute all steps sequentially to ensure comprehensive documentation validation and automatic updates.
@@ -20,9 +18,7 @@ Execute all steps sequentially to ensure comprehensive documentation validation 
 | 5    | **Generate Report**     | Prioritized recommendations with exact fixes  | Automatic                             |
 | 6    | **Apply Updates**       | Show all changes, single approval for all     | Automatic start, approve once for all |
 | 7    | **Validate Changes**    | Re-analyze to confirm gaps resolved           | Automatic after Step 6                |
-
 ---
-
 ## ⚡ Step 0/7: Cache Check
 
 Skip expensive analysis if source files haven't changed since last run.
@@ -67,9 +63,7 @@ ELSE:
 - `prompts/**/*.md` - Slash command changes
 
 **Time savings:** 3-5 minutes → 10-30 seconds on unchanged projects
-
 ---
-
 ## 🔍 Step 1/7: Inventory CLI Interface
 
 Analyze source code to extract all user-facing CLI elements.
@@ -144,9 +138,7 @@ Requirements:
 Published to npm:
 ✓ dist, prompts, templates, README.md, LICENSE
 ```
-
 ---
-
 ## 📦 Step 2/7: Inventory Generated Artifacts
 
 Count and verify templates, prompts, and generated structures programmatically.
@@ -231,9 +223,7 @@ Slash Commands Installed To:
 ✓ .github/prompts/ (*.prompt.md for Copilot)
 ✓ .gemini/ (*.md)
 ```
-
 ---
-
 ## 🔎 Step 3/7: Cross-Reference Documentation
 
 Compare inventory against README.md, GETTING-STARTED.md, and CONTRIBUTING.md.
@@ -342,9 +332,7 @@ GETTING-STARTED.md → README.md (link exists)
 - GETTING-STARTED.md: Not documented
 - Gap: Add to CLI Flags Reference
 ```
-
 ---
-
 ## ❌ Step 4/7: Identify Gaps & Issues
 
 Categorize all discrepancies found across all documents.
@@ -463,9 +451,7 @@ Users see outdated version, may install wrong package version.
 ```
 
 **Location:** Line 5
-
 ---
-
 ### Gap: Backend Template Count Wrong
 
 **Priority:** IMPORTANT
@@ -495,9 +481,7 @@ Users expect 15 files but get 18, causing confusion.
 ```
 
 **Location:** Line 342 (in Features section)
-
 ---
-
 ### Gap: Missing --dry-run Flag in GETTING-STARTED
 
 **Priority:** IMPORTANT
@@ -528,9 +512,7 @@ Users don't know they can test without creating files.
 
 **Location:** After line 45 (in CLI Flags Reference table)
 ````
-
 ---
-
 ## 📊 Step 5/7: Generate Report
 
 Compile findings into actionable report.
@@ -546,9 +528,7 @@ Compile findings into actionable report.
 - **Documents Analyzed:** README.md, GETTING-STARTED.md, CONTRIBUTING.md
 - **Gaps Found:** [X] (Critical: Y, Important: Z, Nice: W)
 - **Package Version:** [from package.json]
-
 ---
-
 ## ✅ Well Documented
 
 README.md:
@@ -564,9 +544,7 @@ GETTING-STARTED.md:
 CONTRIBUTING.md:
 
 - ✓ Development setup - correct
-
 ---
-
 ## ❌ Critical Issues (Fix Immediately)
 
 ### 1. [Gap Title]
@@ -576,9 +554,7 @@ CONTRIBUTING.md:
 ### 2. [Gap Title]
 
 [Use full gap format from Step 4]
-
 ---
-
 ## ⚠️ Important Issues (Should Fix)
 
 ### 3. [Gap Title]
@@ -588,17 +564,13 @@ CONTRIBUTING.md:
 ### 4. [Gap Title]
 
 [Use full gap format from Step 4]
-
 ---
-
 ## 💡 Nice-to-Have Improvements
 
 ### 5. [Gap Title]
 
 [Use full gap format from Step 4]
-
 ---
-
 ## 📋 Summary Table
 
 | #   | Gap                  | Priority  | File               | Type       | Est. Impact |
@@ -606,16 +578,12 @@ CONTRIBUTING.md:
 | 1   | Version mismatch     | CRITICAL  | README.md          | Inaccurate | High        |
 | 2   | Wrong template count | IMPORTANT | README.md          | Inaccurate | Medium      |
 | 3   | Missing --dry-run    | IMPORTANT | GETTING-STARTED.md | Missing    | Medium      |
-
 ---
-
 ## 🎯 Recommendations
 
 Will apply CRITICAL and IMPORTANT gaps in Step 6 (with your approval per change).
 NICE-TO-HAVE gaps are reported only (can apply manually if desired).
-
 ---
-
 ## ✅ Validation Checklist
 
 After Step 6 updates, Step 7 will verify:
@@ -628,9 +596,7 @@ After Step 6 updates, Step 7 will verify:
 - [ ] Node.js requirement consistent
 - [ ] Cross-references are bidirectional and not broken
 - [ ] Examples use current syntax
-
 ---
-
 ## 📝 Next Steps
 
 **Automatically proceeding to Step 6: Apply Updates**
@@ -639,12 +605,9 @@ After Step 6 updates, Step 7 will verify:
 - You approve/reject ALL changes with a single confirmation
 - If approved, all changes are applied automatically
 - Step 7 then validates all changes worked
-
 ---
 ```
-
 ---
-
 ## 🔧 Step 6/7: Apply Updates
 
 **This step executes automatically after Step 5.**
@@ -659,9 +622,7 @@ Display ALL proposed changes together and request a SINGLE approval to apply the
 ## 📝 Proposed Changes Summary
 
 **Total Changes:** [N] (Critical: [X], Important: [Y])
-
 ---
-
 ### Change 1/N: [Gap Title]
 
 **Priority:** [CRITICAL | IMPORTANT]
@@ -682,15 +643,11 @@ Display ALL proposed changes together and request a SINGLE approval to apply the
 ```
 
 **Impact:** [Brief explanation]
-
 ---
-
 ### Change 2/N: [Gap Title]
 
 [... repeat for all changes ...]
-
 ---
-
 ## ⚠️ Confirmation Required
 
 **Do you want to apply ALL [N] changes listed above?**
@@ -764,9 +721,7 @@ OR if rejected:
 
 🔎 **Automatically proceeding to Step 7: Validate Changes...**
 ```
-
 ---
-
 ## ✅ Step 7/7: Validate Changes
 
 **This step executes automatically after Step 6, regardless of approval/rejection.**
@@ -807,9 +762,7 @@ Re-analyze edited files to confirm gaps were resolved correctly.
 - File: README.md (line 342)
 - Status: ✅ RESOLVED
 - Verification: Now correctly shows "18 docs" matching templates/backend/
-
 ---
-
 ### Still Pending
 
 ⚠️ **Gap 3: Missing --dry-run Flag**
@@ -817,9 +770,7 @@ Re-analyze edited files to confirm gaps were resolved correctly.
 - File: GETTING-STARTED.md
 - Status: ⏭️ SKIPPED (user rejected in Step 6)
 - Action: Apply manually if desired
-
 ---
-
 ### Summary
 
 - ✅ Resolved: 2 gaps
@@ -827,16 +778,12 @@ Re-analyze edited files to confirm gaps were resolved correctly.
 - ❌ Failed: 0 gaps
 
 **Documentation Status:** 🟢 IMPROVED (2 critical/important issues fixed)
-
 ---
-
 ### Cache Update
 
 Writing analysis results to `cache/docs-analysis.json` for next run...
 ✅ Cache updated
-
 ---
-
 ### Next Steps
 
 **If all gaps resolved:**
@@ -850,9 +797,7 @@ Writing analysis results to `cache/docs-analysis.json` for next run...
 - Skipped gaps can be applied manually
 - Or re-run this command and approve them
 ```
-
 ---
-
 ## Execution Model
 
 | Step | Action              | Duration    | User Interaction                      |
@@ -871,9 +816,7 @@ Writing analysis results to `cache/docs-analysis.json` for next run...
 - With cache hit: 30 seconds (Step 0 → 7)
 - Full analysis + no changes: 3-4 minutes
 - Full analysis + apply changes: 4-8 minutes
-
 ---
-
 ## Constraints
 
 **Focus ONLY on user-facing elements:**
@@ -903,8 +846,8 @@ Writing analysis results to `cache/docs-analysis.json` for next run...
 - Count templates/prompts programmatically (no manual ls -R)
 - Validate version consistency across all docs
 - Check cross-references are bidirectional
-
 ---
-
 **Reference:** User-facing documentation standards  
 **Last Updated:** 2025-12-11
+
+

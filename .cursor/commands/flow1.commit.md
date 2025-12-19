@@ -3,9 +3,7 @@
 Automate atomic commits following Conventional Commits standard. Execute steps sequentially without user interaction except where explicitly required.
 
 **Display Behavior:** Show step title (`## Step N/4: Name`) in your response BEFORE executing commands in that step.
-
 ---
-
 ## 🔍 Step 1/4: Detect Changes
 
 Use native git commands via terminal execution. Execute all commands automatically (read-only operations):
@@ -119,9 +117,7 @@ git push origin main
 ```
 
 **If push fails:** Show error and suggest resolution (e.g., pull first if behind remote).
-
 ---
-
 ## Execution Model
 
 | Step   | Commands                                              | User Action            |
@@ -149,9 +145,9 @@ git push origin main
 - Imperative mood in descriptions
 - English-only messages
 - Conventional Commits compliance
-
 ---
-
 **Reference:** `CONTRIBUTING.md` § 5.2 | Conventional Commits Spec  
 **Last Updated:** 2025-01-XX
+
+
 

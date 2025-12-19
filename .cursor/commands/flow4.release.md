@@ -3,9 +3,7 @@
 Automate version publishing following semantic versioning, syncing package.json, git tags, and npm registry.
 
 **Display Behavior:** Show step title (`## Step N/5: Name`) in your response BEFORE executing commands in that step.
-
 ---
-
 ## 📋 Step 1/5: Determine Version
 
 Read current version from `package.json` and determine next version using semver:
@@ -23,9 +21,7 @@ Read current version from `package.json` and determine next version using semver
 - Breaking API changes → Major
 - New features, no breaking changes → Minor
 - Bug fixes, docs, refactors → Patch
-
 ---
-
 ## ✏️ Step 2/5: Update Version References
 
 Update version string in all relevant files:
@@ -58,9 +54,7 @@ program.version("X.X.X");
 ```markdown
 **Version:** X.X.X
 ```
-
 ---
-
 ## ✅ Step 3/5: Commit and Tag
 
 Stage modified files, create version commit, tag, and push.
@@ -77,9 +71,7 @@ git push origin main --tags
 **Tag format:** `vX.X.X` (lowercase 'v' prefix)
 
 **Commit message:** Must follow pattern `chore: bump version to X.X.X`
-
 ---
-
 ## 📦 Step 4/5: Publish to npm
 
 Publish package to npm registry.
@@ -98,9 +90,7 @@ npm publish --access public
 
 - Check npm authentication: `npm whoami`
 - Verify version doesn't exist: `npm view ai-flow versions`
-
 ---
-
 ## ✅ Step 5/5: Verify
 
 Confirm successful release across platforms:
@@ -126,9 +116,7 @@ Confirm successful release across platforms:
 
 🎉 Release successful!
 ```
-
 ---
-
 ## Execution Model
 
 | Step | Commands          | User Interaction    |
@@ -156,9 +144,9 @@ Confirm successful release across platforms:
 - Conventional commit message format
 
 **Estimated Time:** 3-5 minutes
-
 ---
-
 **Reference:** [Semantic Versioning 2.0.0](https://semver.org/)  
 **Last Updated:** 2025-01-XX
+
+
 
