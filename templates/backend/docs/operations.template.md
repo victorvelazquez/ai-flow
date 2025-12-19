@@ -575,6 +575,61 @@ GET /health/live     - Liveness check
 {{ELSE}}
 - Retry policies to be configured per service.
 {{/IF}}
+
+### Timeout & Retry Matrix
+
+| Service/Dependency | Timeout | Retries | Backoff | Notes |
+|--------------------|---------|---------|---------|-------|
+{{#EACH TIMEOUT_POLICY}}
+| {{SERVICE_NAME}} | {{TIMEOUT}}ms | {{RETRIES}} | {{BACKOFF}} | {{NOTES}} |
+{{/EACH}}
+
+**Global Defaults:**
+- Default HTTP timeout: {{DEFAULT_HTTP_TIMEOUT}}ms
+- Default retries: {{DEFAULT_RETRIES}}
+- Default backoff: {{DEFAULT_BACKOFF}}
+
+**Non-Retryable Errors:**
+{{#EACH NON_RETRYABLE_ERROR}}
+- `{{ERROR_CODE}}`: {{REASON}}
+{{/EACH}}
+---
+## 📋 Request/Response Logging
+
+### Log Strategy by Environment
+
+| Environment | Level | Body Logging | Performance Logging |
+|-------------|-------|--------------|---------------------|
+{{#EACH LOGGING_STRATEGY}}
+| {{ENVIRONMENT}} | {{LEVEL}} | {{BODY_LOGGING}} | {{PERFORMANCE_LOGGING}} |
+{{/EACH}}
+
+### Request Logging
+
+**Fields Logged:**
+{{#EACH REQUEST_LOG_FIELD}}
+- {{#IF ENABLED}}✅{{ELSE}}❌{{/IF}} `{{FIELD_NAME}}` - {{DESCRIPTION}}
+{{/EACH}}
+
+### Response Logging
+
+**Fields Logged:**
+{{#EACH RESPONSE_LOG_FIELD}}
+- {{#IF ENABLED}}✅{{ELSE}}❌{{/IF}} `{{FIELD_NAME}}` - {{DESCRIPTION}}
+{{/EACH}}
+
+### Sensitive Data Masking
+
+| Field Pattern | Masking Strategy |
+|---------------|------------------|
+{{#EACH MASKING_RULE}}
+| `{{PATTERN}}` | {{STRATEGY}} |
+{{/EACH}}
+
+**Implementation Example:**
+```{{LANGUAGE}}
+{{MASKING_EXAMPLE}}
+```
 ---
 ## 📅 Maintenance Windows
 

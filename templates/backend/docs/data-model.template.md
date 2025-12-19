@@ -157,6 +157,28 @@
 - Transaction patterns to be defined based on business requirements.
 {{/IF}}
 
+### Transaction Boundaries (Atomic Operations)
+
+{{#IF TRANSACTION_BOUNDARIES}}
+{{#EACH TRANSACTION_BOUNDARY}}
+#### {{OPERATION_NAME}}
+
+**Description:** {{DESCRIPTION}}
+
+**Steps (all or nothing):**
+{{#EACH STEP}}
+{{STEP_NUMBER}}. {{STEP_DESCRIPTION}} {{#IF IN_TRANSACTION}}✅ In transaction{{ELSE}}⚡ Outside (async){{/IF}}
+{{/EACH}}
+
+**Rollback Trigger:** {{ROLLBACK_TRIGGER}}
+
+**Compensating Actions:** {{COMPENSATING_ACTIONS}}
+
+{{/EACH}}
+{{ELSE}}
+- No explicit transaction boundaries defined. Individual operations are atomic by default.
+{{/IF}}
+
 ### Consistency Model
 
 **Consistency Strategy:** {{CONSISTENCY_STRATEGY}}
@@ -272,7 +294,72 @@
 - No domain events defined.
   {{/IF}}
 ---
-## 📦 Serialization Contracts
+## �️ Soft Delete & Data Lifecycle
+
+### Deletion Strategy
+
+**Soft Delete Field:** `{{SOFT_DELETE_FIELD}}` ({{SOFT_DELETE_TYPE}})
+
+**Default Query Behavior:** {{SOFT_DELETE_QUERY_DEFAULT}}
+
+### Entity Deletion Rules
+
+| Entity | Delete Type | Field | Cleanup Policy |
+|--------|-------------|-------|----------------|
+{{#EACH ENTITY_DELETE_RULE}}
+| {{ENTITY}} | {{DELETE_TYPE}} | {{FIELD}} | {{CLEANUP_POLICY}} |
+{{/EACH}}
+
+### Permanent Cleanup Schedule
+
+**Policy:** {{CLEANUP_POLICY}}
+**Schedule:** {{CLEANUP_SCHEDULE}}
+**Retention Period:** {{RETENTION_DAYS}} days
+
+### Cascade Delete Behavior
+
+{{#EACH CASCADE_DELETE}}
+- **{{PARENT_ENTITY}}** → **{{CHILD_ENTITY}}**: {{BEHAVIOR}}
+{{/EACH}}
+---
+## 🔄 State Machines
+
+{{#IF STATE_MACHINES}}
+{{#EACH STATE_MACHINE}}
+
+### {{ENTITY_NAME}} State Machine
+
+**States:** {{STATES}}
+
+**Initial State:** {{INITIAL_STATE}}
+
+**Terminal States:** {{TERMINAL_STATES}}
+
+```mermaid
+stateDiagram-v2
+    {{STATE_DIAGRAM}}
+```
+
+#### Valid Transitions
+
+| From | To | Action | Guards | Side Effects |
+|------|----|--------|--------|--------------|
+{{#EACH TRANSITION}}
+| {{FROM}} | {{TO}} | {{ACTION}} | {{GUARDS}} | {{SIDE_EFFECTS}} |
+{{/EACH}}
+
+#### Invalid Transitions (Explicitly Forbidden)
+
+{{#EACH INVALID_TRANSITION}}
+- `{{FROM}}` → `{{TO}}`: {{REASON}}
+{{/EACH}}
+
+{{/EACH}}
+{{ELSE}}
+- No state machines defined. Entities use simple status fields without formal transition rules.
+{{/IF}}
+---
+## �📦 Serialization Contracts
 
 ### API Representations
 

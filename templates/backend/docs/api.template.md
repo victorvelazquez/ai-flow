@@ -101,15 +101,60 @@
 {{ERROR_RESPONSE_EXAMPLE}}
 ```
 
-| HTTP Code | Error Code | Message | Description |
-|-----------|------------|---------|-------------|
-{{#EACH ERROR_MAPPING}}
-| {{HTTP_CODE}} | `{{ERROR_CODE}}` | {{ERROR_MESSAGE}} | {{ERROR_DESCRIPTION}} |
+### Error Codes Catalog
+
+| Code | HTTP | Message | Resolution |
+|------|------|---------|------------|
+{{#EACH ERROR_CODE}}
+| `{{CODE}}` | {{HTTP_STATUS}} | {{MESSAGE}} | {{RESOLUTION}} |
 {{/EACH}}
+
+### Error Categories
+
+| Category | Code Range | Description |
+|----------|------------|-------------|
+| Validation | `VALIDATION_*` | Input validation failures |
+| Authentication | `AUTH_*` | Authentication/authorization errors |
+| Resource | `RESOURCE_*` | Resource not found, conflict errors |
+| Business | `BIZ_*` | Business rule violations |
+| System | `SYS_*` | Internal system errors |
 
 **Retry Policy:** {{RETRY_POLICY}}
 
 **Idempotency:** {{IDEMPOTENCY_POLICY}}
+
+### Idempotency Keys
+
+**Header:** `{{IDEMPOTENCY_HEADER}}`
+**Storage:** {{IDEMPOTENCY_STORAGE}}
+**TTL:** {{IDEMPOTENCY_TTL}}
+
+**Endpoints requiring idempotency:**
+{{#EACH IDEMPOTENT_ENDPOINT}}
+- `{{METHOD}} {{PATH}}` - {{DESCRIPTION}}
+{{/EACH}}
+---
+## 📐 Validation Rules Catalog
+
+### Global Field Validation
+
+| Field Type | Rules | Error Message |
+|------------|-------|---------------|
+{{#EACH VALIDATION_FIELD_TYPE}}
+| `{{TYPE}}` | {{RULES}} | {{ERROR_MESSAGE}} |
+{{/EACH}}
+
+### Entity-Specific Validation
+
+{{#EACH ENTITY_VALIDATION}}
+#### {{ENTITY_NAME}}
+
+| Field | Rules | Required |
+|-------|-------|----------|
+{{#EACH FIELD}}
+| `{{NAME}}` | {{RULES}} | {{REQUIRED}} |
+{{/EACH}}
+{{/EACH}}
 ---
 ## 📚 Resource Catalogue
 
