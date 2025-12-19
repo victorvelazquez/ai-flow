@@ -1,6 +1,6 @@
 ## PHASE 7: Operations & Deployment (10 min)
 
-> **Order for this phase:** 7.1 → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.7 → 7.8 → 7.9 → 7.10 → 7.11
+> **Order for this phase:** 7.1 → 7.2 → 7.3 → 7.4 → 7.4.1 → 7.5 → 7.6 → 7.7 → 7.7.1 → 7.7.2 → 7.8 → 7.9 → 7.9.1 → 7.9.2 → 7.9.3 → 7.9.4 → 7.10 → 7.11
 
 > **📌 Scope-based behavior:**
 >
@@ -180,28 +180,15 @@ Rollback plan:
 - How quickly must rollback complete? __ minutes
 - Who can trigger rollback? [DevOps/Tech Lead/Any developer]
 - Rollback trigger criteria? [Error rate > X%, latency > Y ms, manual]
-```
-
-**7.4.1 Deployment Strategy**
-
-```
-What deployment strategy will you use?
-
-A) ⭐ Standard deployment - Stop old, deploy new (downtime)
-B) 🏆 Blue-Green deployment - Zero-downtime, instant rollback
-C) ⚡ Canary deployment - Gradual rollout, A/B testing
-D) Rolling deployment - Gradual replacement (Kubernetes)
 
 If Blue-Green:
 - Traffic switching: [Load balancer, DNS, etc.]
-- Rollback: [Instant switch back to blue]
 - Database migrations: [Strategy for zero-downtime]
 
 If Canary:
 - Initial traffic: __%
 - Gradual increase: __% per __ minutes
 - Success criteria: __
-- Rollback trigger: __
 ```
 
 **7.5 Monitoring & Logging**
@@ -485,6 +472,88 @@ Services to protect:
 {{#EACH SERVICE_TO_PROTECT}}
 - **{{SERVICE_NAME}}**: {{FAILURE_THRESHOLD}}% threshold, fallback: {{FALLBACK_STRATEGY}}
 {{/EACH}}
+```
+
+**7.9.3 Retry & Timeout Policies**
+
+```
+Define retry and timeout policies for external dependencies:
+
+| Service/Dependency | Timeout   | Retries | Backoff Strategy     | Notes                |
+|--------------------|-----------|---------|----------------------|----------------------|
+| Database queries   | 5000ms    | 2       | None (fail fast)     | Connection pooled    |
+| Redis cache        | 1000ms    | 1       | None                 | Cache miss = OK      |
+| Payment API        | 30000ms   | 3       | Exponential (1s,2s,4s)| Must complete        |
+| Email service      | 5000ms    | 3       | Fixed (2s)           | Queue if fails       |
+| External REST APIs | 10000ms   | 2       | Exponential          | Circuit breaker      |
+| File storage (S3)  | 15000ms   | 3       | Exponential          | Large files          |
+
+Your policies:
+
+| Service/Dependency | Timeout   | Retries | Backoff Strategy     | Notes                |
+|--------------------|-----------|---------|----------------------|----------------------|
+|                    |           |         |                      |                      |
+|                    |           |         |                      |                      |
+
+Global defaults:
+- Default HTTP timeout: __ ms (recommended: 10000)
+- Default retries: __ (recommended: 2)
+- Default backoff: [None/Fixed/Exponential]
+
+Non-retryable errors:
+- 400 Bad Request (client error, won't succeed on retry)
+- 401/403 Unauthorized/Forbidden
+- 404 Not Found
+- [Your additions]
+```
+
+**7.9.4 Request/Response Logging & Masking**
+
+```
+What request/response data will you log?
+
+Log levels by environment:
+| Environment | Level    | Body Logging | Performance Logging |
+|-------------|----------|--------------|---------------------|
+| Development | debug    | Full         | Yes                 |
+| Staging     | info     | Truncated    | Yes                 |
+| Production  | info     | Minimal      | Yes                 |
+
+Request logging:
+- ✅ HTTP method and URL
+- ✅ Request ID (correlation)
+- ✅ User ID (if authenticated)
+- ✅ IP address (optional, may hash for privacy)
+- ✅ Request duration (ms)
+- ❓ Request body (careful with size and PII)
+- ❓ Query parameters
+
+Response logging:
+- ✅ Status code
+- ✅ Response duration (ms)
+- ❓ Response body (careful with size)
+
+Sensitive data masking (CRITICAL):
+
+| Field Pattern          | Masking Strategy           |
+|------------------------|----------------------------|
+| password, secret       | Completely redact          |
+| token, api_key         | Show last 4 chars only     |
+| email                  | j***@example.com           |
+| phone                  | ***-***-1234               |
+| credit_card            | ****-****-****-1234        |
+| ssn, national_id       | Completely redact          |
+| [Your patterns]        | __                         |
+
+Log format:
+A) ⭐ Structured JSON (recommended for aggregation)
+B) Plain text with patterns
+C) Framework default
+
+Log aggregation:
+A) ⭐ Centralized (ELK, Datadog, CloudWatch)
+B) File-based with rotation
+C) Console only (development)
 ```
 
 **7.10 Documentation & Runbooks**

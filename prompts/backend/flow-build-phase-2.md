@@ -222,6 +222,79 @@ H) 🗂️ Partitioning - Split large tables by date/region/etc.
 For each selected, provide brief detail:
 ```
 
+**2.7.1 Soft Delete Configuration** (if A selected above)
+
+```
+How will you handle data deletion?
+
+Field for soft delete:
+A) ⭐ deleted_at (timestamp, null = active) - Recommended
+B) is_deleted (boolean)
+C) status field (e.g., status = 'deleted')
+D) Custom: __
+
+Entities with SOFT delete (keep record, mark as deleted):
+- Users ✅
+- Orders ✅
+- Products ✅
+- [List yours...]
+
+Entities with HARD delete (permanent removal):
+- Session tokens
+- Temporary files  
+- Cart items after checkout
+- [List yours...]
+
+Permanent cleanup policy:
+A) ⭐ Purge soft-deleted after __ days (recommended: 90)
+B) Archive to cold storage after __ days
+C) Never delete (compliance requirement)
+
+Default query behavior:
+A) ⭐ Exclude deleted by default (add scope/filter)
+B) Include all, filter explicitly
+```
+
+**2.7.2 State Machines** (for entities with lifecycle states)
+
+```
+Do any entities have defined state lifecycles?
+
+A) ⭐ Yes - Define state machines
+B) No - Simple status fields without transitions
+
+If yes, define for each entity:
+
+---
+Entity: Order (example)
+States: [draft, pending, confirmed, shipped, delivered, cancelled, refunded]
+
+Valid Transitions:
+- draft → pending (action: submit)
+- pending → confirmed (action: pay) [requires: payment_id]
+- pending → cancelled (action: cancel, or timeout: 24h)
+- confirmed → shipped (action: ship) [requires: tracking_number]
+- shipped → delivered (action: deliver)
+- confirmed → refunded (action: refund)
+- delivered → refunded (action: refund) [within: 30 days]
+
+Invalid Transitions (explicitly forbidden):
+- shipped → cancelled (cannot cancel after shipping)
+- delivered → cancelled
+
+Side Effects:
+- pending → confirmed: send confirmation email, reserve inventory
+- confirmed → cancelled: release inventory, refund payment
+- shipped → delivered: send delivery notification
+---
+
+Your state machines:
+
+Entity: __
+States: __
+Transitions: __
+```
+
 **2.7.1 Domain-Driven Design Concepts** (Production-Ready and Enterprise only)
 
 ```
@@ -262,6 +335,37 @@ Domain Events (things that happen in your domain):
 - etc.
 
 Your key domain events:
+1.
+2.
+3.
+```
+
+**2.7.4 Transaction Boundaries**
+
+```
+Which operations require database transactions?
+
+List operations that must be atomic (all-or-nothing):
+
+1. User Registration:
+   - Create User record
+   - Create Profile record
+   - Send welcome email (queue, not in transaction)
+   → Rollback if: User or Profile creation fails
+
+2. Order Creation:
+   - Create Order record
+   - Create OrderItems
+   - Reserve inventory
+   - Charge payment
+   → Rollback if: Any step fails
+
+3. [Your operations]:
+   - Step 1
+   - Step 2
+   → Rollback if: __
+
+Your transactional operations:
 1.
 2.
 3.

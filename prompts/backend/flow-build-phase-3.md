@@ -272,6 +272,111 @@ Please answer the following questions to define the global API conventions (thes
 The AI will use these conventions to automatically document all CRUD endpoints for each entity in api.md. If you need additional or custom endpoints, you can add them manually later.
 ````
 
+**3.5.1 Error Codes Catalog**
+
+```
+Will you use standardized error codes?
+
+A) ⭐ Yes - Domain-specific error codes (recommended for APIs)
+B) No - HTTP status codes only
+
+If yes, define your error code format:
+
+Format: 
+A) ⭐ Prefixed by domain: USER_001, ORDER_003, PAYMENT_005
+B) Numeric ranges: 1000-1999 (Users), 2000-2999 (Orders)
+C) Other: __
+
+Define your error codes:
+
+| Code          | HTTP | Message                        | Resolution                    |
+|---------------|------|--------------------------------|-------------------------------|
+| USER_001      | 404  | User not found                 | Verify user ID exists         |
+| USER_002      | 409  | Email already registered       | Use different email or login  |
+| USER_003      | 400  | Invalid email format           | Provide valid email           |
+| AUTH_001      | 401  | Invalid credentials            | Check username/password       |
+| AUTH_002      | 401  | Token expired                  | Refresh or re-authenticate    |
+| AUTH_003      | 403  | Insufficient permissions       | Contact administrator         |
+| ORDER_001     | 400  | Empty cart                     | Add items before checkout     |
+| ORDER_002     | 400  | Insufficient stock             | Reduce quantity or wait       |
+| PAYMENT_001   | 402  | Payment declined               | Try different payment method  |
+| VALIDATION_001| 400  | Required field missing         | Provide all required fields   |
+
+Your error codes:
+| Code | HTTP | Message | Resolution |
+|------|------|---------|------------|
+|      |      |         |            |
+```
+
+**3.5.2 Input Validation Rules Catalog**
+
+```
+Define validation rules for common fields across your API:
+
+| Field Type     | Rules                                    | Error Message                    |
+|----------------|------------------------------------------|----------------------------------|
+| email          | valid format, max 255, lowercase         | Invalid email format             |
+| password       | min 8, uppercase, lowercase, number      | Password too weak                |
+| username       | min 3, max 30, alphanumeric, no spaces   | Invalid username format          |
+| phone          | E.164 format or local format             | Invalid phone number             |
+| url            | valid URL, https only (optional)         | Invalid URL format               |
+| date           | ISO 8601 format, not in past (optional)  | Invalid date format              |
+| price/amount   | positive, max 2 decimals                 | Invalid amount                   |
+| quantity       | positive integer, max 9999               | Invalid quantity                 |
+| id (UUID)      | valid UUID v4 format                     | Invalid ID format                |
+| slug           | lowercase, hyphens only, max 100         | Invalid slug format              |
+
+Entity-specific validation (example):
+
+User:
+- firstName: required, min 2, max 50, letters only
+- lastName: required, min 2, max 50, letters only
+- birthDate: valid date, must be 18+ years ago
+
+Product:
+- name: required, min 3, max 100
+- price: required, positive, max 999999.99
+- sku: required, unique, uppercase, alphanumeric
+
+Your entity validations:
+
+Entity: __
+- field: [rules]
+
+Entity: __
+- field: [rules]
+```
+
+**3.5.3 Idempotency Strategy**
+
+```
+How will you handle duplicate requests (critical for payments, orders)?
+
+A) ⭐ Idempotency keys - Client sends unique key per request
+B) Natural idempotency - Use unique constraints (email, etc.)
+C) Not needed - Operations are naturally idempotent
+D) Combination of A + B
+
+If using idempotency keys (A):
+
+Header name:
+A) ⭐ Idempotency-Key (standard)
+B) X-Request-ID
+C) Custom: __
+
+Key storage:
+A) ⭐ Redis with TTL (recommended)
+B) Database table
+
+TTL: __ hours (recommended: 24)
+
+Which endpoints require idempotency?
+- POST /orders ✅
+- POST /payments ✅
+- POST /users ✅
+- [Your endpoints]: __
+```
+
 **3.6 Key Dependencies**
 
 ```
