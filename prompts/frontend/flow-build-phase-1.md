@@ -1,22 +1,131 @@
 # Phase 1: Discovery & UX Requirements
 
 **Duration:** 15-20 minutes
-**Questions:** ~10 questions
+**Questions:** ~11 questions
 **Output:** project-brief.md, parts of AGENT.md
 ---
 ## 🎯 Objective
 
-Understand the **user-facing aspects** of the application:
+Understand the **user-facing aspects** and core goal of the application:
 
-1. What type of application is being built?
-2. Who are the target users?
-3. What are the key user journeys?
-4. What devices and browsers must be supported?
-5. What are the UX priorities?
+1. What is the core goal and purpose of the project?
+2. What type of application is being built?
+3. Who are the target users?
+4. What are the key user journeys?
+5. What devices and browsers must be supported?
+6. What are the UX priorities?
 ---
 ## 📋 Questions
 
-### Question 1.1: Application Type
+### Question 1.1: Project Name & Description (with Smart Refinement)
+
+> **🧠 Intelligent Refinement System**: This question detects vague descriptions and guides the developer to enrich them. It only asks what's missing and responds in the developer's language.
+
+```
+What is the project name?
+
+Provide an initial description of your project.
+(Don't worry about perfection - we'll refine it together if needed!)
+
+Example: "A frontend dashboard for managing inventory in real-time"
+```
+
+**🔍 AI Internal: Ambiguity Analysis**
+
+After receiving the description, silently analyze for these criteria:
+
+| Criterion | Check For | Score +1 if present |
+|-----------|-----------|---------------------|
+| **WHO** | Specific user type mentioned (not just "users") | "store managers", "traders", "students" |
+| **WHAT** | Specific action/function (not just "view", "show") | "compare prices", "edit profiles", "visualize data" |
+| **WHY** | Purpose or value mentioned | "to increase conversion", "to save time", "to improve UX" |
+| **DOMAIN** | Industry/vertical indicated | "fintech", "e-commerce", "social media" |
+| **DETAIL** | Description has 10+ meaningful words | Not counting articles |
+
+**Scoring Rules:**
+- Score 4-5: ✅ Accept immediately → Proceed to 1.2
+- Score 0-3: ⚠️ Enter refinement loop → Ask ONLY missing criteria
+
+---
+
+**🔄 Conditional Refinement Loop (only if score < 4)**
+
+> **CRITICAL**: Only ask about criteria that are MISSING. Do NOT repeat questions already answered. Respond in the SAME LANGUAGE the developer used.
+
+```
+[LANGUAGE: Match the developer's language]
+
+🔍 I'd like to understand your project better.
+
+Your description: "[original description]"
+
+[ONLY show questions for MISSING criteria:]
+
+[If WHO is missing:]
+1️⃣ WHO will use this application?
+   A) End consumers (B2C)
+   B) Business users (B2B)
+   C) Internal team / Admin
+   D) Other: __
+
+[If WHAT is missing:]
+2️⃣ WHAT is the core UX action users will perform?
+   A) Browse & Shop
+   B) Manage & Configure
+   C) Read & Consume
+   D) Create & Publish
+   E) Analyze & Visualize
+   F) Other: __
+
+[If WHY is missing:]
+3️⃣ WHY is this project needed?
+   A) Launch new product
+   B) Replace legacy UI
+   C) Better mobile experience
+   D) Specific new feature
+   E) Other: __
+
+[If DOMAIN is missing:]
+4️⃣ What INDUSTRY/DOMAIN is this for?
+   A) E-commerce/Retail
+   B) Fitness/Health
+   C) Finance/Payments
+   D) Education
+   E) Social/Community
+   F) Business tools (CRM, ERP)
+   G) Other: __
+
+Your answers: __
+```
+
+---
+
+**✨ Generate Professional Description Options**
+
+After gathering missing info, generate 3 polished versions:
+
+```
+[LANGUAGE: Match the developer's language]
+
+✨ Based on your input, here are 3 professional descriptions:
+
+A) Concise (for package.json):
+   "[Generated 1-line description]"
+
+B) Descriptive (for README.md):
+   "[Generated 2-3 line description with UX focus]"
+
+C) Creative (for Marketing/Landing):
+   "[Generated catchy description]"
+
+Which do you prefer? (1-3, or 4 to edit, 5 to start over)
+```
+
+**Your choice:**
+
+---
+
+### Question 1.2: Application Type
 
 **What type of frontend application are you building?**
 
@@ -52,9 +161,25 @@ E) **Static Site (SSG)**
 
 **Your answer:**
 ---
-### Question 1.2: Target Users
+### Question 1.3: Target Users (Confirmation + Expansion)
 
-**Who are your primary target users?**
+```
+[If WHO was captured in 1.1, show:]
+
+✅ Based on your description, your target users are: [WHO from 1.1]
+
+Describe your user personas more deeply (3-5 bullet points):
+
+- Demographics (age, tech-savviness, etc.)
+- Use cases / goals
+- Device preferences
+- Accessibility needs
+
+---
+
+[If WHO was NOT captured in 1.1, ask normally:]
+
+Who are your primary target users?
 
 Describe your user personas (3-5 bullet points):
 
@@ -62,6 +187,7 @@ Describe your user personas (3-5 bullet points):
 - Use cases / goals
 - Device preferences
 - Accessibility needs
+```
 
 **Example:**
 
@@ -74,11 +200,21 @@ Describe your user personas (3-5 bullet points):
 
 **Your answer:**
 ---
-### Question 1.3: Key User Journeys
+### Question 1.4: Key User Journeys (Confirmation + Expansion)
 
-**What are the 3-5 most critical user flows?**
+```
+[If WHAT was captured in 1.1, show:]
 
-List the core journeys users will take through your app.
+✅ Based on your description, a core journey is: [WHAT from 1.1]
+
+What are the 3-5 most critical user flows?
+
+---
+
+[If WHAT was NOT captured in 1.1, ask normally:]
+
+What are the 3-5 most critical user flows?
+```
 
 **Example:**
 
@@ -91,7 +227,7 @@ List the core journeys users will take through your app.
 
 **Your answer:**
 ---
-### Question 1.4: Device & Browser Support
+### Question 1.5: Device & Browser Support
 
 **What devices and browsers must you support?**
 
@@ -123,7 +259,7 @@ D) **Desktop-First**
 
 **Your answer:**
 ---
-### Question 1.5: Responsive Strategy
+### Question 1.6: Responsive Strategy
 
 **How will you handle different screen sizes?**
 
@@ -151,7 +287,7 @@ D) **Fixed Width (Desktop Only)**
 
 **Your answer:**
 ---
-### Question 1.6: Internationalization (i18n)
+### Question 1.7: Internationalization (i18n)
 
 **Do you need multi-language support?**
 
@@ -181,7 +317,7 @@ D) **Right-to-Left (RTL) Support**
 
 **If multi-language selected, list target languages:**
 ---
-### Question 1.7: Authentication Requirements
+### Question 1.8: Authentication Requirements
 
 **What authentication method will you use?**
 
@@ -220,7 +356,7 @@ F) **No Authentication**
 
 **Your answer:**
 ---
-### Question 1.8: Data Privacy & Compliance
+### Question 1.9: Data Privacy & Compliance
 
 **What data privacy requirements do you have?**
 
@@ -258,7 +394,7 @@ F) **Multiple Regulations**
 
 **Your answer:**
 ---
-### Question 1.9: Offline Support
+### Question 1.10: Offline Support
 
 **Do users need offline access?**
 
@@ -288,7 +424,7 @@ D) **Offline-First**
 
 **Your answer:**
 ---
-### Question 1.10: Performance Priorities
+### Question 1.11: Performance Priorities
 
 **What are your performance priorities?** (Select top 3)
 
@@ -336,16 +472,18 @@ Before proceeding to Phase 2, confirm the following:
 ---
 📋 PHASE 1 SUMMARY: DISCOVERY & UX
 ---
-Application Type: [Answer from 1.1]
-Target Users: [Answer from 1.2]
-Key User Journeys: [Answer from 1.3]
-Device/Browser Support: [Answer from 1.4]
-Responsive Strategy: [Answer from 1.5]
-Internationalization: [Answer from 1.6]
-Authentication: [Answer from 1.7]
-Data Privacy: [Answer from 1.8]
-Offline Support: [Answer from 1.9]
-Performance Priorities: [Answer from 1.10]
+Project Name: [Answer from 1.1]
+Project Description: [Answer from 1.1]
+Application Type: [Answer from 1.2]
+Target Users: [Answer from 1.3]
+Key User Journeys: [Answer from 1.4]
+Device/Browser Support: [Answer from 1.5]
+Responsive Strategy: [Answer from 1.6]
+Internationalization: [Answer from 1.7]
+Authentication: [Answer from 1.8]
+Data Privacy: [Answer from 1.9]
+Offline Support: [Answer from 1.10]
+Performance Priorities: [Answer from 1.11]
 
 Is this correct? (Y/n)
 ```
@@ -454,10 +592,6 @@ Next: Phase 2 - Components & Framework
 Read: .ai-flow/prompts/frontend/flow-build-phase-2-components.md
 ```
 ---
-**Last Updated:** 2025-01-XX
+**Last Updated:** 2025-12-XX
 
-**Version:** 1.2.0
-
-
-
-
+**Version:** 1.3.0

@@ -4,7 +4,9 @@
 
 > **📌 Note:** If Phase 0 was executed, some questions may already be answered. Skip those and only ask what's missing.
 
-**1.1 Project Name & Description**
+**1.1 Project Name & Description (with Smart Refinement)**
+
+> **🧠 Intelligent Refinement System**: This question detects vague descriptions and guides the developer to enrich them. It only asks what's missing and responds in the developer's language.
 
 ```
 [If detected from Phase 0, show:]
@@ -17,26 +19,178 @@ If no, please provide correct values.
 [If NOT detected, ask:]
 What is the project name?
 
-Provide a short description (1 sentence) for README and package.json
+Provide an initial description of your project.
+(Don't worry about perfection - we'll refine it together if needed!)
+
+Example: "A backend for managing gym memberships"
 ```
 
-**1.2 Project Overview**
+**🔍 AI Internal: Ambiguity Analysis**
+
+After receiving the description, silently analyze for these criteria:
+
+| Criterion | Check For | Score +1 if present |
+|-----------|-----------|---------------------|
+| **WHO** | Specific user type mentioned (not just "users") | "gym members", "restaurant owners" |
+| **WHAT** | Specific action/function (not just "manage") | "track workouts", "process payments" |
+| **WHY** | Purpose or value mentioned | "to replace spreadsheets", "to launch app" |
+| **DOMAIN** | Industry/vertical indicated | "fitness", "fintech", "healthcare" |
+| **DETAIL** | Description has 10+ meaningful words | Not counting articles |
+
+**Scoring Rules:**
+- Score 4-5: ✅ Accept immediately → Proceed to 1.2
+- Score 0-3: ⚠️ Enter refinement loop → Ask ONLY missing criteria
+
+---
+
+**🔄 Conditional Refinement Loop (only if score < 4)**
+
+> **CRITICAL**: Only ask about criteria that are MISSING. Do NOT repeat questions already answered. Respond in the SAME LANGUAGE the developer used.
 
 ```
-What problem does this backend system solve?
+[LANGUAGE: Match the developer's language]
 
-Describe in 2-3 sentences:
-- Who are the users?
-- What is the core value proposition?
-- What makes this project necessary?
+🔍 I'd like to understand your project better.
+
+Your description: "[original description]"
+
+[ONLY show questions for MISSING criteria:]
+
+[If WHO is missing:]
+1️⃣ WHO will use this system?
+   A) End consumers (B2C)
+   B) Business users (B2B)
+   C) Internal team
+   D) Other systems (APIs)
+   E) Other: __
+
+[If WHAT is missing:]
+2️⃣ WHAT is the core action users will perform?
+   A) Buy/sell products or services
+   B) Manage/organize information
+   C) Communicate/collaborate
+   D) Monitor/analyze data
+   E) Create/publish content
+   F) Other: __
+
+[If WHY is missing:]
+3️⃣ WHY is this project needed?
+   A) Replace manual/legacy process
+   B) Launch new product/business
+   C) Improve existing system
+   D) Enable new capability
+   E) Other: __
+
+[If DOMAIN is missing:]
+4️⃣ What INDUSTRY/DOMAIN is this for?
+   A) E-commerce/Retail
+   B) Fitness/Health
+   C) Finance/Payments
+   D) Education
+   E) Social/Community
+   F) Business tools (CRM, ERP)
+   G) Other: __
+
+Your answers: __ (e.g., "A, B, A, E" or describe freely)
+```
+
+---
+
+**✨ Generate Professional Description Options**
+
+After gathering missing info, generate 3 polished versions:
+
+```
+[LANGUAGE: Match the developer's language]
+
+✨ Based on your input, here are 3 professional descriptions:
+
+A) Concise (for package.json):
+   "[Generated 1-line description with WHO + WHAT]"
+
+B) Descriptive (for README.md):
+   "[Generated 2-3 line description with WHO + WHAT + WHY]"
+
+C) Technical (for AGENT.md):
+   "[Generated technical description with DOMAIN + WHAT]"
+
+Which do you prefer? (1-3, or 4 to edit, 5 to start over)
+```
+
+---
+
+**✅ Final Confirmation**
+
+```
+✅ Your final project description:
+
+📋 Name: [project name]
+📝 Description: "[final polished description]"
+
+Proceed to next question? (Y to continue)
+```
+
+---
+
+**1.2 Project Overview (Confirmation + Expansion)**
+
+> **📌 Smart Skip**: If 1.1 already captured WHO/WHAT/WHY completely, this becomes a quick confirmation.
+
+```
+[If 1.1 refinement was complete (score >= 4), show:]
+
+✅ Based on your description, I understand:
+   • Users: [WHO from 1.1]
+   • Core Action: [WHAT from 1.1]
+   • Purpose: [WHY from 1.1]
+
+Is this complete? (Y) Or would you like to add more context? (N)
+
+[If user says Y → Skip to 1.3]
+[If user says N → Ask:]
+What additional context would you like to add?
+
+---
+
+[If 1.1 was NOT refined OR any WHO/WHAT/WHY still missing, ask:]
+
+[ONLY ask for MISSING elements - check what was NOT captured in 1.1:]
+
+[If WHO still unclear:]
+Who are the primary users of this system?
+
+[If WHAT still unclear:]
+What is the core value proposition?
+
+[If WHY still unclear:]
+What makes this project necessary?
 
 Example:
 "A backend for a fitness tracking mobile app used by gym-goers (users). It allows users to log workouts, track progress over time, and share achievements with friends (value). This project is necessary to replace our legacy spreadsheet-based system and support our new iOS app launch."
 ```
 
-**1.3 Target Users**
+**1.3 Target Users (Confirmation + Additional Types)**
+
+> **📌 Smart Skip**: If 1.1 already identified user types, this confirms and expands.
 
 ```
+[If WHO was captured in 1.1, show:]
+
+✅ Based on your description, your target users are: [WHO from 1.1]
+
+Would you like to add any additional user types? Select any that apply:
+
+A) 🌐 External end-users (B2C) - Public-facing application
+B) 🏢 Internal employees (B2B/Enterprise) - Company internal tool
+C) 🔌 Other systems/services (API consumers) - Integration platform
+D) 👥 Partners/Third-parties - Partner ecosystem
+E) 📱 Mobile/Web apps - Backend for frontend
+F) ✅ No additional users - [WHO from 1.1] is complete
+
+---
+
+[If WHO was NOT captured in 1.1, ask normally:]
+
 Who will use this system? Select all that apply:
 
 A) 🌐 External end-users (B2C) - Public-facing application
@@ -65,9 +219,24 @@ Your objectives:
 3.
 ```
 
-**1.5 System Type**
+**1.5 System Type (Confirmation + Validation)**
+
+> **📌 Smart Skip**: If 1.1 already identified the domain/industry, this confirms it.
 
 ```
+[If DOMAIN was captured in 1.1, show:]
+
+✅ Based on your description, this appears to be a: [DOMAIN from 1.1] system
+
+Is this correct?
+
+A) ✅ Yes, that's correct
+B) 🔄 No, it's actually: [show options below]
+
+---
+
+[If DOMAIN was NOT captured in 1.1, OR user selected B above:]
+
 What type of system are you building? (This helps suggest common features)
 
 A) 🛒 E-commerce/Marketplace

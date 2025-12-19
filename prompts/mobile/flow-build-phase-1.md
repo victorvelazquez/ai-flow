@@ -1,21 +1,157 @@
 # Phase 1: Platform & Framework Selection
 
 **Duration:** 20-25 minutes
-**Questions:** ~15 questions
+**Questions:** ~17 questions
 **Output:** project-brief.md, parts of AGENT.md, parts of ai-instructions.md
 ---
 ## 🎯 Objective
 
-Determine the **technical foundation** for your mobile application:
+Determine the **business goal and technical foundation** for your mobile application:
 
-1. What platforms will you target?
-2. What framework will you use?
-3. What minimum OS versions will you support?
-4. What development tools and languages?
+1. What is the core goal and purpose of the project?
+2. What platforms will you target?
+3. What framework will you use?
+4. What minimum OS versions will you support?
+5. What development tools and languages?
 ---
 ## 📋 Questions
 
-### Question 1.1: Target Platforms
+### Question 1.1: Project Name & Description (with Smart Refinement)
+
+> **🧠 Intelligent Refinement System**: This question detects vague descriptions and guides the developer to enrich them. It only asks what's missing and responds in the developer's language.
+
+```
+What is the project name?
+
+Provide an initial description of your project.
+(Don't worry about perfection - we'll refine it together if needed!)
+
+Example: "A native iOS app for tracking wildlife sightings in the Amazon"
+```
+
+**🔍 AI Internal: Ambiguity Analysis**
+
+After receiving the description, silently analyze for these criteria:
+
+| Criterion | Check For | Score +1 if present |
+|-----------|-----------|---------------------|
+| **WHO** | Specific user type mentioned (not just "users") | "tourists", "researchers", "drivers" |
+| **WHAT** | Specific action/function (not just "app", "system") | "scan barcodes", "record audio", "track GPS" |
+| **WHY** | Purpose or value mentioned | "to protect species", "to optimize routes" |
+| **DOMAIN** | Industry/vertical indicated | "environmental", "logistics", "social" |
+| **DETAIL** | Description has 10+ meaningful words | Not counting articles |
+
+**Scoring Rules:**
+- Score 4-5: ✅ Accept immediately → Proceed to 1.2
+- Score 0-3: ⚠️ Enter refinement loop → Ask ONLY missing criteria
+
+---
+
+**🔄 Conditional Refinement Loop (only if score < 4)**
+
+> **CRITICAL**: Only ask about criteria that are MISSING. Do NOT repeat questions already answered. Respond in the SAME LANGUAGE the developer used.
+
+```
+[LANGUAGE: Match the developer's language]
+
+🔍 I'd like to understand your project better.
+
+Your description: "[original description]"
+
+[ONLY show questions for MISSING criteria:]
+
+[If WHO is missing:]
+1️⃣ WHO will use this mobile app?
+   A) End consumers (App Store/Play Store)
+   B) Internal employees (Enterprise)
+   C) Partners/Contractors
+   D) Other: __
+
+[If WHAT is missing:]
+2️⃣ WHAT is the core mobile action users will perform?
+   A) Transactional (Buy/Sell)
+   B) Utility (Tools/Monitoring)
+   C) Social (Chat/Share)
+   D) Media (Photo/Video)
+   E) Informational (News/Content)
+   F) Other: __
+
+[If WHY is missing:]
+3️⃣ WHY is this mobile project needed?
+   A) New product launch
+   B) Companion to web app
+   C) Offline-first requirement
+   D) Better mobile performance
+   E) Other: __
+
+[If DOMAIN is missing:]
+4️⃣ What INDUSTRY/DOMAIN is this for?
+   A) E-commerce/Retail
+   B) Fitness/Health
+   C) Finance/Payments
+   D) Education/Learning
+   E) Social/Community
+   F) Business tools (CRM, ERP)
+   G) Other: __
+
+Your answers: __
+```
+
+---
+
+**✨ Generate Professional Description Options**
+
+After gathering missing info, generate 3 polished versions:
+
+```
+[LANGUAGE: Match the developer's language]
+
+✨ Based on your input, here are 3 professional descriptions:
+
+A) Concise (for App Store subtitle):
+   "[Generated 1-line description]"
+
+B) Descriptive (for README.md):
+   "[Generated 2-3 line description with Mobile focus]"
+
+C) User-centric (for Marketing):
+   "[Generated benefit-driven description]"
+
+Which do you prefer? (1-3, or 4 to edit, 5 to start over)
+```
+
+**Your choice:**
+
+---
+
+### Question 1.2: Project Overview (Confirmation + Expansion)
+
+> **📌 Smart Skip**: If 1.1 already captured WHO/WHAT/WHY completely, this becomes a quick confirmation.
+
+```
+[If 1.1 refinement was complete (score >= 4), show:]
+
+✅ Based on your description, I understand:
+   • Users: [WHO from 1.1]
+   • Goal: [WHAT from 1.1]
+   • Need: [WHY from 1.1]
+
+Is this correct? (Y) Or would you like to add more context? (N)
+
+---
+
+[If 1.1 was NOT refined OR missing elements, ask:]
+
+Briefly describe the core problem this app solves:
+- Who are the primary users?
+- What is the main benefit?
+- Why build a mobile app instead of a web app?
+```
+
+**Your answer:**
+
+---
+### Question 1.3: Target Platforms
 
 **What platforms will your app support?**
 
@@ -45,7 +181,7 @@ D) **iOS + Android + Web (Universal)**
 
 **Your answer:**
 ---
-### Question 1.2: Mobile Framework
+### Question 1.4: Mobile Framework
 
 **What framework will you use to build your mobile app?**
 
@@ -101,7 +237,7 @@ D) **iOS + Android + Web (Universal)**
 - What Flutter version? (Latest stable recommended)
 - Will you use Flutter for Web/Desktop too? (Y/n)
 ---
-### Question 1.3: Minimum OS Versions
+### Question 1.5: Minimum OS Versions
 
 **What minimum OS versions will you support?**
 
@@ -151,7 +287,7 @@ D) **iOS + Android + Web (Universal)**
 
 **Your answer:**
 ---
-### Question 1.4: Programming Language
+### Question 1.6: Programming Language
 
 **What programming language will you use?**
 
@@ -193,7 +329,7 @@ D) **iOS + Android + Web (Universal)**
 
 **Your answer:**
 ---
-### Question 1.5: Development Environment
+### Question 1.7: Development Environment
 
 **What development tools will you use?**
 
@@ -223,7 +359,7 @@ D) **iOS + Android + Web (Universal)**
 
 **Your answer:**
 ---
-### Question 1.6: Package Manager
+### Question 1.8: Package Manager
 
 **What package manager will you use?**
 
@@ -247,7 +383,7 @@ D) **iOS + Android + Web (Universal)**
 
 **Your answer:**
 ---
-### Question 1.7: Build Tools & CI/CD
+### Question 1.9: Build Tools & CI/CD
 
 **What build and deployment tools will you use?**
 
@@ -279,7 +415,7 @@ E) **Manual Builds**
 
 **Your answer:**
 ---
-### Question 1.8: Code Signing Strategy
+### Question 1.10: Code Signing Strategy
 
 **How will you handle code signing?**
 
@@ -305,7 +441,7 @@ E) **Manual Builds**
 
 **Your answer:**
 ---
-### Question 1.9: App Store Accounts
+### Question 1.11: App Store Accounts
 
 **Do you have App Store accounts set up?**
 
@@ -322,7 +458,7 @@ E) **Manual Builds**
 
 **Your answer:**
 ---
-### Question 1.10: Beta Testing Strategy
+### Question 1.12: Beta Testing Strategy
 
 **How will you handle beta testing?**
 
@@ -348,7 +484,7 @@ D) **No Beta Testing**
 
 **Your answer:**
 ---
-### Question 1.11: Analytics & Crash Reporting
+### Question 1.13: Analytics & Crash Reporting
 
 **What analytics and crash reporting will you use?**
 
@@ -375,7 +511,7 @@ D) **No Analytics**
 
 **Your answer:**
 ---
-### Question 1.12: UI/UX Framework
+### Question 1.14: UI/UX Framework
 
 **What UI/UX framework or design system will you use?**
 
@@ -423,7 +559,7 @@ D) **No Analytics**
 - Will you use platform-specific UI? (iOS uses Cupertino, Android uses Material)
 - Or unified design across platforms?
 ---
-### Question 1.13: Theme & Dark Mode
+### Question 1.15: Theme & Dark Mode
 
 **Will your app support dark mode?**
 
@@ -444,7 +580,7 @@ C) **No Dark Mode**
 
 **Your answer:**
 ---
-### Question 1.14: Internationalization (i18n)
+### Question 1.16: Internationalization (i18n)
 
 **Will your app support multiple languages?**
 
@@ -472,7 +608,7 @@ C) **No Internationalization**
   - Flutter: intl, easy_localization
   - Native: NSLocalizedString (iOS), Resources (Android)
 ---
-### Question 1.15: Image & Asset Management
+### Question 1.17: Image & Asset Management
 
 **How will you handle images and assets?**
 
@@ -509,19 +645,21 @@ After answering all questions, summarize:
 ---
 ✅ Phase 1 Complete: Platform & Framework Selection
 ---
+Project Name: [Answer from 1.1]
+Project Description: [Answer from 1.1]
 Selected Stack:
-- Platforms: iOS + Android
-- Framework: React Native 0.72.0
-- Language: TypeScript
-- Minimum iOS: 15.0+
-- Minimum Android: API 26 (Android 8.0)+
-- Package Manager: npm
-- Build Tools: Fastlane
-- Analytics: Firebase Analytics + Crashlytics
-- UI Framework: React Native Paper
-- Dark Mode: System Theme
-- Internationalization: Multiple Languages (react-i18next)
-- Image Management: Local Assets + Remote Images
+- Platforms: [Answer from 1.3]
+- Framework: [Answer from 1.4]
+- Language: [Answer from 1.6]
+- Minimum iOS: [Answer from 1.5]
+- Minimum Android: [Answer from 1.5]
+- Package Manager: [Answer from 1.8]
+- Build Tools: [Answer from 1.9]
+- Analytics: [Answer from 1.13]
+- UI Framework: [Answer from 1.14]
+- Dark Mode: [Answer from 1.15]
+- Internationalization: [Answer from 1.16]
+- Image Management: [Answer from 1.17]
 
 Proceed to Phase 2 (Navigation & Architecture)? (Y/n)
 ```
@@ -530,7 +668,7 @@ Proceed to Phase 2 (Navigation & Architecture)? (Y/n)
 
 After Phase 1, generate/update:
 
-- `project-brief.md` - Add platform and framework information
+- `project-brief.md` - Add project goal, platforms, and framework information
 - `AGENT.md` - Update technical context section
 - `ai-instructions.md` - Add framework-specific rules and setup
 ---
@@ -538,10 +676,6 @@ After Phase 1, generate/update:
 
 Read: `.ai-flow/prompts/mobile/flow-build-phase-2-navigation.md`
 ---
-**Last Updated:** 2025-01-XX
+**Last Updated:** 2025-12-XX
 
-**Version:** 1.4.0
-
-
-
-
+**Version:** 1.5.0
