@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 18 docs, Frontend: 16 docs, Mobile: 14 docs, Fullstack: 5 docs)
+- 🚀 Complete professional documentation (Backend: 15 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4 docs)
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 Multi-AI support with slash commands
@@ -24,12 +24,12 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Then open your AI tool and run: /flow-build
+# Then open your AI tool and run:
+# /flow-build       - To generate all documentation
+# /flow-dev-feature - To start building features
 ```
 
-📚 **[Complete Guide →](GETTING-STARTED.md)**
-
----
+## 📚 **[Complete Guide →](GETTING-STARTED.md)**
 
 ## Español
 
@@ -37,7 +37,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 18 docs, Frontend: 16 docs, Mobile: 14 docs, Fullstack: 5 docs)
+- 🚀 Documentación profesional completa (Backend: 15 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4 docs)
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
 - 🤖 Compatible con Claude, Copilot, Cursor, Gemini
@@ -51,19 +51,19 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Luego en tu herramienta IA: /flow-build
+# Luego en tu herramienta IA:
+# /flow-build       - Para generar toda la documentación
+# /flow-dev-feature - Para comenzar a construir funcionalidades
 ```
 
-📚 **[Guía Completa →](GETTING-STARTED.md)**
-
----
+## 📚 **[Guía Completa →](GETTING-STARTED.md)**
 
 ## Português
 
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 18, Frontend: 16, Mobile: 14, Fullstack: 5 docs)
+- 🚀 Documentação profissional completa (Backend: 15, Frontend: 15, Mobile: 13, Fullstack: 4 docs)
 - ⚡ **Dois modos:** Interactivo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
 - 🌍 Suporte universal - 12 linguagens, 60+ frameworks, 35+ ORMs
 - 🤖 Compatível com Claude, Copilot, Cursor, Gemini
@@ -77,12 +77,12 @@ Transforme sua ideia em um projeto pronto para produção e documentado para IA 
 ```bash
 npm install -g ai-flow-dev
 ai-flow init .
-# Em seguida, na sua ferramenta de IA: /flow-build
+# Em seguida, na sua ferramenta de IA:
+# /flow-build       - Para gerar toda a documentação
+# /flow-dev-feature - Para começar a construir funcionalidades
 ```
 
-📚 **[Guia Completo →](GETTING-STARTED.md)**
-
----
+## 📚 **[Guia Completo →](GETTING-STARTED.md)**
 
 ## 🎯 What is AI Flow?
 
@@ -132,9 +132,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-**Current version:** 2.1.3
-
----
+## **Current version:** 2.1.3
 
 ## 🚀 Quick Start
 
@@ -152,9 +150,7 @@ ai-flow init .
 
 That's it! The AI will guide you through an interactive questionnaire to generate all documentation.
 
-**📚 For detailed tutorials, see [GETTING-STARTED.md](GETTING-STARTED.md)**
-
----
+## **📚 For detailed tutorials, see [GETTING-STARTED.md](GETTING-STARTED.md)**
 
 ## 🛠️ CLI Commands
 
@@ -308,9 +304,7 @@ After initialization, use these slash commands in your AI tool:
 
 > **Note:** Frontend and Mobile projects include build commands (`/flow-build`, phases, `/flow-docs-sync`) but not workflow commands.
 
-**📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
-
----
+## **📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
 
 ## 💡 How It Works
 
@@ -338,13 +332,13 @@ After initialization, use these slash commands in your AI tool:
 
 ## 🎯 Generated Documentation
 
-**Backend** (18 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 11 technical docs and 2 specs
+**Backend** (15 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 technical docs and 2 specs
 
-**Frontend** (16 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 10 technical docs and 3 specs
+**Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 9 technical docs and 3 specs
 
-**Mobile** (14 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 8 technical docs and 3 specs
+**Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 8 technical docs and 2 specs
 
-**Fullstack** (5 docs): AGENT.md, ai-instructions.md, project-brief.md, README.md, plus 1 spec
+**Fullstack** (4 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 1 spec
 
 ### 📁 Generated Structure
 
@@ -404,9 +398,7 @@ AI Flow provides **universal support** with automatic detection for 98% of the m
 | **Scala**              | <1%          | Play Framework, Akka HTTP                                                | Slick, Quill                                                  | ✅ Full |
 | **Swift**              | <1%          | Vapor                                                                    | Fluent                                                        | ✅ Full |
 
-**See [GETTING-STARTED.md](GETTING-STARTED.md) for automatic detection details and examples.**
-
----
+## **See [GETTING-STARTED.md](GETTING-STARTED.md) for automatic detection details and examples.**
 
 ## 🎓 Why Use AI Flow?
 
@@ -480,15 +472,11 @@ AI Flow follows: **Documentation as Executable Code**
 
 ## 🤝 Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
----
+## We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## 📝 License
 
-MIT License - See [LICENSE](LICENSE) for details.
-
----
+## MIT License - See [LICENSE](LICENSE) for details.
 
 ## 💬 Support
 

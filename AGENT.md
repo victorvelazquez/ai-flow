@@ -3,9 +3,7 @@
 > Universal AI Assistant Configuration
 >
 > This file provides context for ALL AI development tools (Claude, Copilot, Cursor, Gemini, etc.) when working with the ai-flow project.
-
 ---
-
 ## 📋 About This Project
 
 **Project Name:** AI Flow
@@ -36,9 +34,7 @@
 
 > This project uses AI-assisted development with comprehensive documentation.
 > All files below provide context to AI assistants for consistent, high-quality code generation.
-
 ---
-
 ## 🏗️ Documentation Architecture
 
 This project follows **AI-assisted development** with comprehensive documentation.
@@ -86,9 +82,7 @@ All documentation is structured to guide AI assistants in understanding the proj
    - All commands and logic
    - Helper functions
    - Entry point
-
 ---
-
 ## 🎯 Project Structure
 
 ```
@@ -132,9 +126,7 @@ ai-flow/
 ├── .cursorrules               # Cursor-specific rules
 └── AGENT.md                   # This file
 ```
-
 ---
-
 ## 🎯 Critical Rules
 
 ### ❌ NEVER
@@ -163,9 +155,7 @@ ai-flow/
 - Test CLI changes with: `npm run dev init test-folder --ai cursor`
 - Use `chalk` for consistent logging (info=cyan/white, warnings=yellow, failures=red)
 - Validate cross-platform behavior (Windows keeps script perms untouched)
-
 ---
-
 ## 🏗️ Architecture
 
 ### CLI Architecture
@@ -261,9 +251,7 @@ This works because:
   "frontend": false
 }
 ```
-
 ---
-
 ## 🚀 Development Workflow
 
 ### Common Commands
@@ -341,9 +329,7 @@ Use Conventional Commits:
 - `fix(templates): correct placeholder syntax`
 - `docs(readme): update installation instructions`
 - `chore(deps): upgrade chalk to v5.6.2`
-
 ---
-
 ## 📝 Key Files Reference
 
 | File                                      | Purpose                                         | When to Edit                                        |
@@ -376,9 +362,7 @@ Use Conventional Commits:
 | `copyPrompts()`          | Copy prompts/ to project                            | `targetPath: string`                     |
 | `setupSlashCommands()`   | Install slash commands for selected tools           | `targetPath, aiTools, projectType`       |
 | `initializeProject()`    | Main init orchestration                             | `targetPath, aiTool?, projectType?, ...` |
-
 ---
-
 ## 🎯 Development Principles
 
 ### Core Principles
@@ -412,9 +396,7 @@ Use Conventional Commits:
 - `ora` spinners show success/fail states
 - `chalk.red()` for errors, `chalk.yellow()` for warnings
 - User-friendly error messages
-
 ---
-
 ## 🔍 Important Notes
 
 ### Templates vs Project Documentation
@@ -442,18 +424,16 @@ Every change should be tested with the **full build flow**:
 3. Verify generated documents are correct
 4. Check all placeholders are filled
 5. Ensure documentation is coherent
-
 ---
-
 ## 📚 Additional Resources
 
 - **Repository:** https://github.com/victorvelazquez/ai-flow
 - **npm Package:** https://www.npmjs.com/package/ai-flow
 - **Issues:** https://github.com/victorvelazquez/ai-flow/issues
-
 ---
-
 **Always reference this AGENT.md for complete project understanding.**
 
 **Last Updated:** 2025-01-XX
 **Version:** 1.0.8
+
+

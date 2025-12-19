@@ -169,10 +169,9 @@ Your choice (A/B): __
 The AI assistant will guide you through each phase with questions like:
 
 ```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 📋 Phase 1: Discovery & Business  |  Question 1/8  |  Phase Progress: 12%
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 What core business problem does your API solve?
 
 Examples:
@@ -676,9 +675,7 @@ After initialization, you have access to **26+ slash commands**:
 
 ```
 
-See [Commands Cheat Sheet](#commands-cheat-sheet) for the complete list.
-
----
+## See [Commands Cheat Sheet](#commands-cheat-sheet) for the complete list.
 
 ## 📚 Part 2: Core Workflows
 
@@ -1095,9 +1092,7 @@ docs/testing.md
 ├── Tests entities from: docs/data-model.md
 ```
 
-**Result:** Changing one document triggers relevant updates in others.
-
----
+## **Result:** Changing one document triggers relevant updates in others.
 
 ## ⚡ Part 3: Advanced Usage
 
@@ -1539,20 +1534,16 @@ Description: Imperative mood, English, max 72 chars
 
 ```
 /flow-dev-commit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 🔍 Step 1/4: Detecting Changes
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 ✅ Changes detected:
 - Source code: 8 files
 - Tests: 3 files
 - Documentation: 1 file
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 ⚡ Step 2/4: Intelligent Grouping
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 📦 Group 1: Feature Complete
    Type: feat
    Scope: products
@@ -1572,11 +1563,9 @@ Description: Imperative mood, English, max 72 chars
    Files (2):
    ✓ docker-compose.yml
    ✓ .env.template
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 ✅ Step 3/4: Creating Commits
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 Commit 1/2: Feature Complete
 
 git add src/modules/products/entities/product.entity.ts ... && git commit -m "feat(products): implement product management with CRUD operations"
@@ -1592,11 +1581,9 @@ git add docker-compose.yml .env.template && git commit -m "chore(docker): update
 Click "Allow" to execute →
 
 ✅ Commit created: chore(docker): update database connection settings
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 🚀 Step 4/4: Summary & Push
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 ✅ 2 commits created following Conventional Commits
 
 📋 Commit History:
@@ -1805,11 +1792,9 @@ Ready to continue! What would you like me to do?
 /flow-dev-review
 
 🔍 CODE REVIEW REPORT
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 🔴 CRITICAL ISSUES (Fix Immediately)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 🔒 SECURITY - SQL Injection Risk
 File: src/repositories/user.repository.ts:45
 Issue: Raw SQL with string interpolation
@@ -1819,11 +1804,9 @@ Fix: Use parameterized queries
 File: src/services/order.service.ts:78
 Issue: Loading relations in loop (100+ queries)
 Fix: Use eager loading or batch fetching
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 🟡 WARNINGS (Should Fix Soon)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 🧪 TESTING - Missing Edge Case Tests
 File: src/validators/email.validator.ts
 Issue: No tests for invalid formats
@@ -1833,11 +1816,9 @@ Fix: Add test cases for edge cases
 File: src/controllers/payment.controller.ts:23
 Issue: Direct database access from controller
 Fix: Move logic to service layer
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 🟢 SUGGESTIONS (Nice to Have)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 🎨 CODE QUALITY - Complex Function
 File: src/utils/price-calculator.ts:15
 Issue: Cyclomatic complexity: 12 (threshold: 10)
@@ -1847,11 +1828,9 @@ Suggestion: Extract helper functions
 File: src/services/subscription.service.ts:34
 Issue: Hard-coded 30, 90, 365 days
 Suggestion: Use named constants
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 📊 SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 Files reviewed: 8
 Critical issues: 2 🔴
 Warnings: 2 🟡
@@ -1987,11 +1966,9 @@ Keep documentation synchronized with code changes using `/flow-docs-sync`.
 Last analysis: 2 days ago (Dec 2, 2025)
 Files changed: 47
 New files: 8
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 📊 CHANGES DETECTED
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 🔴 Documents requiring updates (4):
 
 1. docs/api.md
@@ -2010,9 +1987,7 @@ New files: 8
 
 4. specs/configuration.md
    - 4 new environment variables (REDIS_URL, WEBSOCKET_PORT, etc.)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 ¿Actualizar todos los documentos detectados? (Y/N)
 
 > Y
@@ -2038,11 +2013,9 @@ New files: 8
 
 ✅ .ai-flow/cache/docs-analysis.json updated
    - Saved new baseline for future comparisons
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 ✅ DOCUMENTATION UPDATE COMPLETE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+---
 Documents updated: 4
 Lines added: 127
 Lines modified: 43
@@ -2284,10 +2257,10 @@ See [README.md](README.md#-supported-languages--frameworks) for complete tables.
 # Check current version
 node --version
 
-# Install Node.js 18+ from https://nodejs.org/
+# Install Node.js 20+ from https://nodejs.org/
 # Or use nvm:
-nvm install 18
-nvm use 18
+nvm install 20
+nvm use 20
 ```
 
 #### Insufficient Permissions

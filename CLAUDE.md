@@ -1,9 +1,7 @@
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ---
-
 ## 🎯 RESUMEN EJECUTIVO (Quick Context)
 
 **Qué es:** CLI de Node.js/TypeScript que genera 15 documentos de backend profesionales mediante cuestionario interactivo de 7 fases
@@ -34,9 +32,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Comandos slash se copian de `prompts/backend/` a `.{tool}/commands/`
 
 **Si necesitas más detalle:** Lee secciones específicas abajo ↓
-
 ---
-
 ## 📋 About This Project
 
 **AI Flow** is a CLI tool that generates comprehensive backend documentation through interactive questionnaires.
@@ -44,9 +40,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Purpose:** Transform project ideas into production-ready backends with professional AI-ready documentation in 90-120 minutes.
 
 **Target Users:** Backend developers starting new projects who want to work efficiently with AI assistants.
-
 ---
-
 ## 🏗️ Project Structure
 
 ```
@@ -74,9 +68,7 @@ ai-flow/
 ├── README.md                  # Project documentation
 └── CLAUDE.md                  # This file
 ```
-
 ---
-
 ## ⚙️ Common Commands
 
 ### Development
@@ -123,9 +115,7 @@ npm run prepare
 
 # The CLI is globally accessible as 'ai-flow' via bin config in package.json
 ```
-
 ---
-
 ## 🎯 Development Philosophy
 
 ### Core Principles
@@ -141,9 +131,7 @@ npm run prepare
 - Universal configuration file all AI tools can read
 - Acts as aggregator pointing to detailed docs
 - Single source of truth across AI tools
-
 ---
-
 ## 🏛️ Architecture
 
 ### CLI Architecture
@@ -224,9 +212,7 @@ npm run prepare
 3. Reads template files from `.ai-flow/templates/`
 4. Performs string replacement on placeholders with gathered data
 5. Writes generated files to project root and subdirectories
-
 ---
-
 ## 🔄 Workflow System (v2.0)
 
 ### Overview
@@ -476,9 +462,7 @@ cd test-project
 - 📝 Documentation always synchronized
 - 🔄 Resume without context loss
 - 🐛 Built-in code review + security checks
-
 ---
-
 ## 📝 Master prompt (`prompts/backend/flow-build.md`)
 
 ### Structure
@@ -507,9 +491,7 @@ cd test-project
 - Fill templates with gathered information
 - Validate completeness
 - Provide next steps
-
 ---
-
 ## ✅ Code Quality Standards
 
 ### TypeScript Configuration
@@ -568,9 +550,7 @@ try {
   throw error;
 }
 ```
-
 ---
-
 ## 🚀 Development Workflow
 
 ### Before Making Changes
@@ -665,9 +645,7 @@ feat(cli): add interactive AI tool selection
 
 Closes #42
 ```
-
 ---
-
 ## 📚 Key Files Reference
 
 | File                                | Lines    | Purpose                                        | When to Edit                                      |
@@ -696,9 +674,7 @@ Closes #42
 | `copyTemplates()`        | Copy templates/ to project                          | `targetPath: string`                    |
 | `setupSlashCommands()`   | Install slash commands for selected tools           | `targetPath: string, aiTools: string[]` |
 | `initializeProject()`    | Main init orchestration                             | `targetPath: string, aiTool?: string`   |
-
 ---
-
 ## 🔍 Implementation Details
 
 ### Path Resolution Strategy
@@ -760,9 +736,7 @@ This works because:
 ```
 
 This enables future frontend/full-stack build support.
-
 ---
-
 ## 🎯 Development Principles
 
 ### Vision
@@ -807,9 +781,7 @@ Every change should be tested with the **full build flow**:
 2. Add placeholders like `{{VARIABLE}}`
 3. Update `prompts/backend/flow-build.md` to reference new phase
 4. Update AGENT.md template to reference new doc
-
 ---
-
 ## 🚀 Quick Reference
 
 **Most common development tasks:**
@@ -835,7 +807,7 @@ vim prompts/backend/flow-build.md
 npm run dev init test --ai claude
 cat test/.claude/commands/flow-build.md
 ```
-
 ---
-
 **Last Updated:** 2025-12-04 (Added Workflow System v2.0 documentation)
+
+

@@ -462,9 +462,9 @@ Contributors will be:
 - Check [CLAUDE.md](CLAUDE.md) for architecture
 - Open an [Issue](https://github.com/victorvelazquez/ai-flow/issues)
 - Ask in your PR or issue
-
 ---
-
 **Thank you for contributing to AI Flow!** 🚀
 
 Every contribution, no matter how small, makes a difference. We appreciate your time and effort in making this project better.
+
+
