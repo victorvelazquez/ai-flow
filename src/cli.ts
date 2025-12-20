@@ -116,61 +116,61 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
   );
   console.log(
     chalk.cyan('    ║') +
-    '                                                                   ' +
-    chalk.cyan('║')
+      '                                                                   ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('          █████╗ ██╗    ███████╗██╗      ██████╗ ██╗    ██╗') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('          █████╗ ██╗    ███████╗██╗      ██████╗ ██╗    ██╗') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('         ██╔══██╗██║    ██╔════╝██║     ██╔═══██╗██║    ██║') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('         ██╔══██╗██║    ██╔════╝██║     ██╔═══██╗██║    ██║') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('         ███████║██║    █████╗  ██║     ██║   ██║██║ █╗ ██║') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('         ███████║██║    █████╗  ██║     ██║   ██║██║ █╗ ██║') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('         ██╔══██║██║    ██╔══╝  ██║     ██║   ██║██║███╗██║') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('         ██╔══██║██║    ██╔══╝  ██║     ██║   ██║██║███╗██║') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('         ██║  ██║██║    ██║     ███████╗╚██████╔╝╚███╔███╔╝') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('         ██║  ██║██║    ██║     ███████╗╚██████╔╝╚███╔███╔╝') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.cyan('         ╚═╝  ╚═╝╚═╝    ╚═╝     ╚══════╝ ╚═════╝  ╚══╝╚══╝') +
-    '         ' +
-    chalk.cyan('║')
+      chalk.cyan('         ╚═╝  ╚═╝╚═╝    ╚═╝     ╚══════╝ ╚═════╝  ╚══╝╚══╝') +
+      '         ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    '                                                                   ' +
-    chalk.cyan('║')
+      '                                                                   ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    '           ' +
-    chalk.white('✨ From Idea to Production with AI Guidance') +
-    '             ' +
-    chalk.cyan('║')
+      '           ' +
+      chalk.white('✨ From Idea to Production with AI Guidance') +
+      '             ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    '                                                                   ' +
-    chalk.cyan('║')
+      '                                                                   ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ╚═══════════════════════════════════════════════════════════════════╝')
@@ -654,17 +654,17 @@ async function initializeProject(
         console.log(chalk.cyan('  1. Open Claude Code'));
         console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
         console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
-        console.log(chalk.gray('     Each will guide you through 9 phases\n'));
+        console.log(chalk.gray('     Each will guide you through up to 11 phases (0-10)\n'));
       } else if (aiTools.includes('cursor')) {
         console.log(chalk.cyan('  1. Open Cursor'));
         console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
         console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
-        console.log(chalk.gray('     Each will guide you through 9 phases\n'));
+        console.log(chalk.gray('     Each will guide you through up to 11 phases (0-10)\n'));
       } else {
         console.log(chalk.cyan(`  1. Open your AI tool (${toolsText})`));
         console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
         console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
-        console.log(chalk.gray('     Each will guide you through 9 phases\n'));
+        console.log(chalk.gray('     Each will guide you through up to 11 phases (0-10)\n'));
       }
 
       console.log(chalk.white('Available slash commands:'));
@@ -713,19 +713,19 @@ async function initializeProject(
       if (aiTools.includes('claude')) {
         console.log(chalk.cyan('  1. Open Claude Code'));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
+        console.log(chalk.gray('     This will guide you through up to 11 phases (0-10)\n'));
       } else if (aiTools.includes('cursor')) {
         console.log(chalk.cyan('  1. Open Cursor'));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
+        console.log(chalk.gray('     This will guide you through up to 11 phases (0-10)\n'));
       } else if (aiTools.includes('antigravity')) {
         console.log(chalk.cyan('  1. Use Antigravity commands'));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
+        console.log(chalk.gray('     This will guide you through up to 11 phases (0-10)\n'));
       } else {
         console.log(chalk.cyan(`  1. Open your AI tool (${toolsText})`));
         console.log(chalk.cyan('  2. Run: /flow-build'));
-        console.log(chalk.gray('     This will start the 9-phase interactive setup\n'));
+        console.log(chalk.gray('     This will guide you through up to 11 phases (0-10)\n'));
       }
 
       console.log(chalk.white('Available slash commands:'));
@@ -910,8 +910,9 @@ program
           const toolsText =
             config.aiTools.length === 1
               ? config.aiTools[0]
-              : `${config.aiTools.slice(0, -1).join(', ')} and ${config.aiTools[config.aiTools.length - 1]
-              }`;
+              : `${config.aiTools.slice(0, -1).join(', ')} and ${
+                  config.aiTools[config.aiTools.length - 1]
+                }`;
           console.log(chalk.cyan(`  1. Open your AI tool (${toolsText})`));
           console.log(chalk.cyan('  2. Run: /backend-flow-build (for backend documentation)'));
           console.log(chalk.cyan('  3. Run: /frontend-flow-build (for frontend documentation)'));
@@ -927,8 +928,9 @@ program
           const toolsText =
             config.aiTools.length === 1
               ? config.aiTools[0]
-              : `${config.aiTools.slice(0, -1).join(', ')} and ${config.aiTools[config.aiTools.length - 1]
-              }`;
+              : `${config.aiTools.slice(0, -1).join(', ')} and ${
+                  config.aiTools[config.aiTools.length - 1]
+                }`;
           console.log(chalk.cyan(`  1. Open your AI tool (${toolsText})`));
           console.log(chalk.cyan('  2. Run: /flow-build'));
         }
