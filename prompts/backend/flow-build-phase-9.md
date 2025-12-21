@@ -89,6 +89,7 @@ From docs/architecture.md:
 
 ## Workflow: 6 Steps
 
+// turbo
 ### Step 9.1: Extract Context & Inventory (10-15 min)
 
 **1. Extract context variables from `ai-instructions.md`:**
