@@ -4,7 +4,7 @@ description: Documentation Gap Analysis & Auto-Update
 
 # Documentation Gap Analysis & Auto-Update
 
-Analyze and automatically update project documentation (README.md, GETTING-STARTED.md, CONTRIBUTING.md) to ensure accuracy with source code, templates, and prompts.
+Analyze and automatically update project documentation (README.md, GETTING-STARTED.md, CONTRIBUTING.md, CHANGELOG.md) to ensure accuracy with source code, templates, and prompts.
 
 **Display Behavior:** Show step title (`## Step N/7: Name`) in your response BEFORE executing actions in that step.
 
@@ -37,7 +37,7 @@ Count and verify templates, prompts, and generated structures programmatically.
 
 ## 🔎 Step 3/7: Cross-Reference Documentation
 
-Compare inventory against README.md, GETTING-STARTED.md, and CONTRIBUTING.md.
+Compare inventory against README.md, GETTING-STARTED.md, CONTRIBUTING.md, and CHANGELOG.md.
 
 ---
 

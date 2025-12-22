@@ -1,6 +1,6 @@
 # Documentation Gap Analysis & Auto-Update
 
-Analyze and automatically update project documentation (README.md, GETTING-STARTED.md, CONTRIBUTING.md) to ensure accuracy with source code, templates, and prompts. Focus exclusively on user-facing features.
+Analyze and automatically update project documentation (README.md, GETTING-STARTED.md, CONTRIBUTING.md, CHANGELOG.md) to ensure accuracy with source code, templates, and prompts. Focus exclusively on user-facing features.
 
 **Display Behavior:** Show step title (`## Step N/7: Name`) in your response BEFORE executing actions in that step.
 
@@ -236,7 +236,7 @@ Slash Commands Installed To:
 
 ## 🔎 Step 3/7: Cross-Reference Documentation
 
-Compare inventory against README.md, GETTING-STARTED.md, and CONTRIBUTING.md.
+Compare inventory against README.md, GETTING-STARTED.md, CONTRIBUTING.md, and CHANGELOG.md.
 
 ### Checks for Each Document
 
@@ -299,7 +299,7 @@ Compare inventory against README.md, GETTING-STARTED.md, and CONTRIBUTING.md.
 **Version Consistency (CRITICAL):**
 
 ```
-package.json version === README.md version === GETTING-STARTED.md version
+package.json version === README.md version === GETTING-STARTED.md version === CHANGELOG.md version
 ```
 
 **Template Count Consistency:**
@@ -404,7 +404,7 @@ For each gap:
 
 **Priority:** CRITICAL | IMPORTANT | NICE-TO-HAVE
 **Category:** Missing | Inaccurate | Incomplete
-**File:** [README.md | GETTING-STARTED.md | CONTRIBUTING.md]
+**File:** [README.md | GETTING-STARTED.md | CONTRIBUTING.md | CHANGELOG.md]
 **Section:** [Section name or "Not Present"]
 
 **Current State:**
