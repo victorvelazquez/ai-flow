@@ -92,7 +92,7 @@ Read these files in order:
 
 - Use `@AGENT.md` to reference project context
 - Use `@ai-instructions.md` for coding rules
-- Run `/flow-build` to start documentation generation
+- **🚀 Proactive Execution:** When running `/flow-build`, `/flow-work`, or `/flow-check`, **ACT IMMEDIATELY**. These flows have their own interactive confirmation steps. Do not wait for a general plan approval.
 - Check `docs/` folder for detailed specifications
 
 ---
