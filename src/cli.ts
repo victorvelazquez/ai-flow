@@ -465,10 +465,14 @@ async function setupSlashCommands(
     for (const { dir, prefix } of promptSources) {
       const promptsSource = path.join(ROOT_DIR, 'prompts', dir);
       const allFiles = await fs.readdir(promptsSource);
-      // Filter markdown files, excluding flow-build-phase-*.md (they are loaded by flow-build.md)
-      const files = allFiles.filter(
-        (file) => file.endsWith('.md') && !file.match(/^flow-build-phase-\d+.*\.md$/)
-      );
+      // Filter markdown files, excluding internal logic files (they are loaded by main commands)
+      const files = allFiles.filter((file) => {
+        const isMarkdown = file.endsWith('.md');
+        const isInternalPhase = file.match(/^flow-build-phase-\d+.*\.md$/);
+        const isInternalWork = file.match(/^flow-work-.+\.md$/);
+        const isInternalCheck = file.match(/^flow-check-.+\.md$/);
+        return isMarkdown && !isInternalPhase && !isInternalWork && !isInternalCheck;
+      });
 
       for (const tool of aiTools) {
         if (tool === 'copilot') {
