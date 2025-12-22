@@ -9,6 +9,162 @@
 ### Objective
 Define the project's core purpose, business rules, and high-level requirements to ensure the foundation is solid before technical design begins.
 
+---
+
+## 🔍 Pre-Flight Check (Smart Skip Logic)
+
+**Check for existing documentation and audit data:**
+
+```javascript
+// Read audit data from Phase 0
+const auditData = readJSON('.ai-flow/cache/audit-data.json');
+const phase1Data = auditData?.phases?.phase1;
+
+if (phase1Data?.exists) {
+  executeSmartSkip(phase1Data);
+} else {
+  proceedToFullPhase();
+}
+```
+
+### Scenario A: High Confidence (≥95%) - SKIP
+
+**If `phase1Data.consistencyScore >= 95`:**
+
+```
+---
+✅ BUSINESS CONTEXT ALREADY DOCUMENTED
+
+File: project-brief.md
+Consistency: 100%
+Status: Complete business context documented
+
+Documented Information:
+✅ Project Name: My Awesome API
+✅ Description: "Backend API for gym membership management..."
+✅ Target Users: Gym members, gym staff, administrators
+✅ Business Objectives: 3 defined
+✅ System Type: SaaS/Business Tool
+✅ Core Features: 8 features documented
+✅ Scope: MVP features defined, future features listed
+✅ Constraints: Time, compliance (GDPR)
+✅ Success Metrics: Users, performance, business goals
+✅ Business Flows: 4 main flows documented
+
+---
+
+Use existing documentation? (Y/n) ⭐
+> _
+```
+
+**If user selects Y:**
+```
+✅ Phase 1 skipped - using project-brief.md
+✅ Proceeding to Phase 2
+
+[Skip to Phase 2]
+```
+
+**If user selects n:**
+```
+Proceeding with full Phase 1 questionnaire...
+[Continue to section 1.1]
+```
+
+---
+
+### Scenario B: Medium Confidence (80-94%) - HYBRID
+
+**If `phase1Data.consistencyScore >= 80 && < 95`:**
+
+```
+---
+📚 BUSINESS CONTEXT PARTIALLY DOCUMENTED
+
+File: project-brief.md
+Consistency: 87%
+Status: Most information present, some gaps
+
+Documented:
+✅ Project name and description
+✅ Target users identified
+✅ System type defined
+✅ Core features listed
+
+Missing:
+❌ Business objectives not quantified
+❌ Success metrics undefined
+❌ Constraints not specified
+
+---
+
+Options:
+A) Answer only 3 missing questions ⭐
+B) Re-answer everything (full phase)
+C) Skip entirely (use docs as-is)
+
+> _
+```
+
+**If user selects A (Hybrid Mode):**
+```
+---
+Question 1/3: Business Objectives
+
+What are the top 3 measurable objectives?
+
+Examples:
+- Process 10,000 transactions/day
+- Reduce onboarding time by 50%
+
+Your objectives:
+1. _
+2. _
+3. _
+
+---
+Question 2/3: Success Metrics
+
+[Only asks what's missing...]
+
+---
+Question 3/3: Constraints
+
+[Only asks what's missing...]
+
+✅ Phase 1 complete - merged with existing project-brief.md
+
+[Skip to Phase 2]
+```
+
+---
+
+### Scenario C: Low Confidence (<80%) or No Docs - FULL PHASE
+
+**If `phase1Data.consistencyScore < 80 || !phase1Data.exists`:**
+
+```
+---
+⚠️ BUSINESS CONTEXT NEEDS DOCUMENTATION
+
+Reason: project-brief.md is outdated or missing
+Consistency: 62% (or N/A if file doesn't exist)
+
+Issues detected:
+❌ Description is vague or outdated
+❌ Business objectives unclear
+❌ Missing critical information
+
+Recommendation: Complete full Phase 1 questionnaire
+
+Proceeding with full phase...
+[Continue to section 1.1]
+```
+
+---
+
+## Phase 1 Questions (Full Mode)
+
 > **📌 Note:** If Phase 0 was executed, some questions may already be answered. Skip those and only ask what's missing.
 
 **1.1 Project Name & Description (with Smart Refinement)**
