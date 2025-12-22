@@ -18,37 +18,43 @@ Detect changes in the codebase compared to the last documented state (stored in 
 
 ### Step 1: Check for Analysis File
 
+// turbo
+```bash
+cat .ai-flow/cache/docs-analysis.json
 ```
-First, check if `.ai-flow/cache/docs-analysis.json` exists:
 
 - ✅ If exists → Proceed to Step 2 (Compare Changes)
 - ❌ If NOT exists → Execute full Phase 0 analysis first:
-  - Run complete code analysis (as described in Phase 0)
+  - Run complete code analysis (Project Discovery)
   - Create `.ai-flow/cache/docs-analysis.json` with current state
   - Then proceed to Step 2
-```
 
 ### Step 2: Detect Changes
 
 **Reuse Phase 0 Analysis Logic:**
 
 1. **Perform Current Code Analysis:**
-   - Execute the same analysis as Phase 0 (section 0.1):
-     - File structure analysis
-     - AST-based code parsing (endpoints, entities, dependencies)
-     - Database schema analysis
-     - Pattern detection
+   - Execute project-wide discovery using cross-platform commands:
+     // turbo
+     ```bash
+     ls -R . --exclude-standard
+     ```
+   - Analyze current state for:
+     - File structure and major modules
+     - Interface definitions (API endpoints, CLI commands, RPC methods)
+     - Data structures (Models, Entities, Schemas)
+     - Core dependencies and configuration
    - Generate current state snapshot
 
 2. **Compare with Previous State:**
    - Load `.ai-flow/cache/docs-analysis.json`
    - Compare current state vs previous state
    - Detect changes in:
-     - **Endpoints:** New, modified, or deleted endpoints
-     - **Entities:** New fields, relationships, or deleted entities
-     - **Dependencies:** New libraries, updated versions
-     - **Architecture:** New modules, changed patterns
-     - **Configuration:** New environment variables, external services
+     - **Interfaces:** New, modified, or deleted "entry points" (API, CLI, etc.)
+     - **Data Forms:** New, modified, or deleted core data structures/entities
+     - **Dependencies:** Manifest changes (version bumps, new packages)
+     - **Architecture:** Structural changes (new modules, moved folders)
+     - **Configuration:** New environment keys or external integrations
 
 3. **Generate Change Report:**
    - Categorize changes by type
@@ -63,9 +69,9 @@ First, check if `.ai-flow/cache/docs-analysis.json` exists:
 📊 CAMBIOS DETECTADOS:
 
 🔴 Documentos que requieren actualización:
-- docs/api.md (3 nuevos endpoints en UsersController)
-- docs/data-model.md (campo "email" agregado a User)
-- ai-instructions.md (nueva dependencia "@nestjs/swagger")
+- docs/api.md (3 nuevas rutas en AuthModule)
+- docs/data-model.md (campo "active" agregado a User)
+- ai-instructions.md (nueva dependencia "zod")
 
 ⚠️ Cambios moderados detectados:
 - docs/architecture.md (cambio en estructura de carpetas)
@@ -184,15 +190,15 @@ No se requiere ninguna actualización.
 ✅ DOCUMENTACIÓN ACTUALIZADA:
 
 📝 docs/api.md
-- Agregados 3 nuevos endpoints de UsersController
-- Actualizada sección de autenticación
+- Agregados 3 nuevos puntos de entrada (AuthModule)
+- Actualizada sección de seguridad
 
 📝 docs/data-model.md
-- Agregado campo "email" a entidad User
+- Agregado campo "active" a estructura User
 - Actualizado diagrama ER (mermaid)
 
 📝 ai-instructions.md
-- Agregada dependencia "@nestjs/swagger"
+- Agregada dependencia "zod"
 - Actualizada sección de herramientas
 
 ✅ docs-analysis.json actualizado con nuevo estado
@@ -208,54 +214,48 @@ Actualización cancelada. Ejecuta `/flow-docs-sync` cuando estés listo para act
 ---
 ## Change Detection Rules
 
-### Endpoints Detection
+### Interface Detection (Agnostic)
 
-**What triggers `docs/api.md` update:**
+**What triggers document update (e.g., `docs/api.md`, `README.md`):**
 
-- New `@Controller()`, `@Get()`, `@Post()`, `@Put()`, `@Delete()`, `@Patch()` decorators
-- New `app.get()`, `app.post()`, `router.get()`, etc. (Express)
-- New `@app.get()`, `@app.post()`, `@router.get()` (FastAPI)
-- Modified route paths or methods
-- Deleted endpoints
+- New interface markers (e.g., Decorators like `@Get`, Route definitions like `app.get`, or exported public functions)
+- Modified interface paths, methods, or naming
+- Deleted interfaces
 
 **How to update:**
 
-- Add new endpoints following existing API conventions from Phase 3
-- Use same format, authentication, pagination rules as existing endpoints
-- Maintain all existing endpoints unchanged
+- Add new interfaces following the established patterns in the project
+- Use consistent formatting for parameters, responses, and security
+- Maintain existing documentation for unchanged segments
 
-### Entities Detection
+### Data Structure Detection (Agnostic)
 
-**What triggers `docs/data-model.md` update:**
+**What triggers document update (e.g., `docs/data-model.md`):**
 
-- New `@Entity()` classes (TypeORM)
-- New `model` definitions (Prisma)
-- New `@Column()` fields
-- New relationships (`@OneToMany`, `@ManyToOne`, etc.)
-- Modified field types or constraints
-- Deleted entities or fields
+- New schema definitions (e.g., `class User`, `struct User`, `type User`)
+- New ORM/ODM mappings (e.g., Prisma models, SQL tables, NoSQL schemas)
+- Field changes (additions, deletions, type modifications)
+- Relationship changes (Associations, Foreign Keys, Embedded docs)
 
 **How to update:**
 
-- Add new entities to entity catalog
-- Update entity definitions with new fields
-- Update ER diagram (mermaid) to include new relationships
-- Maintain all existing entities unchanged
+- Update data structure catalog with new definitions
+- Refresh ER diagrams (Mermaid) to reflect new relationships
+- Preserve documentation for unchanged structures
 
-### Dependencies Detection
+### Dependencies Detection (Agnostic)
 
-**What triggers `ai-instructions.md` update:**
+**What triggers update (e.g., `ai-instructions.md`, `package.json`):**
 
-- New entries in `package.json` / `requirements.txt` / `pom.xml` / etc.
-- Updated version numbers
-- New framework or ORM
+- Changes in dependency manifests (package.json, requirements.txt, go.mod, pom.xml, etc.)
+- Significant version updates (+Major or +Minor depending on project)
+- Changes in build systems or package managers
 
 **How to update:**
 
-- Add to dependencies section
-- Update version information
-- Add to tools/libraries list if significant
-- Maintain all existing dependencies
+- Update the tech stack or libraries section
+- Link to new requirements if necessary
+- Maintain information about stable core dependencies
 
 ### Architecture Detection
 
@@ -334,11 +334,11 @@ AI:
 ✅ DOCUMENTACIÓN ACTUALIZADA:
 
 📝 docs/api.md
-- Agregados 2 nuevos endpoints de UsersController (POST/DELETE /users/:id/avatar)
+- Agregados 2 nuevos puntos de entrada (Update/Delete Profile)
 - Mantenida toda la documentación existente
 
 📝 docs/data-model.md
-- Agregado campo "avatarUrl" (String, nullable) a entidad User
+- Agregado campo "display_name" (String, nullable) a estructura User
 - Actualizado diagrama ER (mermaid) con nuevo campo
 
 ✅ docs-analysis.json actualizado con nuevo estado
