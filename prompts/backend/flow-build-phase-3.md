@@ -18,6 +18,25 @@ Define the technical stack, architecture patterns, and system design.
 
 ---
 
+## 🔍 Pre-Flight Check (Smart Skip Logic)
+
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 3:**
+
+- **Target File**: `docs/architecture.md`
+- **Phase Name**: "SYSTEM ARCHITECTURE"
+- **Key Items**: Framework, architecture pattern, API style, database, caching, background jobs, integrations
+- **Typical Gaps**: API versioning, rate limiting, caching strategy
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
+---
+
+## Phase 3 Questions (Full Mode)
+
+---
+
 #### 🎨 MERMAID ARCHITECTURE DIAGRAM FORMAT - CRITICAL
 
 > 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../shared/mermaid-guidelines.md) for architecture diagram syntax, node shapes, and styling.
