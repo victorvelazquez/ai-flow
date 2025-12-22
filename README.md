@@ -135,7 +135,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-## **Current version:** 2.1.9
+## **Current version:** 2.2.0
 
 ## 🚀 Quick Start
 
