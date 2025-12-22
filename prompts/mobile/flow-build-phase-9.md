@@ -69,6 +69,20 @@ EP-ZZZ: Store Preparation & Deployment
 
 ### Step 9.5: Validate Coverage
 
+## Architectural Markers Key
+
+| Marker | Name | Description |
+|--------|------|-------------|
+| **[U]** | UI/Comp | Reusable components/widgets |
+| **[P]** | Screen | Screen layout & logic |
+| **[N]** | Nav | Navigation setup, deep links |
+| **[S]** | State/Data | State management, local storage |
+| **[F]** | Native/Feat | Permissions, native modules, SDKs |
+| **[T]** | Test | Unit, integration, e2e tests |
+| **[D]** | Docs | Documentation updates |
+
+---
+
 ### Step 9.6: Generate Document (docs/roadmap.md)
 
 ---

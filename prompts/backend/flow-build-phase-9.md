@@ -298,6 +298,20 @@ COVERAGE VALIDATION
 
 ### Step 9.6: Generate Document (5-10 min)
 
+## Architectural Markers Key
+
+| Marker | Name | Description |
+|--------|------|-------------|
+| **[I]** | Infrastructure | Technical setup, configuration, and core utilities |
+| **[E]** | Entity | Database models and schema definitions |
+| **[R]** | Repository | Data access layer (Prisma ORM) |
+| **[S]** | Service | Business logic and use cases |
+| **[C]** | Controller | API endpoints and request handling |
+| **[T]** | Tests | Unit, integration, and E2E testing |
+| **[D]** | Documentation | Technical and API documentation |
+
+---
+
 **Write `docs/roadmap.md` with this structure:**
 
 ```markdown
