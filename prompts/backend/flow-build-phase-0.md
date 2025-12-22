@@ -105,8 +105,247 @@ Show the final "🔍 BACKEND STACK DETECTED" report and ask for confirmation.
 
 ---
 
-## 0.4 Proactive Suggestions
-Generate a report of missing critical elements (e.g., "Rate Limiting Not Detected", "CORS Not Configured") and offer to address them in later phases.
+## 0.4 Layer 4: Documentation Audit (30-90s, CONDITIONAL)
+
+**Trigger:** Only if `docs/` or `specs/` directories exist with content.
+
+**Purpose:** Validate existing documentation against implemented code to detect inconsistencies.
+
+### 0.4.1 Ask User Permission
+
+```
+📚 Existing documentation detected (12 files in docs/, 3 in specs/)
+
+Would you like to audit documentation vs code?
+A) Yes, audit and show inconsistencies (recommended) ⭐
+B) No, skip audit (continue to Phase 1)
+
+> _
+```
+
+**If user selects B:** Skip to section 0.5 (Validation & Synthesis).
+
+### 0.4.2 Parse Existing Documentation
+
+**Action:** Extract documented information from:
+- `docs/architecture.md` → Architecture patterns
+- `docs/data-model.md` → Entities and fields
+- `docs/api.md` → Endpoints and methods
+- `specs/requirements.md` → Business requirements
+
+**Save to:** `.ai-flow/cache/docs-snapshot.json`
+
+### 0.4.3 Compare Code vs Documentation
+
+**Compare:**
+1. **Entities:** Schema files (Prisma, TypeORM, etc.) vs `docs/data-model.md`
+2. **Endpoints:** Controllers/Routes vs `docs/api.md`
+3. **Architecture:** Code structure vs `docs/architecture.md`
+4. **Tech Stack:** `package.json` vs documented stack
+
+**Detect:**
+- Items in code but not in docs (undocumented features)
+- Items in docs but not in code (missing implementations or obsolete docs)
+- Mismatches in fields, types, or patterns
+
+### 0.4.4 Classify Inconsistencies
+
+**Severity Levels:**
+
+🔴 **CRITICAL** (Requires user decision):
+- Documented entity/endpoint not implemented
+- Major architectural mismatch
+
+🟡 **MEDIUM** (Auto-correctable with confirmation):
+- Implemented endpoint not documented
+- Missing fields in docs
+
+🟢 **LOW** (Auto-correctable):
+- Obsolete fields in docs
+- Outdated version numbers
+
+### 0.4.5 Generate Audit Summary
+
+**Output:** Concise summary (full report saved for later).
+
+```
+---
+📊 Documentation Audit Summary
+
+Consistency Score: 72%
+
+🔴 Critical: 2 issues
+  - Entity 'Category' documented but not in schema
+  - Endpoint POST /api/auth/register documented but missing
+
+🟡 Medium: 5 issues
+  - 3 endpoints implemented but not documented
+  - 2 entity fields missing in docs
+
+🟢 Minor: 3 issues
+  - 3 obsolete fields in documentation
+
+💡 Recommendation:
+  - Review critical issues before continuing
+  - Full audit report will be generated in Phase 8
+  - Auto-corrections can be applied after Phase 8
+---
+```
+
+### 0.4.6 Handle Critical Issues (If Any)
+
+**If critical issues found:**
+
+```
+⚠️ Critical inconsistencies detected!
+
+How would you like to proceed?
+A) Continue to Phase 1 (address issues later in Phase 8) ⭐
+B) Review critical issues now (interactive)
+C) Cancel /flow-build (fix manually first)
+
+> _
+```
+
+**Option A (Recommended):** Continue to Phase 1
+- Save audit data for Phase 8
+- Phase 8 will offer to apply corrections
+
+**Option B:** Interactive review now
+```
+🔴 Critical Issue 1/2: Entity 'Category'
+   Documented in docs/data-model.md but NOT in schema
+
+   What should we do?
+   A) Mark as "To Implement" (add to roadmap)
+   B) Mark as "Obsolete" (remove from docs in Phase 8)
+   C) Skip for now
+
+> _
+```
+
+**Option C:** Cancel
+- User fixes issues manually
+- Re-run `/flow-build` later
+
+### 0.4.7 Save Audit Data
+
+**Save to:** `.ai-flow/cache/audit-data.json`
+
+```json
+{
+  "auditPerformed": true,
+  "timestamp": "2025-12-22T16:43:00Z",
+  "consistencyScore": 72,
+  "critical": 2,
+  "medium": 5,
+  "minor": 3,
+  "userDecisions": {
+    "Category": "obsolete",
+    "POST /api/auth/register": "to_implement"
+  },
+  "phases": {
+    "phase1": {
+      "file": "project-brief.md",
+      "exists": true,
+      "consistencyScore": 100,
+      "recommendation": "SKIP",
+      "gaps": [],
+      "reason": "Complete business context documented"
+    },
+    "phase2": {
+      "file": "docs/data-model.md",
+      "exists": true,
+      "consistencyScore": 98,
+      "recommendation": "SKIP",
+      "gaps": [],
+      "reason": "All entities documented and match schema"
+    },
+    "phase3": {
+      "file": "docs/architecture.md",
+      "exists": true,
+      "consistencyScore": 87,
+      "recommendation": "HYBRID",
+      "gaps": ["api_versioning", "rate_limiting"],
+      "reason": "Architecture documented but missing 2 details"
+    },
+    "phase4": {
+      "file": "specs/security.md",
+      "exists": true,
+      "consistencyScore": 95,
+      "recommendation": "SKIP",
+      "gaps": [],
+      "reason": "Security patterns match implementation"
+    },
+    "phase5": {
+      "file": "docs/code-standards.md",
+      "exists": true,
+      "consistencyScore": 92,
+      "recommendation": "SKIP",
+      "gaps": [],
+      "reason": "Standards documented and enforced"
+    },
+    "phase6": {
+      "file": "docs/testing.md",
+      "exists": true,
+      "consistencyScore": 90,
+      "recommendation": "SKIP",
+      "gaps": [],
+      "reason": "Testing strategy documented"
+    },
+    "phase7": {
+      "file": "docs/deployment.md",
+      "exists": true,
+      "consistencyScore": 82,
+      "recommendation": "HYBRID",
+      "gaps": ["monitoring_strategy", "incident_runbooks"],
+      "reason": "Deployment documented but missing operational details"
+    }
+  }
+}
+```
+
+**Recommendation Logic:**
+- **SKIP** (≥95%): Phase can be skipped, use existing docs
+- **HYBRID** (80-94%): Ask only missing questions, merge with existing docs
+- **FULL** (<80% or file missing): Execute full phase with pre-filled answers
+
+This data will be used in Phases 1-7 to:
+1. Determine if phase can be skipped
+2. Identify specific gaps to ask about
+3. Merge new answers with existing documentation
+
+This data will be used in Phase 8 to:
+1. Generate detailed audit report
+2. Apply auto-corrections
+3. Update roadmap with "To Implement" items
+
+---
+
+## 0.5 Validation & Synthesis
+
+### Present Findings
+
+Show the final report including:
+1. **🔍 BACKEND STACK DETECTED** (from Layers 1-3)
+2. **📊 Documentation Audit Summary** (from Layer 4, if executed)
+
+Ask for confirmation to proceed to Phase 1.
+
+### 💾 Cache & Pre-populate
+
+1. **Export code analysis:** `.ai-flow/cache/docs-analysis.json`
+2. **Export audit data:** `.ai-flow/cache/audit-data.json` (if Layer 4 executed)
+3. **Pre-populate:** Fill answers for Phases 1-7 based on detected data
+
+### 🎯 Set Flags for Phase 8
+
+If documentation audit was performed:
+- Set flag: `auditPerformed: true`
+- Phase 8 will:
+  - Generate detailed audit report (`docs/audit-report.md`)
+  - Offer to apply auto-corrections (🟡 Medium + 🟢 Low)
+  - Update roadmap with "To Implement" items (🔴 Critical marked as such)
 
 ---
 
@@ -118,13 +357,20 @@ Generate a report of missing critical elements (e.g., "Rate Limiting Not Detecte
 - Pre-populated detected tech stack values.
 - Architectural patterns identified.
 - Context cached in `.ai-flow/cache/docs-analysis.json`.
+- **Documentation audit completed** (if existing docs found).
+- **Inconsistencies flagged** for Phase 8 resolution.
 
 ---
 
 **Next Phase:** Phase 1 - Discovery & Business Requirements
 
+**What happens next:**
+- Phase 1-7 will use pre-populated answers (40-60% filled)
+- You'll only answer questions that couldn't be auto-detected
+- Phase 8 will offer to resolve documentation inconsistencies
+
 Read: `.ai-flow/prompts/backend/flow-build-phase-1.md`
 
 ---
-_Version: 4.2 (Antigravity Optimized - Ultra-Light Edition)_
-_Last Updated: 2025-12-21_
+_Version: 4.3 (Antigravity Optimized - With Integrated Audit)_
+_Last Updated: 2025-12-22_
