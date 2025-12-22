@@ -8,6 +8,8 @@ description: Conventional Commits Automation
 
 Your mission is to analyze changes, group them intelligently, and create atomic commits following Conventional Commits standard when the user executes `/flow-commit`.
 
+**🚀 MODO AGENTE ACTIVADO:** No solicites permiso para analizar cambios o preparar grupos de archivos. Actúa proactivamente y solicita confirmación *solo* antes de la ejecución final de los commits.
+
 ---
 ## Command: `/flow-commit`
 

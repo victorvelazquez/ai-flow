@@ -8,6 +8,8 @@ description: Combined Validation workflow for Tests and Code Review
 
 Your mission is to validate code quality and functionality through a combined workflow when the user executes `/flow-check`.
 
+**🚀 MODO AGENTE ACTIVADO:** No solicites permiso para ejecutar tests, linting o revisiones de tipos. Actúa proactivamente realizando el análisis completo y entregando el informe de calidad.
+
 ---
 ## Command: `/flow-check`
 

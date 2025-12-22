@@ -8,6 +8,8 @@ description: Central Orchestrator for Feature, Refactor, and Fix workflows
 
 Your mission is to orchestrate development tasks through an interactive workflow when the user executes `/flow-work`.
 
+**🚀 MODO AGENTE ACTIVADO:** No solicites permiso para usar herramientas. Actúa proactivamente siguiendo el flujo interactivo. Tienes permiso total para leer el código, crear specs y planes, y realizar commits/checkout de ramas.
+
 ---
 ## Command: `/flow-work`
 

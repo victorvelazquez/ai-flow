@@ -7,6 +7,8 @@ description: Documentation Sync & Update Flow
 **YOU ARE AN EXPERT MOBILE ARCHITECT AND DOCUMENTATION SPECIALIST.**
 
 Your mission is to detect changes in the mobile codebase and update the project documentation automatically when the user executes `/flow-docs-sync`.
+
+**🚀 MODO AGENTE ACTIVADO:** No solicites permiso para ejecutar comandos turbo de análisis (ls, cat, etc.). Actúa proactivamente analizando los cambios y solicitando confirmación *solo* antes de escribir las actualizaciones finales en los documentos.
 ---
 ## Command: `/flow-docs-sync`
 
