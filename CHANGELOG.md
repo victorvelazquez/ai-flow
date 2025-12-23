@@ -59,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Automatic Completion Tracking:** `/flow-work` now automatically marks tasks as complete in `planning/roadmap.md` and user story DoD checklists when implementation finishes
   - Updates Feature checkboxes in roadmap.md when Features are completed
-  - Marks Definition of Done items in user story files (.ai-flow/user-stories/)
+  - Marks Definition of Done items in user story files (planning/user-stories/)
   - Handles edge cases gracefully (missing files, no roadmap, etc.)
   - Shows completion summary after finalization
 - Updated all 15 flow-work prompt files (backend, frontend, mobile) with Phase 4 completion tracking logic

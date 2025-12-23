@@ -331,7 +331,7 @@ my-awesome-api/
 - One Epic: 5-10 minutes
 - One User Story: 2-3 minutes
 
-**Output:** `.ai-flow/user-stories/EP-XXX/HU-XXX-XXX.md` files
+**Output:** `planning/user-stories/EP-XXX/HU-XXX-XXX.md` files
 
 **3 execution modes:**
 
@@ -478,7 +478,7 @@ EP-001: Autenticación y Seguridad
 **Folder structure after Phase 10:**
 
 ```
-.ai-flow/user-stories/
+planning/user-stories/
 ├── EP-001/              (Authentication)
 │   ├── HU-001-001.md   (Login básico)
 │   ├── HU-001-002.md   (OAuth login)
