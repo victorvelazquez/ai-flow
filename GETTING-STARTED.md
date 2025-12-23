@@ -673,6 +673,8 @@ After initialization, you have access to **16+ slash commands**:
 
 ```
 
+> **Automatic Completion Tracking:** When you complete work with `/flow-work`, the system automatically updates `docs/roadmap.md` (marks Feature checkboxes) and `docs/user-stories/` files (marks DoD checklist items). This keeps your documentation synchronized with actual implementation progress.
+
 ## See [Commands Cheat Sheet](#commands-cheat-sheet) for the complete list.
 
 ## 📚 Part 2: Core Workflows

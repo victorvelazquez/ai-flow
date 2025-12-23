@@ -310,10 +310,12 @@ After initialization, use these slash commands in your AI tool:
 
 **Workflows (All project types):**
 
-- `/flow-work` - **Unified orchestrator** for Features/Refactors/Fixes with smart detection
+- `/flow-work` - **Unified orchestrator** for Features/Refactors/Fixes with smart detection and automatic completion tracking
 - `/flow-check` - **Combined validation**: Tests + Code Review in one command
 - `/flow-commit` - Automate commits with Conventional Commits (3-5 min)
 - `/flow-docs-sync` - **Sync documentation** when code changes occur
+
+> **Note:** `/flow-work` automatically marks tasks as complete in `docs/roadmap.md` and user story DoD checklists when implementation finishes.
 
 ## **📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
 
