@@ -47,18 +47,54 @@ Provide a single, intelligent entry point for all development work (New Features
 - **COMPLEX FIX**: Multi-file, architectural, performance/security. → Use `flow-work-fix.md` (Deep).
 
 ---
-## Phase 1: Interactive Analysis
+## Phase 1: Analysis & Refinement
 
 **1. Context Loading (Multi-Source):**
+
 **CRITICAL**: Regardless of whether a `USER_STORY` ID or a `ROADMAP_FEATURE` name is provided, you MUST attempt to load context from **BOTH** sources:
 - **`docs/roadmap.md`**: To understand high-level scope, epic relationships, and technical dependencies.
 - **`docs/user-stories/**/HU-XXX-XXX.md`**: To get granular details (Acceptance Criteria, Gherkin Scenarios, QA cases).
 
-**2. Interactive Questions:**
-- IF both sources provide 100% clarity: Skip questions.
-- IF there is missing info or ambiguity: Ask 3-5 key questions with **Multiple Choice Options** and **Defaults (marked with ⭐)**.
+**2. Detail Level Detection (if Manual input):**
 
-**Example Interaction:**
+IF input is manual description (not HU/Roadmap):
+
+```python
+detail_level = analyze_description(input)
+
+# Criteria for HIGH detail (Feature):
+# - Mentions technology/method (JWT, OAuth, bcrypt, etc.)
+# - Describes flow (registration, login, CRUD, etc.)
+# - Includes technical constraints (hashing, tokens, validation, etc.)
+
+# Criteria for HIGH detail (Refactor):
+# - Describes what to extract/move
+# - Mentions destination (file/class)
+# - References pattern to follow
+
+# Criteria for HIGH detail (Fix):
+# - Describes symptom (error 500, crash, null pointer, etc.)
+# - Mentions probable cause
+# - Suggests fix approach
+```
+
+**3. Interactive Refinement (Conditional):**
+
+**IF detail_level == "HIGH":**
+- Skip refinement questions
+- Proceed directly to Phase 2 (Planning)
+- Show: "✅ Sufficient detail detected. Proceeding with planning..."
+
+**IF detail_level == "MEDIUM":**
+- Ask 1-2 targeted questions (only missing items)
+- Use Multiple Choice with defaults (⭐)
+
+**IF detail_level == "LOW":**
+- Full refinement flow (3-5 questions)
+- Use Multiple Choice with defaults (⭐)
+- Focus on: approach, scope, constraints, priorities
+
+**Example Interaction (LOW detail):**
 > 📝 I need to clarify some details for this feature:
 > 1. What authentication provider should we use? [default: A]
 >    A) JWT (Local) ⭐
@@ -68,19 +104,235 @@ Provide a single, intelligent entry point for all development work (New Features
 > 2. Should we implement audit logs for this? [default: B]
 >    A) Yes
 >    B) No ⭐
+>
+> Your answers (or Enter for defaults): _
+
+**4. Refined Objective Generation (if Manual):**
+
+After refinement, generate clear objective statement:
+```
+✅ Refined Objective:
+
+[Clear 1-2 paragraph description of WHAT will be implemented]
+
+**Scope**:
+- [List in-scope items]
+
+**Out of Scope**:
+- [List out-of-scope items]
+
+Is this correct? (Yes/Edit/Cancel): _
+```
+
+**5. Documentation Compliance Check:**
+
+Read relevant documentation:
+- `ai-instructions.md` (NEVER/ALWAYS rules)
+- `docs/architecture.md` (patterns, structure)
+- `docs/code-standards.md` (naming, quality)
+- IF auth/security: `specs/security.md`
+- IF database: `docs/data-model.md`
+- IF API: `docs/api.md`
+
+Compare refined objective against documentation:
+
+**IF deviation detected:**
+```
+🚨 POTENTIAL DEVIATION
+
+From [document]:
+❌ NEVER: [rule being violated]
+✅ ALWAYS: [rule being ignored]
+
+Your request: [conflicting part]
+
+Options:
+A) Modify request to align with documentation
+B) Proceed with deviation (requires justification)
+C) Cancel
+
+Your choice: _
+```
+
+**IF user chooses B (Override):**
+```
+⚠️ OVERRIDE CONFIRMATION
+
+You are implementing something that deviates from:
+- [list violated documents/rules]
+
+Type "I UNDERSTAND THE RISKS" to proceed: _
+
+Provide justification: _
+```
 
 ---
 ## Phase 2: Planning & Documentation
 
-1. **`spec.md`**: Generate/Update in `specs/ai-flow/work/[task-name]/spec.md`.
-   - Ask for user approval.
-2. **`plan.md`**: Generate technical approach and task list.
-   - Assign Feature Number (NNN).
-   - Story Points estimation (Fibonacci).
-   - Phase organization.
-   - Ask for user approval.
-3. **`task.md`**: Generate the checklist of tactical tasks.
-4. **`status.json`**: Initialize/Update metadata (progress, branch, validation state).
+**1. Read Required Documentation (MANDATORY)**
+
+Before generating work.md, read relevant documentation:
+- `ai-instructions.md` → Extract NEVER/ALWAYS rules
+- `docs/architecture.md` → Identify layer, pattern, file structure
+- `docs/code-standards.md` → Extract naming conventions, quality rules
+- IF touching database: `docs/data-model.md`
+- IF auth/security: `specs/security.md`
+- IF creating/modifying API: `docs/api.md`
+- IF tests required: `docs/testing.md`
+
+**2. Analyze Existing Codebase (MANDATORY)**
+
+Find similar features/patterns in codebase:
+- Identify existing files to use as reference (e.g., ProductService.ts for UserService.ts)
+- Check naming conventions in actual code
+- Verify architectural consistency
+- Look for reusable components/services
+
+**3. Generate work.md**
+
+Create single consolidated file: `specs/ai-flow/work/[task-name]/work.md`
+
+**Structure** (~30-40 lines):
+
+```markdown
+# [Type]: [Feature Name]
+
+## Context
+**Source**: HU-001-002 | Roadmap 2.3 | Manual [+ DEVIATION if override]
+**SP**: 5 | **Branch**: feature/user-auth | **Deps**: None
+
+## Objective
+[1-2 clear paragraphs describing WHAT will be implemented]
+
+## Documentation Constraints
+**Read**: ai-instructions.md, architecture.md, code-standards.md, [security.md]
+
+**Key Rules**:
+- ✅ ALWAYS: [List specific rules that apply]
+- ❌ NEVER: [List specific prohibitions]
+- 📐 Pattern: [Architectural pattern from docs]
+- 📁 Location: [File structure from architecture.md]
+
+## Approach
+**Layer**: [Data | Business Logic | API | UI]
+**Files**: [List files to create/modify]
+**Reference**: [Existing file to follow as pattern]
+
+**Phases**:
+1. [Phase 1 description]
+2. [Phase 2 description]
+3. [Phase 3 description]
+4. [Phase 4 description]
+
+## Tasks
+[SEE TASK GENERATION LOGIC BELOW]
+
+## Validation
+- [ ] All NEVER/ALWAYS rules followed
+- [ ] Tests pass (coverage per docs/testing.md)
+- [ ] No hardcoded secrets
+- [ ] Follows existing patterns
+- [ ] [Add specific validations based on type]
+```
+
+**Task Generation Logic:**
+
+**IF source is User Story:**
+```python
+tasks = read_user_story_tasks()
+if tasks.are_detailed():  # Has: path, constraints, SP, deps
+    work_md.tasks = """
+**Source**: docs/user-stories/EP-XXX/HU-XXX-XXX.md
+
+Tasks already detailed in User Story (see linked file).
+
+**Summary**: [N] tasks, [X] SP total
+- [Brief phase breakdown]
+"""
+else:
+    work_md.tasks = generate_detailed_tasks()
+```
+
+**IF source is Roadmap:**
+```python
+feature = read_roadmap_feature()
+if feature.has_detailed_tasks():
+    work_md.tasks = """
+**Source**: docs/roadmap.md Feature X.X
+
+Tasks already detailed in Roadmap (see linked file).
+
+**Summary**: [N] tasks, [X] SP total
+"""
+else:
+    work_md.tasks = generate_detailed_tasks()
+```
+
+**IF source is Manual OR tasks need expansion:**
+
+Generate detailed tasks with this format:
+```markdown
+## Tasks
+**Source**: Manual | Roadmap X.X (expanded) | HU-XXX-XXX (expanded)
+
+- [ ] T001 [D] Create User entity → src/entities/User.ts • 1 SP
+  - Follow Product.ts pattern, hash passwords (bcrypt)
+- [ ] T002 [L] UserService.register() → src/services/ • 2 SP
+  - Validate email, hash password, return JWT (deps: T001)
+- [ ] T003 [A] POST /users/register → src/controllers/ • 1 SP
+  - Return 201, rate limit, follow api.md (deps: T002)
+- [ ] T004 [T] Unit tests → tests/services/ • 2 SP
+  - 80% coverage, edge cases (deps: T002)
+```
+
+**Task Detail Requirements:**
+- Specific file path
+- Pattern/reference to follow
+- Key constraints from docs
+- Dependencies (if applicable)
+- Story Points
+
+**4. Generate status.json**
+
+Create: `specs/ai-flow/work/[task-name]/status.json`
+
+```json
+{
+  "type": "feature|refactor|fix",
+  "source": "HU-001-002|roadmap-2.3|manual",
+  "deviation": false,
+  "progress": {
+    "totalTasks": 4,
+    "completedTasks": 0,
+    "percentage": 0
+  },
+  "git": {
+    "branchName": "feature/user-auth",
+    "commits": []
+  },
+  "timestamps": {
+    "created": "2025-12-22T23:00:00-03:00",
+    "lastUpdated": "2025-12-22T23:00:00-03:00"
+  },
+  "validation": {
+    "tests": { "executed": false },
+    "lint": { "executed": false }
+  }
+}
+```
+
+**5. User Approval**
+
+Show work.md for review:
+```
+📄 Generated: specs/ai-flow/work/[task-name]/work.md
+
+Review work.md? (Yes/Edit/No): _
+```
+
+- **Yes**: Proceed to Phase 3
+- **Edit**: Allow user to modify work.md, then re-read
+- **No**: Cancel workflow
 
 ---
 ## Phase 3: Execution (Branch Creation)
@@ -94,11 +346,14 @@ Provide a single, intelligent entry point for all development work (New Features
 2. **Execute**: `git checkout -b [branch-name]`.
 3. **Update `status.json`**: Record branch name and start timestamp.
 4. **Implementation**: Proceed according to the selected mode (Auto, Phase-by-phase, Task-by-task).
+   - Follow tasks in `work.md`
+   - Update task checkboxes as completed
+   - Update `status.json` progress
 
 ---
 ## Phase 4: Finalization & Archiving
 
-**When all tasks in `task.md` are complete (✅) and validated:**
+**When all tasks in `work.md` are complete (✅) and validated:**
 
 1. **Update Source Documentation (Automatic - ALWAYS UPDATE BOTH IF BOTH EXIST)**:
    

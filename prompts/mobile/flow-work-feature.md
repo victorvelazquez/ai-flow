@@ -9,34 +9,39 @@ This file contains the detailed execution logic for implementing new features, i
 ---
 ## 🚀 Feature Implementation Flow
 
-### 1. Specification (auto-skip if User Story)
-- Extract requirements from User Story or Roadmap.
-- If interactive, ask clarification questions (Multiple Choice).
-- Save to `specs/ai-flow/work/[feature]/spec.md`.
+### 1. Context Analysis (auto-skip if User Story with detailed tasks)
+- Extract requirements from User Story or Roadmap
+- If User Story has detailed tasks: Skip to work.md generation
+- If Roadmap or Manual: Analyze and refine
+- Read relevant documentation (ai-instructions.md, architecture.md, etc.)
 
-### 2. Technical Planning
-- Analyze codebase for patterns.
-- Generate `plan.md` with Fibonacci estimation.
-- Organize tasks into layers (Data, Logic, API, Test, Docs).
-- **User Confirmation Required.**
+### 2. work.md Generation
+- Generate consolidated work.md (see Phase 2 in flow-work.md)
+- Include: Context, Objective, Constraints, Approach, Tasks, Validation
+- **User Confirmation Required**
 
 ### 3. Progressive Implementation
 Choose mode:
-- **Auto**: Complete all tasks without pausing.
-- **Phase-by-phase**: Pause and validate after each phase.
-- **Task-by-task**: Pause after each task.
+- **Auto**: Complete all tasks without pausing
+- **Phase-by-phase**: Pause and validate after each phase
+- **Task-by-task**: Pause after each task
+
+Follow tasks in `work.md`:
+- Update checkboxes as completed
+- Update `status.json` progress
+- Follow patterns and constraints specified
 
 ### 4. Definition of Done (DoD)
-- If HU mode: Validate against Gherkin scenarios.
-- Run tests and linting.
-- Perform security check.
-- **Update completion status** in source documents (see Phase 4 Step 1 in flow-work.md).
+- If HU mode: Validate against Gherkin scenarios
+- Run tests and linting
+- Perform security check
+- **Update completion status** in source documents (see Phase 4 Step 1 in flow-work.md)
 
 ---
 ## 🌿 Git Branching Strategy
-- Generate slug from name.
-- Execute `git checkout -b feature/[slug]`.
-- Maintain `status.json` with commit history.
+- Generate slug from name
+- Execute `git checkout -b feature/[slug]`
+- Maintain `status.json` with commit history
 
 ---
 ## 📦 status.json Persistence

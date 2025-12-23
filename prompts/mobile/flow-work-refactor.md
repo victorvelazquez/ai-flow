@@ -9,24 +9,29 @@ This file contains the detailed execution logic for code refactoring, imported b
 ---
 ## 🔄 Refactoring Workflow
 
-### 1. Scope Identification
-- Map affected files and dependencies.
-- Confirm no behavior change is expected.
-- Validate against architecture patterns.
+### 1. Scope Identification & work.md Generation
+- Map affected files and dependencies
+- Confirm no behavior change expected
+- Validate against architecture patterns
+- Generate work.md with:
+  - Clear scope (what to extract/move/rename)
+  - Affected files list
+  - Step-by-step tasks
+  - "No behavior change" constraint
 
-### 2. Implementation Strategy
-- Use `plan.md` to map extraction/renaming/moving steps.
-- Set "No behavior change" as the primary constraint.
+### 2. Implementation
+- Follow work.md tasks sequentially
+- Update imports and references across codebase
+- **Critical**: Existing tests must pass without modification (unless test itself is refactored)
 
-### 3. Execution & Safety
-- Update imports and references across the codebase.
-- **Critical**: Existing tests must pass without modification (unless test itself is refactored).
-- Run `/flow-check` to verify no regressions.
-- **Update completion status** if refactor was tracked in roadmap/user stories (see Phase 4 Step 1 in flow-work.md).
+### 3. Validation
+- Run `/flow-check` to verify no regressions
+- Confirm all tests pass
+- **Update completion status** if refactor was tracked in roadmap/user stories (see Phase 4 Step 1 in flow-work.md)
 
 ---
 ## 🌿 Git Branching Strategy
-- Execute `git checkout -b refactor/[slug]`.
+- Execute `git checkout -b refactor/[slug]`
 
 ---
 ## 📦 status.json Persistence
