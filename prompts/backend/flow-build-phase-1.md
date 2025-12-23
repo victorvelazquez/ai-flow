@@ -22,7 +22,7 @@ Define the project's core purpose, business rules, and high-level requirements t
 - **Key Items**: Project name, description, users, objectives, system type, features, scope, constraints, metrics, business flows
 - **Typical Gaps**: Business objectives, success metrics, constraints
 
-**Proceed with appropriate scenario based on audit data from `cache/audit-data.json`**
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
 
 ---
 

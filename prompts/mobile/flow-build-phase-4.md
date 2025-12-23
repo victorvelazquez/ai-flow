@@ -25,7 +25,7 @@ Define security policies, authentication, authorization, and compliance requirem
 - **Key Items**: Auth strategy, encryption, security patterns, compliance
 - **Typical Gaps**: Compliance requirements, audit logging, security policies
 
-**Proceed with appropriate scenario based on audit data from `cache/audit-data.json`**
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
 
 ---
 

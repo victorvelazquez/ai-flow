@@ -23,7 +23,7 @@ Design the database model, entities, and relationships.
 - **Key Items**: Entities, relationships, data patterns, indexes
 - **Typical Gaps**: Missing entities, undocumented relationships, missing fields
 
-**Proceed with appropriate scenario based on audit data from `cache/audit-data.json`**
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
 
 ---
 
