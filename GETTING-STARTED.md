@@ -59,7 +59,7 @@ Verify installation:
 
 ```bash
 ai-flow --version
-# Output: 2.2.4
+# Output: 2.4.0
 ```
 
 _Note: Package name is `ai-flow-dev`, but the CLI command remains `ai-flow`_
@@ -213,7 +213,7 @@ After answering, you'll see:
 
 After completion, you'll have professional documentation:
 
-**Backend projects** (17 documents):
+**Backend projects** (14 documents):
 
 ```
 my-awesome-api/
@@ -236,7 +236,7 @@ my-awesome-api/
 └── README.md                 # Project overview
 ```
 
-**Backend projects** (17 documents), **Frontend projects** (15 documents), **Mobile projects** (13 documents), **Fullstack projects** (30+ documents) - see [Project Type Comparison](#project-type-comparison) for details.
+**Backend projects** (14 documents), **Frontend projects** (15 documents), **Mobile projects** (13 documents), **Fullstack projects** (4 documents) - see [Project Type Comparison](#project-type-comparison) for details.
 
 #### Step 6: Phase 8 - Project Setup (Automatic)
 
@@ -301,7 +301,7 @@ my-awesome-api/
 
 **Time:** 15-30 minutes (automated)
 
-**Output:** `docs/roadmap.md` with complete implementation plan (strategic level)
+**Output:** `planning/roadmap.md` with complete implementation plan (strategic level)
 
 **When to use:**
 
@@ -318,7 +318,7 @@ my-awesome-api/
 
 **What Phase 10 does:**
 
-- ✅ Reads docs/roadmap.md Features and converts them to detailed User Stories
+- ✅ Reads planning/roadmap.md Features and converts them to detailed User Stories
 - ✅ Generates Gherkin-style acceptance criteria (Given/When/Then)
 - ✅ Creates technical task breakdown (Backend/Frontend/Testing)
 - ✅ Derives QA test cases from acceptance criteria
@@ -351,7 +351,7 @@ my-awesome-api/
 - ✅ You want detailed User Stories with acceptance criteria before coding
 - ✅ You're working with QA and need test case specifications
 - ✅ You follow Scrum/Agile with User Story format
-- ❌ Skip if docs/roadmap.md is enough for your workflow
+- ❌ Skip if planning/roadmap.md is enough for your workflow
 
 **Example User Story structure:**
 
@@ -497,7 +497,7 @@ EP-001: Autenticación y Seguridad
 **With roadmap only (Phase 9):**
 
 ```bash
-# Use Feature names from docs/roadmap.md
+# Use Feature names from planning/roadmap.md
 /flow-dev-feature Base application configuration
 ```
 
@@ -673,7 +673,7 @@ After initialization, you have access to **16+ slash commands**:
 
 ```
 
-> **Automatic Completion Tracking:** When you complete work with `/flow-work`, the system automatically updates `docs/roadmap.md` (marks Feature checkboxes) and `docs/user-stories/` files (marks DoD checklist items). This keeps your documentation synchronized with actual implementation progress.
+> **Automatic Completion Tracking:** When you complete work with `/flow-work`, the system automatically updates `planning/roadmap.md` (marks Feature checkboxes) and `planning/user-stories/` files (marks DoD checklist items). This keeps your documentation synchronized with actual implementation progress.
 
 > **Consolidated Planning:** `/flow-work` generates a single consolidated `work.md` file (~30-40 lines) that includes context, objectives, documentation constraints, approach, tasks, and validation. This reduces context window usage and makes it easier to review and resume work.
 

@@ -140,7 +140,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-## **Current version:** 2.2.4
+## **Current version:** 2.4.0
 
 ## 🚀 Quick Start
 
@@ -315,7 +315,7 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-commit` - Automate commits with Conventional Commits (3-5 min)
 - `/flow-docs-sync` - **Sync documentation** when code changes occur
 
-> **Note:** `/flow-work` automatically marks tasks as complete in `docs/roadmap.md` and user story DoD checklists when implementation finishes. It generates a consolidated `work.md` file for efficient planning and context management.
+> **Note:** `/flow-work` automatically marks tasks as complete in `planning/roadmap.md` and user story DoD checklists when implementation finishes. It generates a consolidated `work.md` file for efficient planning and context management.
 
 ## **📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
 

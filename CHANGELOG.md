@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - **Project Structure Reorganization:** Improved separation of concerns for better clarity
-  - Moved `docs/roadmap.md` → `planning/roadmap.md` (requirements, not documentation)
-  - Moved `docs/user-stories/` → `planning/user-stories/` (requirements, not documentation)
+  - Moved `planning/roadmap.md` → `planning/roadmap.md` (requirements, not documentation)
+  - Moved `planning/user-stories/` → `planning/user-stories/` (requirements, not documentation)
   - Moved `specs/ai-flow/` → `.ai-flow/` (temporary state, not specification)
   - Updated 70+ files (prompts + templates) with new paths
   - Added `.ai-flow/` to `.gitignore` (optional)
@@ -57,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.2.5] - 2025-12-23
 ### Added
-- **Automatic Completion Tracking:** `/flow-work` now automatically marks tasks as complete in `docs/roadmap.md` and user story DoD checklists when implementation finishes
+- **Automatic Completion Tracking:** `/flow-work` now automatically marks tasks as complete in `planning/roadmap.md` and user story DoD checklists when implementation finishes
   - Updates Feature checkboxes in roadmap.md when Features are completed
   - Marks Definition of Done items in user story files (.ai-flow/user-stories/)
   - Handles edge cases gracefully (missing files, no roadmap, etc.)
