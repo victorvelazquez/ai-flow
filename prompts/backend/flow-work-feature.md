@@ -30,6 +30,7 @@ Choose mode:
 - If HU mode: Validate against Gherkin scenarios.
 - Run tests and linting.
 - Perform security check.
+- **Update completion status** in source documents (see Phase 4 Step 1 in flow-work.md).
 
 ---
 ## 🌿 Git Branching Strategy

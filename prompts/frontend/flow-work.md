@@ -100,18 +100,47 @@ Provide a single, intelligent entry point for all development work (New Features
 
 **When all tasks in `task.md` are complete (✅) and validated:**
 
-1. **Sugerir Próximos Pasos**:
+1. **Update Source Documentation (Automatic - ALWAYS UPDATE BOTH IF BOTH EXIST)**:
+   
+   **Step 1a: Check and Update User Story (if exists)**
+   - Look for User Story reference in `status.json` or work context
+   - IF User Story `HU-XXX-XXX` exists:
+     - Read `docs/user-stories/EP-XXX/HU-XXX-XXX.md`
+     - Mark ALL DoD checklist items as complete: `- [ ]` → `- [x]`
+     - Add completion timestamp comment: `<!-- Completed: YYYY-MM-DD HH:MM -->`
+     - Save file
+   
+   **Step 1b: Check and Update Roadmap (if exists)**
+   - Look for Feature reference in `status.json` or work context
+   - IF Feature exists in `docs/roadmap.md`:
+     - Read `docs/roadmap.md`
+     - Find the Feature section by name/number
+     - Mark Feature checkbox as complete: `- [ ]` → `- [x]`
+     - Save file
+   
+   **Step 1c: Show Completion Summary**
+   - IF both updated: "✅ Updated roadmap.md (Feature X.X) AND HU-XXX-XXX.md (Y/Y DoD items)"
+   - IF only roadmap: "✅ Updated roadmap.md (Feature X.X)"
+   - IF only user story: "✅ Updated HU-XXX-XXX.md (Y/Y DoD items)"
+   - IF neither exists: "⚠️ No roadmap or user story found to update"
+   
+   **Error Handling:**
+   - If file doesn't exist: Log warning, continue with other file
+   - If checkbox not found: Log warning with helpful message, continue
+   - Never fail the entire finalization due to documentation update errors
+
+2. **Sugerir Próximos Pasos**:
    - **`/flow-check`**: Ejecutar tests y revisión de código combinada.
    - **`/flow-docs-sync`**: Sincronizar la documentación técnica.
    - **`/flow-commit`**: Crear commits atómicos.
 
-2. **Proceso de Archivado (Automático tras aprobación)**:
+3. **Proceso de Archivado (Automático tras aprobación)**:
    - Una vez el usuario confirma que el trabajo está listo para ser cerrado:
    - **Mover**: `specs/ai-flow/work/[task-name]/` → `specs/ai-flow/archive/YYYY-MM/[task-name]/`.
    - **Actualizar `status.json`**: Cambiar `status` a `"COMPLETED"` y registrar `timestamps.completed`.
    - **Cleanup**: Mantener limpia la carpeta `work` para que `/flow-work` detecte solo tareas activas.
 
-3. **Resumen Final**:
+4. **Resumen Final**:
    - Mostrar estadísticas finales de tiempo, archivos y cobertura antes de archivar.
 
 ---

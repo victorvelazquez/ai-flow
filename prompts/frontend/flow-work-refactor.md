@@ -22,6 +22,7 @@ This file contains the detailed execution logic for code refactoring, imported b
 - Update imports and references across the codebase.
 - **Critical**: Existing tests must pass without modification (unless test itself is refactored).
 - Run `/flow-check` to verify no regressions.
+- **Update completion status** if refactor was tracked in roadmap/user stories (see Phase 4 Step 1 in flow-work.md).
 
 ---
 ## 🌿 Git Branching Strategy
