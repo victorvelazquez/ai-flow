@@ -25,7 +25,7 @@ Define deployment, monitoring, and operational practices.
 - **Key Items**: CI/CD pipeline, deployment platform, monitoring, logging
 - **Typical Gaps**: Incident runbooks, disaster recovery, scaling strategy
 
-**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+**Proceed with appropriate scenario based on audit data from `cache/audit-data.json`**
 
 ---
 

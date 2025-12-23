@@ -14,7 +14,7 @@ Your mission is to detect changes in the mobile codebase and update the project 
 
 ### Objective
 
-Detect changes in the mobile codebase compared to the last documented state (stored in `.ai-flow/cache/docs-analysis.json`) and update all affected documentation files automatically.
+Detect changes in the mobile codebase compared to the last documented state (stored in `cache/docs-analysis.json`) and update all affected documentation files automatically.
 ---
 ## Execution Flow
 
@@ -22,13 +22,13 @@ Detect changes in the mobile codebase compared to the last documented state (sto
 
 // turbo
 ```bash
-cat .ai-flow/cache/docs-analysis.json
+cat cache/docs-analysis.json
 ```
 
 - ✅ If exists → Proceed to Step 2 (Compare Changes)
 - ❌ If NOT exists → Execute full Phase 0 analysis first:
   - Run complete mobile code analysis (Project Discovery)
-  - Create `.ai-flow/cache/docs-analysis.json` with current state
+  - Create `cache/docs-analysis.json` with current state
   - Then proceed to Step 2
 
 ### Step 2: Detect Changes
@@ -51,7 +51,7 @@ cat .ai-flow/cache/docs-analysis.json
 
 2. **Compare with Previous State:**
 
-   - Load `.ai-flow/cache/docs-analysis.json`
+   - Load `cache/docs-analysis.json`
    - Compare current state vs previous state
    - Detect changes in:
      - **Interfaces:** New, modified, or deleted "entry points" (Screens, Routes)
@@ -176,7 +176,7 @@ No updates required.
 
 2. **Update `docs-analysis.json`:**
 
-   - Save current state to `.ai-flow/cache/docs-analysis.json`
+   - Save current state to `cache/docs-analysis.json`
    - Update timestamp
    - Include all detected changes in metadata
 
@@ -355,7 +355,7 @@ Update cancelled. Run `/flow-docs-sync` when you're ready to update the document
 
 3. **Update Analysis File:**
 
-   - Always update `.ai-flow/cache/docs-analysis.json` after document updates
+   - Always update `cache/docs-analysis.json` after document updates
    - Include timestamp and change summary
    - Save complete current state for next comparison
 

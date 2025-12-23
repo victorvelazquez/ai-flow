@@ -6,7 +6,7 @@
 
 ### How It Works
 
-1. **Read audit data** from Phase 0: `.ai-flow/cache/audit-data.json`
+1. **Read audit data** from Phase 0: `cache/audit-data.json`
 2. **Check consistency score** for the current phase
 3. **Execute appropriate scenario** based on score
 
@@ -16,7 +16,7 @@
 
 ```javascript
 // Read audit data from Phase 0
-const auditData = readJSON('.ai-flow/cache/audit-data.json');
+const auditData = readJSON('cache/audit-data.json');
 const phaseData = auditData?.phases?.[currentPhase];
 
 if (phaseData?.exists) {

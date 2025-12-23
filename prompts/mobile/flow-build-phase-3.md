@@ -29,7 +29,7 @@ Define the technical stack, architecture patterns, and system design.
 - **Key Items**: Framework, architecture pattern, API style, database, caching, background jobs, integrations
 - **Typical Gaps**: API versioning, rate limiting, caching strategy
 
-**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+**Proceed with appropriate scenario based on audit data from `cache/audit-data.json`**
 
 ---
 

@@ -25,7 +25,7 @@ Establish code quality rules, naming conventions, and development practices.
 - **Key Items**: Linters, formatters, naming conventions, code review process
 - **Typical Gaps**: Team-specific conventions, code review workflow
 
-**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+**Proceed with appropriate scenario based on audit data from `cache/audit-data.json`**
 
 ---
 

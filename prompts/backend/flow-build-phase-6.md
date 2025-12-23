@@ -31,7 +31,7 @@ Define testing approach, tools, and quality gates.
 - **Key Items**: Test framework, coverage targets, test types, CI/CD integration
 - **Typical Gaps**: E2E strategy, load testing, performance testing
 
-**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+**Proceed with appropriate scenario based on audit data from `cache/audit-data.json`**
 
 ---
 
