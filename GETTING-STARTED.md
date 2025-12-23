@@ -685,6 +685,11 @@ After running `/flow-build`, your project will have:
 - `specs/` - Technical specifications (security.md, configuration.md)
 - `planning/` - Requirements (roadmap.md, user-stories/)
 - `.ai-flow/` - Workflow state (work/, archive/) - can be gitignored
+  - `.ai-flow/cache/` - Analysis cache (docs-analysis.json, audit-data.json)
+
+> **Cache Location:**
+> - In **your projects**: `.ai-flow/cache/` stores analysis data
+> - In **AI Flow repo**: `cache/` at root (for self-analysis only)
 
 ## See [Commands Cheat Sheet](#commands-cheat-sheet) for the complete list.
 

@@ -349,6 +349,18 @@ AI Flow organizes your project with clear separation of concerns:
   - `work/` - Active development tasks
   - `archive/` - Completed tasks (organized by month)
 
+> **Note on Cache Directory:**
+> 
+> **In projects using AI Flow:**
+> - Cache is stored in `.ai-flow/cache/` (analysis data for your project)
+> - Contains: `docs-analysis.json`, `audit-data.json`, `docs-snapshot.json`
+> 
+> **In the AI Flow repository itself:**
+> - Cache is stored in `cache/` at root (self-analysis data)
+> - Used by `/flow3-docs` to track documentation accuracy
+> 
+> These are two different caches with different purposes.
+
 ## 💡 How It Works
 
 1. **Smart Detection** - Analyzes existing projects in 3 layers (15s to 5min)
