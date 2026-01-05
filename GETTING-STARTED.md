@@ -684,7 +684,7 @@ After running `/flow-build`, your project will have:
 - `docs/` - Descriptive documentation (architecture, data-model, api, testing)
 - `specs/` - Technical specifications (security.md, configuration.md)
 - `planning/` - Requirements (roadmap.md, user-stories/)
-- `.ai-flow/` - Workflow state (work/, archive/) - can be gitignored
+- `.ai-flow/` - Workflow state (work/, archive/analytics.jsonl) - can be gitignored
   - `.ai-flow/cache/` - Analysis cache (docs-analysis.json, audit-data.json)
 
 > **Cache Location:**
@@ -1723,9 +1723,8 @@ The command automatically detects:
 │   ├── feature-notifications/
 │   ├── feature-auth/
 │   └── fix-payment-bug/
-└── archive/                 # Completed work
-    ├── feature-user-crud/
-    └── fix-validation/
+└── archive/
+    └── analytics.jsonl      # Completed work history (1 line per task)
 ```
 
 **Example: List Active Work**
@@ -1774,27 +1773,19 @@ The command automatically detects:
 Ready to continue! What would you like me to do?
 ```
 
-**Example: Archive Completed Work**
+**Example: Completed Work History**
 
+When work is finalized, metadata is logged to `.ai-flow/archive/analytics.jsonl`:
+
+```jsonl
+{"task":"user-auth","type":"feature","src":"HU-001-002","dur":125,"start":"2025-01-05T10:00:00-03:00","end":"2025-01-05T12:05:00-03:00","tasks":8,"sp":5,"commits":3,"valid":true}
+{"task":"fix-login-bug","type":"fix","src":"manual","dur":22,"start":"2025-01-05T14:30:00-03:00","end":"2025-01-05T14:52:00-03:00","tasks":2,"commits":1,"valid":true}
+{"task":"refactor-auth-service","type":"refactor","src":"roadmap-2.3","dur":180,"start":"2025-01-05T15:00:00-03:00","end":"2025-01-05T18:00:00-03:00","tasks":12,"sp":8,"commits":5,"valid":true}
 ```
-/flow-dev-work archive feature-notifications
 
-📦 ARCHIVING: feature-notifications
+**Fields:** `task` (name), `type` (feature/fix/refactor), `src` (source), `dur` (duration in minutes), `start`/`end` (timestamps), `tasks` (total), `sp` (Story Points), `commits` (count), `valid` (tests passed).
 
-✅ Marking all tasks complete
-📝 Updating documentation:
-  - docs/api.md (added WebSocket endpoints)
-  - docs/architecture.md (added notification system diagram)
-  - CHANGELOG.md (added v1.2.0 notes)
-
-📁 Moving to archive:
-  .ai-flow/flow-dev-work/flow-dev-feature-notifications/
-  → .ai-flow/archive/flow-dev-feature-notifications/
-
-✅ ARCHIVED SUCCESSFULLY
-⏱️ Total time: 2h 15min
-📊 Final stats: 8/8 tasks, 12 files, 342 lines added
-```
+> **Note:** This file enables future analytics commands like `/flow-stats` to calculate velocity, average duration, and success rates.
 
 #### 3.3.5 `/flow-dev-review` - Code Review
 
