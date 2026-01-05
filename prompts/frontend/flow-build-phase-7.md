@@ -1,575 +1,1001 @@
-# Phase 7: Performance & Deployment
+## PHASE 7: Operations & Deployment (10-15 min)
 
-**Duration:** 10-15 minutes
-**Questions:** ~10 questions
-**Output:** docs/performance.md, docs/operations.md, specs/configuration.md
+> **Order for this phase:** 7.1 → 7.2 → 7.3 → 7.4 → 7.4.1 → 7.5 → 7.6 → 7.7 → 7.7.1 → 7.7.2 → 7.8 → 7.9 → 7.9.1 → 7.9.2 → 7.9.3 → 7.9.4 → 7.10
+
+> **📌 Scope-based behavior:**
+>
+> - **MVP:** Ask 7.1-7.4 only (deployment basics), skip 7.5-7.10 (monitoring, scaling, backups), mark as "TBD"
+> - **Production-Ready:** Ask 7.1-7.8, simplify 7.9-7.10 (advanced monitoring and resilience)
+> - **Enterprise:** Ask all questions 7.1-7.10 with emphasis on reliability and disaster recovery
+
+### Objective
+
+Define deployment, monitoring, and operational practices.
+
 ---
-## 🎯 Objective
 
-Define performance targets and deployment strategy:
+## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-1. What Core Web Vitals targets?
-2. What optimization strategies?
-3. Where will you deploy?
-4. What monitoring/analytics tools?
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 7:**
+
+- **Target File**: `docs/deployment.md`
+- **Phase Name**: "OPERATIONS & DEPLOYMENT"
+- **Key Items**: CI/CD pipeline, deployment platform, monitoring, logging
+- **Typical Gaps**: Incident runbooks, disaster recovery, scaling strategy
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
 ---
-## 📋 Questions
 
-### Question 7.1: Core Web Vitals Targets
+## Phase 7 Questions (Full Mode)
 
-**What performance targets will you aim for?**
+**7.1 Deployment Environment**
 
-Core Web Vitals:
+```
 
-- **LCP (Largest Contentful Paint):** Largest element render time
-- **FID (First Input Delay):** Time to interactive
-- **CLS (Cumulative Layout Shift):** Visual stability
+Where will you deploy?
 
-A) ⭐ **"Good" Rating (Recommended)**
+A) ⭐ Cloud Platform
 
-- LCP: < 2.5s
-- FID: < 100ms
-- CLS: < 0.1
-- Best for: Most apps, SEO, user experience
+- AWS (ECS, Fargate, Lambda, EC2)
+- Google Cloud (Cloud Run, GKE, Compute Engine)
+- Azure (App Service, AKS, VMs)
 
-B) **"Needs Improvement" (Acceptable)**
+B) 🔥 Platform-as-a-Service (PaaS)
 
-- LCP: < 4.0s
-- FID: < 300ms
-- CLS: < 0.25
-- Best for: MVPs, internal tools
+- Heroku
+- Railway
+- Render
+- Fly.io
+- Vercel (for APIs)
 
-C) **Aggressive Targets**
+C) 🏢 On-Premises
 
-- LCP: < 1.5s
-- FID: < 50ms
-- CLS: < 0.05
-- Best for: Performance-critical apps, e-commerce
+- Company servers
+- Private cloud
 
-D) **No specific targets**
+D) 🐳 Container Orchestration
 
-- Not recommended
+- Kubernetes (GKE, EKS, AKS)
+- Docker Swarm
+- Nomad
 
-**Your answer:**
----
-### Question 7.2: Bundle Size Target
+Your choice: \_\_
+Why?
 
-**What bundle size will you target?**
+```
 
-A) ⭐ **< 200KB gzipped (initial load)** (Recommended)
+**7.2 Containerization**
 
-- Best for: Most apps, good mobile experience
+````
 
-B) **< 100KB gzipped**
+Will you use Docker?
 
-- Best for: Performance-critical apps
+A) ⭐ Yes - Dockerize application
 
-C) **< 300KB gzipped**
+- Multi-stage build
+- Optimized image size
+- Docker Compose for local dev
 
-- Best for: Feature-rich apps
+B) No - Deploy directly
 
-D) **No target**
+If yes:
+Base image: **
+Estimated image size: ** MB
 
-- Best for: Internal tools only
+Example stack (local development):
 
-**Your answer:**
+```yaml
+services:
+  app:
+    build: .
+    ports: [3000:3000]
+  db:
+    image: postgres:15
+  redis:
+    image: redis:7
+```
 
-**Monitor bundle size in CI?**
-A) Yes - Fail if bundle exceeds target
-B) Yes - Warn if bundle grows
-C) No
+````
 
-**Tool for bundle analysis:**
+**7.3 Environment Strategy**
 
-- `webpack-bundle-analyzer`
-- `rollup-plugin-visualizer`
-- `vite-plugin-bundle-analyzer`
-- Manual
----
-### Question 7.3: Code Splitting Strategy
+```
 
-**How will you split your code?**
+How many environments will you have?
 
-A) ⭐ **Route-based splitting** (Recommended)
-
-- Split by page/route
-- Example: `/dashboard` → `Dashboard.chunk.js`
-- Best for: Multi-page apps, SPAs
-
-B) **Component-based splitting**
-
-- Lazy load heavy components
-- Example: Modals, charts, editors
-- Best for: Apps with heavy components
-
-C) **Vendor splitting**
-
-- Separate vendor code from app code
-- Best for: Long-term caching
-
-D) **Combined approach**
-
-- Route + Component + Vendor splitting
-- Best for: Large apps, optimal caching
-
-E) **No code splitting**
-
-- Best for: Very small apps (<100KB)
-
-**Your answer:**
-
-**Dynamic imports for:**
-
-- [ ] Routes
-- [ ] Modals/Dialogs
-- [ ] Heavy libraries (charts, editors)
-- [ ] Third-party widgets
-- [ ] Images above the fold (lazy loading)
----
-### Question 7.4: Image Optimization
-
-**How will you optimize images?**
-
-A) ⭐ **Next-gen formats + Lazy loading** (Recommended)
-
-- WebP/AVIF with PNG/JPG fallback
-- Lazy load below-the-fold images
-- Responsive images (srcset)
-- Best for: Image-heavy apps
-
-B) **Lazy loading only**
-
-- Native lazy loading: `<img loading="lazy" />`
-- Best for: Simple optimization
-
-C) **CDN + Image service**
-
-- Use Cloudinary, Imgix, etc.
-- Automatic optimization
-- Best for: Large image libraries
-
-D) **No optimization**
-
-- Best for: Minimal images
-
-**Your answer:**
-
-**Image formats supported:**
-
-- [ ] WebP
-- [ ] AVIF
-- [ ] PNG/JPG fallback
-
-**Image CDN:**
-
-- Cloudinary
-- Imgix
-- Vercel Image Optimization
-- Self-hosted
-- No CDN
----
-### Question 7.5: Caching Strategy
-
-**What caching strategy will you use?**
-
-A) ⭐ **Cache-first with revalidation** (Recommended)
-
-- Service Worker cache assets
-- Revalidate in background
-- Best for: PWAs, fast repeat visits
-
-B) **Network-first with cache fallback**
-
-- Try network, fall back to cache
-- Best for: Dynamic content
-
-C) **Browser caching only**
-
-- Use HTTP cache headers
-- Best for: Static sites, simple apps
-
-D) **No caching**
-
-- Best for: Dev environments only
-
-**Your answer:**
-
-**Cache duration for assets:**
-
-- HTML: \_\_\_\_ (e.g., no cache, max-age=3600)
-- CSS/JS (versioned): \_\_\_\_ (e.g., max-age=31536000)
-- Images: \_\_\_\_ (e.g., max-age=86400)
----
-### Question 7.6: Deployment Platform
-
-**Where will you deploy?**
-
-A) ⭐ **Vercel** (Recommended for Next.js/SPA)
-
-- Features: Zero-config, edge functions, preview deployments
-- Best for: Next.js, React, Vue, Svelte
-- Pricing: Free tier available
-
-B) 🔥 **Netlify**
-
-- Features: Similar to Vercel, great DX
-- Best for: Static sites, JAMstack
-- Pricing: Free tier available
-
-C) **AWS (S3 + CloudFront)**
-
-- Features: Full control, scalable
-- Best for: Enterprise, existing AWS infrastructure
-- Pricing: Pay per use
-
-D) **Cloudflare Pages**
-
-- Features: Edge deployment, fast global CDN
-- Best for: Static sites, edge workers
-- Pricing: Free tier generous
-
-E) **Firebase Hosting**
-
-- Features: Integrated with Firebase services
-- Best for: Firebase apps
-- Pricing: Free tier available
-
-F) **Docker + VPS (DigitalOcean, Linode, etc.)**
-
-- Features: Full control, self-hosted
-- Best for: Custom infrastructure
-- Pricing: $5-$20/month
-
-G) **Azure Static Web Apps / Google Cloud Run**
-
-- Features: Enterprise cloud platforms
-- Best for: Enterprise, existing Azure/GCP infrastructure
-
-**Your answer:**
----
-### Question 7.7: CI/CD Pipeline
-
-**What CI/CD platform will you use?**
-
-A) ⭐ **GitHub Actions** (Recommended)
-
-- Features: Native GitHub integration, free for public repos
-- Best for: GitHub-hosted projects
-
-B) **GitLab CI/CD**
-
-- Features: Native GitLab integration
-- Best for: GitLab-hosted projects
-
-C) **Vercel/Netlify auto-deploy**
-
-- Features: Zero-config, automatic on git push
-- Best for: Simple deployments
-
-D) **CircleCI / Travis CI**
-
-- Features: Mature platforms, good caching
-- Best for: Complex pipelines
-
-E) **No CI/CD**
-
-- Manual deployments
-- Not recommended
-
-**Your answer:**
-
-**CI/CD steps:**
-
-- [ ] Install dependencies
-- [ ] Lint code
-- [ ] Run unit tests
-- [ ] Run E2E tests
-- [ ] Build production bundle
-- [ ] Deploy to preview (PR)
-- [ ] Deploy to production (merge to main)
-- [ ] Run Lighthouse audit
-- [ ] Notify team (Slack, Discord)
----
-### Question 7.8: Environment Management
-
-**How many environments will you have?**
-
-A) ⭐ **3 environments** (Recommended)
+A) ⭐ Three environments
 
 - Development (local)
-- Staging (preview.yourapp.com)
-- Production (yourapp.com)
-- Best for: Most apps
+- Staging (pre-production, QA)
+- Production (live)
 
-B) **4+ environments**
+B) 🏆 Four+ environments
 
-- Development, Staging, QA, Production
-- Best for: Enterprise apps
+- Development
+- Testing (automated tests)
+- Staging
+- Production
 
-C) **2 environments**
+C) 🚀 Two environments
 
-- Development, Production
-- Best for: Small teams, MVPs
+- Development
+- Production
 
-**Your answer:**
+Your choice: \_\_
 
-**Environment variables management:**
-
-- `.env.local` (gitignored, local overrides)
-- `.env.development`
-- `.env.staging`
-- `.env.production`
-- Secrets stored in: Vercel/Netlify dashboard / GitHub Secrets / Vault
----
-### Question 7.9: Monitoring & Analytics
-
-**What monitoring will you use?**
-
-#### Analytics
-
-A) ⭐ **Google Analytics 4**
-
-- Features: Free, comprehensive, industry standard
-- Best for: Most apps
-
-B) **Plausible / Fathom**
-
-- Features: Privacy-focused, simple, no GDPR banner needed
-- Best for: Privacy-conscious apps
-- Pricing: Paid
-
-C) **Mixpanel / Amplitude**
-
-- Features: Product analytics, event tracking
-- Best for: SaaS products
-- Pricing: Free tier available
-
-D) **No analytics**
-
-- Best for: Internal tools only
-
-**Your answer:**
-
-#### Error Tracking
-
-A) ⭐ **Sentry** (Recommended)
-
-- Features: Error tracking, performance monitoring, releases
-- Best for: Most apps
-- Pricing: Free tier available
-
-B) **LogRocket**
-
-- Features: Session replay, error tracking
-- Best for: User behavior analysis
-- Pricing: Paid
-
-C) **Datadog / New Relic**
-
-- Features: Full observability platform
-- Best for: Enterprise
-- Pricing: Paid
-
-D) **Console only**
-
-- Best for: MVPs, dev environments
-
-**Your answer:**
-
-#### Performance Monitoring
-
-A) ⭐ **Web Vitals + Sentry** (Recommended)
-
-- Track Core Web Vitals automatically
-- Best for: Most apps
-
-B) **Lighthouse CI**
-
-- Run Lighthouse in CI/CD
-- Best for: Performance budgets
-
-C) **SpeedCurve / Calibre**
-
-- Features: Continuous performance monitoring
-- Best for: Performance-critical apps
-- Pricing: Paid
-
-D) **No monitoring**
-
-- Not recommended
-
-**Your answer:**
----
-### Question 7.10: SEO & Meta Tags
-
-**How will you manage SEO?**
-
-A) ⭐ **React Helmet / vue-meta / Angular Meta service**
-
-- Dynamic meta tags per page
-- Best for: SPAs with SEO needs
-
-B) **Next.js / Nuxt / Analog built-in SEO**
-
-- `<Head>` component, automatic sitemap
-- Best for: SSR frameworks
-
-C) **Static meta tags**
-
-- Hardcoded in index.html
-- Best for: Simple apps, no SEO focus
-
-D) **No SEO**
-
-- Best for: Internal tools, auth-protected apps
-
-**Your answer:**
-
-**SEO requirements:**
-
-- [ ] Dynamic meta tags (title, description, OG)
-- [ ] Sitemap.xml generation
-- [ ] Robots.txt
-- [ ] Canonical URLs
-- [ ] Structured data (JSON-LD)
-- [ ] Social media previews (Open Graph, Twitter Cards)
----
-## 📊 Phase 7 Summary
+Environment configuration:
+A) ✅ Environment variables (.env files)
+B) ✅ Config service (AWS Secrets Manager, Vault)
+C) ✅ Feature flags (LaunchDarkly, Unleash)
 
 ```
----
-📋 PHASE 7 SUMMARY: PERFORMANCE & DEPLOYMENT
----
-Core Web Vitals: [Answer from 7.1]
-Bundle Size Target: [Answer from 7.2]
-Code Splitting: [Answer from 7.3]
-Image Optimization: [Answer from 7.4]
-Caching Strategy: [Answer from 7.5]
-Deployment Platform: [Answer from 7.6]
-CI/CD: [Answer from 7.7]
-Environments: [Answer from 7.8]
-Monitoring: [Answer from 7.9]
-SEO: [Answer from 7.10]
-Security: [Answer from 7.11]
-PWA Features: [Answer from 7.12]
-Performance Monitoring: [Answer from 7.13]
-Build Optimization: [Answer from 7.14]
-Analytics: [Answer from 7.15]
 
-Is this correct? (Y/n)
-```
----
-## 📝 Document Generation
-
-Generate `docs/performance.md` and `docs/operations.md` with these placeholders:
-
-### Performance Placeholders
-
-- `{{WEB_VITALS_TARGETS}}` → LCP/FID/CLS targets
-- `{{BUNDLE_SIZE_TARGET}}` → Bundle size limit
-- `{{CODE_SPLITTING_STRATEGY}}` → Route/Component/Vendor/Combined
-- `{{IMAGE_OPTIMIZATION}}` → Strategy and formats
-- `{{CACHING_STRATEGY}}` → Service Worker / Browser / None
-
-### Operations Placeholders
-
-- `{{DEPLOYMENT_PLATFORM}}` → Vercel / Netlify / AWS / etc.
-- `{{CI_CD_PLATFORM}}` → GitHub Actions / GitLab CI / etc.
-- `{{ENVIRONMENTS}}` → Dev / Staging / Prod
-- `{{ERROR_TRACKING}}` → Sentry / LogRocket / etc.
-- `{{ANALYTICS}}` → Google Analytics / Plausible / etc.
-- `{{PERFORMANCE_MONITORING}}` → Web Vitals / Lighthouse CI / etc.
-- `{{SEO_STRATEGY}}` → Dynamic meta tags / Static / None
-
-Update `ai-instructions.md`:
-
-```markdown
-## Performance
-
-- **Core Web Vitals:** {{WEB_VITALS_TARGETS}}
-- **Bundle Size Target:** {{BUNDLE_SIZE_TARGET}}
-- **Code Splitting:** {{CODE_SPLITTING_STRATEGY}}
-
-### Rules
-
-- ✅ ALWAYS lazy load routes and heavy components
-- ✅ ALWAYS optimize images (WebP/AVIF, lazy loading)
-- ✅ ALWAYS code-split by route
-- ❌ NEVER import entire libraries (use tree-shaking)
-- ❌ NEVER load all data upfront (paginate, infinite scroll)
-- ✅ ALWAYS measure Core Web Vitals in production
-- ✅ ALWAYS keep bundle size < {{BUNDLE_SIZE_TARGET}}
-
-## Deployment
-
-- **Platform:** {{DEPLOYMENT_PLATFORM}}
-- **CI/CD:** {{CI_CD_PLATFORM}}
-- **Monitoring:** {{ERROR_TRACKING}} + {{ANALYTICS}}
-
-### Rules
-
-- ✅ ALWAYS test in staging before production
-- ✅ ALWAYS use environment variables for config
-- ❌ NEVER commit secrets to git
-- ✅ ALWAYS monitor errors with {{ERROR_TRACKING}}
-- ✅ ALWAYS track Core Web Vitals in production
-```
----
-## ✅ Phase 7 Completion
-
-After answering all questions, summarize:
+**7.4 CI/CD Pipeline**
 
 ```
----
-✅ Phase 7 Complete: Performance & Deployment
----
-Selected Performance & Deployment Strategy:
-- Performance: {{CORE_WEB_VITALS_TARGETS}}
-- Optimization: {{OPTIMIZATION_STRATEGIES}}
-- Deployment Platform: {{DEPLOYMENT_PLATFORM}}
-- Monitoring: {{MONITORING_TOOLS}}
-- Analytics: {{ANALYTICS_TOOLS}}
 
-Generated Documents:
-✅ docs/performance.md
+CI/CD platform:
+
+A) ⭐ GitHub Actions - If using GitHub
+B) 🔥 GitLab CI - If using GitLab
+C) Jenkins - Self-hosted
+D) CircleCI
+E) Travis CI
+F) AWS CodePipeline
+G) Azure DevOps
+
+Your choice: \_\_
+
+Pipeline stages:
+
+1. ✅ Checkout code
+2. ✅ Install dependencies
+3. ✅ Lint
+4. ✅ Test (with coverage)
+5. ✅ Build
+6. ✅ Security scan (optional)
+7. ✅ Deploy to staging
+8. ⏸️ Manual approval (optional)
+9. ✅ Deploy to production
+
+Auto-deploy strategy:
+A) ⭐ Auto-deploy to staging, manual approval for production
+B) 🚀 Auto-deploy to production (main branch)
+C) Manual deploy for all environments
+
+```
+
+**7.4.1 Deployment Strategy** (Production-Ready and Enterprise only)
+
+```
+What deployment strategy will you use for production?
+
+A) ⭐ Rolling Deployment - Gradual replacement
+   - Replace instances one at a time
+   - Zero downtime
+   - Easy rollback
+
+B) 🔥 Blue-Green Deployment - Instant switch
+   - Two identical environments
+   - Switch traffic instantly
+   - Higher infrastructure cost
+
+C) ⚡ Canary Deployment - Progressive rollout
+   - Deploy to small percentage first
+   - Monitor for issues
+   - Gradually increase traffic
+
+D) 🏆 Feature Flags - Code-level control
+   - Deploy code, toggle features
+   - Instant enable/disable
+   - Best with: LaunchDarkly, Unleash
+
+Your choice: __
+
+Rollback plan:
+- How quickly must rollback complete? __ minutes
+- Who can trigger rollback? [DevOps/Tech Lead/Any developer]
+- Rollback trigger criteria? [Error rate > X%, latency > Y ms, manual]
+
+If Blue-Green:
+- Traffic switching: [Load balancer, DNS, etc.]
+- Database migrations: [Strategy for zero-downtime]
+
+If Canary:
+- Initial traffic: __%
+- Gradual increase: __% per __ minutes
+- Success criteria: __
+```
+
+**7.5 Monitoring & Logging**
+
+````
+
+Monitoring tools:
+
+Application Performance Monitoring (APM):
+A) ⭐ Datadog - Full-featured, expensive
+B) 🔥 New Relic - Popular
+C) Sentry - Error tracking focus
+D) ⚡ OpenTelemetry + Grafana - Open source
+E) AWS CloudWatch
+F) None yet
+
+Your choice: \_\_
+
+Logging:
+A) ⭐ Centralized logging
+
+- Winston/Pino (Node.js) → CloudWatch/Datadog
+- Python logging → ELK Stack
+
+B) Basic console logs
+
+C) Structured JSON logging ⭐
+
+```json
+{
+  "level": "info",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "userId": "123",
+  "action": "user.login",
+  "ip": "192.168.1.1",
+  "message": "User logged in successfully"
+}
+```
+
+Your logging strategy: \_\_
+
+Metrics to track:
+
+- ✅ Request rate (requests/sec)
+- ✅ Error rate (% of failed requests)
+- ✅ Response time (p50, p95, p99)
+- ✅ Database query time
+- ✅ Cache hit rate
+- ✅ CPU/Memory usage
+- Custom business metrics: \_\_
+
+````
+
+**7.6 Alerts**
+
+```
+
+When should you be alerted?
+
+A) ✅ Error rate > **% (e.g., 1%)
+B) ✅ Response time > **ms (e.g., 1000ms)
+C) ✅ 5xx errors (server errors)
+D) ✅ Service down (health check failure)
+E) ✅ Database connection failures
+F) ✅ Disk space > 80%
+G) ✅ Memory usage > 85%
+
+Alert channels:
+A) ⭐ Email
+B) 🔥 Slack/Discord
+C) ⚡ PagerDuty/Opsgenie (on-call)
+D) SMS (critical only)
+
+Your preferences: \_\_
+
+On-call rotation:
+A) Yes - Using [PagerDuty/Opsgenie]
+B) No - Monitor during business hours
+
+```
+
+**7.7 Backup & Disaster Recovery**
+
+```
+
+Backup strategy:
+
+Database backups:
+A) ⭐ Automated daily backups
+
+- Retention: 30 days
+- Point-in-time recovery
+
+B) 🏆 Continuous backups
+
+- Every hour
+- 90 days retention
+
+C) Manual backups weekly
+
+Your strategy: **
+Retention period: ** days
+
+Disaster recovery:
+
+- Recovery Time Objective (RTO): \_\_ (how fast to restore)
+- Recovery Point Objective (RPO): \_\_ (acceptable data loss)
+
+Example:
+
+- RTO: 1 hour (service restored within 1 hour)
+- RPO: 15 minutes (lose max 15 min of data)
+
+```
+
+**7.7.1 Database Migrations in Production**
+
+```
+How will you handle database migrations in production?
+
+Zero-downtime migrations:
+A) ⭐ Yes - Plan for zero-downtime migrations (Production-Ready/Enterprise)
+B) No - Accept maintenance windows (MVP)
+
+If zero-downtime:
+- Strategy: [Expand/Contract, Blue-Green migrations, etc.]
+- Rollback plan: __
+- Testing: [Tested on staging, Dry-run process]
+
+Migration windows (if not zero-downtime):
+- Preferred time: __
+- Duration: __ minutes
+- Notification: __
+```
+
+**7.7.2 Database Connection Pooling**
+
+```
+Database connection pooling configuration:
+
+Pool tool: [ORM built-in, pgBouncer, HikariCP, etc.]
+
+Settings:
+- Min connections: __
+- Max connections: __
+- Connection timeout: __ ms
+- Idle timeout: __ ms
+- Max lifetime: __ ms
+
+Monitoring:
+- Track active/idle connections: [Yes/No]
+- Alert on pool exhaustion: [Yes/No]
+```
+
+**7.8 Scaling Strategy**
+
+```
+
+How will you handle growth?
+
+A) ⭐ Horizontal scaling - Add more instances
+
+- Load balancer distributes traffic
+- Stateless application design
+
+B) Vertical scaling - Bigger instances
+
+- Increase CPU/RAM
+- Simpler but limited
+
+C) ⚡ Auto-scaling - Automatic based on load
+
+- Scale up during high traffic
+- Scale down to save costs
+- Metrics: CPU > 70%, requests > threshold
+
+Your strategy: \_\_
+
+Expected load:
+
+- Initial: \_\_ requests/minute
+- Year 1: \_\_ requests/minute
+- Peak traffic: \_\_x normal load
+
+Database scaling:
+A) Read replicas - Scale reads
+B) Sharding - Split data across DBs
+C) Vertical scaling - Bigger DB instance
+D) Not needed yet
+
+```
+
+**7.9 Health Checks**
+
+````
+
+Health check endpoints:
+
+A) ✅ /health - Basic liveness
+
+- Returns 200 OK if app is running
+
+B) ✅ /health/ready - Readiness check
+
+- Returns 200 OK if app can handle traffic
+- Checks: DB connected, Redis connected, etc.
+
+C) ✅ /health/live - Liveness check
+
+- Returns 200 OK if app is alive
+- Load balancer uses this
+
+Example response:
+
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "checks": {
+    "database": "ok",
+    "redis": "ok",
+    "disk_space": "ok"
+  },
+  "version": "1.2.3"
+}
+```
+
+Your health check endpoints: \_\_
+
+````
+
+**7.9.1 Graceful Shutdown**
+
+```
+Will you implement graceful shutdown?
+
+A) ⭐ Yes - Handle shutdown gracefully (Production-Ready/Enterprise)
+B) No - Standard shutdown
+
+If yes:
+Shutdown sequence:
+1. Stop accepting new requests (timeout: __s)
+2. Finish processing current requests (timeout: __s)
+3. Close database connections (timeout: __s)
+4. Close other connections (Redis, message queues, etc.)
+5. Exit process
+
+Total shutdown timeout: __s
+
+Implementation:
+- Signal handling: [SIGTERM, SIGINT]
+- Health check grace period: __s
+- Connection drain timeout: __s
+```
+
+**7.9.2 Circuit Breakers & Resilience**
+
+```
+Will you implement circuit breakers?
+
+A) ⭐ Yes - Protect against cascading failures (Production-Ready/Enterprise)
+B) No - Direct service calls
+
+If yes:
+Circuit breaker tool: [Resilience4j, Hystrix, Polly, etc.]
+
+Configuration:
+- Failure threshold: __% (open circuit after X% failures)
+- Success threshold: __% (close circuit after X% successes)
+- Timeout: __ms
+- Half-open retries: __
+- Reset timeout: __s
+
+Fallback strategy:
+A) ⭐ Return cached data
+B) Return default/empty response
+C) Call alternative service
+D) Return error gracefully
+
+Services to protect:
+{{#EACH SERVICE_TO_PROTECT}}
+- **{{SERVICE_NAME}}**: {{FAILURE_THRESHOLD}}% threshold, fallback: {{FALLBACK_STRATEGY}}
+{{/EACH}}
+```
+
+**7.9.3 Retry & Timeout Policies**
+
+```
+Define retry and timeout policies for external dependencies:
+
+| Service/Dependency | Timeout   | Retries | Backoff Strategy     | Notes                |
+|--------------------|-----------|---------|----------------------|----------------------|
+| Database queries   | 5000ms    | 2       | None (fail fast)     | Connection pooled    |
+| Redis cache        | 1000ms    | 1       | None                 | Cache miss = OK      |
+| Payment API        | 30000ms   | 3       | Exponential (1s,2s,4s)| Must complete        |
+| Email service      | 5000ms    | 3       | Fixed (2s)           | Queue if fails       |
+| External REST APIs | 10000ms   | 2       | Exponential          | Circuit breaker      |
+| File storage (S3)  | 15000ms   | 3       | Exponential          | Large files          |
+
+Your policies:
+
+| Service/Dependency | Timeout   | Retries | Backoff Strategy     | Notes                |
+|--------------------|-----------|---------|----------------------|----------------------|
+|                    |           |         |                      |                      |
+|                    |           |         |                      |                      |
+
+Global defaults:
+- Default HTTP timeout: __ ms (recommended: 10000)
+- Default retries: __ (recommended: 2)
+- Default backoff: [None/Fixed/Exponential]
+
+Non-retryable errors:
+- 400 Bad Request (client error, won't succeed on retry)
+- 401/403 Unauthorized/Forbidden
+- 404 Not Found
+- [Your additions]
+```
+
+**7.9.4 Request/Response Logging & Masking**
+
+```
+What request/response data will you log?
+
+Log levels by environment:
+| Environment | Level    | Body Logging | Performance Logging |
+|-------------|----------|--------------|---------------------|
+| Development | debug    | Full         | Yes                 |
+| Staging     | info     | Truncated    | Yes                 |
+| Production  | info     | Minimal      | Yes                 |
+
+Request logging:
+- ✅ HTTP method and URL
+- ✅ Request ID (correlation)
+- ✅ User ID (if authenticated)
+- ✅ IP address (optional, may hash for privacy)
+- ✅ Request duration (ms)
+- ❓ Request body (careful with size and PII)
+- ❓ Query parameters
+
+Response logging:
+- ✅ Status code
+- ✅ Response duration (ms)
+- ❓ Response body (careful with size)
+
+Sensitive data masking (CRITICAL):
+
+| Field Pattern          | Masking Strategy           |
+|------------------------|----------------------------|
+| password, secret       | Completely redact          |
+| token, api_key         | Show last 4 chars only     |
+| email                  | j***@example.com           |
+| phone                  | ***-***-1234               |
+| credit_card            | ****-****-****-1234        |
+| ssn, national_id       | Completely redact          |
+| [Your patterns]        | __                         |
+
+Log format:
+A) ⭐ Structured JSON (recommended for aggregation)
+B) Plain text with patterns
+C) Framework default
+
+Log aggregation:
+A) ⭐ Centralized (ELK, Datadog, CloudWatch)
+B) File-based with rotation
+C) Console only (development)
+```
+
+**7.10 Documentation & Runbooks**
+
+```
+
+Operational documentation:
+
+A) ✅ Deployment guide - How to deploy
+B) ✅ Runbooks - How to handle incidents
+
+- Database connection failure → steps to diagnose/fix
+- High CPU usage → steps to investigate
+- Service down → recovery procedure
+
+C) ✅ Architecture diagrams (Mermaid format)
+
+- System architecture diagram (mermaid)
+- Data flow diagram (mermaid)
+- Infrastructure diagram (mermaid)
+
+D) ✅ API documentation
+
+- Swagger/OpenAPI
+- Auto-generated from code
+
+Will you create these?
+A) Yes - All of them ⭐
+B) Yes - Critical ones only (deployment, runbooks)
+C) Later - Start without docs
+
+API documentation strategy:
+A) ⭐ Code-First (Recommended)
+
+- Generate docs from code (Swagger/OpenAPI decorators)
+- Always in sync with code
+- Tools: @nestjs/swagger, FastAPI docs
+
+B) 📝 Design-First
+
+- Write openapi.yaml manually first
+- Generate code from spec
+- Better for large teams/contracts
+
+C) 📄 Manual
+
+- Write Markdown/Notion docs
+- Hard to keep in sync (Not recommended)
+
+```
+
+---
+
+#### 🎨 MERMAID OPERATIONS DIAGRAM FORMATS - CRITICAL
+
+## **Use these exact formats** for operational and infrastructure diagrams mentioned in question 7.10:
+
+##### 1️⃣ System Architecture Diagram (Deployment View)
+
+Use `graph TD` to show deployed system components with scaling and redundancy:
+
+````markdown
+```mermaid
+graph TD
+    subgraph "Production Environment"
+        subgraph "Load Balancer Layer"
+            LB1[Load Balancer 1]
+            LB2[Load Balancer 2]
+        end
+
+        subgraph "Application Layer"
+            App1[API Server 1<br/>4 vCPU, 8GB RAM]
+            App2[API Server 2<br/>4 vCPU, 8GB RAM]
+            App3[API Server 3<br/>4 vCPU, 8GB RAM]
+        end
+
+        subgraph "Data Layer"
+            Primary[(Primary DB<br/>PostgreSQL 15)]
+            Replica1[(Read Replica 1)]
+            Replica2[(Read Replica 2)]
+            Cache[Redis Cluster<br/>3 Nodes]
+        end
+
+        subgraph "Message Queue"
+            Queue[RabbitMQ Cluster<br/>3 Nodes]
+        end
+    end
+
+    Internet[Internet] -->|HTTPS| LB1
+    Internet -->|HTTPS| LB2
+    LB1 --> App1
+    LB1 --> App2
+    LB2 --> App2
+    LB2 --> App3
+
+    App1 -->|Write| Primary
+    App2 -->|Write| Primary
+    App3 -->|Write| Primary
+
+    App1 -->|Read| Replica1
+    App2 -->|Read| Replica2
+    App3 -->|Read| Replica1
+
+    App1 -->|Cache| Cache
+    App2 -->|Cache| Cache
+    App3 -->|Cache| Cache
+
+    App1 -->|Async Jobs| Queue
+    App2 -->|Async Jobs| Queue
+    App3 -->|Async Jobs| Queue
+
+    Primary -.->|Replication| Replica1
+    Primary -.->|Replication| Replica2
+
+    style Internet fill:#e1f5ff
+    style Primary fill:#e1ffe1
+    style Cache fill:#f0e1ff
+    style Queue fill:#ffe1f5
+```
+````
+
+## **Use for:** Showing deployed infrastructure, scaling configuration, redundancy, high availability
+
+##### 2️⃣ Data Flow Diagram (Request Flow)
+
+Use `flowchart LR` to show how data moves through the system step-by-step:
+
+````markdown
+```mermaid
+flowchart LR
+    User[User Request] -->|1. HTTPS POST| LB[Load Balancer]
+    LB -->|2. Route| API[API Server]
+    API -->|3. Validate JWT| Auth[Auth Service]
+    Auth -->|4. Token Valid| API
+
+    API -->|5. Check Cache| Cache[(Redis Cache)]
+    Cache -->|6. Cache Miss| API
+
+    API -->|7. Query| DB[(PostgreSQL)]
+    DB -->|8. Data| API
+
+    API -->|9. Store in Cache| Cache
+    API -->|10. Enqueue Job| Queue[Message Queue]
+
+    Queue -->|11. Process| Worker[Background Worker]
+    Worker -->|12. Send Email| Email[Email Service]
+
+    API -->|13. JSON Response| User
+
+    style User fill:#e1f5ff
+    style Cache fill:#f0e1ff
+    style DB fill:#e1ffe1
+    style Email fill:#fff4e1
+```
+````
+
+## **Use for:** Documenting request/response cycles, async processing flows, numbered execution steps
+
+##### 3️⃣ Infrastructure Diagram (Cloud Resources)
+
+Use `graph TB` with subgraphs to show cloud infrastructure and network topology:
+
+````markdown
+```mermaid
+graph TB
+    subgraph "AWS Cloud - Production (us-east-1)"
+        subgraph "VPC (10.0.0.0/16)"
+            subgraph "Public Subnet (10.0.1.0/24)"
+                ALB[Application Load Balancer]
+                NAT[NAT Gateway]
+            end
+
+            subgraph "Private Subnet 1 (10.0.10.0/24)"
+                ECS1[ECS Cluster<br/>Auto Scaling Group]
+                App1[Container: API<br/>Fargate Task]
+                App2[Container: API<br/>Fargate Task]
+            end
+
+            subgraph "Private Subnet 2 (10.0.20.0/24)"
+                RDS[(RDS PostgreSQL<br/>Multi-AZ)]
+                ElastiCache[ElastiCache Redis<br/>Cluster Mode]
+            end
+
+            subgraph "Private Subnet 3 (10.0.30.0/24)"
+                SQS[Amazon SQS<br/>Message Queue]
+                Lambda[Lambda Functions<br/>Background Workers]
+            end
+        end
+
+        subgraph "Supporting Services"
+            S3[S3 Bucket<br/>File Storage]
+            CloudWatch[CloudWatch<br/>Monitoring & Logs]
+            SecretsManager[Secrets Manager<br/>API Keys & Credentials]
+        end
+    end
+
+    Internet[Internet Users] -->|HTTPS| ALB
+    ALB --> App1
+    ALB --> App2
+
+    App1 --> RDS
+    App2 --> RDS
+    App1 --> ElastiCache
+    App2 --> ElastiCache
+
+    App1 -->|Upload/Download| S3
+    App2 -->|Upload/Download| S3
+
+    App1 -->|Send Message| SQS
+    SQS -->|Trigger| Lambda
+    Lambda --> RDS
+
+    App1 -->|Logs & Metrics| CloudWatch
+    App2 -->|Logs & Metrics| CloudWatch
+    Lambda -->|Logs| CloudWatch
+
+    App1 -->|Fetch Secrets| SecretsManager
+    App2 -->|Fetch Secrets| SecretsManager
+
+    style Internet fill:#e1f5ff
+    style RDS fill:#e1ffe1
+    style ElastiCache fill:#f0e1ff
+    style S3 fill:#fff4e1
+    style CloudWatch fill:#ffe1e1
+```
+````
+
+## **Use for:** Documenting cloud architecture, network topology, AWS/GCP/Azure resources, VPC design
+
+##### 4️⃣ Monitoring & Observability Diagram (Optional)
+
+Use `graph TD` to show monitoring, logging, and alerting stack:
+
+````markdown
+```mermaid
+graph TD
+    subgraph "Application Layer"
+        App[API Servers]
+        Worker[Background Workers]
+    end
+
+    subgraph "Monitoring Stack"
+        Prometheus[Prometheus<br/>Metrics Collection]
+        Grafana[Grafana<br/>Dashboards]
+        AlertManager[Alert Manager<br/>Notifications]
+    end
+
+    subgraph "Logging Stack"
+        FluentBit[Fluent Bit<br/>Log Collector]
+        Elasticsearch[Elasticsearch<br/>Log Storage]
+        Kibana[Kibana<br/>Log Viewer]
+    end
+
+    subgraph "Tracing"
+        Jaeger[Jaeger<br/>Distributed Tracing]
+    end
+
+    subgraph "Alerts"
+        PagerDuty[PagerDuty]
+        Slack[Slack Notifications]
+    end
+
+    App -->|Metrics| Prometheus
+    Worker -->|Metrics| Prometheus
+    Prometheus --> Grafana
+    Prometheus --> AlertManager
+
+    App -->|Logs| FluentBit
+    Worker -->|Logs| FluentBit
+    FluentBit --> Elasticsearch
+    Elasticsearch --> Kibana
+
+    App -->|Traces| Jaeger
+    Worker -->|Traces| Jaeger
+
+    AlertManager --> PagerDuty
+    AlertManager --> Slack
+
+    style Grafana fill:#e1f5ff
+    style Kibana fill:#f0e1ff
+    style PagerDuty fill:#ffe1e1
+```
+````
+
+## **Use for:** Documenting observability strategy, monitoring infrastructure, alerting workflows
+
+**Best Practices for Operations Diagrams:**
+
+1. **Include Resource Specs:** Add CPU/RAM/disk info to nodes (e.g., `[API Server<br/>4 vCPU, 8GB RAM]`)
+2. **Show Redundancy:** Display load balancers, replicas, multi-AZ deployments, failover paths
+3. **Label Network Boundaries:** Use subgraphs for VPCs, subnets, availability zones, regions
+4. **Document Protocols:** Label connections with HTTPS, gRPC, TCP, WebSocket, etc.
+5. **Add IP Ranges:** Include CIDR blocks for network subnets (e.g., `10.0.1.0/24`)
+6. **Show Auto-Scaling:** Indicate which components scale horizontally/vertically
+7. **Include External Services:** SaaS tools, third-party APIs, CDNs, email providers
+8. **Color Code by Layer:** Infrastructure (blue), data (green), monitoring (purple), alerts (red)
+
+**Common Formatting Rules:**
+
+- Code fence: ` ```mermaid ` (lowercase, no spaces, three backticks)
+- Use `subgraph "Name"` to group related components by layer/zone
+- Use `[(Cylinder)]` for databases, data stores, and persistent storage
+- Use `[Square Brackets]` for services, servers, and compute resources
+- Use dotted arrows `-.->` for replication, backup, and async flows
+- Apply consistent styling: `style NodeName fill:#colorcode`
+
+**Deployment Context Examples:**
+
+- For Docker: Show containers, volumes, networks, registries
+- For Kubernetes: Show pods, services, ingress, namespaces, persistent volumes
+- For Serverless: Show Lambda functions, API Gateway, S3 triggers, event sources
+- For VMs: Show instances, security groups, load balancers, auto-scaling groups
+
+## **Validation:** Test diagrams at https://mermaid.live/ before saving to ensure syntax is correct
+
+### Phase 7 Output
+
+```
+📋 PHASE 7 SUMMARY:
+
+Deployment Environment: [cloud/PaaS/on-premises/container-orchestration + platform choice + rationale] (7.1)
+Containerization: [yes/no + Docker setup (base image, size, compose stack)] (7.2)
+Environments: [number of environments (dev/staging/prod) + config approach (env vars/secrets/feature flags)] (7.3)
+CI/CD Pipeline: [platform (GitHub Actions/GitLab CI/etc.) + pipeline stages + auto-deploy strategy] (7.4)
+Deployment Strategy: [standard/blue-green/canary/rolling + zero-downtime approach + rollback plan] (7.4.1)
+Monitoring & Logging: [APM tool + logging strategy (centralized/structured JSON) + metrics to track] (7.5)
+Alerts: [alert conditions (error rate/response time/5xx/etc.) + channels (email/Slack/PagerDuty) + on-call rotation] (7.6)
+Backup & Disaster Recovery: [backup strategy + retention period + RTO/RPO targets] (7.7)
+Database Migrations in Production: [zero-downtime strategy + rollback plan + migration windows] (7.7.1)
+Database Connection Pooling: [pool tool + settings (min/max/timeouts) + monitoring] (7.7.2)
+Scaling Strategy: [horizontal/vertical/auto-scaling + expected load + database scaling approach] (7.8)
+Health Checks: [endpoints (/health, /health/ready, /health/live) + checks performed] (7.9)
+Graceful Shutdown: [yes/no + shutdown sequence + timeouts] (7.9.1)
+Circuit Breakers & Resilience: [yes/no + tool + configuration + fallback strategies] (7.9.2)
+Documentation & Runbooks: [what will be created (deployment guide/runbooks/architecture diagrams in mermaid format/API docs) + API doc strategy (code-first/design-first)] (7.10)
+
+Is this correct? (Yes/No)
+```
+
+---
+
+### 📄 Generate Phase 7 Documents
+
+**Before starting generation:**
+
+```
+📖 Loading context from previous phases...
+✅ Re-reading docs/testing.md
+✅ Re-reading ai-instructions.md
+```
+
+**Generate documents automatically:**
+
+**1. `docs/operations.md`**
+
+- Use template: `.ai-flow/templates/docs/operations.template.md`
+- Fill with deployment, monitoring, alerting, backup, scaling
+- Write to: `docs/operations.md`
+
+**2. `specs/configuration.md`**
+
+- Use template: `.ai-flow/templates/specs/configuration.template.md`
+- Fill with environment variables, secrets management, feature flags
+- Write to: `specs/configuration.md`
+
+**3. `.env.example`**
+
+- List all environment variables needed
+- Include comments explaining each variable
+- Write to: `.env.example`
+
+```
+✅ Generated: docs/operations.md
+✅ Generated: specs/configuration.md
+✅ Generated: .env.example
+
+Documents have been created with all Phase 7 information.
+
+📝 Would you like to make any corrections before continuing?
+
+→ If yes: Edit the files and type "ready" when done. I'll re-read them.
+→ If no: Type "continue" to proceed to final checkpoint.
+```
+
+**If user edits files:**
+Re-read files to refresh context before continuing.
+
+---
+
+### Phase 7 Completion
+
+```
+✅ Phase 7 Complete!
+
+Generated documents:
 ✅ docs/operations.md
 ✅ specs/configuration.md
 ✅ .env.example
----
-📊 Progress Summary:
 
-Phases 1-7 completed:
-✅ project-brief.md (Phase 1)
-✅ docs/ui-structure.md (Phase 2)
-✅ docs/architecture.md (Phase 3)
-✅ ai-instructions.md (Phase 3)
-✅ docs/code-standards.md (Phase 5)
-✅ docs/testing.md (Phase 6)
-✅ docs/performance.md (Phase 7)
-✅ docs/operations.md (Phase 7)
-✅ specs/configuration.md (Phase 7)
-✅ .env.example (Phase 7)
+📝 Would you like to review these documents before proceeding to Phase 8?
 
-Remaining:
-⏭️  Phase 8: Project setup & final documentation
----
-🎯 Next: Phase 8 - Project Setup & Final Documentation
----
-Phase 8 will:
-- 🔍 Detect project state (new vs existing)
-- 🚀 Initialize framework (optional, for new projects)
-- 📝 Generate final docs (components-guide, state-management, contributing)
-- 📖 Generate AGENT.md (master documentation index)
-- 📄 Generate README.md (with intelligent merge if needed)
-- 🤖 Create tool-specific configs (based on AI selection)
-
-Continue to Phase 8? (yes/no)
+→ If yes: Edit the files and type "ready" when done.
+→ If no: Type "continue" to proceed to Phase 8.
 ```
+
 ---
-**Last Updated:** 2025-12-09
 
-**Version:** 2.0.0 (Unified workflow with Phase 8)
+## 📝 Generated Documents
 
+After Phase 7, generate/update:
 
+- `docs/operations.md` - Operations and deployment guide
+- `specs/configuration.md` - Configuration specification  
+- `.env.example` - Environment variables template
 
+---
 
+**Next Phase:** Phase 8 - Project Setup & Final Documentation
+
+Read: `.ai-flow/prompts/backend/flow-build-phase-8.md`
+
+---
+
+**Last Updated:** 2025-12-20
+
+**Version:** 2.1.8

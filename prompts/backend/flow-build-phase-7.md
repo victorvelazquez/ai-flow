@@ -12,6 +12,25 @@
 
 Define deployment, monitoring, and operational practices.
 
+---
+
+## 🔍 Pre-Flight Check (Smart Skip Logic)
+
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 7:**
+
+- **Target File**: `docs/deployment.md`
+- **Phase Name**: "OPERATIONS & DEPLOYMENT"
+- **Key Items**: CI/CD pipeline, deployment platform, monitoring, logging
+- **Typical Gaps**: Incident runbooks, disaster recovery, scaling strategy
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
+---
+
+## Phase 7 Questions (Full Mode)
+
 **7.1 Deployment Environment**
 
 ```

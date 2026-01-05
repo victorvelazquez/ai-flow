@@ -1,6 +1,6 @@
 # AI Flow
 
-[![CI Status](https://github.com/victorvelazquez/ai-flow/actions/flow-dev-workflows/nodejs.yml/badge.svg?branch=main)](https://github.com/victorvelazquez/ai-flow/actions/flow-dev-workflows/nodejs.yml)
+[![CI Status](https://github.com/victorvelazquez/ai-flow/actions/workflows/nodejs.yml/badge.svg)](https://github.com/victorvelazquez/ai-flow/actions/workflows/nodejs.yml)
 
 ## English
 
@@ -10,12 +10,14 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4 docs)
+- 🚀 Complete professional documentation (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 30+ docs)
 - 🧠 **Smart Description Refinement:** Detects ambiguity and iteratively guides you to a professional project definition.
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 Multi-AI support with slash commands
 - 🔍 Smart 3-layer detection for existing projects (50-94% faster)
+- 🎯 **Smart Skip Logic:** Intelligently skips documentation phases for existing projects (15-20 min vs 90 min for ≥95% consistency).
+- 🚀 **Agent Mode Enforcement:** AI assistants now prioritize proactive tool usage and immediate execution for all `/flow-` commands (No more redundant planning).
 - ⏱️ Save 10-20 hours per project
 
 **Quick Start:**
@@ -26,8 +28,8 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 npm install -g ai-flow-dev
 ai-flow init .
 # Then open your AI tool and run:
-# /flow-build       - To generate all documentation
-# /flow-dev-feature - To start building features
+# /flow-build  - To generate all documentation
+# /flow-work   - To start building features
 ```
 
 ## 📚 **[Complete Guide →](GETTING-STARTED.md)**
@@ -38,12 +40,13 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 4 docs)
+- 🚀 Documentación profesional completa (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 30+ docs)
 - 🧠 **Refinamiento Inteligente:** Detecta ambigüedad y te guía iterativamente hacia una descripción profesional.
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
 - 🤖 Compatible with Claude, Copilot, Cursor, Gemini, Antigravity
 - 🔍 Detección inteligente para proyectos existentes (50-94% más rápido)
+- 🚀 **Modo Agente:** Los asistentes de IA ahora priorizan la ejecución proactiva para todos los comandos `/flow-`.
 - ⏱️ Ahorra 10-20 horas por proyecto
 
 **Inicio rápido:**
@@ -54,8 +57,8 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 npm install -g ai-flow-dev
 ai-flow init .
 # Luego en tu herramienta IA:
-# /flow-build       - Para generar toda la documentación
-# /flow-dev-feature - Para comenzar a construir funcionalidades
+# /flow-build  - Para generar toda la documentación
+# /flow-work   - Para comenzar a construir funcionalidades
 ```
 
 ## 📚 **[Guía Completa →](GETTING-STARTED.md)**
@@ -65,7 +68,8 @@ ai-flow init .
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 4 docs)
+- 🚀 Documentação profissional completa (Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 30+ docs)
+- 🚀 **Modo Agente:** Os assistentes de IA agora priorizam a execução proativa para todos os comandos `/flow-`.
 - 🧠 **Refinamento Inteligente:** Detecta ambiguidade e guia você para uma descrição profissional.
 - ⚡ **Dois modos:** Interactivo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
 - 🌍 Suporte universal - 12 linguagens, 60+ frameworks, 35+ ORMs
@@ -81,8 +85,8 @@ Transforme sua ideia em um projeto pronto para produção e documentado para IA 
 npm install -g ai-flow-dev
 ai-flow init .
 # Em seguida, na sua ferramenta de IA:
-# /flow-build       - Para gerar toda a documentação
-# /flow-dev-feature - Para começar a construir funcionalidades
+# /flow-build  - Para gerar toda a documentação
+# /flow-work   - Para começar a construir funcionalidades
 ```
 
 ## 📚 **[Guia Completo →](GETTING-STARTED.md)**
@@ -104,14 +108,15 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, Antigravity, any AI tool
-- 📚 **Professional Documentation** - Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 4 docs
+- 📚 **Professional Documentation** - Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 30+ docs
 - 🧠 **Smart Description Refinement** - AI detects vague inputs and helps you rich the context (WHO, WHAT, WHY).
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, all phases (90-120 min)
   - **Smart Auto-Suggest:** Only 6 critical questions, AI suggests best practices (15-25 min)
 - 🔍 **Smart 3-Layer Detection** - Analyzes existing projects in 15s-5min
 - 💾 **Intelligent Caching** - 0 seconds on re-runs with no changes
-- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-dev-feature`, `/flow-dev-commit`
+- 🚀 **Agent Mode** - Immediate, proactive execution for all AI workflows
+- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-work`, `/flow-check`, `/flow-commit`
 - ⏱️ **Time Efficient** - Save 10-20 hours per project
 
 ---
@@ -135,7 +140,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-## **Current version:** 2.2.0
+## **Current version:** 2.4.1
 
 ## 🚀 Quick Start
 
@@ -171,7 +176,7 @@ $ ai-flow check
 
 ✓ .ai-flow/core/config.json found
 ✓ AI tools configured: antigravity
-✓ Project type: backend
+✓ Project Type: Backend (backend)
 ✓ Documentation complete: 17 files
 ✓ Slash commands installed: .agent/workflows/
 
@@ -261,7 +266,7 @@ After initialization, use these slash commands in your AI tool:
 
 > **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
 
-**Backend Projects:** 19 commands  
+**Backend Projects:** 16 commands  
 **Frontend Projects:** 13 commands  
 **Mobile Projects:** 13 commands  
 **Fullstack Projects:** Combined backend + frontend commands
@@ -270,6 +275,9 @@ After initialization, use these slash commands in your AI tool:
 
 - `/flow-build` - Flujo completo: todas las fases en orden (11 fases backend, 11 frontend/mobile)
 - `/flow-build fase N` - Ejecutar fase específica (ver lista de fases abajo)
+- `/flow-work` - Development orchestrator (feature, refactor, fix, resume)
+- `/flow-check` - Combined code review & testing workflow
+- `/flow-commit` - Atomic commits (Conventional Commits)
 - `/flow-docs-sync` - Update documentation when code changes
 
 **Fases disponibles (Backend):**
@@ -300,18 +308,60 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-build fase 9` - Implementation Roadmap (opcional)
 - `/flow-build fase 10` - User Stories Generation (opcional)
 
-**Workflows (Backend only):**
+**Workflows (All project types):**
 
-- `/flow-dev-feature` - Create/modify features (15-20 min)
-- `/flow-dev-fix` - Fix bugs (3-15 min, adaptive)
-- `/flow-dev-commit` - Automate commits with Conventional Commits (3-5 min)
-- `/flow-dev-work` - Manage work in progress
-- `/flow-dev-review` - Multi-aspect code review (5 min)
-- `/flow-dev-refactor` - Quick refactorings (3-5 min)
+- `/flow-work` - **Unified orchestrator** for Features/Refactors/Fixes with smart detection, automatic completion tracking, and consolidated planning
+- `/flow-check` - **Combined validation**: Tests + Code Review in one command
+- `/flow-commit` - Automate commits with Conventional Commits (3-5 min)
+- `/flow-docs-sync` - **Sync documentation** when code changes occur
 
-> **Note:** Frontend and Mobile projects include build commands (`/flow-build`, phases, `/flow-docs-sync`) but not workflow commands.
+> **Note:** `/flow-work` automatically marks tasks as complete in `planning/roadmap.md` and user story DoD checklists when implementation finishes. It generates a consolidated `work.md` file for efficient planning and context management.
 
 ## **📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
+
+---
+
+## 📁 Project Structure
+
+AI Flow organizes your project with clear separation of concerns:
+
+### Documentation & Specifications
+
+- **`docs/`** - Descriptive documentation (WHAT the project IS)
+  - `architecture.md` - System architecture and design patterns
+  - `data-model.md` - Entities, relationships, database schema
+  - `api.md` - Available endpoints and contracts
+  - `testing.md` - Testing strategy and guidelines
+
+- **`specs/`** - Technical specifications (HOW to IMPLEMENT)
+  - `security.md` - Security rules and constraints (MUST/NEVER)
+  - `configuration.md` - Environment variables and settings
+
+### Planning & Requirements
+
+- **`planning/`** - Requirements and roadmap (WHAT to DO)
+  - `roadmap.md` - Technical implementation roadmap with Story Points
+  - `user-stories/` - Agile user stories with acceptance criteria
+
+### Development State
+
+- **`.ai-flow/`** - AI workflow state (temporary, can be gitignored)
+  - `work/` - Active development tasks
+  - `archive/` - Completed tasks (organized by month)
+
+> **Note on Cache Directory:**
+>
+> **In projects using AI Flow:**
+>
+> - Cache is stored in `.ai-flow/cache/` (analysis data for your project)
+> - Contains: `docs-analysis.json`, `audit-data.json`, `docs-snapshot.json`
+>
+> **In the AI Flow repository itself:**
+>
+> - Cache is stored in `cache/` at root (self-analysis data)
+> - Used by `/flow3-docs` to track documentation accuracy
+>
+> These are two different caches with different purposes.
 
 ## 💡 How It Works
 
@@ -339,13 +389,13 @@ After initialization, use these slash commands in your AI tool:
 
 ## 🎯 Generated Documentation
 
-**Backend** (17 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 14 technical docs/specs.
+**Backend** (14 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, plus 8 docs and 2 specs.
 
 **Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
 
 **Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 10 technical docs/specs.
 
-**Fullstack** (4 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 1 spec
+**Fullstack** (30+ docs): Combined Backend + Frontend documentation structures.
 
 ### 📁 Generated Structure
 

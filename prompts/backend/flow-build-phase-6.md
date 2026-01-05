@@ -18,6 +18,25 @@ Define testing approach, tools, and quality gates.
 
 **🚨 Important: All projects require basic testing. Scope determines depth, not whether to test.**
 
+---
+
+## 🔍 Pre-Flight Check (Smart Skip Logic)
+
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 6:**
+
+- **Target File**: `docs/testing.md`
+- **Phase Name**: "TESTING STRATEGY"
+- **Key Items**: Test framework, coverage targets, test types, CI/CD integration
+- **Typical Gaps**: E2E strategy, load testing, performance testing
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
+---
+
+## Phase 6 Questions (Full Mode)
+
 **6.1 Testing Framework**
 
 ```

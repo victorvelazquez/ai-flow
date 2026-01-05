@@ -11,13 +11,13 @@ Break down technical roadmap tasks into user-centric Agile requirements (User St
 
 // turbo
 ### Step 10.1: Load Context from Roadmap
-Extract context variables and epics from `docs/roadmap.md`.
+Extract context variables and epics from `planning/roadmap.md`.
 
 ### Step 10.2: Select Scope
 Choose: All Epics, Sprint 1, or Specific Epics.
 
 ### Step 10.3: Generate User Story Documents
-Create `docs/user-stories/EP-XXX/HU-XXX-YYY.md`.
+Create `planning/user-stories/EP-XXX/HU-XXX-YYY.md`.
 
 **Frontend specific Acceptance Criteria focus:**
 - **UX/Interaction:** "When I click X, Y happens with a smooth transition."
@@ -26,7 +26,7 @@ Create `docs/user-stories/EP-XXX/HU-XXX-YYY.md`.
 - **Validation:** "Show inline error message if field is empty."
 
 ### Step 10.4: Generate Test Cases
-Create `docs/user-stories/EP-XXX/tests/TC-XXX-YYY.md`.
+Create `planning/user-stories/EP-XXX/tests/TC-XXX-YYY.md`.
 
 ---
 _Version: 4.2 (Antigravity Optimized)_

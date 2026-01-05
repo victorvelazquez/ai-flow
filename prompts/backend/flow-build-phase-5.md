@@ -12,6 +12,25 @@
 
 Establish code quality rules, naming conventions, and development practices.
 
+---
+
+## 🔍 Pre-Flight Check (Smart Skip Logic)
+
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 5:**
+
+- **Target File**: `docs/code-standards.md`
+- **Phase Name**: "CODE STANDARDS"
+- **Key Items**: Linters, formatters, naming conventions, code review process
+- **Typical Gaps**: Team-specific conventions, code review workflow
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
+---
+
+## Phase 5 Questions (Full Mode)
+
 **5.1 Code Style & Formatting**
 
 ```
@@ -256,7 +275,7 @@ src/
     utils/
   infrastructure/
     database/
-    cache/
+    .ai-flow/cache/
 
 Your choice: __
 Why?

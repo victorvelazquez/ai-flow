@@ -12,6 +12,25 @@
 
 Define security policies, authentication, authorization, and compliance requirements.
 
+---
+
+## 🔍 Pre-Flight Check (Smart Skip Logic)
+
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 4:**
+
+- **Target File**: `specs/security.md`
+- **Phase Name**: "SECURITY & AUTHENTICATION"
+- **Key Items**: Auth strategy, encryption, security patterns, compliance
+- **Typical Gaps**: Compliance requirements, audit logging, security policies
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
+---
+
+## Phase 4 Questions (Full Mode)
+
 **4.1 Authentication Method**
 
 ```

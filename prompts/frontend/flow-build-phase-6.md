@@ -1,593 +1,524 @@
-# Phase 6: Testing Strategy
+## PHASE 6: Testing Strategy (15-20 min)
 
-**Duration:** 15-25 minutes
-**Questions:** ~12 questions
-**Output:** docs/testing.md, parts of ai-instructions.md
+> **Order for this phase:**
+>
+> - **MVP:** 6.1 → 6.2 (smoke tests) → 6.7 (CI basics)
+> - **Production-Ready:** 6.1 → 6.1b → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7
+> - **Enterprise:** 6.1 → 6.1b → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7 → 6.8 → 6.9
+
+> **📌 Scope-based behavior:**
+>
+> - **MVP:** Ask 6.1 (framework), 6.2 (smoke tests only), 6.7 (CI basics) - **Target: 15-25% coverage**
+> - **Production-Ready:** Ask all questions 6.1-6.7 - **Target: 60-80% coverage**
+> - **Enterprise:** Ask all questions 6.1-6.9 - **Target: 80-95% coverage + contract/load tests**
+
+### Objective
+
+Define testing approach, tools, and quality gates.
+
+**🚨 Important: All projects require basic testing. Scope determines depth, not whether to test.**
+
 ---
-## 🎯 Objective
 
-Define your testing strategy:
+## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-1. What testing frameworks will you use?
-2. What types of tests will you write?
-3. What coverage targets?
-4. How will tests run in CI/CD?
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 6:**
+
+- **Target File**: `docs/testing.md`
+- **Phase Name**: "TESTING STRATEGY"
+- **Key Items**: Test framework, coverage targets, test types, CI/CD integration
+- **Typical Gaps**: E2E strategy, load testing, performance testing
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
 ---
-## 📋 Questions
 
-### Question 6.1: Unit Testing Framework
+## Phase 6 Questions (Full Mode)
 
-**What unit test framework will you use?**
+**6.1 Testing Framework**
 
-A) ⭐ **Vitest** (Recommended for most)
+```
 
-- Features: Fast, Vite-native, compatible with Jest API
-- Best for: Vite projects, modern apps
-- Speed: Very fast (ESM native)
-- Bundle: N/A (dev dependency)
+Which testing tools will you use?
 
-B) 🔥 **Jest**
+JavaScript/TypeScript:
+A) ⭐ Jest - Most popular, great ecosystem
+B) Vitest - Modern, fast, Vite-compatible
+C) Mocha + Chai
+D) AVA
 
-- Features: Mature, widely used, snapshot testing
-- Best for: React apps, large ecosystem
-- Speed: Fast (with SWC/ESBuild)
-- Bundle: N/A (dev dependency)
+Python:
+E) ⭐ pytest - Modern, feature-rich
+F) unittest - Built-in
+G) nose2
 
-C) **Testing Library + Node Test Runner**
+Java:
+H) ⭐ JUnit 5 + Mockito
+I) TestNG
 
-- Features: Node.js built-in test runner (Node 18+)
-- Best for: Zero-dependency testing
-- Speed: Fast
+Your choice: \_\_
 
-D) **Mocha + Chai**
+Assertion library: **
+Mocking library: **
 
-- Features: Flexible, BDD-style
-- Best for: Legacy projects
+```
 
-**Your answer:**
----
-### Question 6.2: Component Testing Library
+**6.1b Testing Philosophy** (Production-Ready and Enterprise only)
 
-**How will you test components?**
+```
+What is your testing philosophy?
 
-#### React
+A) ⭐ Test-First (TDD) - Write tests before code
+   - Red-Green-Refactor cycle
+   - Higher initial effort, better design
+   - Best for: Complex business logic, critical systems
 
-A) ⭐ **React Testing Library** (Recommended)
+B) 🔥 Test-After - Write tests after implementation
+   - Faster initial development
+   - Risk of untested edge cases
+   - Best for: Rapid prototyping, time-sensitive features
 
-- Philosophy: Test user behavior, not implementation
-- Features: Accessible queries, user-centric
-- Best for: All React apps
+C) ⚡ Behavior-Driven (BDD) - Write tests as specifications
+   - Given/When/Then format
+   - Business-readable tests
+   - Best for: Domain-heavy applications
 
-B) **Enzyme**
+D) 🏆 Hybrid - TDD for core logic, test-after for simple features
+   - Balance of speed and quality
+   - Pragmatic approach
 
-- Features: Shallow rendering, instance testing
-- Best for: Legacy React apps
-- Note: Not recommended for new projects
+Your choice: __
+```
 
-#### Vue
+**6.2 Test Types**
 
-A) ⭐ **Vue Test Utils** (Official)
+```
+[If MVP scope selected, ask simplified version:]
 
-- Features: Vue-specific testing utilities
-- Best for: All Vue apps
+For MVP, we'll focus on smoke tests (critical path verification).
+Which critical flows should be tested?
 
-#### Angular
+Select 3-5 most important endpoints/features:
+A) Authentication (login/register)
+B) Main business operation (e.g., create order, post article)
+C) User profile/account management
+D) Payment processing (if applicable)
+E) Data retrieval (main GET endpoints)
 
-A) ⭐ **Angular Testing Utilities** (Built-in)
+Selected: __
 
-- Features: TestBed, ComponentFixture
-- Best for: All Angular apps
+Test approach: Integration tests covering happy path of selected flows
+Coverage target: 15-25%
+Test type: Integration/E2E only (no unit tests required for MVP)
 
-#### Svelte
+[If Production-Ready or Enterprise scope selected, ask full version:]
 
-A) ⭐ **Svelte Testing Library**
+Which test types will you implement?
 
-- Features: User-centric testing
-- Best for: All Svelte apps
+A) ✅ Unit Tests
+   - Test individual functions/methods in isolation
+   - Fast, numerous
+   - Mock all dependencies
 
-#### Solid
+B) ✅ Integration Tests
+   - Test multiple components together
+   - Database, external APIs
+   - Slower but more realistic
 
-A) ⭐ **Solid Testing Library**
+C) ✅ E2E (End-to-End) Tests
+   - Test full user flows
+   - API endpoints from request to response
+   - Tool: Supertest (Node.js), pytest with TestClient (Python)
 
-- Features: Similar to React Testing Library
-- Best for: All Solid apps
+D) 🏆 Contract Tests (Advanced - Enterprise recommended)
+   - Verify API contracts between services
+   - Tool: Pact, Spring Cloud Contract
 
-**Your answer:**
----
-### Question 6.3: E2E Testing Framework
+E) ⚡ Load/Performance Tests (Enterprise recommended)
+   - Tool: Artillery, K6, JMeter
 
-**What E2E testing tool will you use?**
+F) 🔬 Chaos Engineering (Enterprise only)
+   - Test system resilience to failures
+   - Tool: Chaos Monkey, Litmus, Gremlin
 
-A) ⭐ **Playwright** (Recommended)
+Selected: __
 
-- Features: Cross-browser, fast, modern API, auto-waiting
-- Browsers: Chromium, Firefox, WebKit
-- Best for: Most apps, CI/CD friendly
-- Speed: Very fast
-
-B) 🔥 **Cypress**
-
-- Features: Great DX, time-travel debugging, visual testing
-- Browsers: Chrome, Firefox, Edge, Electron
-- Best for: Developer experience, visual regression
-- Speed: Fast
-
-C) **Puppeteer**
-
-- Features: Chrome/Chromium only, powerful API
-- Best for: Chrome-only testing, scraping
-
-D) **WebDriverIO**
-
-- Features: WebDriver protocol, cross-platform
-- Best for: Mobile testing, Appium integration
-
-E) **No E2E tests**
-
-- Best for: MVPs, small apps
-
-**Your answer:**
----
-### Question 6.4: Testing Pyramid Distribution
-
-**What test distribution will you target?**
-
-A) ⭐ **Standard Pyramid** (Recommended)
-
+Pyramid distribution:
 - 70% Unit tests
 - 20% Integration tests
 - 10% E2E tests
-- Best for: Most apps, balanced approach
+  (Adjust as needed)
 
-B) **Heavy Unit**
-
-- 85% Unit tests
-- 10% Integration tests
-- 5% E2E tests
-- Best for: Logic-heavy apps, libraries
-
-C) **Heavy Integration**
-
-- 50% Unit tests
-- 40% Integration tests
-- 10% E2E tests
-- Best for: UI-heavy apps, component libraries
-
-D) **Testing Trophy** (Kent C. Dodds)
-
-- 30% Unit tests
-- 50% Integration tests
-- 20% E2E tests
-- Best for: User-centric apps
-
-**Your answer:**
----
-#### 🎨 TESTING PYRAMID VISUALIZATION
-
-**Use this diagram format** to visualize test distribution strategy:
-
-```mermaid
-graph TB
-    subgraph "Testing Pyramid"
-        E2E["🌐 E2E Tests (10%)<br/>Slow, Expensive<br/>Full user flows"]
-        INT["🔗 Integration Tests (20%)<br/>Medium Speed<br/>Component interaction"]
-        UNIT["⚡ Unit Tests (70%)<br/>Fast, Cheap<br/>Individual functions/components"]
-    end
-
-    E2E --> INT
-    INT --> UNIT
-
-    style E2E fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    style INT fill:#fff4e6,stroke:#f57c00,stroke-width:2px
-    style UNIT fill:#e8f5e9,stroke:#388e3c,stroke-width:3px
-
-    classDef note fill:#f5f5f5,stroke:#666,stroke-dasharray: 5 5
-
-    note1["Cost ↑<br/>Speed ↓<br/>Confidence ↑"]:::note
-    note2["Cost ↓<br/>Speed ↑<br/>Confidence varies"]:::note
-
-    E2E -.-> note1
-    UNIT -.-> note2
 ```
 
-**Alternative: Testing Trophy (Kent C. Dodds)**
-
-For apps prioritizing integration tests over unit tests:
-
-```mermaid
-graph TB
-    subgraph "Testing Trophy"
-        E2E["🌐 E2E Tests (20%)<br/>Critical user paths"]
-        INT["🔗 Integration Tests (50%)<br/>⭐ Focus here<br/>Component + API interaction"]
-        UNIT["⚡ Unit Tests (30%)<br/>Complex logic only"]
-        STATIC["📝 Static Analysis (Base)<br/>TypeScript + ESLint"]
-    end
-
-    E2E --> INT
-    INT --> UNIT
-    UNIT --> STATIC
-
-    style E2E fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    style INT fill:#fff4e6,stroke:#f57c00,stroke-width:4px
-    style UNIT fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-    style STATIC fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-```
-
-**When to Use Each Visualization:**
-
-- **Testing Pyramid**: Best for traditional apps, backend-heavy logic, libraries
-- **Testing Trophy**: Best for React apps, user-centric products, component-driven UIs
-
-**Diagram Guidelines:**
-
-- Color code by test type (E2E=pink, Integration=orange, Unit=green)
-- Show percentages clearly
-- Include speed/cost trade-offs
-- Update percentages based on selected strategy (A, B, C, or D)
----
----
-### Question 6.5: Code Coverage Targets
-
-**What coverage percentage will you target?**
-
-A) ⭐ **80% / 75% / 80% / 80%** (Recommended)
-
-- Statements: 80%
-- Branches: 75%
-- Functions: 80%
-- Lines: 80%
-- Best for: Most production apps
-
-B) **100% / 100% / 100% / 100%** (Strict)
-
-- All coverage at 100%
-- Best for: Critical apps (finance, healthcare)
-- Note: May be impractical
-
-C) **60% / 60% / 60% / 60%** (Lenient)
-
-- Best for: MVPs, startups
-
-D) **No coverage targets**
-
-- Best for: Prototypes only
-
-**Your answer:**
-
-**Enforce coverage in CI?**
-A) Yes - Fail CI if below threshold
-B) No - Report only, no enforcement
----
-### Question 6.6: Snapshot Testing
-
-**Will you use snapshot testing?**
-
-Snapshot testing = Capture component output, detect unexpected changes
-
-A) ⭐ **Yes, for components**
-
-- Test component output snapshots
-- Best for: Preventing regressions
-- Tools: Jest/Vitest snapshots
-
-B) **Yes, for components + visual regression**
-
-- Add visual snapshot testing (screenshot comparison)
-- Best for: UI-critical apps
-- Tools: Percy, Chromatic, Playwright screenshots
-
-C) **No snapshot testing**
-
-- Best for: Avoiding brittle tests
-
-**Your answer:**
----
-### Question 6.7: Test Data & Fixtures
-
-**How will you manage test data?**
-
-A) ⭐ **Factory functions** (Recommended)
-
-```typescript
-const createUser = (overrides = {}) => ({
-  id: '1',
-  name: 'John Doe',
-  email: 'john@example.com',
-  ...overrides,
-});
-```
-
-- Best for: Flexible, reusable test data
-
-B) **Static fixtures**
-
-```typescript
-// fixtures/users.json
-{
-  "user1": { "id": "1", "name": "John Doe" }
-}
-```
-
-- Best for: Consistent test data
-
-C) **Faker.js / @faker-js/faker**
-
-- Generate random realistic data
-- Best for: Large datasets, avoiding hardcoding
-
-D) **Inline data**
-
-- Define data directly in tests
-- Best for: Simple tests
-
-**Your answer:**
----
-### Question 6.8: Mocking Strategy
-
-**How will you mock dependencies?**
-
-A) ⭐ **Mock Service Worker (MSW)** (Recommended for API mocking)
-
-- Features: Intercept network requests, works in tests and browser
-- Best for: API mocking, realistic tests
-- Example:
-  ```typescript
-  rest.get('/api/users', (req, res, ctx) => {
-    return res(ctx.json({ users: [...] }));
-  });
-  ```
-
-B) **Vitest/Jest mocks**
-
-- Features: `vi.mock()` / `jest.mock()` for modules
-- Best for: Module/function mocking
-- Example:
-  ```typescript
-  vi.mock('./api', () => ({
-    fetchUser: vi.fn(() => Promise.resolve({ id: '1' })),
-  }));
-  ```
-
-C) **Manual mocks**
-
-- Features: Create mock implementations manually
-- Best for: Full control
-
-D) **No mocking**
-
-- Test against real APIs
-- Best for: Integration tests only
-
-**Your answer:**
----
-### Question 6.9: Test Organization
-
-**How will you organize tests?**
-
-A) ⭐ **Collocated with source** (Recommended)
+**6.3 Test Database** [Skip if MVP scope]
 
 ```
-components/
-├── Button/
-│   ├── Button.tsx
-│   ├── Button.test.tsx
-│   └── Button.stories.tsx
+[Production-Ready/Enterprise only]
+
+How will you handle database in tests?
+
+A) ⭐ In-memory database
+   - SQLite for testing, PostgreSQL for prod
+   - Fast, isolated
+
+B) 🏆 Docker test database
+   - Same DB as production
+   - More realistic
+   - Tool: Testcontainers
+
+C) 🔄 Shared test database
+   - One DB for all tests
+   - Reset between test suites
+
+D) 🎭 Mock database
+   - Mock all DB calls
+   - Fastest, but less realistic
+
+Your choice: __
+
+Test data strategy:
+A) ⭐ Factories/Fixtures - Generate test data programmatically
+B) Seed files - Load from JSON/SQL files
+C) Inline - Create data in each test
+
 ```
 
-- Best for: Modularity, easy to find tests
-
-B) **Separate **tests** folder**
+**6.4 Test Data Management** [Skip if MVP scope]
 
 ```
-components/
-├── Button/
-│   ├── Button.tsx
-│   └── __tests__/
-│       └── Button.test.tsx
+[Production-Ready/Enterprise only]
+
+How will you create test data?
+
+A) ⭐ Factory pattern
+   - Libraries: factory_boy (Python), Fishery (TypeScript)
+   - Generate realistic data on demand
+
+B) Fixtures
+   - Predefined test data
+   - Loaded before tests
+
+C) Faker
+   - Random realistic data
+   - Library: @faker-js/faker, Faker (Python)
+
+Your approach: __
+
+Example test data needs:
+- Users with various roles
+- Products with different states
+- Orders in different stages
+- Payment records
+- [Add your specific needs]
+
 ```
 
-- Best for: Jest convention
-
-C) **Mirrored test folder**
+**6.5 Mocking Strategy** [Skip if MVP scope]
 
 ```
+[Production-Ready/Enterprise only]
+
+What will you mock?
+
+A) ✅ External APIs - Third-party services
+B) ✅ Database - In unit tests
+C) ✅ File system - S3, local storage
+D) ✅ Time/Date - For deterministic tests
+E) ✅ Email/SMS - Sending services
+F) ✅ Payment gateways
+
+Mocking approach:
+A) ⭐ Manual mocks - jest.fn(), unittest.mock
+B) Library - MSW (Mock Service Worker), nock
+C) Test doubles - Stubs, spies, mocks
+
+When NOT to mock:
+- Internal business logic
+- Simple utilities
+- Value objects
+
+```
+
+**6.6 Test Organization** [Skip if MVP scope]
+
+```
+[Production-Ready/Enterprise only]
+
+Test file structure:
+
+A) ⭐ Co-located with source
+```
+
 src/
-├── components/Button.tsx
-tests/
-├── components/Button.test.tsx
+users/
+user.service.ts
+user.service.spec.ts
+
 ```
 
-- Best for: Separation of concerns
+B) Separate test directory
+```
 
-**Your answer:**
+src/users/user.service.ts
+tests/users/user.service.test.ts
 
-**E2E test location:**
+````
 
-- `e2e/` folder at root
-- `tests/e2e/` folder
-- `__e2e__/` folders throughout
----
-### Question 6.10: CI/CD Test Execution
-
-**How will tests run in CI?**
-
-A) ⭐ **All tests on every PR** (Recommended)
-
-- Unit + Integration + E2E
-- Best for: Most apps, catch regressions early
-
-B) **Unit/Integration on PR, E2E on merge to main**
-
-- Faster PR feedback, comprehensive on main
-- Best for: Slow E2E suites
-
-C) **Unit on PR, full suite nightly**
-
-- Best for: Very large test suites
-
-D) **Manual test runs**
-
-- Not recommended
-
-**Your answer:**
-
-**Parallel test execution:**
-A) Yes - Run tests in parallel (faster)
-B) No - Sequential execution
-
-**Retry failed tests:**
-A) Yes - Retry flaky tests (specify retries: \_\_\_)
-B) No - Fail immediately
----
-### Question 6.11: Visual Regression Testing
-
-**Will you do visual regression testing?**
-
-Visual regression = Screenshot comparison to detect unintended UI changes
-
-A) ⭐ **Yes, with Percy / Chromatic**
-
-- Features: Cloud-based, visual diffs, review UI
-- Best for: Design-critical apps, component libraries
-
-B) **Yes, with Playwright snapshots**
-
-- Features: Local screenshot comparison
-- Best for: Self-hosted, free option
-
-C) **No visual regression**
-
-- Best for: MVPs, non-visual apps
-
-**Your answer:**
-
-**If yes, what to test:**
-
-- [ ] Critical user flows (checkout, signup)
-- [ ] All components (Storybook)
-- [ ] Responsive breakpoints
-- [ ] Dark/light themes
----
-### Question 6.12: Accessibility Testing
-
-**How will you test accessibility?**
-
-A) ⭐ **jest-axe / vitest-axe**
+Test naming:
 
 ```typescript
-it('has no a11y violations', async () => {
-  const { container } = render(<Button>Click me</Button>);
-  const results = await axe(container);
-  expect(results).toHaveNoViolations();
+describe('UserService', () => {
+  describe('createUser', () => {
+    it('should create a new user with valid data', async () => {
+      // Arrange
+      const userData = { email: 'test@example.com', name: 'Test' };
+
+      // Act
+      const result = await userService.createUser(userData);
+
+      // Assert
+      expect(result).toBeDefined();
+      expect(result.email).toBe(userData.email);
+    });
+
+    it('should throw error when email is duplicated', async () => {
+      // ...
+    });
+  });
 });
-```
+````
 
-- Best for: Automated a11y checks in unit tests
+Naming pattern:
+A) ⭐ "should [expected behavior] when [condition]"
+B) "it [expected behavior]"
+C) Free-form
 
-B) **@axe-core/playwright / @axe-core/cypress**
+````
 
-- E2E accessibility testing
-- Best for: Full-page a11y scans
-
-C) **Manual testing**
-
-- Screen reader testing, keyboard navigation
-- Best for: Comprehensive a11y
-
-D) **No automated a11y testing**
-
-- Best for: MVPs only (not recommended)
-
-E) **Combined (automated + manual)**
-
-- Best for: WCAG compliance
-
-**Your answer:**
----
-## 📊 Phase 6 Summary
+**6.6.1 Contract Testing** [If selected in 6.2]
 
 ```
----
-📋 PHASE 6 SUMMARY: TESTING STRATEGY
----
-Unit Testing: [Answer from 6.1]
-Component Testing: [Answer from 6.2]
-E2E Testing: [Answer from 6.3]
-Test Distribution: [Answer from 6.4]
-Coverage Targets: [Answer from 6.5]
-Snapshot Testing: [Answer from 6.6]
-Test Data: [Answer from 6.7]
-Mocking Strategy: [Answer from 6.8]
-Test Organization: [Answer from 6.9]
-CI/CD Execution: [Answer from 6.10]
-Visual Regression: [Answer from 6.11]
-A11y Testing: [Answer from 6.12]
+[Production-Ready/Enterprise only]
 
-Is this correct? (Y/n)
+Contract testing tool:
+A) ⭐ Pact - Consumer-driven contracts
+B) Spring Cloud Contract - Provider contracts
+C) Other: __
+
+Contract strategy:
+A) ⭐ Consumer-driven - Frontend/consumers define contracts
+B) Provider-driven - Backend defines contracts
+C) Both - Hybrid approach
+
+Contract storage:
+A) ⭐ Pact Broker - Centralized contract storage
+B) Git repository - Version contracts in code
+C) Other: __
+
+Contract versioning:
+- Strategy: __
+- Breaking changes: __
 ```
----
-## 📝 Document Generation
 
-Generate `docs/testing.md` with these placeholders:
-
-- `{{UNIT_TEST_FRAMEWORK}}` → Vitest / Jest / etc.
-- `{{COMPONENT_TEST_LIBRARY}}` → React Testing Library / Vue Test Utils / etc.
-- `{{E2E_FRAMEWORK}}` → Playwright / Cypress / etc.
-- `{{TEST_DISTRIBUTION}}` → Testing pyramid percentages
-- `{{COVERAGE_TARGETS}}` → Coverage thresholds
-- `{{SNAPSHOT_TESTING}}` → Yes/No and strategy
-- `{{TEST_DATA_STRATEGY}}` → Factory / Fixtures / Faker
-- `{{MOCKING_LIBRARY}}` → MSW / Vitest mocks / etc.
-- `{{TEST_ORGANIZATION}}` → Collocated / Separate / Mirrored
-- `{{CI_STRATEGY}}` → How tests run in CI
-- `{{VISUAL_REGRESSION_TOOL}}` → Percy / Playwright / None
-- `{{A11Y_TESTING}}` → jest-axe / Manual / Combined
-
-Update `ai-instructions.md`:
-
-```markdown
-## Testing
-
-- **Unit Tests:** {{UNIT_TEST_FRAMEWORK}}
-- **Component Tests:** {{COMPONENT_TEST_LIBRARY}}
-- **E2E Tests:** {{E2E_FRAMEWORK}}
-- **Coverage:** {{COVERAGE_TARGETS}}
-
-### Rules
-
-- ✅ ALWAYS write tests for new features
-- ✅ ALWAYS test user behavior, not implementation details
-- ✅ ALWAYS use accessible queries (getByRole, getByLabelText)
-- ❌ NEVER test implementation details (state, props directly)
-- ❌ NEVER commit untested code
-- ✅ ALWAYS mock external APIs with {{MOCKING_LIBRARY}}
-  {{#IF_SNAPSHOT_TESTING}}
-- ✅ ALWAYS review snapshot changes carefully
-  {{/IF_SNAPSHOT_TESTING}}
-  {{#IF_A11Y_TESTING}}
-- ✅ ALWAYS include axe accessibility checks in component tests
-  {{/IF_A11Y_TESTING}}
-- ✅ ALWAYS maintain {{COVERAGE_TARGETS}}% code coverage
-```
----
-## 🚀 Next Steps
+**6.6.2 Load/Performance Testing** [If selected in 6.2]
 
 ```
-✅ Phase 6 Complete!
+[Production-Ready/Enterprise only]
 
-Documents Generated:
-  - docs/testing.md
-  - ai-instructions.md (updated)
+Load testing tool:
+A) ⭐ Artillery - Node.js, YAML-based
+B) K6 - Modern, JavaScript-based
+C) JMeter - Java-based, GUI available
+D) Locust - Python-based
+E) Other: __
 
-Next: Phase 7 - Performance & Deployment
+Test scenarios:
+- Normal load: __ requests/second
+- Peak load: __ requests/second
+- Stress test: __ requests/second (beyond capacity)
+- Duration: __ minutes
 
-Read: .ai-flow/prompts/frontend/flow-build-phase-7-deployment.md
+Performance thresholds:
+- Response time p50: < __ ms
+- Response time p95: < __ ms
+- Response time p99: < __ ms
+- Error rate: < __%
+- Throughput: > __ requests/second
+
+When to run:
+A) ⭐ Before major releases
+B) Weekly automated runs
+C) On-demand only
+```
+
+**6.6.3 Chaos Engineering** [If selected in 6.2 - Enterprise only]
+
+```
+[Enterprise only]
+
+Chaos engineering tool:
+A) ⭐ Chaos Monkey (Netflix)
+B) Litmus (Kubernetes)
+C) Gremlin - Managed chaos platform
+D) Custom scripts
+E) Other: __
+
+Chaos experiments to run:
+A) Network latency injection
+B) Service failures
+C) Database connection failures
+D) CPU/memory exhaustion
+E) Disk space issues
+F) Network partition
+
+→ Your selection (e.g., A, B, C): __
+
+Safety rules:
+- Run only in: [Staging, Production with approval]
+- Blast radius: __% of traffic/instances
+- Auto-rollback: [Yes/No]
+- Approval required: [Yes/No]
+```
+
+**6.7 CI/CD Testing** [All scopes - simplified for MVP]
+
+```
+[If MVP scope:]
+For MVP, we'll set up basic CI to run smoke tests.
+
+When will smoke tests run?
+A) ⭐ On pull request (GitHub Actions, GitLab CI) - Recommended
+B) Before deploy only
+
+Selected: __
+
+Quality gate for MVP:
+- ✅ All smoke tests must pass
+- ⚠️ Coverage tracking (no minimum required)
+
+[If Production-Ready or Enterprise scope:]
+
+When will tests run?
+
+A) ⭐ On every commit (pre-commit hook) - Catch issues early
+B) 🔥 On pull request (GitHub Actions, GitLab CI) - Most popular, prevents broken merges
+C) ⭐ Before deploy (staging pipeline) - Recommended safety check
+D) Nightly (comprehensive test suite) - For slow/extensive tests
+
+Selected: __
+
+Quality gates:
+
+- ✅ All tests must pass
+- ✅ Coverage must be >= __% (15-25% MVP, 60-80% Production, 80-95% Enterprise)
+- ✅ No linting errors
+- ⚡ Performance benchmarks met (optional, Enterprise recommended)
+
+Failing a quality gate:
+A) ⭐ Block merge/deploy - Force fix
+B) ⚠️ Warning only - Allow with justification
+
+```
+
+### Phase 6 Output
+
+```
+📋 PHASE 6 SUMMARY:
+
+**If MVP scope (A):**
+Testing Framework: [Jest/pytest/JUnit] (6.1)
+Test Types: Smoke tests on critical paths [selected 3-5 critical flows] (6.2)
+Test Approach: Integration/E2E tests covering happy path only (6.2)
+Coverage Target: 15-25% (6.2)
+CI/CD Testing: [on PR/before deploy] + quality gate: all tests must pass (6.7)
+Status: Basic testing implemented for MVP
+
+**If Production-Ready (B):**
+Testing Framework: [Jest/pytest/JUnit + assertion library + mocking library] (6.1)
+Test Types: [unit/integration/e2e - selected types] (6.2)
+Test Distribution: [pyramid percentages: 70/20/10 or custom] (6.2)
+Test Database: [in-memory/Docker/shared/mock + initial data strategy] (6.3)
+Test Data Management: [factories/fixtures/faker approach + specific test data needs] (6.4)
+Mocking Strategy: [what to mock (APIs/DB/files/time/email/payments) + approach] (6.5)
+Test Organization: [co-located/separate folder + naming pattern] (6.6)
+CI/CD Testing: [when tests run (commit/PR/deploy/nightly) + quality gates (pass/60-80% coverage/lint) + gate behavior (block/warn)] (6.7)
+Status: Comprehensive testing strategy implemented
+
+**If Enterprise (C):**
+Testing Framework: [Jest/pytest/JUnit + assertion library + mocking library] (6.1)
+Test Types: [unit/integration/e2e/contract/load/chaos - all types] (6.2)
+Test Distribution: [pyramid percentages: 70/20/10 or custom] (6.2)
+Test Database: [in-memory/Docker/shared/mock + initial data strategy] (6.3)
+Test Data Management: [factories/fixtures/faker approach + specific test data needs] (6.4)
+Mocking Strategy: [what to mock (APIs/DB/files/time/email/payments) + approach] (6.5)
+Test Organization: [co-located/separate folder + naming pattern] (6.6)
+Contract Testing: [tool (Pact/Spring Cloud Contract) + strategy + storage + versioning] (6.6.1)
+Load Testing: [tool (Artillery/K6/JMeter) + scenarios + thresholds + schedule] (6.6.2)
+Chaos Engineering: [tool (Chaos Monkey/Litmus/Gremlin) + experiments + safety rules] (6.6.3)
+CI/CD Testing: [when tests run (commit/PR/deploy/nightly) + quality gates (pass/80-95% coverage/lint/performance) + gate behavior (block/warn)] (6.7)
+Status: Exhaustive testing strategy with advanced scenarios
+
+Is this correct? (Yes/No)
 ```
 ---
-**Last Updated:** 2025-01-XX
+### 📄 Generate Phase 6 Documents
 
-**Version:** 1.2.0
+**Before starting generation:**
 
+```
+📖 Loading context from previous phases...
+✅ Re-reading docs/code-standards.md
+✅ Re-reading ai-instructions.md
+```
 
+**Generate `docs/testing.md` automatically:**
 
+- Use template: `.ai-flow/templates/docs/testing.template.md`
+- **If MVP scope:** Fill with basic testing strategy: framework selection, smoke tests on critical paths, coverage 15-25%, basic CI setup. Mark advanced sections as "Not implemented yet - expand when moving to Production-Ready"
+- **If Production-Ready:** Fill with comprehensive testing strategy: framework, unit/integration/e2e tests, 60-80% coverage, test data management, mocking, full CI/CD
+- **If Enterprise:** Fill with exhaustive testing strategy: all Production-Ready items + contract tests, load tests, security tests, 80-95% coverage, performance benchmarks
+- Write to: `docs/testing.md`
 
+```
+✅ Generated: docs/testing.md
+
+Document has been created with all Phase 6 information.
+
+📝 Would you like to make any corrections before continuing?
+
+→ If yes: Edit the file and type "ready" when done. I'll re-read it.
+→ If no: Type "continue" to proceed to Phase 7.
+```
+
+**If user edits file:**
+Re-read file to refresh context before continuing.
+---
+**Proceed to Phase 7 only after documents are validated.**
+
+> ⚠️ **CRITICAL:** DO NOT generate README.md in this phase. README.md is ONLY generated in Phase 8 (step 8.5) after framework initialization.
+---
+
+## 📝 Generated Documents
+
+After Phase 6, generate/update:
+- `docs/testing.md` - Testing strategy and quality gates
+
+---
+
+**Next Phase:** Phase 7 - Operations & Deployment (10-15 min)
+
+Read: `.ai-flow/prompts/backend/flow-build-phase-7.md`
+
+---
+
+**Last Updated:** 2025-12-20
+**Version:** 2.1.8
+
+---
+
+## PHASE 7: Operations & Deployment (10-15 min)
+
+````

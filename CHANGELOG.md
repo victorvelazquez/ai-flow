@@ -5,6 +5,125 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [2.4.1] - 2025-12-23
+
+### Fixed
+- **Lint warnings**: Removed unused functions (`logVerbose`, `isValidDescription`) and parameters
+- **Cache paths**: Ensured all prompts use `.ai-flow/cache/` instead of `cache/` for user projects
+- **Directory creation**: Added automatic creation of `.ai-flow/cache/`, `.ai-flow/work/`, `.ai-flow/archive/`
+
+### Documentation
+- Clarified cache directory usage (AI Flow repo vs user projects)
+- Updated all documentation references for version 2.4.1
+
+## [2.4.0] - 2025-12-23
+
+### Changed
+- **Project Structure Reorganization:** Improved separation of concerns for better clarity
+  - Moved `planning/roadmap.md` → `planning/roadmap.md` (requirements, not documentation)
+  - Moved `planning/user-stories/` → `planning/user-stories/` (requirements, not documentation)
+  - Moved `specs/ai-flow/` → `.ai-flow/` (temporary state, not specification)
+  - Updated 70+ files (prompts + templates) with new paths
+  - Added `.ai-flow/` to `.gitignore` (optional)
+
+### Added
+- New `planning/` directory for requirements and roadmap
+- New `.ai-flow/` directory for temporary workflow state
+- Project structure documentation in README.md and GETTING-STARTED.md
+
+### Documentation
+- **`docs/`** - Descriptive documentation (WHAT the project IS)
+- **`specs/`** - Technical specifications (HOW to IMPLEMENT)  
+- **`planning/`** - Requirements and roadmap (WHAT to DO)
+- **`.ai-flow/`** - Temporary development state
+
+## [2.3.0] - 2025-12-23
+### Added
+- **Consolidated work.md Structure:** `/flow-work` now generates a single consolidated `work.md` file for planning and task management
+  - Concise format: ~30-40 lines per work item
+  - Improves context window efficiency (~30% reduction in tokens)
+  - Easier to review and resume work
+  - Includes: Context, Objective, Documentation Constraints, Approach, Tasks, Validation
+- **Interactive Refinement for Manual Inputs:** Added detail detection and conditional refinement flow
+  - Analyzes description detail level (HIGH/MEDIUM/LOW)
+  - Skips refinement questions if description is sufficiently detailed
+  - Asks 1-2 targeted questions for MEDIUM detail
+  - Full refinement (3-5 questions) for LOW detail
+- **Documentation Compliance Checking:** Automatic validation against existing documentation
+  - Detects deviations from ai-instructions.md, architecture.md, security.md, etc.
+  - Warns user and requires explicit confirmation for overrides
+  - Marks deviations in work.md for visibility
+- **Smart Task Generation Logic:** Intelligent decision on when to generate vs reference tasks
+  - References User Story/Roadmap tasks if already detailed
+  - Expands tasks only when needed
+  - Criteria: file path, constraints, SP, dependencies
+
+### Changed
+- Updated all 15 flow-work prompt files (backend, frontend, mobile) to use work.md
+- Updated flow-work-resume.md to load work.md for context restoration
+- Phase 1 now includes detail detection and conditional refinement
+- Phase 2 now generates consolidated work.md with task decision logic
+- README.md and GETTING-STARTED.md updated with work.md documentation
+
+## [2.2.5] - 2025-12-23
+### Added
+- **Automatic Completion Tracking:** `/flow-work` now automatically marks tasks as complete in `planning/roadmap.md` and user story DoD checklists when implementation finishes
+  - Updates Feature checkboxes in roadmap.md when Features are completed
+  - Marks Definition of Done items in user story files (planning/user-stories/)
+  - Handles edge cases gracefully (missing files, no roadmap, etc.)
+  - Shows completion summary after finalization
+- Updated all 15 flow-work prompt files (backend, frontend, mobile) with Phase 4 completion tracking logic
+
+### Changed
+- Phase 4 (Finalization) in flow-work now includes automatic documentation updates as Step 1
+- Updated README.md and GETTING-STARTED.md to document automatic completion tracking behavior
+
+## [2.2.4] - 2025-12-23
+### Changed
+- Synchronized Fullstack documentation counts across all guides.
+- Formatted source code in `src/cli.ts` for consistency.
+- Corrected versioning placeholders in Agent template.
+
+## [2.2.3] - 2025-12-22
+### Refactor
+- Significant refactoring of `src/cli.ts` for better maintainability and modularity.
+- Extracted static data (banner, slash commands, project phases) into centralized constants.
+- Modularized `initializeProject` and unified help output logic across commands.
+- Removed duplicated code and improved ASCII banner display logic.
+
+## [2.2.2] - 2025-12-22
+
+### Fixed
+- **CLI Help Improvements:**
+  - Added missing `/flow-work`, `/flow-check`, and `/flow-commit` to help output.
+  - Fixed "Fases disponibles" for Mobile applications (previously showed Frontend phases).
+  - Grouped slash commands for better readability.
+  - Eliminated duplicated `/flow-docs-sync` in help output.
+
+## [2.2.1] - 2025-12-22
+
+### Added
+- **Smart Skip Logic:** Intelligent phase skipping for Phases 1-10 with 3 scenarios
+  - Shared template system (`prompts/shared/smart-skip-preflight.md`)
+  - Phase 0 Layer 4: Documentation audit with consistency scoring
+  - `audit-data.json` generation for smart skip decisions
+  - SKIP scenario (≥95% consistency): Skip entire phase
+  - HYBRID scenario (80-94%): Ask only missing questions
+  - FULL scenario (<80%): Complete phase with pre-filled answers
+  - Reduces documentation time for existing projects: 90min → 15-20min (≥95% consistency)
+
+### Changed
+- Phases 1-8 now support smart skip for existing projects (backend, frontend, mobile)
+- Phases 9-10 auto-skip for projects with implemented code
+- All 34 phase files updated with Pre-Flight Check references
+
+### Technical Details
+- 10 commits implementing Smart Skip Logic system
+- Phases 1-7: Full smart skip with Pre-Flight Check
+- Phase 8: Final documentation generation (AGENT.md, README.md, api.md, etc.)
+- Phases 9-10: Optional for new projects, auto-skip for existing
+
 ## [2.2.0] - 2025-12-21
 
 ### Added

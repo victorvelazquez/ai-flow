@@ -10,6 +10,25 @@
 
 Design the database model, entities, and relationships.
 
+---
+
+## 🔍 Pre-Flight Check (Smart Skip Logic)
+
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 2:**
+
+- **Target File**: `docs/data-model.md`
+- **Phase Name**: "DATA ARCHITECTURE"
+- **Key Items**: Entities, relationships, data patterns, indexes
+- **Typical Gaps**: Missing entities, undocumented relationships, missing fields
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
+---
+
+## Phase 2 Questions (Full Mode)
+
 **2.1 Database Type**
 
 ```

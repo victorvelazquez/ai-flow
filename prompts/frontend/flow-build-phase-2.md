@@ -1,937 +1,573 @@
-# Phase 2: Component Architecture
+## PHASE 2: Data Architecture (15-20 min)
 
-> **Duration:** 15-20 minutes
-> **Purpose:** Define UI framework, component patterns, and frontend architecture
+> **Order for this phase:** 2.1 → 2.2 → 2.3 → 2.4 → 2.5 → 2.6 → 2.7
+
+> **📌 Scope-based behavior:**
+> - **MVP/Basic Scope:** Focus only on essential entities and basic relationships.
+> - **Production-Ready Scope:** In-depth modeling including indexes, constraints, and audit fields.
+
+### Objective
+
+Design the database model, entities, and relationships.
+
 ---
-## 📋 Context
 
-You are in **Phase 2 of 7** of the frontend build process.
+## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-**What we're defining:**
-- UI Framework selection (React/Vue/Angular/Svelte/Solid)
-- Component architecture pattern
-- Component library and tooling
-- File organization strategy
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
 
-**Documents to generate:**
-- `docs/components.md` - Component architecture guide
-- `docs/architecture.md` - Frontend system architecture
-- Updates to `ai-instructions.md` - Tech stack section
+**Execute Pre-Flight Check for Phase 2:**
+
+- **Target File**: `docs/data-model.md`
+- **Phase Name**: "DATA ARCHITECTURE"
+- **Key Items**: Entities, relationships, data patterns, indexes
+- **Typical Gaps**: Missing entities, undocumented relationships, missing fields
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
 ---
-## 🎯 Instructions
 
-Ask questions **one at a time**, wait for user response before next question.
+## Phase 2 Questions (Full Mode)
 
-**Progress indicator:** Show "Question X/12" for each question.
-
-**Recommendations:** Mark with ⭐ (recommended), 🔥 (popular), ⚡ (modern), 🏆 (enterprise)
----
-## Question 2.1: UI Framework
-
-**Question:** Which UI framework will you use?
-
-**Context:** This is the foundation of your frontend. Choose based on team expertise, ecosystem, and project requirements.
-
-**Options:**
-
-A) ⭐ **React 18+** (Recommended - Largest ecosystem)
-   - Functional components + hooks
-   - Virtual DOM, component-based architecture
-   - Massive ecosystem (Next.js, Remix for SSR)
-   - Best for: Teams with React experience, large apps
-   - Meta-frameworks: Next.js 14+, Remix 2+, Vite
-
-B) 🔥 **Vue 3** (Popular - Progressive framework)
-   - Composition API + reactivity system
-   - Single-file components (.vue)
-   - Excellent documentation
-   - Best for: Rapid development, gradual adoption
-   - Meta-framework: Nuxt 3
-
-C) 🏆 **Angular 17+** (Enterprise - Batteries included)
-   - TypeScript-first, opinionated
-   - Dependency injection, RxJS
-   - Complete framework (router, HTTP, forms included)
-   - Best for: Large teams, enterprise apps
-   - Meta-framework: Analog (experimental)
-
-D) ⚡ **Svelte 4 / SvelteKit** (Modern - Compiler-based)
-   - No virtual DOM, compiles to vanilla JS
-   - Less boilerplate, reactive by default
-   - Best for: Performance-critical apps
-   - Meta-framework: SvelteKit
-
-E) 🚀 **Solid.js** (Modern - Fine-grained reactivity)
-   - JSX syntax, no virtual DOM
-   - Blazing fast performance
-   - Best for: Performance enthusiasts
-   - Meta-framework: SolidStart
-
-**Your choice:** (A/B/C/D/E)
-
-**Follow-up if A (React):**
-- **Meta-framework:** Next.js 14+ / Remix 2 / Create React App / Vite?
-- **Version:** React 18.2+ (latest stable)
-
-**Follow-up if B (Vue):**
-- **Meta-framework:** Nuxt 3 / Vite?
-- **Version:** Vue 3.4+ (latest stable)
-
-**Follow-up if C (Angular):**
-- **Version:** Angular 17+ (latest stable with signals)
-
-**Follow-up if D (Svelte):**
-- **Meta-framework:** SvelteKit (recommended) / Vite?
-- **Version:** Svelte 4+ (latest stable)
-
-**Follow-up if E (Solid):**
-- **Meta-framework:** SolidStart / Vite?
-- **Version:** Solid 1.8+ (latest stable)
----
-## Question 2.2: TypeScript
-
-**Question:** Will you use TypeScript?
-
-**Context:** TypeScript adds static typing, improving code quality and developer experience.
-
-**Options:**
-
-A) ⭐ **Yes, strict mode** (Recommended)
-   - `"strict": true` in tsconfig.json
-   - Maximum type safety
-   - Best for: Production apps, large codebases
-
-B) **Yes, relaxed mode**
-   - Some strict options disabled
-   - Gradual typing adoption
-   - Best for: Migrating from JavaScript
-
-C) **No, JavaScript only**
-   - Pure JavaScript
-   - Best for: Small projects, prototypes
-
-**Your choice:** (A/B/C)
-
-**If Yes:** TypeScript 5.3+ (latest stable)
----
-## Question 2.3: Build Tool
-
-**Question:** Which build tool will you use?
-
-**Context:** Modern build tools provide fast development and optimized production builds.
-
-**Options:**
-
-A) ⭐ **Vite** (Recommended - Lightning fast)
-   - Instant HMR, ESM-based
-   - Optimized production builds
-   - Best for: Modern apps, all frameworks
-
-B) **Webpack 5**
-   - Mature, highly configurable
-   - Large ecosystem of loaders/plugins
-   - Best for: Complex build requirements
-
-C) **Turbopack** (Next.js only)
-   - Rust-based, ultra-fast
-   - Integrated with Next.js 13+
-   - Best for: Next.js projects
-
-D) **esbuild**
-   - Extremely fast Go-based bundler
-   - Minimal configuration
-   - Best for: Simple builds
-
-E) **Framework default**
-   - Use whatever the meta-framework provides
-   - (e.g., Next.js has built-in bundler)
-
-**Your choice:** (A/B/C/D/E)
----
-## Question 2.4: Component Architecture Pattern
-
-**Question:** How will you organize components?
-
-**Context:** Component organization impacts maintainability and scalability.
-
-**Options:**
-
-A) ⭐ **Atomic Design** (Recommended - Scalable)
-   - Atoms → Molecules → Organisms → Templates → Pages
-   - Clear hierarchy, highly reusable
-   - Best for: Design systems, large apps
-   - Example:
-     ```
-     components/
-       atoms/ (Button, Input, Label)
-       molecules/ (SearchBar, FormField)
-       organisms/ (Header, UserCard, DataTable)
-       templates/ (MainLayout, DashboardLayout)
-     pages/ (actual routes)
-     ```
-
-B) **Feature-based** (Domain-driven)
-   - Components organized by feature/domain
-   - Co-located code (components + hooks + tests)
-   - Best for: Feature-rich apps, microfront ends
-   - Example:
-     ```
-     features/
-       auth/ (LoginForm, RegisterForm, hooks, services)
-       dashboard/ (DashboardView, widgets, hooks)
-       profile/ (ProfileForm, settings, hooks)
-     ```
-
-C) **Flat structure** (Simple)
-   - All components in one folder
-   - Minimal hierarchy
-   - Best for: Small apps, prototypes
-   - Example:
-     ```
-     components/ (all components here)
-     ```
-
-D) **Hybrid** (Mix of Atomic + Feature-based)
-   - Shared components in atomic structure
-   - Feature-specific in feature folders
-   - Best for: Large, complex apps
-   - Example:
-     ```
-     components/shared/ (atomic design)
-     features/ (feature-specific components)
-     ```
-
-**Your choice:** (A/B/C/D)
----
-#### 🎨 MERMAID COMPONENT DIAGRAM FORMATS - CRITICAL
-
-**Use these exact formats** for frontend component diagrams mentioned in documentation:
----
-##### 1️⃣ Component Hierarchy (Atomic Design)
-
-Use `graph TD` to show component organization from pages down to atoms:
-
-````markdown
-```mermaid
-graph TD
-    subgraph "Pages"
-        P1[HomePage]
-        P2[ProductPage]
-        P3[CheckoutPage]
-    end
-
-    subgraph "Organisms"
-        H[Header]
-        HG[HeroSection]
-        PL[ProductList]
-        CF[CheckoutForm]
-        F[Footer]
-    end
-
-    subgraph "Molecules"
-        N[NavBar]
-        S[SearchBar]
-        PC[ProductCard]
-        FI[FormInput]
-    end
-
-    subgraph "Atoms"
-        B[Button]
-        I[Input]
-        L[Logo]
-        IC[Icon]
-    end
-
-    P1 --> H
-    P1 --> HG
-    P1 --> F
-    P2 --> H
-    P2 --> PL
-    P2 --> F
-    P3 --> H
-    P3 --> CF
-    P3 --> F
-
-    H --> N
-    H --> L
-    HG --> S
-    PL --> PC
-    CF --> FI
-
-    N --> B
-    S --> I
-    S --> B
-    PC --> B
-    PC --> IC
-    FI --> I
-    FI --> L
-
-    style P1 fill:#e1f5ff
-    style P2 fill:#e1f5ff
-    style P3 fill:#e1f5ff
-    style H fill:#fff4e6
-    style F fill:#fff4e6
-    style N fill:#e8f5e9
-    style B fill:#fce4ec
-```
-````
-
-**Use for:** Showing component organization, Atomic Design hierarchy, composition patterns
----
-##### 2️⃣ Component Tree with Props/Events
-
-Use `graph LR` to show parent-child relationships and data flow:
-
-````markdown
-```mermaid
-graph LR
-    subgraph "Parent Component"
-        P[UserDashboard]
-    end
-
-    subgraph "Child Components"
-        H[UserHeader]
-        PR[UserProfile]
-        AF[ActivityFeed]
-        S[Sidebar]
-    end
-
-    subgraph "Grandchild Components"
-        A[Avatar]
-        E[EditButton]
-        AI[ActivityItem]
-    end
-
-    P -->|user: User| H
-    P -->|user: User| PR
-    P -->|activities: Activity[]| AF
-    P -->|menuItems: MenuItem[]| S
-
-    H --> A
-    H --> E
-    AF --> AI
-
-    E -.->|onEdit(userId)| P
-    AI -.->|onLike(activityId)| AF
-    AF -.->|onUpdate()| P
-
-    style P fill:#e1f5ff
-    style H fill:#fff4e6
-    style PR fill:#fff4e6
-    style AF fill:#fff4e6
-    style S fill:#fff4e6
-```
-````
-
-**Notation:**
-- Solid arrow `-->|prop: Type|` = Props passed down
-- Dotted arrow `-.->|event(args)|` = Events bubbled up
-- Group related components in subgraphs
-
-**Use for:** Documenting data flow, props drilling, event handling patterns
----
-##### 3️⃣ Component File Organization
-
-Use `graph TB` to show file/folder structure:
-
-````markdown
-```mermaid
-graph TB
-    subgraph "src/components/"
-        subgraph "pages/"
-            HP[HomePage.tsx]
-            PP[ProductPage.tsx]
-        end
-
-        subgraph "organisms/"
-            H[Header/]
-            PL[ProductList/]
-        end
-
-        subgraph "molecules/"
-            N[NavBar/]
-            PC[ProductCard/]
-        end
-
-        subgraph "atoms/"
-            B[Button/]
-            I[Input/]
-        end
-    end
-
-    HP -.-> H
-    HP -.-> PL
-    H -.-> N
-    PL -.-> PC
-    PC -.-> B
-
-    style pages fill:#e1f5ff
-    style organisms fill:#fff4e6
-    style molecules fill:#e8f5e9
-    style atoms fill:#fce4ec
-```
-````
-
-**Use for:** Showing folder structure, import relationships, file organization patterns
----
-##### 4️⃣ Application Routing Structure
-
-Use `graph TD` to show route hierarchy:
-
-````markdown
-```mermaid
-graph TD
-    ROOT[/ Root Layout] --> PUBLIC[Public Routes]
-    ROOT --> AUTH[Protected Routes]
-
-    PUBLIC --> HOME[/]
-    PUBLIC --> LOGIN[/auth/login]
-    PUBLIC --> REGISTER[/auth/register]
-    PUBLIC --> RESET[/auth/reset-password]
-
-    AUTH --> DASH[/dashboard]
-    AUTH --> PROF[/profile]
-    AUTH --> SETTINGS[/settings]
-
-    DASH --> OVERVIEW[/dashboard/overview]
-    DASH --> ANALYTICS[/dashboard/analytics]
-    DASH --> REPORTS[/dashboard/reports]
-
-    PROF --> VIEW[/profile/:userId]
-    PROF --> EDIT[/profile/:userId/edit]
-
-    SETTINGS --> ACCOUNT[/settings/account]
-    SETTINGS --> PREFS[/settings/preferences]
-
-    style ROOT fill:#e1f5ff
-    style PUBLIC fill:#e8f5e9
-    style AUTH fill:#fff4e6
-```
-````
-
-**Use for:** Documenting route structure, showing protected routes, nested routing patterns
----
-**Best Practices for Component Diagrams:**
-
-1. **Color Code by Abstraction Level:**
-   - Pages/Routes: `#e1f5ff` (light blue)
-   - Organisms: `#fff4e6` (light orange)
-   - Molecules: `#e8f5e9` (light green)
-   - Atoms: `#fce4ec` (light pink)
-
-2. **Use Subgraphs:** Group related components by type or feature
-3. **Show Relationships:** Use solid arrows for composition, dotted for communication
-4. **Label Props:** Include TypeScript types when helpful (`user: User`, `items: Product[]`)
-5. **Keep It Readable:** Avoid overcrowding, use clear naming
-
-**Common Formatting Rules:**
-- Code fence: ` ```mermaid ` (lowercase, no spaces, three backticks)
-- Start Mermaid syntax at column 0 (no indentation before code block)
-- Use consistent colors across diagrams
-- Preview at https://mermaid.live/ before saving
----
-## Question 2.5: Component Library
-
-**Question:** Will you use a component library?
-
-**Context:** Component libraries provide pre-built, accessible components.
-
-**Options:**
-
-**For React:**
-A) ⭐ **Material UI (MUI)** - Comprehensive, Material Design
-B) 🔥 **Chakra UI** - Accessible, themeable, modern
-C) **shadcn/ui** - Copy-paste components, full control
-D) **Ant Design** - Enterprise-focused, complete
-E) **Headless UI** - Unstyled, accessible primitives
-F) **None** - Build custom components
-
-**For Vue:**
-A) ⭐ **Vuetify** - Material Design, comprehensive
-B) **Quasar** - Full framework, multiple platforms
-C) **Element Plus** - Enterprise-focused
-D) **PrimeVue** - Rich component set
-E) **Headless UI Vue** - Unstyled primitives
-F) **None** - Build custom components
-
-**For Angular:**
-A) ⭐ **Angular Material** - Official, Material Design
-B) **PrimeNG** - Rich component set
-C) **NG-ZORRO** - Ant Design for Angular
-D) **None** - Build custom components
-
-**For Svelte:**
-A) **Skeleton** - Full-featured UI toolkit
-B) **Carbon Components Svelte** - IBM Design
-C) **Svelte Material UI** - Material Design
-D) **None** - Build custom components
-
-**For Solid:**
-A) **Hope UI** - Chakra-inspired for Solid
-B) **Solid UI** - Minimalist component library
-C) **None** - Build custom components
-
-**Your choice:** (specify library or None)
----
-## Question 2.6: State Management
-
-**Question:** How will you manage global state?
-
-**Context:** Choose based on app complexity and team preference.
-
-**Options:**
-
-**For React:**
-A) ⭐ **Zustand** (Recommended - Simple, modern)
-   - Minimal boilerplate, hooks-based
-   - Best for: Most apps
-B) **Redux Toolkit** - Predictable, DevTools
-   - Best for: Complex state, time-travel debugging
-C) **Jotai** - Atomic state management
-   - Best for: Fine-grained state control
-D) **Context API** - Built-in React
-   - Best for: Simple global state (theme, auth)
-E) **None** - Local state only (useState, useReducer)
-
-**For Vue:**
-A) ⭐ **Pinia** (Recommended - Official)
-   - TypeScript-first, simple API
-   - Best for: Most Vue 3 apps
-B) **Vuex 4** - Classic Vue state management
-   - Best for: Existing Vuex apps
-C) **Composition API + provide/inject**
-   - Built-in Vue, simple
-   - Best for: Small to medium apps
-
-**For Angular:**
-A) ⭐ **NgRx** (Recommended - Redux for Angular)
-   - Reactive, RxJS-based
-   - Best for: Enterprise Angular apps
-B) **Akita** - Simple, object-oriented
-   - Best for: Easier learning curve
-C) **Services + RxJS** - Angular built-in
-   - Best for: Simple state needs
-
-**For Svelte:**
-A) ⭐ **Svelte Stores** (Built-in, recommended)
-   - Reactive stores, simple API
-   - Best for: Most Svelte apps
-B) **None** - Component state only
-
-**For Solid:**
-A) ⭐ **Solid Store** (Built-in, recommended)
-   - Fine-grained reactivity
-   - Best for: Most Solid apps
-B) **None** - Signals only
-
-**Your choice:** (specify option)
----
-## Question 2.7: Data Fetching
-
-**Question:** How will you fetch and cache server data?
-
-**Context:** Modern data fetching libraries handle caching, revalidation, and loading states.
-
-**Options:**
-
-A) ⭐ **TanStack Query (React Query)** (Recommended)
-   - Works with React, Vue, Svelte, Solid
-   - Automatic caching, background updates
-   - Best for: REST APIs, GraphQL
-   - Features: Pagination, infinite scroll, optimistic updates
-
-B) **SWR** (Stale-While-Revalidate)
-   - Lightweight, hooks-based (React)
-   - Best for: Simple data fetching
-
-C) **Apollo Client** (GraphQL only)
-   - Complete GraphQL client
-   - Best for: GraphQL APIs
-
-D) **RTK Query** (Redux Toolkit)
-   - Integrated with Redux
-   - Best for: Redux-based apps
-
-E) **Axios + manual caching**
-   - Traditional approach
-   - Best for: Simple apps
-
-F) **Native fetch + useState**
-   - No dependencies
-   - Best for: Minimal apps
-
-**Your choice:** (A/B/C/D/E/F)
----
-## Question 2.8: Routing
-
-**Question:** How will you handle routing?
-
-**Context:** Most meta-frameworks include routing. For SPAs, you need a routing library.
-
-**Options:**
-
-**If using meta-framework (Next.js, Nuxt, SvelteKit, etc.):**
-- ⭐ **Use built-in file-based routing** (Recommended)
-  - pages/ directory = routes
-  - No configuration needed
-
-**If building SPA:**
-
-**For React:**
-A) ⭐ **React Router 6+** (Recommended)
-   - Industry standard
-   - Data loading, nested routes
-B) **TanStack Router**
-   - Type-safe, modern
-   - Best for: TypeScript-heavy apps
-C) **Wouter**
-   - Tiny, minimalist
-   - Best for: Small apps
-
-**For Vue:**
-A) ⭐ **Vue Router 4** (Official, recommended)
-   - Composition API support
-   - Nested routes, guards
-
-**For Angular:**
-A) ⭐ **Angular Router** (Built-in, only option)
-
-**For Svelte:**
-A) ⭐ **SvelteKit routing** (Built-in)
-B) **Page.js** (for non-SvelteKit SPAs)
-
-**For Solid:**
-A) ⭐ **Solid Router** (Official)
-B) **@solidjs/router**
-
-**Your choice:** (specify router or "meta-framework built-in")
----
-## Question 2.9: Form Management
-
-**Question:** How will you handle complex forms?
-
-**Context:** Form libraries handle validation, errors, and submission state.
-
-**Options:**
-
-**For React:**
-A) ⭐ **React Hook Form** (Recommended)
-   - Minimal re-renders, performance-focused
-   - Best for: Complex forms
-B) **Formik**
-   - Popular, full-featured
-   - Best for: Traditional form handling
-C) **Native HTML forms**
-   - No library
-   - Best for: Simple forms
-
-**For Vue:**
-A) ⭐ **VeeValidate 4**
-   - Composition API, flexible
-   - Best for: Complex forms
-B) **Native v-model**
-   - Built-in Vue
-   - Best for: Simple forms
-
-**For Angular:**
-A) ⭐ **Reactive Forms** (Built-in, recommended)
-   - Strongly typed, testable
-B) **Template-driven Forms**
-   - Simpler, less control
-
-**For Svelte:**
-A) **Svelte Native** (bind:value)
-   - Built-in two-way binding
-   - Best for: Most forms
-B) **Felte** - Form library for Svelte
-
-**For Solid:**
-A) **Solid Forms**
-   - Form library for Solid
-B) **Native** - Solid signals
-
-**Your choice:** (specify library or native)
----
-## Question 2.10: Styling Approach
-
-**Question:** How will you style components?
-
-**Context:** Choose based on team preference, design system needs, and performance requirements.
-
-**Options:**
-
-A) ⭐ **Tailwind CSS** (Recommended - Utility-first)
-   - Rapid development, consistent design
-   - JIT compiler, small bundle
-   - Best for: Most modern apps
-
-B) **CSS Modules** (Scoped CSS)
-   - Standard CSS, locally scoped
-   - Best for: Traditional CSS developers
-
-C) **Styled Components / Emotion** (CSS-in-JS)
-   - Dynamic styles, themed
-   - Best for: Component libraries
-
-D) **Sass/SCSS** (CSS preprocessor)
-   - Variables, mixins, nesting
-   - Best for: Traditional workflow
-
-E) **Vanilla CSS** (Plain CSS files)
-   - No dependencies
-   - Best for: Simple apps
-
-F) **UnoCSS** (Instant atomic CSS)
-   - Faster than Tailwind
-   - Best for: Performance enthusiasts
-
-**Your choice:** (A/B/C/D/E/F)
-
-**If Tailwind:** Will you use any Tailwind plugins? (typography, forms, etc.)
----
-## Question 2.11: Design Tokens / Theming
-
-**Question:** Will you use design tokens for theming?
-
-**Context:** Design tokens centralize colors, spacing, typography for consistency.
-
-**Options:**
-
-A) ⭐ **Yes, CSS Variables** (Recommended)
-   - Dynamic theming, runtime changes
-   - Example:
-     ```css
-     :root {
-       --color-primary: #3B82F6;
-       --spacing-md: 1rem;
-     }
-     ```
-
-B) **Yes, JavaScript/TypeScript tokens**
-   - Exported constants
-   - Type-safe
-
-C) **Yes, Component library tokens**
-   - Use library's theming system (MUI, Chakra, etc.)
-
-D) **No, hardcoded values**
-   - Direct colors/sizes in styles
-   - Best for: Small apps
-
-**Your choice:** (A/B/C/D)
-
-**If Yes to tokens:**
-- Will you support dark mode? (Yes/No)
-- Will you support multiple themes? (Yes/No/Maybe later)
----
-## Question 2.12: Testing Strategy
-
-**Question:** What will you test in components?
-
-**Context:** Testing ensures components work correctly and don't break.
-
-**Options:**
-
-A) ⭐ **Unit + Component + E2E** (Recommended - Comprehensive)
-   - Unit: Vitest / Jest
-   - Component: Testing Library (React/Vue/Svelte Testing Library)
-   - E2E: Playwright / Cypress
-   - Best for: Production apps
-
-B) **Component + E2E** (Pragmatic)
-   - Skip pure unit tests
-   - Focus on user behavior
-   - Best for: Most apps
-
-C) **E2E only** (High-level)
-   - Test critical user paths
-   - Best for: Small apps, MVPs
-
-D) **Minimal** (Unit only)
-   - Test utilities and hooks only
-   - Best for: Prototypes
-
-**Your choice:** (A/B/C/D)
-
-**Component testing framework:**
-- **React:** React Testing Library (recommended)
-- **Vue:** Vue Test Utils
-- **Angular:** Jasmine/Karma (built-in)
-- **Svelte:** Svelte Testing Library
-- **Solid:** Solid Testing Library
-
-**E2E testing framework:**
-- ⭐ **Playwright** (Recommended - Modern, fast)
-- **Cypress** (Popular, DX-focused)
-- **None** - Skip E2E for now
----
-## Question 2.13: API Integration Pattern
-
-**Question:** How will you integrate with backend APIs?
-
-**Context:** Define how your frontend communicates with backend services.
-
-**Options:**
-
-A) ⭐ **REST API with Fetch/Axios**
-   - Standard REST endpoints
-   - Client: Axios, Fetch API, or custom wrapper
-   - Best for: Most apps, simple integration
-   - Example: `GET /api/users`, `POST /api/users`
-
-B) **GraphQL with Apollo/urql**
-   - Single endpoint, flexible queries
-   - Client: Apollo Client, urql, or TanStack Query GraphQL
-   - Best for: Complex data requirements, mobile apps
-   - Example: `query { users { id name } }`
-
-C) **tRPC (TypeScript RPC)**
-   - End-to-end type safety
-   - Best for: TypeScript monorepos, type-safe APIs
-   - Example: `trpc.users.getById.useQuery({ id: '1' })`
-
-D) **gRPC-Web**
-   - Protocol buffers, efficient binary format
-   - Best for: High-performance, microservices
-   - Example: `client.getUser({ id: '1' })`
-
-**Your choice:** (A/B/C/D)
-
-**If REST selected:**
-- **API Client:** Axios / Fetch API / Custom wrapper
-- **Base URL:** __
-- **Request interceptors:** [Auth headers, error handling, logging]
-- **Response interceptors:** [Error transformation, token refresh]
-
-**If GraphQL selected:**
-- **Client:** Apollo Client / urql / TanStack Query GraphQL
-- **Endpoint:** __
-- **Subscriptions:** [Yes/No - Real-time updates]
-
-**API Layer Pattern:**
-A) ⭐ **Service Layer** - Separate API functions
-   ```
-   services/
-     api.ts (base client)
-     users.ts (user endpoints)
-     products.ts (product endpoints)
-   ```
-
-B) **Hooks/Composables Layer** - API calls in hooks
-   ```
-   hooks/
-     useUsers.ts (API calls + state)
-     useProducts.ts
-   ```
-
-C) **Both** - Services + Hooks
-   ```
-   services/ (API functions)
-   hooks/ (React hooks/Vue composables)
-   ```
-
-**Your choice:** (A/B/C)
----
-## Question 2.14: Error Boundaries / Global Error Handling
-
-**Question:** How will you handle global errors?
-
-**Context:** Catch and handle errors that occur during rendering, lifecycle methods, and constructors.
-
-**Options:**
-
-**For React:**
-A) ⭐ **Error Boundaries** (Recommended)
-   - Catch component tree errors
-   - Show fallback UI
-   - Best for: React apps
-   - Example: `<ErrorBoundary><App /></ErrorBoundary>`
-
-B) **Global Error Handler + Error Boundary**
-   - Window error handler + Error Boundaries
-   - Best for: Comprehensive error handling
-
-**For Vue:**
-A) ⭐ **errorHandler** (Built-in)
-   - Global error handler
-   - Best for: Vue apps
-   - Example: `app.config.errorHandler = (err, instance, info) => { ... }`
-
-**For Angular:**
-A) ⭐ **ErrorHandler** (Built-in)
-   - Global error handler service
-   - Best for: Angular apps
-
-**Error Recovery Strategy:**
-A) ⭐ **Show fallback UI** - Display error message, retry button
-B) **Redirect to error page** - Navigate to `/error`
-C) **Log and continue** - Log error, show minimal notification
-D) **Combined** - Different strategies for different error types
-
-**Error Logging:**
-- **Tool:** Sentry / LogRocket / Console only
-- **What to log:** [Error message, stack trace, user context, component tree]
-
-**Your answer:**
----
-## 📝 Phase 2 Summary
-
-After all questions, show summary:
+**2.1 Database Type**
 
 ```
----
-PHASE 2 SUMMARY: Component Architecture
----
-UI Framework:     {{UI_FRAMEWORK}} {{VERSION}}
-Meta-framework:   {{META_FRAMEWORK}}
-Build Tool:       {{BUILD_TOOL}}
-TypeScript:       {{TYPESCRIPT}}
+[If detected from Phase 0, show:]
+✅ Database Detected: [PostgreSQL/MySQL/MongoDB/etc.]
+✅ Version: [version if found]
+✅ ORM/Client: [Prisma/TypeORM/Sequelize/SQLAlchemy/etc.]
 
-Component Pattern: {{COMPONENT_PATTERN}}
-Component Library: {{COMPONENT_LIBRARY}}
-State Management:  {{STATE_MANAGEMENT}}
-Data Fetching:     {{DATA_FETCHING}}
+Is this correct? (Y/N)
+If no, please provide correct database type.
 
-Routing:          {{ROUTING}}
-Forms:            {{FORM_LIBRARY}}
-Styling:          {{STYLING_APPROACH}}
-Design Tokens:    {{DESIGN_TOKENS}}
-Dark Mode:        {{DARK_MODE_SUPPORT}}
+[If NOT detected, ask:]
+What type of database will you use? (Can select multiple)
 
-Testing:
-  - Component:    {{COMPONENT_TEST_LIBRARY}}
-  - E2E:          {{E2E_FRAMEWORK}}
+A) ⭐ PostgreSQL - Recommended for most backends (ACID, relational, JSON support)
+B) 🔥 MySQL/MariaDB - Popular, proven, wide ecosystem
+C) ⚡ MongoDB - Modern, NoSQL, flexible schema
+D) 🏆 Multi-database - PostgreSQL + Redis + S3, etc.
+E) Other: [specify]
 
-API Integration:  {{API_INTEGRATION_PATTERN}}
-API Client:       {{API_CLIENT}}
-Error Handling:   {{ERROR_HANDLING_STRATEGY}}
----
+Why this choice?
 ```
 
-**Ask for confirmation:**
-"Does this look correct? (Yes to continue, No to restart phase 2)"
+**2.2 Core Data Entities**
 
-**If Yes:**
-"✅ Phase 2 complete! Moving to Phase 3: State Management & Data Flow..."
+```
+[If detected from Phase 0, show:]
+✅ Entities Detected from Code:
+- [User] - [description if inferred from code]
+- [Product] - [description]
+- [Order] - [description]
+- [etc.]
 
-**If No:**
-"Restarting Phase 2..."
+Are these correct? (Y/N)
+Do you need to add more entities? (Y/N)
+
+[If NOT detected OR user wants to add more, show:]
+Based on your system type (from Phase 1, question 1.5), here are common entities:
+
+🛒 E-commerce typical entities:
+1) User - System users with authentication
+2) Product - Items available for purchase
+3) Category - Product categorization
+4) Cart - Shopping cart items
+5) Order - Customer orders
+6) OrderItem - Individual items in an order
+7) Payment - Payment transactions
+8) Address - Shipping/billing addresses
+9) Review - Product reviews and ratings
+10) Inventory - Stock tracking
+
+📱 SaaS typical entities:
+1) User - System users
+2) Organization - Tenant/workspace
+3) Team - Groups within organizations
+4) Role - Access control roles
+5) Permission - Granular permissions
+6) Subscription - Billing plans
+7) Invoice - Payment records
+8) ApiKey - API access credentials
+9) AuditLog - Activity tracking
+
+📊 CRM typical entities:
+1) User - System users
+2) Contact - Customers/leads
+3) Company - Organizations
+4) Deal - Sales opportunities
+5) Activity - Calls, emails, meetings
+6) Task - To-do items
+7) Note - Free-form notes
+8) Document - Attachments
+
+🎮 Social typical entities:
+1) User - Platform users
+2) Profile - User profiles
+3) Post - Content/publications
+4) Comment - Post comments
+5) Like/Reaction - Engagement
+6) Follow - User connections
+7) Notification - User alerts
+H) Message - Direct messages
+I) Group - Communities
+
+→ Your selection (e.g., A, C, F): __
+
+OR list your custom entities:
+
+1.
+2.
+3.
+4.
+5.
+...
+
+(Include brief description for custom entities)
+```
+
+**2.3 Relationships**
+
+```
+Common relationship patterns (select what applies to your entities):
+
+⭐ One-to-Many (most common):
+A) User → Order (one user has many orders)
+B) User → Post (one user creates many posts)
+C) Organization → User (one org has many users)
+D) Category → Product (one category contains many products)
+E) Order → OrderItem (one order has many line items)
+F) Post → Comment (one post has many comments)
+G) Other: __
+
+→ Your selection (e.g., A, B, D): __
+
+⭐ Many-to-Many (via join table):
+A) Order ↔ Product (via OrderItem)
+B) User ↔ Role (via UserRole)
+E) Course ↔ Student (via Enrollment)
+F) Other: __
+
+→ Your selection (e.g., A, C, E): __
+
+⭐ One-to-One (less common):
+
+⭐ One-to-One (less common):
+C) Order → Payment (one order has one payment)
+D) Other: __
+
+→ Your selection (e.g., A, B): __
+
+⭐ Polymorphic (one entity relates to multiple types):
+C) Activity → (User | Organization | Deal) - activities linked to various objects
+D) Other: __
+
+→ Your selection (e.g., A, C): __
 ---
-## 🎯 Next Steps
-
-After Phase 2 completion, you will:
-1. Update `ai-instructions.md` with tech stack
-2. Generate `docs/components.md` with component patterns
-3. Generate `docs/architecture.md` with system architecture
-4. Continue to Phase 3: State Management & Data Flow
+Your specific relationships (list main ones):
 ---
-**Phase:** 2 of 7
-**Estimated time:** 15-20 minutes
-**Documents updated:** ai-instructions.md, docs/components.md, docs/architecture.md
+Your specific relationships (list main ones):
+-
+-
+-
 
+(Format: EntityA → EntityB: Relationship type - description)
+```
 
+**2.4 Data Volume Estimates**
 
+```
+Estimated data volume (Year 1):
 
+- Total records: [Low (<10k) / Medium (10k-1M) / High (>1M)]
+- Growth rate: [Slow / Moderate / Fast]
 
+Data Complexity (Record Size):
+A) 📄 Low - Mostly text data (JSON, strings)
+B) 🖼️ Medium - Some images/documents (blobs, small files)
+C) 🎥 High - Heavy media/large files (video, audio, raw data)
 
+⭐ Standard for MVP:
+- Records: Low (<10k)
+- Growth: Moderate
+- Complexity: Low (mostly text)
 
+🏆 Standard for Production/Scale:
+- Records: High (>1M)
+- Growth: Fast
+- Complexity: Medium/High (includes media/files)
+```
+
+**2.5 Data Retention**
+
+```
+Data retention policies:
+
+A) ♾️ Keep forever - Never delete data
+B) 🗓️ Regulatory compliance - Specific retention period (e.g., 7 years)
+C) 🔄 Archival strategy - Archive old data after __ months
+D) 🗑️ Auto-deletion - Delete after __ days/months
+
+For each entity that has special retention needs, specify:
+```
+
+**2.6 Data Migration**
+
+```
+Is this a new system or replacing an existing one?
+
+A) 🆕 New system - No legacy data
+B) 🔄 Replacing existing - Need to migrate from [system name]
+C) 🔌 Integration - Syncing with existing system
+
+If migration needed:
+- Source system: __
+- Data volume to migrate: __
+- Migration strategy: [Big bang / Phased / Parallel run]
+```
+
+**2.7 Critical Data Patterns**
+
+```
+Select data patterns that apply:
+
+A) 🔐 Soft deletes - Keep deleted records with deleted_at flag
+B) 📝 Audit trail - Track who changed what and when
+C) 🕐 Temporal data - Track historical versions
+D) 🌍 Multi-tenancy - Data isolation per customer/organization
+E) 🎭 Polymorphic relationships - One entity relates to multiple types
+F) 🔗 Graph relationships - Complex many-to-many networks
+G) 📊 Aggregations/Materialized views - Pre-computed summaries
+H) 🗂️ Partitioning - Split large tables by date/region/etc.
+
+For each selected, provide brief detail:
+```
+
+**2.7.1 Soft Delete Configuration** (if A selected above)
+
+```
+How will you handle data deletion?
+
+Field for soft delete:
+A) ⭐ deleted_at (timestamp, null = active) - Recommended
+B) is_deleted (boolean)
+C) status field (e.g., status = 'deleted')
+D) Custom: __
+
+Entities with SOFT delete (keep record, mark as deleted):
+- Users ✅
+- Orders ✅
+- Products ✅
+- [List yours...]
+
+Entities with HARD delete (permanent removal):
+- Session tokens
+- Temporary files
+- Cart items after checkout
+- [List yours...]
+
+Permanent cleanup policy:
+A) ⭐ Purge soft-deleted after __ days (recommended: 90)
+B) Archive to cold storage after __ days
+C) Never delete (compliance requirement)
+
+Default query behavior:
+A) ⭐ Exclude deleted by default (add scope/filter)
+B) Include all, filter explicitly
+```
+
+**2.7.2 State Machines** (for entities with lifecycle states)
+
+```
+Do any entities have defined state lifecycles?
+
+A) ⭐ Yes - Define state machines
+B) No - Simple status fields without transitions
+
+If yes, define for each entity:
+
+---
+Entity: Order (example)
+States: [draft, pending, confirmed, shipped, delivered, cancelled, refunded]
+
+Valid Transitions:
+- draft → pending (action: submit)
+- pending → confirmed (action: pay) [requires: payment_id]
+- pending → cancelled (action: cancel, or timeout: 24h)
+- confirmed → shipped (action: ship) [requires: tracking_number]
+- shipped → delivered (action: deliver)
+- confirmed → refunded (action: refund)
+- delivered → refunded (action: refund) [within: 30 days]
+
+Invalid Transitions (explicitly forbidden):
+- shipped → cancelled (cannot cancel after shipping)
+- delivered → cancelled
+
+Side Effects:
+- pending → confirmed: send confirmation email, reserve inventory
+- confirmed → cancelled: release inventory, refund payment
+- shipped → delivered: send delivery notification
+---
+
+Your state machines:
+
+Entity: __
+States: __
+Transitions: __
+```
+
+**2.7.1 Domain-Driven Design Concepts** (Production-Ready and Enterprise only)
+
+```
+Will you use Domain-Driven Design (DDD) patterns?
+
+A) ⭐ Yes - Using DDD tactical patterns
+   - Aggregate Roots for transactional boundaries
+   - Value Objects for immutable data
+   - Domain Events for decoupling
+
+B) 🔥 Partial - Only Aggregate Roots
+   - Define aggregate roots for complex domains
+   - Keep entities grouped by aggregate
+
+C) No - Simple CRUD patterns
+   - Standard entity relationships
+   - No aggregate boundaries
+
+If using DDD (A or B):
+
+What are your Aggregate Roots?
+(Aggregate roots are the entry points to groups of related entities)
+
+Examples:
+- Order (with OrderItems, Shipping, Payment)
+- User (with Profile, Preferences, Settings)
+- Project (with Tasks, Members, Files)
+
+Your Aggregate Roots:
+1. __ (contains: __)
+2. __ (contains: __)
+3. __ (contains: __)
+
+Domain Events (things that happen in your domain):
+- UserRegistered
+- OrderPlaced
+- PaymentCompleted
+- etc.
+
+Your key domain events:
+1.
+2.
+3.
+```
+
+**2.7.4 Transaction Boundaries**
+
+```
+Which operations require database transactions?
+
+List operations that must be atomic (all-or-nothing):
+
+1. User Registration:
+   - Create User record
+   - Create Profile record
+   - Send welcome email (queue, not in transaction)
+   → Rollback if: User or Profile creation fails
+
+2. Order Creation:
+   - Create Order record
+   - Create OrderItems
+   - Reserve inventory
+   - Charge payment
+   → Rollback if: Any step fails
+
+3. [Your operations]:
+   - Step 1
+   - Step 2
+   → Rollback if: __
+
+Your transactional operations:
+1.
+2.
+3.
+```
+
+**2.8 Database Indexes**
+
+```
+What indexes will you need for performance optimization?
+
+Indexes are critical for query performance. Based on your entities and relationships, consider:
+
+Common indexes needed:
+A) Foreign keys (automatically indexed by most ORMs)
+B) Frequently queried columns (email, username, status)
+C) Columns used in WHERE clauses
+D) Columns used in JOIN conditions
+E) Columns used in ORDER BY clauses
+F) Composite indexes for multi-column queries
+
+→ Your selection (e.g., A, B, C, D): __
+
+Do you have specific query patterns that need optimization?
+
+Example:
+- User lookup by email: Index on users.email
+- Order search by date range: Index on orders.created_at
+- Product search by category and status: Composite index on (category_id, status)
+
+Your specific indexes:
+1.
+2.
+3.
+```
+
+**2.9 Transaction Management**
+
+```
+What transaction isolation level will you use?
+
+A) ⭐ READ COMMITTED - Recommended default (PostgreSQL, MySQL default)
+   - Prevents dirty reads
+   - Allows non-repeatable reads and phantom reads
+   - Good balance of consistency and performance
+
+B) READ UNCOMMITTED - Lowest isolation (rarely used)
+   - Allows dirty reads
+   - Fastest but least safe
+
+C) REPEATABLE READ - Higher isolation
+   - Prevents dirty reads and non-repeatable reads
+   - May have phantom reads
+   - Better consistency, slightly slower
+
+D) 🏆 SERIALIZABLE - Highest isolation (Enterprise)
+   - Prevents all concurrency issues
+   - Slowest but safest
+   - Use only when absolutely necessary
+
+Your choice: __
+
+Consistency model:
+A) ⭐ Strong consistency - All reads see latest writes (most backends)
+B) Eventual consistency - Acceptable delay for better performance (distributed systems)
+
+If eventual consistency:
+- Acceptable delay: __ seconds/minutes
+- Conflict resolution strategy: __
+```
+
+**2.10 Schema Migrations**
+
+```
+What migration tool will you use?
+
+A) ⭐ Prisma Migrate (if using Prisma)
+B) TypeORM Migrations (if using TypeORM)
+C) Alembic (Python/SQLAlchemy)
+D) Flyway (Java/Universal)
+E) Liquibase (Java/Universal)
+F) Django Migrations (Django)
+G) Laravel Migrations (Laravel)
+H) Rails Migrations (Ruby on Rails)
+I) Other: __
+
+Migration strategy:
+A) ⭐ Versioned migrations - Each change creates a new migration file
+B) Auto-migrations - Tool generates migrations automatically
+C) Manual SQL scripts - Write migrations manually
+
+Zero-downtime migrations:
+A) ⭐ Yes - Plan for zero-downtime migrations (Production-Ready/Enterprise)
+B) No - Accept maintenance windows (MVP)
+
+If zero-downtime:
+- Strategy: [Expand/Contract, Blue-Green, etc.]
+- Rollback plan: __
+```
+
+### Phase 2 Output
+
+```
+📋 PHASE 2 SUMMARY:
+
+Database: [type(s)]
+Core Entities: [list with descriptions]
+Relationships: [key relationships]
+Data Volume: [estimates]
+Retention: [policies]
+Migration: [strategy if applicable]
+Data Patterns: [selected patterns with brief details]
+Database Indexes: [list of indexes needed]
+Transaction Isolation: [level + consistency model]
+Schema Migrations: [tool + strategy + zero-downtime approach]
+
+Is this correct? (Yes/No)
+```
+
+---
+
+### 📄 Generate Phase 2 Documents
+
+**Before starting generation:**
+
+```
+📖 Loading context from previous phases...
+✅ Re-reading project-brief.md
+```
+
+**Generate `docs/data-model.md` automatically:**
+
+- Use template: `.ai-flow/templates/docs/data-model.template.md`
+- Fill with all Phase 2 entity and relationship information
+- Include entity catalog, relationships, data patterns
+- Generate entity-relationship diagram (ER diagram) in mermaid format showing all entities and their relationships
+- Write to: `docs/data-model.md`
+
+---
+
+#### 🎨 MERMAID ER DIAGRAM FORMAT - CRITICAL
+
+> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../shared/mermaid-guidelines.md) for ER diagram syntax, relationship notation, and common mistakes.
+
+## **Example ER Diagram:**
+
+```
+✅ Generated: docs/data-model.md
+
+Document has been created with all Phase 2 information.
+
+📝 Would you like to make any corrections before continuing?
+
+→ If yes: Edit docs/data-model.md and type "ready" when done. I'll re-read it.
+→ If no: Type "continue" to proceed to Phase 3.
+```
+
+**If user edits the file:**
+Execute `read_file('docs/data-model.md')` to refresh context before continuing.
+
+---
+
+> ⚠️ **CRITICAL:** DO NOT generate README.md in Phase 2. README.md is ONLY generated in Phase 8 (step 8.5) after framework initialization.
+
+---
+
+## 📝 Generated Documents
+
+After Phase 2, generate/update:
+- `docs/data-model.md` - Database schema and entity relationships
+
+---
+
+**Next Phase:** Phase 3 - System Architecture (15-20 min)
+
+Read: `.ai-flow/prompts/backend/flow-build-phase-3.md`
+
+---
+
+**Last Updated:** 2025-12-20
+**Version:** 2.1.8
+
+---
+
+## PHASE 3: System Architecture (15-20 min)

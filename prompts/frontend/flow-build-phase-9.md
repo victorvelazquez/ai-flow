@@ -73,7 +73,21 @@ Generate atomic tasks using the `{{VARIABLE}}` paths.
 ### Step 9.5: Validate Coverage
 Check for gaps.
 
-### Step 9.6: Generate Document (docs/roadmap.md)
+## Architectural Markers Key
+
+| Marker | Name | Description |
+|--------|------|-------------|
+| **[U]** | UI/Comp | Atoms, Molecules, Organisms |
+| **[P]** | Page | Page layout, route implementation |
+| **[L]** | Logic/Hook | Custom hooks, business logic |
+| **[S]** | State | Store actions, reducers, context |
+| **[A]** | API/Data | Fetching, services, transformers |
+| **[T]** | Test | Unit, component, e2e tests |
+| **[D]** | Docs | Documentation updates |
+
+---
+
+### Step 9.6: Generate Document (planning/roadmap.md)
 
 ---
 _Version: 4.2 (Antigravity Optimized)_

@@ -36,3 +36,8 @@ logs/
 tmp/
 temp/
 *.tmp
+
+# AI Flow temporary state (optional - team decision)
+# Uncomment to ignore workflow state
+# .ai-flow/work/
+# .ai-flow/archive/

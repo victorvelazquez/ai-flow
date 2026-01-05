@@ -1,497 +1,553 @@
-# Phase 4: Styling & Design System
+## PHASE 4: Security & Authentication (15-20 min)
 
-**Duration:** 15-20 minutes
-**Questions:** ~11 questions
-**Output:** docs/styling.md, parts of ai-instructions.md
+> **Order for this phase:** 4.1 → 4.2 → 4.3 → 4.4 → 4.5 → 4.6 → 4.7 → 4.8 → 4.9 → 4.10 → 4.11
+
+> **📌 Scope-based behavior:**
+>
+> - **MVP:** Ask 4.1-4.5 only (auth basics + CORS), skip 4.6-4.11 (advanced security), mark as "TBD"
+> - **Production-Ready:** Ask 4.1-4.8 and 4.11, skip or simplify 4.9 (compliance) and 4.10 (audit logging)
+> - **Enterprise:** Ask all questions 4.1-4.11 with emphasis on compliance and audit trails
+
+### Objective
+
+Define security policies, authentication, authorization, and compliance requirements.
+
 ---
-## 🎯 Objective
 
-Define your styling architecture and design system:
+## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-1. What CSS approach will you use?
-2. Do you need design tokens?
-3. Will you support theming?
-4. What's your responsive strategy?
-5. How will you organize styles?
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 4:**
+
+- **Target File**: `specs/security.md`
+- **Phase Name**: "SECURITY & AUTHENTICATION"
+- **Key Items**: Auth strategy, encryption, security patterns, compliance
+- **Typical Gaps**: Compliance requirements, audit logging, security policies
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
 ---
-## 📋 Questions
 
-### Question 4.1: Styling Approach
+## Phase 4 Questions (Full Mode)
 
-**What CSS architecture will you use?**
-
-A) ⭐ **Tailwind CSS** (Recommended for most)
-
-- Features: Utility-first, rapid development, small production bundle
-- Pros: Fast prototyping, consistent design, great DX
-- Cons: Verbose HTML, learning curve
-- Best for: Most modern apps
-- Bundle: ~10KB (purged)
-
-B) 🔥 **CSS Modules**
-
-- Features: Scoped CSS, traditional CSS syntax
-- Pros: Familiar, type-safe (TypeScript), no runtime
-- Cons: More manual work, no design system out of box
-- Best for: Teams preferring traditional CSS
-- Bundle: Variable (your CSS only)
-
-C) **Styled Components**
-
-- Features: CSS-in-JS, component-scoped styles
-- Pros: Dynamic styling, props-based theming, scoped by default
-- Cons: Runtime cost, larger bundle
-- Best for: Component libraries, dynamic themes
-- Bundle: ~16KB
-
-D) **Emotion**
-
-- Features: CSS-in-JS, faster than Styled Components
-- Pros: Better performance than SC, both runtime and compile-time
-- Cons: Still has runtime overhead
-- Best for: Performance-critical CSS-in-JS
-- Bundle: ~11KB
-
-E) **Sass/SCSS**
-
-- Features: CSS preprocessor, variables, mixins
-- Pros: Mature, powerful, compile-time
-- Cons: Global scope (without modules), manual optimization
-- Best for: Legacy projects, traditional workflows
-- Bundle: Variable
-
-F) **Vanilla Extract**
-
-- Features: Zero-runtime CSS-in-TS
-- Pros: Type-safe, no runtime, great DX
-- Cons: Newer, smaller ecosystem
-- Best for: Type safety + performance
-- Bundle: 0KB runtime
-
-G) **UnoCSS**
-
-- Features: Atomic CSS engine, faster than Tailwind
-- Pros: Extremely fast, flexible, smaller bundle
-- Cons: Newer, smaller community
-- Best for: Performance-critical apps
-- Bundle: ~5KB
-
-**Your answer:**
----
-### Question 4.2: Component Library / UI Kit
-
-**Will you use a pre-built component library?**
-
-#### React Options
-
-A) ⭐ **None (Custom Components)**
-
-- Build everything from scratch
-- Best for: Full design control, unique designs
-
-B) 🔥 **shadcn/ui** (Unstyled, customizable)
-
-- Features: Copy-paste components, Radix UI primitives
-- Best for: Tailwind users, full customization
-
-C) **Material UI (MUI)**
-
-- Features: Material Design, comprehensive, mature
-- Best for: Google Material Design aesthetic
-- Bundle: ~90KB
-
-D) **Chakra UI**
-
-- Features: Accessible, composable, themeable
-- Best for: Rapid development, accessibility
-- Bundle: ~50KB
-
-E) **Ant Design**
-
-- Features: Enterprise-focused, comprehensive
-- Best for: Admin panels, dashboards, Chinese market
-- Bundle: ~120KB
-
-F) **Mantine**
-
-- Features: Modern, hooks-based, feature-rich
-- Best for: Developer experience, rapid prototyping
-- Bundle: ~40KB
-
-#### Vue Options
-
-A) **None (Custom Components)**
-B) 🔥 **Vuetify** - Material Design for Vue
-C) **Quasar** - Full framework with components
-D) **PrimeVue** - Rich component library
-E) **Element Plus** - Enterprise UI library
-
-#### Angular Options
-
-A) **None (Custom Components)**
-B) ⭐ **Angular Material** - Official Material Design
-C) **PrimeNG** - Rich component library
-D) **NG-ZORRO** - Ant Design for Angular
-
-**Your answer:**
----
-### Question 4.3: Design Tokens
-
-**Will you use design tokens?**
-
-Design tokens = Single source of truth for colors, spacing, typography, etc.
-
-A) ⭐ **Yes, comprehensive design tokens** (Recommended)
-
-- Define colors, spacing, typography, shadows, etc.
-- Best for: Design consistency, theming support
-- Example: Tailwind config, CSS variables, TypeScript constants
-
-B) **Yes, basic tokens only**
-
-- Just colors and spacing
-- Best for: Simple apps
-
-C) **No tokens**
-
-- Hardcoded values
-- Best for: Prototypes, MVPs
-
-**Your answer:**
-
-**If yes, what will be tokenized?** (Select all that apply)
-
-- Colors
-- Spacing (padding, margin, gaps)
-- Typography (fonts, sizes, weights)
-- Shadows
-- Border radius
-- Transitions/animations
-- Breakpoints
----
-### Question 4.4: Color System
-
-**How will you define your color palette?**
-
-A) ⭐ **Tailwind-style scales** (50-900)
-
-- Example: `gray-50`, `gray-100`, ..., `gray-900`
-- Example: `blue-500`, `blue-600`, etc.
-- Best for: Tailwind CSS, comprehensive palettes
-- Generates: 10 shades per color
-
-B) **Semantic colors**
-
-- Example: `primary`, `secondary`, `success`, `error`, `warning`
-- Best for: Simple apps, component libraries
-- Generates: 5-7 colors
-
-C) **Custom color system**
-
-- Your own naming and structure
-- Best for: Unique design systems
-
-**Your answer:**
-
-**Primary brand colors (hex codes):**
-
-- Primary: #**\_\_**
-- Secondary (optional): #**\_\_**
-- Accent (optional): #**\_\_**
----
-### Question 4.5: Typography System
-
-**How will you handle typography?**
-
-A) ⭐ **Type scale (Tailwind-style)**
-
-- Sizes: xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl, 7xl, 8xl, 9xl
-- Best for: Responsive, scalable typography
-- Example: `text-sm`, `text-lg`
-
-B) **Semantic headings**
-
-- Sizes: h1, h2, h3, h4, h5, h6, body, caption
-- Best for: Content-heavy sites, traditional hierarchy
-
-C) **Custom scale**
-
-- Your own naming and sizes
-
-**Your answer:**
-
-**Font families:**
-
-- Heading font: ******\_\_\_****** (e.g., Inter, Poppins)
-- Body font: ********\_******** (e.g., Inter, Roboto)
-- Mono font (optional): **\_\_\_** (e.g., Fira Code)
-
-**Font loading strategy:**
-A) Google Fonts CDN
-B) Self-hosted fonts (better performance)
-C) System fonts only (fastest)
----
-### Question 4.6: Theming Support
-
-**Do you need theme support (dark mode, multiple themes)?**
-
-A) ⭐ **Dark mode only**
-
-- Light + Dark themes
-- Best for: Modern apps, user preference
-- Implementation: CSS variables, class toggle
-
-B) **Multiple themes**
-
-- Example: Default, Dark, High Contrast, Brand A, Brand B
-- Best for: White-label apps, multi-tenant
-
-C) **No theming**
-
-- Single theme only
-- Best for: MVPs, simpler implementation
-
-**Your answer:**
-
-**If theming selected:**
-
-**Theme switching method:**
-A) User preference (toggle button)
-B) System preference only (prefers-color-scheme)
-C) Both (respect system, allow override)
-
-**Theme persistence:**
-A) localStorage
-B) User account setting (backend)
-C) No persistence (reset on reload)
----
-### Question 4.7: Responsive Breakpoints
-
-**What breakpoint strategy will you use?**
-
-A) ⭐ **Tailwind defaults** (Recommended)
-
-- sm: 640px
-- md: 768px
-- lg: 1024px
-- xl: 1280px
-- 2xl: 1536px
-
-B) **build-style**
-
-- xs: 0px
-- sm: 576px
-- md: 768px
-- lg: 992px
-- xl: 1200px
-
-C) **Custom breakpoints**
-
-- Define your own
-
-D) **No breakpoints (fluid)**
-
-- Use relative units only (%, vw, etc.)
-
-**Your answer:**
----
-### Question 4.8: Spacing System
-
-**What spacing scale will you use?**
-
-A) ⭐ **4px grid (Tailwind-style)**
-
-- 0, 1 (4px), 2 (8px), 3 (12px), 4 (16px), 5 (20px), 6 (24px), 8 (32px), etc.
-- Best for: Most apps, consistent spacing
-
-B) **8px grid**
-
-- 0, 8, 16, 24, 32, 40, 48, 56, 64...
-- Best for: Simpler scale, larger spacing
-
-C) **Custom scale**
-
-- Your own spacing values
-
-**Your answer:**
----
-### Question 4.9: Animation & Transitions
-
-**How will you handle animations?**
-
-A) ⭐ **CSS transitions only**
-
-- Simple hover effects, state changes
-- Best for: Most apps, good performance
-- Example: `transition-colors`, `transition-all`
-
-B) **CSS transitions + keyframe animations**
-
-- Add loading spinners, fade-ins, etc.
-- Best for: Modern UX
-
-C) **Animation library** (Framer Motion, GSAP, etc.)
-
-- Complex animations, gestures, page transitions
-- Best for: Animation-heavy apps, marketing sites
-- Example: Framer Motion for React
-
-D) **Minimal animations**
-
-- Accessibility-first, respect prefers-reduced-motion
-- Best for: Accessibility-critical apps
-
-**Your answer:**
-
-**If animations used:**
-
-**Respect prefers-reduced-motion?**
-A) Yes (disable/reduce animations for users who prefer it)
-B) No
----
-### Question 4.10: CSS Organization
-
-**How will you organize your stylesheets?**
-
-A) ⭐ **Component-scoped styles**
-
-- Each component has its own style file
-- Example: `Button.tsx` + `Button.module.css`
-- Best for: Component libraries, modularity
-
-B) **Utility-first (Tailwind)**
-
-- No separate stylesheets, classes in JSX
-- Best for: Tailwind CSS users
-
-C) **Global + Component**
-
-- Global base styles + component styles
-- Best for: Hybrid approach
-
-D) **Feature-based**
-
-- Styles organized by feature/page
-- Example: `features/auth/styles.css`
-- Best for: Larger apps
-
-**Your answer:**
----
-### Question 4.11: Accessibility (A11y) Styling
-
-**What accessibility level will you target?**
-
-A) ⭐ **WCAG 2.1 Level AA** (Recommended)
-
-- Color contrast ratio: 4.5:1 (normal text), 3:1 (large text)
-- Focus indicators visible
-- Best for: Most apps, legal compliance
-
-B) **WCAG 2.1 Level AAA**
-
-- Color contrast ratio: 7:1 (normal text), 4.5:1 (large text)
-- More stringent requirements
-- Best for: Government, healthcare, education
-
-C) **Basic accessibility**
-
-- Semantic HTML, keyboard navigation
-- Best for: MVPs, internal tools
-
-D) **No specific target**
-
-- Best effort only
-
-**Your answer:**
-
-**A11y features to include:**
-
-- [ ] Focus indicators (outline on keyboard focus)
-- [ ] High contrast mode support
-- [ ] Text resizing support (up to 200%)
-- [ ] Screen reader optimizations
-- [ ] Reduced motion support
----
-## 📊 Phase 4 Summary
+**4.1 Authentication Method**
 
 ```
----
-📋 PHASE 4 SUMMARY: STYLING & DESIGN
----
-Styling Approach: [Answer from 4.1]
-Component Library: [Answer from 4.2]
-Design Tokens: [Answer from 4.3]
-Color System: [Answer from 4.4]
-Typography: [Answer from 4.5]
-Theming: [Answer from 4.6]
-Breakpoints: [Answer from 4.7]
-Spacing System: [Answer from 4.8]
-Animations: [Answer from 4.9]
-CSS Organization: [Answer from 4.10]
-Accessibility: [Answer from 4.11]
+How will users authenticate?
 
-Is this correct? (Y/n)
+A) ⭐ JWT (JSON Web Tokens) - Recommended for APIs
+
+- Stateless, scalable
+- Access + Refresh token pattern
+
+B) 🔥 Session-based - Traditional web apps
+
+- Server-side sessions
+- Cookie-based
+
+C) ⚡ OAuth 2.0 / OpenID Connect - External providers
+
+- "Sign in with Google/GitHub/etc."
+- Delegated authentication
+
+D) 🏆 Multi-factor (MFA) - Enterprise security
+
+- OTP, SMS, authenticator app
+- Required or optional?
+
+E) API Keys - Service-to-service
+
+- Simple, stateless
+- Limited use cases
+
+Your choice: __
+Why?
 ```
----
-## 📝 Document Generation
 
-Generate `docs/styling.md` using the template with these placeholders:
-
-- `{{STYLING_APPROACH}}` → Styling solution (e.g., "Tailwind CSS")
-- `{{COMPONENT_LIBRARY}}` → UI kit (e.g., "shadcn/ui" or "None")
-- `{{DESIGN_TOKENS}}` → Yes/No
-- `{{THEME_SUPPORT}}` → Dark mode / Multiple themes / None
-- `{{COLOR_SYSTEM}}` → Color palette approach
-- `{{TYPOGRAPHY_SYSTEM}}` → Type scale approach
-- `{{BREAKPOINTS}}` → Responsive breakpoints
-- `{{SPACING_SCALE}}` → Spacing system
-- `{{ANIMATION_STRATEGY}}` → Animation approach
-- `{{A11Y_COMPLIANCE}}` → WCAG level
-
-Update `ai-instructions.md`:
-
-```markdown
-## Styling
-
-- **Approach:** {{STYLING_APPROACH}}
-- **Component Library:** {{COMPONENT_LIBRARY}}
-- **Design Tokens:** {{DESIGN_TOKENS}}
-- **Theming:** {{THEME_SUPPORT}}
-- **Accessibility:** {{A11Y_COMPLIANCE}}
-
-### Rules
-
-- ✅ ALWAYS use design tokens for colors and spacing
-- ✅ ALWAYS ensure WCAG {{A11Y_COMPLIANCE}} color contrast
-- ✅ ALWAYS include focus indicators for keyboard navigation
-- ❌ NEVER hardcode colors or spacing values
-- ❌ NEVER ignore prefers-reduced-motion
-  {{#IF_TAILWIND}}
-- ✅ ALWAYS use Tailwind utility classes, avoid custom CSS
-- ❌ NEVER use arbitrary values excessively (e.g., `w-[127px]`)
-  {{/IF_TAILWIND}}
-  {{#IF_DARK_MODE}}
-- ✅ ALWAYS test components in both light and dark modes
-  {{/IF_DARK_MODE}}
-```
----
-## 🚀 Next Steps
+**4.2 JWT Configuration (if using JWT)**
 
 ```
-✅ Phase 4 Complete!
+JWT token configuration:
 
-Documents Generated:
-  - docs/styling.md
-  - ai-instructions.md (updated)
+Access Token:
+- Lifetime: __ (recommended: 15min - 1hour)
+- Algorithm: __ (recommended: RS256 or HS256)
 
-Next: Phase 5 - Code Standards
+Refresh Token:
+- Lifetime: __ (recommended: 7-30 days)
+- Storage: [httpOnly cookie / localStorage / database]
+- Rotation strategy: [rotate on use / rotate periodically / no rotation]
 
-Read: .ai-flow/prompts/frontend/flow-build-phase-5-standards.md
+Token claims to include:
+- userId ✅
+- email ✅
+- roles ✅
+- Custom: __
+```
+
+**4.3 Authorization Model**
+
+```
+How will you manage permissions?
+
+A) ⭐ Role-Based Access Control (RBAC)
+- Users have roles (admin, user, moderator, etc.)
+- Roles have permissions
+- Simple and common
+
+B) 🏆 Attribute-Based Access Control (ABAC)
+- Fine-grained based on attributes
+- Complex rules
+- Enterprise use cases
+
+C) 🔒 Resource-based (Ownership)
+- Users can only access their own resources
+- Simple projects
+
+D) 🌐 Multi-tenant with role hierarchy
+- Organization → Teams → Users
+- Complex enterprise systems
+
+Your choice: __
+
+List the roles you'll need:
+-
+-
+
+List key permissions:
+-
+-
+```
+
+**4.4 Password Policy**
+
+```
+Password requirements:
+
+A) ⭐ Recommended Policy
+- Minimum 8 characters
+- At least 1 uppercase, 1 lowercase, 1 number
+- Special characters encouraged but not required
+- No maximum length limit
+- Hash with bcrypt (12 rounds) or argon2
+
+B) 🏆 Strong Policy (Enterprise)
+- Minimum 12 characters
+- Uppercase, lowercase, number, special char required
+- Password expiration every 90 days
+- Password history (can't reuse last 5)
+
+C) 🔓 Simple Policy
+- Minimum 6 characters
+- No complexity requirements
+- Good for low-risk apps
+
+Your choice: __
+
+Hashing algorithm:
+A) ⭐ bcrypt (rounds: 10-12) - Recommended
+B) argon2 - More secure, newer
+C) scrypt - Good alternative
+```
+
+**4.5 Rate Limiting**
+
+```
+Will you implement rate limiting?
+
+A) ⭐ Yes - Recommended for all public APIs
+
+Rate limits by endpoint type:
+- Authentication endpoints: ** requests per ** (e.g., 5 per 15 min)
+- Public read endpoints: ** requests per ** (e.g., 100 per minute)
+- Write endpoints: ** requests per ** (e.g., 30 per minute)
+- Admin endpoints: ** requests per ** (e.g., 1000 per minute)
+
+Rate limiting strategy:
+A) IP-based
+B) User/API key-based
+C) Both
+
+Tool:
+A) express-rate-limit / @nestjs/throttler
+B) Redis-based rate limiting
+C) API Gateway (AWS, Kong, etc.)
+```
+
+**4.6 CORS Policy**
+
+```
+CORS (Cross-Origin Resource Sharing) configuration:
+
+Allowed origins:
+A) ⭐ Specific domains - https://myapp.com, https://admin.myapp.com
+B) 🔧 Development only - localhost:3000, localhost:5173
+C) ⚠️ Wildcard (*) - Allow all (NOT recommended for production)
+
+Your allowed origins:
+-
+
+Allowed methods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+Credentials: [true/false] - Allow cookies/auth headers
+Max age: __ seconds (cache preflight)
+```
+
+**4.7 Data Encryption**
+
+```
+Encryption requirements:
+
+In Transit (HTTPS/TLS):
+A) ✅ Yes, always - TLS 1.2+ required ⭐
+B) Development only HTTP, production HTTPS
+C) Optional
+
+At Rest (Database/Files):
+A) ⭐ Yes, encrypt sensitive fields - PII, payment info, secrets
+B) 🏆 Yes, full database encryption - Enterprise requirement
+C) No encryption - Low-risk data only
+
+Fields to encrypt:
+-
+-
+
+Encryption method:
+A) AES-256-GCM (symmetric)
+B) Database-level encryption
+C) Application-level encryption
+```
+
+**4.8 Security Headers**
+
+```
+Which security headers will you implement?
+
+A) ✅ All recommended headers (use helmet.js or equivalent)
+- Content-Security-Policy
+- X-Frame-Options: DENY
+- X-Content-Type-Options: nosniff
+- Strict-Transport-Security (HSTS)
+- X-XSS-Protection
+
+B) Basic headers only
+C) None (not recommended)
+```
+
+**4.9 Compliance Requirements**
+
+```
+Does your project need to comply with specific regulations or standards?
+
+Some projects must follow legal requirements or industry standards. If you're not sure, you can select "None" and add compliance requirements later.
+
+Select all that apply:
+
+A) 🌍 GDPR (General Data Protection Regulation)
+   What it is: EU data privacy regulation
+   When it applies: If you process personal data of users in the European Union
+   What it means: Users have rights to access, delete, and export their data
+   Key requirements:
+   - Right to access data (users can request their data)
+   - Right to deletion (users can request data removal)
+   - Data portability (users can export their data)
+   - Consent management (explicit consent for data processing)
+   Example: "We serve users in Germany, so we need GDPR compliance"
+
+B) 🏥 HIPAA (Health Insurance Portability and Accountability Act)
+   What it is: US healthcare data protection law
+   When it applies: If you handle Protected Health Information (PHI) - medical records, health data
+   What it means: Strict rules for protecting patient health information
+   Key requirements:
+   - PHI protection (encryption, access controls)
+   - Audit logs (track who accessed what health data)
+   - Encryption requirements (data must be encrypted)
+   Example: "We're building a telemedicine platform that stores patient records"
+
+C) 💳 PCI-DSS (Payment Card Industry Data Security Standard)
+   What it is: Security standard for credit card processing
+   When it applies: If you process, store, or transmit credit card information
+   What it means: Strict security rules to protect cardholder data
+   Key requirements:
+   - Never store CVV (security code on card)
+   - Tokenize card numbers (use tokens instead of real numbers)
+   - Secure transmission (encrypted connections required)
+   Example: "We process credit card payments directly (not using Stripe/PayPal)"
+
+D) 🏢 SOC 2 (System and Organization Controls 2)
+   What it is: Security and compliance standard for SaaS companies
+   When it applies: If you're selling B2B SaaS and need to prove security to enterprise customers
+   What it means: Documented security controls and processes
+   Key requirements:
+   - Security controls (documented security measures)
+   - Audit trails (logs of all security-relevant actions)
+   - Access controls (who can access what)
+   Example: "We're selling to Fortune 500 companies who require SOC 2 certification"
+
+E) 🇺🇸 CCPA (California Consumer Privacy Act)
+   What it is: California state privacy law
+   When it applies: If you have California users and meet certain thresholds (revenue/users)
+   What it means: California users have privacy rights
+   Key requirements:
+   - Right to know what data is collected
+   - Right to delete data
+   - Right to opt-out of data sales
+   Example: "We have users in California and meet the revenue threshold"
+
+F) None - No specific compliance requirements
+   Select this if you're not sure or don't need compliance yet
+
+Selected: __
+
+For each selected, list specific requirements that apply to your project:
+
+Example for GDPR:
+- Must allow users to download all their data in JSON format
+- Must completely delete user data when requested (not just soft delete)
+- Need cookie consent banner for EU users
+- Privacy policy must be accessible and up-to-date
+
+Example for SOC 2:
+- Need 90-day audit log retention
+- Quarterly access control reviews required
+- Security incident response procedures documented
+- Continuous monitoring of administrative actions
+```
+
+**4.10 Logging & Audit Trail**
+
+```
+What security events will you log?
+
+A) ✅ Authentication events
+- Login success/failure
+- Password changes
+- Account creation
+
+B) ✅ Authorization events
+- Permission denied
+- Role changes
+
+C) ✅ Data access
+- Sensitive data views
+- Exports/downloads
+
+D) ✅ Data modifications
+- Create/Update/Delete operations
+- Who, what, when
+
+Log retention: __ days (recommended: 90+ days)
+Log storage: [Database / File system / External service (CloudWatch, Datadog)]
+```
+
+**4.11 API Keys Management**
+
+```
+Will you use API keys for service-to-service authentication?
+
+A) ⭐ Yes - API keys for programmatic access
+B) No - JWT/Sessions only
+
+If yes:
+- Key format: [Prefix + random string, UUID, etc.]
+- Key length: __ characters
+- Storage: [Hashed in database, Plain text (not recommended)]
+- Hashing algorithm: [bcrypt, SHA-256, etc.]
+
+Key rotation:
+A) ⭐ Manual rotation - Rotate on demand
+B) Automatic rotation - Rotate every __ days
+C) No rotation
+
+Key revocation:
+- Process: __
+- Reasons: [Compromised, Expired, User request, Security incident]
+
+Rate limiting by API key tier:
+- Free tier: __ requests per __
+- Paid tier: __ requests per __
+- Enterprise: __ requests per __
+```
+
+**4.12 Dependency Security**
+
+```
+How will you manage dependency security?
+
+A) ⭐ Automated scanning - Regular security audits (npm audit, Snyk, Dependabot)
+B) Manual scanning - Check vulnerabilities manually
+C) No scanning - Not recommended
+
+Scanning frequency:
+A) ⭐ On every install/update
+B) Daily automated scans
+C) Weekly scans
+D) Monthly scans
+
+Vulnerability response:
+- Critical: Fix within __ hours
+- High: Fix within __ days
+- Medium: Fix within __ days
+- Low: Fix in next release
+
+Tools:
+- Dependency scanner: __
+- Security alerts: [GitHub Dependabot, Snyk, npm audit, etc.]
+```
+
+**4.13 Input Validation & Sanitization**
+
+```
+Input validation strategy:
+
+A) ⭐ Strict validation with DTOs/Schemas (Recommended)
+   - Use validation library: [class-validator/Zod/Pydantic/Joi from Phase 3.6]
+   - Reject unknown fields: [yes/no]
+   - Type coercion: [strict/lenient]
+
+B) Manual validation in services
+   - Custom validation logic
+   - More flexible but error-prone
+
+Sanitization rules:
+
+A) ✅ Sanitize all string inputs (XSS prevention)
+   - Strip HTML tags: [yes/no]
+   - Escape special characters: [yes/no]
+   - Library: [DOMPurify/validator.js/bleach]
+
+B) ✅ SQL Injection prevention
+   - Use parameterized queries (ORM handles this automatically)
+   - Never concatenate user input in queries
+
+Request size limits:
+
+- Max JSON body size: __ MB (recommended: 1-10 MB)
+- Max file upload size: __ MB (recommended: 10-50 MB)
+- Max URL length: __ characters (recommended: 2048)
+
+File upload validation (if applicable from Phase 3.9):
+
+- Allowed file types: [jpg, png, pdf, etc.]
+- MIME type validation: [yes/no - verify actual content matches extension]
+- File content validation: [yes/no - check file headers]
+- Virus scanning: [yes/no - ClamAV, VirusTotal API]
+- Filename sanitization: [yes/no - remove special characters, limit length]
+
+Content-Type enforcement:
+
+A) ⭐ Strict - Reject if Content-Type doesn't match body (recommended)
+B) Lenient - Accept common mismatches (application/json vs text/plain)
+C) No validation
+
+Validation approach:
+
+A) ⭐ Whitelist - Only allow known good inputs (recommended)
+   - Define allowed values explicitly
+   - Reject everything else
+
+B) Blacklist - Block known bad inputs (not recommended)
+   - Easy to bypass
+   - Incomplete protection
+
+Special character handling:
+
+- Allow special characters in: [names, descriptions, etc.]
+- Escape/encode for: [HTML output, SQL queries, shell commands]
+- Reject in: [IDs, slugs, filenames]
+```
+
+### Phase 4 Output
+
+```
+📋 PHASE 4 SUMMARY:
+
+Authentication: [method]
+JWT Config: [if applicable - access/refresh token lifetimes, algorithm, storage]
+Authorization: [RBAC/ABAC/etc.]
+Roles: [list]
+Permissions: [key permissions defined]
+Password Policy: [requirements and hashing algorithm]
+Rate Limiting: [yes/no + limits by endpoint type]
+CORS: [origins, methods, credentials, max-age]
+Encryption: [in-transit + at-rest + fields to encrypt]
+Security Headers: [list]
+Compliance: [requirements with specific controls]
+Audit Logging: [events logged + retention + storage]
+API Keys Management: [yes/no + format + rotation + revocation + rate limiting]
+Dependency Security: [scanning tool + frequency + vulnerability response]
+Input Validation: [strategy + sanitization rules + size limits + file upload validation + whitelist/blacklist approach]
+
+Is this correct? (Yes/No)
 ```
 ---
-**Last Updated:** 2025-01-XX
+### 📄 Generate Phase 4 Documents
 
-**Version:** 1.2.0
+**Before starting generation:**
+
+```
+📖 Loading context from previous phases...
+✅ Re-reading project-brief.md
+✅ Re-reading docs/data-model.md
+✅ Re-reading docs/architecture.md
+✅ Re-reading ai-instructions.md
+```
+
+**Generate documents automatically:**
+
+**1. `specs/security.md`**
+
+- Use template: `.ai-flow/templates/specs/security.template.md`
+- Fill with all security policies, authentication, authorization
+- Write to: `specs/security.md`
+
+**2. Update `ai-instructions.md`**
+
+- Add security rules to NEVER/ALWAYS sections
+- Add authentication/authorization patterns
+
+```
+✅ Generated: specs/security.md
+✅ Updated: ai-instructions.md (security rules added)
+
+Documents have been created with all Phase 4 information.
+
+📝 Would you like to make any corrections before continuing?
+
+→ If yes: Edit the files and type "ready" when done. I'll re-read them.
+→ If no: Type "continue" to proceed to Phase 5.
+```
+
+**If user edits files:**
+Re-read files to refresh context before continuing.
+---
+**Proceed to Phase 5 only after documents are validated.**
+
+> ⚠️ **CRITICAL:** DO NOT generate README.md in this phase. README.md is ONLY generated in Phase 8 (step 8.5) after framework initialization.
+---
+---
+
+---
+
+## 📝 Generated Documents
+
+After Phase 4, generate/update:
+- `specs/security.md` - Security policies and authentication details
+
+---
+
+**Next Phase:** Phase 5 - Development Standards (15-20 min)
+
+Read: `.ai-flow/prompts/backend/flow-build-phase-5.md`
+
+---
+
+**Last Updated:** 2025-12-20
+**Version:** 2.1.8
+
+---
+
+## PHASE 5: Development Standards (15-20 min)
 
 
 

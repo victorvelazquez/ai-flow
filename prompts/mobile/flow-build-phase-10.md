@@ -15,7 +15,7 @@ Break down technical roadmap tasks into user-centric Agile requirements (User St
 ### Step 10.2: Select Scope
 
 ### Step 10.3: Generate User Story Documents
-Create `docs/user-stories/EP-XXX/HU-XXX-YYY.md`.
+Create `planning/user-stories/EP-XXX/HU-XXX-YYY.md`.
 
 **Mobile specific Acceptance Criteria focus:**
 - **UX/Touch:** "When I swipe left on X, Y action is triggered."
@@ -25,7 +25,7 @@ Create `docs/user-stories/EP-XXX/HU-XXX-YYY.md`.
 - **Native:** "System biometrics dialog appears before accessing Y."
 
 ### Step 10.4: Generate Test Cases
-Create `docs/user-stories/EP-XXX/tests/TC-XXX-YYY.md`.
+Create `planning/user-stories/EP-XXX/tests/TC-XXX-YYY.md`.
 
 ---
 _Version: 4.2 (Antigravity Optimized)_

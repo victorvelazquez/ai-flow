@@ -9,6 +9,25 @@
 ### Objective
 Define the project's core purpose, business rules, and high-level requirements to ensure the foundation is solid before technical design begins.
 
+---
+
+## 🔍 Pre-Flight Check (Smart Skip Logic)
+
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 1:**
+
+- **Target File**: `project-brief.md`
+- **Phase Name**: "BUSINESS CONTEXT"
+- **Key Items**: Project name, description, users, objectives, system type, features, scope, constraints, metrics, business flows
+- **Typical Gaps**: Business objectives, success metrics, constraints
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
+---
+
+## Phase 1 Questions (Full Mode)
+
 > **📌 Note:** If Phase 0 was executed, some questions may already be answered. Skip those and only ask what's missing.
 
 **1.1 Project Name & Description (with Smart Refinement)**

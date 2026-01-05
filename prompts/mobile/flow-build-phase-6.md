@@ -1,494 +1,524 @@
-# Phase 6: Testing Strategy
+## PHASE 6: Testing Strategy (15-20 min)
 
-**Duration:** 15-25 minutes
-**Questions:** ~12 questions
-**Output:** docs/testing.md, parts of ai-instructions.md
+> **Order for this phase:**
+>
+> - **MVP:** 6.1 → 6.2 (smoke tests) → 6.7 (CI basics)
+> - **Production-Ready:** 6.1 → 6.1b → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7
+> - **Enterprise:** 6.1 → 6.1b → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7 → 6.8 → 6.9
+
+> **📌 Scope-based behavior:**
+>
+> - **MVP:** Ask 6.1 (framework), 6.2 (smoke tests only), 6.7 (CI basics) - **Target: 15-25% coverage**
+> - **Production-Ready:** Ask all questions 6.1-6.7 - **Target: 60-80% coverage**
+> - **Enterprise:** Ask all questions 6.1-6.9 - **Target: 80-95% coverage + contract/load tests**
+
+### Objective
+
+Define testing approach, tools, and quality gates.
+
+**🚨 Important: All projects require basic testing. Scope determines depth, not whether to test.**
+
 ---
-## 🎯 Objective
 
-Define your mobile testing strategy:
+## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-1. What testing frameworks will you use?
-2. What types of tests will you write?
-3. How will you test on devices/emulators?
-4. What coverage targets?
-5. How will tests run in CI/CD?
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 6:**
+
+- **Target File**: `docs/testing.md`
+- **Phase Name**: "TESTING STRATEGY"
+- **Key Items**: Test framework, coverage targets, test types, CI/CD integration
+- **Typical Gaps**: E2E strategy, load testing, performance testing
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
 ---
-## 📋 Questions
 
-### Question 6.1: Unit Testing Framework
+## Phase 6 Questions (Full Mode)
 
-**What unit test framework will you use?**
+**6.1 Testing Framework**
 
-**If React Native:**
+```
 
-- A) ⭐ **Jest** (Recommended)
-  - Built-in with React Native
-  - Snapshot testing
-  - Best for: Most React Native apps
+Which testing tools will you use?
 
-- B) **Vitest**
-  - Faster, ESM native
-  - Best for: Modern setups
+JavaScript/TypeScript:
+A) ⭐ Jest - Most popular, great ecosystem
+B) Vitest - Modern, fast, Vite-compatible
+C) Mocha + Chai
+D) AVA
 
-**If Flutter:**
+Python:
+E) ⭐ pytest - Modern, feature-rich
+F) unittest - Built-in
+G) nose2
 
-- A) ⭐ **Flutter Test** (Built-in)
-  - Widget testing
-  - Unit testing
-  - Best for: All Flutter apps
+Java:
+H) ⭐ JUnit 5 + Mockito
+I) TestNG
 
-**If Native iOS:**
+Your choice: \_\_
 
-- A) ⭐ **XCTest** (Built-in)
-  - Unit tests
-  - UI tests
-  - Best for: All iOS apps
+Assertion library: **
+Mocking library: **
 
-**If Native Android:**
+```
 
-- A) ⭐ **JUnit** (Standard)
-  - Unit tests
-  - Best for: All Android apps
+**6.1b Testing Philosophy** (Production-Ready and Enterprise only)
 
-**Your answer:**
----
-### Question 6.2: Component/Screen Testing
+```
+What is your testing philosophy?
 
-**How will you test components and screens?**
+A) ⭐ Test-First (TDD) - Write tests before code
+   - Red-Green-Refactor cycle
+   - Higher initial effort, better design
+   - Best for: Complex business logic, critical systems
 
-**If React Native:**
+B) 🔥 Test-After - Write tests after implementation
+   - Faster initial development
+   - Risk of untested edge cases
+   - Best for: Rapid prototyping, time-sensitive features
 
-- A) ⭐ **React Native Testing Library** (Recommended)
-  - User-centric testing
-  - Accessible queries
-  - Best for: All React Native apps
+C) ⚡ Behavior-Driven (BDD) - Write tests as specifications
+   - Given/When/Then format
+   - Business-readable tests
+   - Best for: Domain-heavy applications
 
-**If Flutter:**
+D) 🏆 Hybrid - TDD for core logic, test-after for simple features
+   - Balance of speed and quality
+   - Pragmatic approach
 
-- A) ⭐ **Widget Testing** (Built-in)
-  - Test widgets in isolation
-  - Best for: All Flutter apps
+Your choice: __
+```
 
-**If Native iOS:**
+**6.2 Test Types**
 
-- A) ⭐ **XCUITest** (Built-in)
-  - UI testing framework
-  - Best for: All iOS apps
+```
+[If MVP scope selected, ask simplified version:]
 
-**If Native Android:**
+For MVP, we'll focus on smoke tests (critical path verification).
+Which critical flows should be tested?
 
-- A) ⭐ **Espresso** (Recommended)
-  - UI testing framework
-  - Best for: All Android apps
+Select 3-5 most important endpoints/features:
+A) Authentication (login/register)
+B) Main business operation (e.g., create order, post article)
+C) User profile/account management
+D) Payment processing (if applicable)
+E) Data retrieval (main GET endpoints)
 
-**Your answer:**
----
-### Question 6.3: E2E Testing Framework
+Selected: __
 
-**What E2E testing tool will you use?**
+Test approach: Integration tests covering happy path of selected flows
+Coverage target: 15-25%
+Test type: Integration/E2E only (no unit tests required for MVP)
 
-**If React Native:**
+[If Production-Ready or Enterprise scope selected, ask full version:]
 
-- A) ⭐ **Detox** (Recommended)
-  - Gray-box E2E testing
-  - Works with iOS and Android
-  - Best for: Most React Native apps
+Which test types will you implement?
 
-- B) **Maestro**
-  - Declarative E2E testing
-  - Cross-platform
-  - Best for: Simple E2E flows
+A) ✅ Unit Tests
+   - Test individual functions/methods in isolation
+   - Fast, numerous
+   - Mock all dependencies
 
-- C) **Appium**
-  - WebDriver-based
-  - Cross-platform
-  - Best for: Complex E2E scenarios
+B) ✅ Integration Tests
+   - Test multiple components together
+   - Database, external APIs
+   - Slower but more realistic
 
-**If Flutter:**
+C) ✅ E2E (End-to-End) Tests
+   - Test full user flows
+   - API endpoints from request to response
+   - Tool: Supertest (Node.js), pytest with TestClient (Python)
 
-- A) ⭐ **Integration Test** (Built-in)
-  - Flutter's integration testing
-  - Best for: Most Flutter apps
+D) 🏆 Contract Tests (Advanced - Enterprise recommended)
+   - Verify API contracts between services
+   - Tool: Pact, Spring Cloud Contract
 
-- B) **Maestro**
-  - Declarative E2E testing
-  - Best for: Simple E2E flows
+E) ⚡ Load/Performance Tests (Enterprise recommended)
+   - Tool: Artillery, K6, JMeter
 
-**If Native:**
+F) 🔬 Chaos Engineering (Enterprise only)
+   - Test system resilience to failures
+   - Tool: Chaos Monkey, Litmus, Gremlin
 
-- A) ⭐ **Appium** (Recommended)
-  - Cross-platform
-  - Works with iOS and Android
-  - Best for: Native apps
+Selected: __
 
-**Your answer:**
----
-### Question 6.4: Testing on Physical Devices
-
-**How will you test on physical devices?**
-
-A) ⭐ **TestFlight (iOS) + Firebase App Distribution (Android)** (Recommended)
-
-- Beta testing on real devices
-- Best for: Most apps
-
-B) **TestFlight (iOS) + Google Play Internal Testing (Android)**
-
-- Official store channels
-- Best for: Store-focused testing
-
-C) **Device Farm Services**
-
-- AWS Device Farm
-- BrowserStack App Automate
-- Sauce Labs
-- Best for: Multiple device testing
-
-D) **Manual Testing Only**
-
-- Test on personal devices
-- Best for: Small teams, MVPs
-
-**Your answer:**
----
-### Question 6.5: Emulator/Simulator Strategy
-
-**How will you use emulators/simulators?**
-
-A) ⭐ **Local Emulators + CI Emulators** (Recommended)
-
-- Develop locally with iOS Simulator / Android Emulator
-- Run tests in CI with emulators
-- Best for: Most teams
-
-B) **Local Only**
-
-- No CI emulator testing
-- Best for: Small teams
-
-C) **Cloud Emulators Only**
-
-- Use cloud services for all testing
-- Best for: Teams without local setup
-
-**Your answer:**
----
-### Question 6.6: Testing Pyramid Distribution
-
-**What test distribution will you target?**
-
-A) ⭐ **Standard Pyramid** (Recommended)
-
+Pyramid distribution:
 - 70% Unit tests
 - 20% Integration tests
 - 10% E2E tests
-- Best for: Most apps
+  (Adjust as needed)
 
-B) **Heavy Unit**
-
-- 85% Unit tests
-- 10% Integration tests
-- 5% E2E tests
-- Best for: Logic-heavy apps
-
-C) **Heavy Integration**
-
-- 50% Unit tests
-- 40% Integration tests
-- 10% E2E tests
-- Best for: UI-heavy apps
-
-**Your answer:**
----
-#### 🎨 MOBILE TESTING PYRAMID VISUALIZATION
-
-**Use this diagram format** to visualize mobile test distribution strategy:
-
-```mermaid
-graph TB
-    subgraph "Mobile Testing Pyramid"
-        E2E["📱 E2E Tests (10%)<br/>Detox/Appium<br/>Slow, Expensive<br/>Full user flows on device"]
-        INT["🔗 Integration Tests (20%)<br/>Component + API<br/>Medium Speed<br/>Screen rendering + navigation"]
-        UNIT["⚡ Unit Tests (70%)<br/>Jest/XCTest<br/>Fast, Cheap<br/>Business logic, hooks, utilities"]
-    end
-
-    E2E --> INT
-    INT --> UNIT
-
-    style E2E fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    style INT fill:#fff4e6,stroke:#f57c00,stroke-width:2px
-    style UNIT fill:#e8f5e9,stroke:#388e3c,stroke-width:3px
-
-    classDef note fill:#f5f5f5,stroke:#666,stroke-dasharray: 5 5
-
-    note1["Run on Real Devices/Emulators<br/>Test platform-specific behavior<br/>Slow feedback (minutes)"]:::note
-    note2["Test screen components<br/>Navigation flows<br/>API integration<br/>Medium feedback"]:::note
-    note3["Test pure functions<br/>Redux reducers<br/>Utilities, validators<br/>Fast feedback (seconds)"]:::note
-
-    E2E -.-> note1
-    INT -.-> note2
-    UNIT -.-> note3
 ```
 
-**Mobile-Specific Testing Layers:**
-
-```mermaid
-graph TB
-    subgraph "Mobile Test Types"
-        E2E_LAYER["E2E Layer<br/>Detox, Maestro, Appium"]
-        SCREEN_LAYER["Screen Tests<br/>React Native Testing Library<br/>Flutter Widget Tests"]
-        COMPONENT_LAYER["Component Tests<br/>Rendering, Props, Events"]
-        LOGIC_LAYER["Unit Tests<br/>Hooks, Utils, State Logic"]
-        STATIC_LAYER["Static Analysis<br/>TypeScript, ESLint"]
-    end
-
-    E2E_LAYER --> SCREEN_LAYER
-    SCREEN_LAYER --> COMPONENT_LAYER
-    COMPONENT_LAYER --> LOGIC_LAYER
-    LOGIC_LAYER --> STATIC_LAYER
-
-    DEVICES["Real Devices<br/>iOS + Android"]
-    EMULATORS["Emulators/Simulators<br/>Fast feedback"]
-
-    E2E_LAYER -.->|Run on| DEVICES
-    SCREEN_LAYER -.->|Run on| EMULATORS
-
-    style E2E_LAYER fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    style SCREEN_LAYER fill:#fff4e6,stroke:#f57c00,stroke-width:2px
-    style COMPONENT_LAYER fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-    style LOGIC_LAYER fill:#e1f5ff,stroke:#1976d2,stroke-width:2px
-    style STATIC_LAYER fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-```
-
-**Platform-Specific Testing Considerations:**
-
-```mermaid
-graph LR
-    subgraph "Cross-Platform Mobile Testing"
-        SHARED[Shared Business Logic<br/>Unit Tests (Jest)]
-        RN_SCREEN[React Native<br/>Screen Tests]
-        FLUTTER_WIDGET[Flutter<br/>Widget Tests]
-    end
-
-    subgraph "Platform Tests"
-        IOS_E2E[iOS E2E<br/>XCUITest/Detox]
-        ANDROID_E2E[Android E2E<br/>Espresso/Detox]
-    end
-
-    SHARED --> RN_SCREEN
-    SHARED --> FLUTTER_WIDGET
-
-    RN_SCREEN --> IOS_E2E
-    RN_SCREEN --> ANDROID_E2E
-
-    FLUTTER_WIDGET --> IOS_E2E
-    FLUTTER_WIDGET --> ANDROID_E2E
-
-    style SHARED fill:#e8f5e9
-    style RN_SCREEN fill:#e1f5ff
-    style FLUTTER_WIDGET fill:#e1f5ff
-    style IOS_E2E fill:#fce4ec
-    style ANDROID_E2E fill:#fff4e6
-```
-
-**When to Use Each Diagram:**
-
-- **Testing Pyramid**: Best for understanding test distribution strategy
-- **Mobile Test Types**: Best for showing all testing layers including emulators/devices
-- **Cross-Platform**: Best for React Native/Flutter apps with shared logic
-
-**Diagram Guidelines:**
-
-- Color code by test type (E2E=pink, Integration=orange, Unit=green)
-- Show device vs emulator distinction
-- Include platform-specific considerations (iOS/Android)
-- Highlight speed/cost trade-offs
-- Update percentages based on selected strategy (A, B, or C)
----
----
-### Question 6.7: Code Coverage Targets
-
-**What code coverage targets will you set?**
-
-A) ⭐ **80% Overall** (Recommended)
-
-- 80% line coverage
-- 70% branch coverage
-- Best for: Most apps
-
-B) **90% Overall**
-
-- 90% line coverage
-- 80% branch coverage
-- Best for: Critical apps
-
-C) **70% Overall**
-
-- 70% line coverage
-- 60% branch coverage
-- Best for: MVPs, small apps
-
-D) **No Coverage Target**
-
-- Test what's important
-- Best for: Very small projects
-
-**Your answer:**
----
-### Question 6.8: Snapshot Testing
-
-**Will you use snapshot testing?**
-
-**If React Native:**
-
-- A) ⭐ **Yes - Jest Snapshots** (Recommended)
-  - Catch unintended UI changes
-  - Best for: Component regression testing
-
-- B) **No Snapshot Testing**
-  - Manual visual review
-  - Best for: Rapidly changing UIs
-
-**If Flutter:**
-
-- A) ⭐ **Yes - Golden Tests** (Recommended)
-  - Flutter's snapshot testing
-  - Best for: Widget regression testing
-
-**Your answer:**
----
-### Question 6.9: Performance Testing
-
-**Will you test app performance?**
-
-A) ⭐ **Yes - Basic Performance** (Recommended)
-
-- App launch time
-- Screen render time
-- Memory usage
-- Best for: Most apps
-
-B) **Yes - Comprehensive Performance**
-
-- FPS monitoring
-- Network performance
-- Battery usage
-- Best for: Performance-critical apps
-
-C) **No Performance Testing**
-
-- Manual testing only
-- Best for: MVPs
-
-**Your answer:**
----
-### Question 6.10: Accessibility Testing
-
-**Will you test accessibility?**
-
-A) ⭐ **Yes - Basic Accessibility** (Recommended)
-
-- Screen reader support (TalkBack/VoiceOver)
-- Touch target sizes
-- Color contrast
-- Best for: Most apps
-
-B) **Yes - Comprehensive Accessibility**
-
-- WCAG 2.1 AA compliance
-- Full accessibility audit
-- Best for: Public-facing apps
-
-C) **No Accessibility Testing**
-
-- Not a priority
-- Best for: Internal apps
-
-**Your answer:**
----
-### Question 6.11: CI/CD Testing Strategy
-
-**How will tests run in CI/CD?**
-
-A) ⭐ **Run All Tests on PR** (Recommended)
-
-- Unit tests: Fast (<5 min)
-- Integration tests: Medium (<15 min)
-- E2E tests: Slow (<30 min)
-- Best for: Most teams
-
-B) **Run Unit Tests on PR, E2E on Merge**
-
-- Faster PR feedback
-- E2E on main branch
-- Best for: Large teams
-
-C) **Run Tests Manually**
-
-- No automated testing
-- Best for: Very small teams
-
-**Your answer:**
----
-### Question 6.12: Test Data Management
-
-**How will you manage test data?**
-
-A) ⭐ **Mock Data + Test Fixtures** (Recommended)
-
-- Mock API responses
-- Use fixtures for consistent data
-- Best for: Most apps
-
-B) **Test Database**
-
-- Separate test database
-- Best for: Integration testing
-
-C) **Real API (Staging)**
-
-- Use staging environment
-- Best for: E2E testing
-
-**Your answer:**
----
-## ✅ Phase 6 Completion
-
-After answering all questions, summarize:
+**6.3 Test Database** [Skip if MVP scope]
 
 ```
----
-✅ Phase 6 Complete: Testing Strategy
----
-Selected Testing Stack:
-- Unit Tests: Jest (React Native Testing Library)
-- E2E Tests: Detox
-- Device Testing: TestFlight + Firebase App Distribution
-- Coverage Target: 80% overall
-- Snapshot Testing: Yes (Jest Snapshots)
-- Performance Testing: Basic
-- Accessibility Testing: Basic
-- CI/CD: Run all tests on PR
+[Production-Ready/Enterprise only]
 
-Proceed to Phase 7 (Store Deployment)? (Y/n)
+How will you handle database in tests?
+
+A) ⭐ In-memory database
+   - SQLite for testing, PostgreSQL for prod
+   - Fast, isolated
+
+B) 🏆 Docker test database
+   - Same DB as production
+   - More realistic
+   - Tool: Testcontainers
+
+C) 🔄 Shared test database
+   - One DB for all tests
+   - Reset between test suites
+
+D) 🎭 Mock database
+   - Mock all DB calls
+   - Fastest, but less realistic
+
+Your choice: __
+
+Test data strategy:
+A) ⭐ Factories/Fixtures - Generate test data programmatically
+B) Seed files - Load from JSON/SQL files
+C) Inline - Create data in each test
+
+```
+
+**6.4 Test Data Management** [Skip if MVP scope]
+
+```
+[Production-Ready/Enterprise only]
+
+How will you create test data?
+
+A) ⭐ Factory pattern
+   - Libraries: factory_boy (Python), Fishery (TypeScript)
+   - Generate realistic data on demand
+
+B) Fixtures
+   - Predefined test data
+   - Loaded before tests
+
+C) Faker
+   - Random realistic data
+   - Library: @faker-js/faker, Faker (Python)
+
+Your approach: __
+
+Example test data needs:
+- Users with various roles
+- Products with different states
+- Orders in different stages
+- Payment records
+- [Add your specific needs]
+
+```
+
+**6.5 Mocking Strategy** [Skip if MVP scope]
+
+```
+[Production-Ready/Enterprise only]
+
+What will you mock?
+
+A) ✅ External APIs - Third-party services
+B) ✅ Database - In unit tests
+C) ✅ File system - S3, local storage
+D) ✅ Time/Date - For deterministic tests
+E) ✅ Email/SMS - Sending services
+F) ✅ Payment gateways
+
+Mocking approach:
+A) ⭐ Manual mocks - jest.fn(), unittest.mock
+B) Library - MSW (Mock Service Worker), nock
+C) Test doubles - Stubs, spies, mocks
+
+When NOT to mock:
+- Internal business logic
+- Simple utilities
+- Value objects
+
+```
+
+**6.6 Test Organization** [Skip if MVP scope]
+
+```
+[Production-Ready/Enterprise only]
+
+Test file structure:
+
+A) ⭐ Co-located with source
+```
+
+src/
+users/
+user.service.ts
+user.service.spec.ts
+
+```
+
+B) Separate test directory
+```
+
+src/users/user.service.ts
+tests/users/user.service.test.ts
+
+````
+
+Test naming:
+
+```typescript
+describe('UserService', () => {
+  describe('createUser', () => {
+    it('should create a new user with valid data', async () => {
+      // Arrange
+      const userData = { email: 'test@example.com', name: 'Test' };
+
+      // Act
+      const result = await userService.createUser(userData);
+
+      // Assert
+      expect(result).toBeDefined();
+      expect(result.email).toBe(userData.email);
+    });
+
+    it('should throw error when email is duplicated', async () => {
+      // ...
+    });
+  });
+});
+````
+
+Naming pattern:
+A) ⭐ "should [expected behavior] when [condition]"
+B) "it [expected behavior]"
+C) Free-form
+
+````
+
+**6.6.1 Contract Testing** [If selected in 6.2]
+
+```
+[Production-Ready/Enterprise only]
+
+Contract testing tool:
+A) ⭐ Pact - Consumer-driven contracts
+B) Spring Cloud Contract - Provider contracts
+C) Other: __
+
+Contract strategy:
+A) ⭐ Consumer-driven - Frontend/consumers define contracts
+B) Provider-driven - Backend defines contracts
+C) Both - Hybrid approach
+
+Contract storage:
+A) ⭐ Pact Broker - Centralized contract storage
+B) Git repository - Version contracts in code
+C) Other: __
+
+Contract versioning:
+- Strategy: __
+- Breaking changes: __
+```
+
+**6.6.2 Load/Performance Testing** [If selected in 6.2]
+
+```
+[Production-Ready/Enterprise only]
+
+Load testing tool:
+A) ⭐ Artillery - Node.js, YAML-based
+B) K6 - Modern, JavaScript-based
+C) JMeter - Java-based, GUI available
+D) Locust - Python-based
+E) Other: __
+
+Test scenarios:
+- Normal load: __ requests/second
+- Peak load: __ requests/second
+- Stress test: __ requests/second (beyond capacity)
+- Duration: __ minutes
+
+Performance thresholds:
+- Response time p50: < __ ms
+- Response time p95: < __ ms
+- Response time p99: < __ ms
+- Error rate: < __%
+- Throughput: > __ requests/second
+
+When to run:
+A) ⭐ Before major releases
+B) Weekly automated runs
+C) On-demand only
+```
+
+**6.6.3 Chaos Engineering** [If selected in 6.2 - Enterprise only]
+
+```
+[Enterprise only]
+
+Chaos engineering tool:
+A) ⭐ Chaos Monkey (Netflix)
+B) Litmus (Kubernetes)
+C) Gremlin - Managed chaos platform
+D) Custom scripts
+E) Other: __
+
+Chaos experiments to run:
+A) Network latency injection
+B) Service failures
+C) Database connection failures
+D) CPU/memory exhaustion
+E) Disk space issues
+F) Network partition
+
+→ Your selection (e.g., A, B, C): __
+
+Safety rules:
+- Run only in: [Staging, Production with approval]
+- Blast radius: __% of traffic/instances
+- Auto-rollback: [Yes/No]
+- Approval required: [Yes/No]
+```
+
+**6.7 CI/CD Testing** [All scopes - simplified for MVP]
+
+```
+[If MVP scope:]
+For MVP, we'll set up basic CI to run smoke tests.
+
+When will smoke tests run?
+A) ⭐ On pull request (GitHub Actions, GitLab CI) - Recommended
+B) Before deploy only
+
+Selected: __
+
+Quality gate for MVP:
+- ✅ All smoke tests must pass
+- ⚠️ Coverage tracking (no minimum required)
+
+[If Production-Ready or Enterprise scope:]
+
+When will tests run?
+
+A) ⭐ On every commit (pre-commit hook) - Catch issues early
+B) 🔥 On pull request (GitHub Actions, GitLab CI) - Most popular, prevents broken merges
+C) ⭐ Before deploy (staging pipeline) - Recommended safety check
+D) Nightly (comprehensive test suite) - For slow/extensive tests
+
+Selected: __
+
+Quality gates:
+
+- ✅ All tests must pass
+- ✅ Coverage must be >= __% (15-25% MVP, 60-80% Production, 80-95% Enterprise)
+- ✅ No linting errors
+- ⚡ Performance benchmarks met (optional, Enterprise recommended)
+
+Failing a quality gate:
+A) ⭐ Block merge/deploy - Force fix
+B) ⚠️ Warning only - Allow with justification
+
+```
+
+### Phase 6 Output
+
+```
+📋 PHASE 6 SUMMARY:
+
+**If MVP scope (A):**
+Testing Framework: [Jest/pytest/JUnit] (6.1)
+Test Types: Smoke tests on critical paths [selected 3-5 critical flows] (6.2)
+Test Approach: Integration/E2E tests covering happy path only (6.2)
+Coverage Target: 15-25% (6.2)
+CI/CD Testing: [on PR/before deploy] + quality gate: all tests must pass (6.7)
+Status: Basic testing implemented for MVP
+
+**If Production-Ready (B):**
+Testing Framework: [Jest/pytest/JUnit + assertion library + mocking library] (6.1)
+Test Types: [unit/integration/e2e - selected types] (6.2)
+Test Distribution: [pyramid percentages: 70/20/10 or custom] (6.2)
+Test Database: [in-memory/Docker/shared/mock + initial data strategy] (6.3)
+Test Data Management: [factories/fixtures/faker approach + specific test data needs] (6.4)
+Mocking Strategy: [what to mock (APIs/DB/files/time/email/payments) + approach] (6.5)
+Test Organization: [co-located/separate folder + naming pattern] (6.6)
+CI/CD Testing: [when tests run (commit/PR/deploy/nightly) + quality gates (pass/60-80% coverage/lint) + gate behavior (block/warn)] (6.7)
+Status: Comprehensive testing strategy implemented
+
+**If Enterprise (C):**
+Testing Framework: [Jest/pytest/JUnit + assertion library + mocking library] (6.1)
+Test Types: [unit/integration/e2e/contract/load/chaos - all types] (6.2)
+Test Distribution: [pyramid percentages: 70/20/10 or custom] (6.2)
+Test Database: [in-memory/Docker/shared/mock + initial data strategy] (6.3)
+Test Data Management: [factories/fixtures/faker approach + specific test data needs] (6.4)
+Mocking Strategy: [what to mock (APIs/DB/files/time/email/payments) + approach] (6.5)
+Test Organization: [co-located/separate folder + naming pattern] (6.6)
+Contract Testing: [tool (Pact/Spring Cloud Contract) + strategy + storage + versioning] (6.6.1)
+Load Testing: [tool (Artillery/K6/JMeter) + scenarios + thresholds + schedule] (6.6.2)
+Chaos Engineering: [tool (Chaos Monkey/Litmus/Gremlin) + experiments + safety rules] (6.6.3)
+CI/CD Testing: [when tests run (commit/PR/deploy/nightly) + quality gates (pass/80-95% coverage/lint/performance) + gate behavior (block/warn)] (6.7)
+Status: Exhaustive testing strategy with advanced scenarios
+
+Is this correct? (Yes/No)
 ```
 ---
+### 📄 Generate Phase 6 Documents
+
+**Before starting generation:**
+
+```
+📖 Loading context from previous phases...
+✅ Re-reading docs/code-standards.md
+✅ Re-reading ai-instructions.md
+```
+
+**Generate `docs/testing.md` automatically:**
+
+- Use template: `.ai-flow/templates/docs/testing.template.md`
+- **If MVP scope:** Fill with basic testing strategy: framework selection, smoke tests on critical paths, coverage 15-25%, basic CI setup. Mark advanced sections as "Not implemented yet - expand when moving to Production-Ready"
+- **If Production-Ready:** Fill with comprehensive testing strategy: framework, unit/integration/e2e tests, 60-80% coverage, test data management, mocking, full CI/CD
+- **If Enterprise:** Fill with exhaustive testing strategy: all Production-Ready items + contract tests, load tests, security tests, 80-95% coverage, performance benchmarks
+- Write to: `docs/testing.md`
+
+```
+✅ Generated: docs/testing.md
+
+Document has been created with all Phase 6 information.
+
+📝 Would you like to make any corrections before continuing?
+
+→ If yes: Edit the file and type "ready" when done. I'll re-read it.
+→ If no: Type "continue" to proceed to Phase 7.
+```
+
+**If user edits file:**
+Re-read file to refresh context before continuing.
+---
+**Proceed to Phase 7 only after documents are validated.**
+
+> ⚠️ **CRITICAL:** DO NOT generate README.md in this phase. README.md is ONLY generated in Phase 8 (step 8.5) after framework initialization.
+---
+
 ## 📝 Generated Documents
 
 After Phase 6, generate/update:
+- `docs/testing.md` - Testing strategy and quality gates
 
-- `docs/testing.md` - Testing strategy and setup guide
-- `ai-instructions.md` - Add testing rules
 ---
-**Next Phase:** Phase 7 - Store Deployment
 
-Read: `.ai-flow/prompts/mobile/flow-build-phase-7-deployment.md`
+**Next Phase:** Phase 7 - Operations & Deployment (10-15 min)
+
+Read: `.ai-flow/prompts/backend/flow-build-phase-7.md`
+
 ---
-**Last Updated:** 2025-01-XX
 
-**Version:** 1.4.0
+**Last Updated:** 2025-12-20
+**Version:** 2.1.8
 
+---
 
+## PHASE 7: Operations & Deployment (10-15 min)
 
-
+````

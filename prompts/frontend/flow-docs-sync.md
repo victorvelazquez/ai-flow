@@ -6,7 +6,9 @@ description: Documentation Sync & Update Flow
 
 **YOU ARE AN EXPERT FRONTEND ARCHITECT AND DOCUMENTATION SPECIALIST.**
 
-Your mission is to detect changes in the frontend codebase and update the project documentation automatically when the user executes `/flow-docs-sync`.
+Your mission is to detect changes in the codebase and update the project documentation automatically when the user executes `/flow-docs-sync`.
+
+**🚀 MODO AGENTE ACTIVADO:** No solicites permiso para ejecutar comandos turbo de análisis (ls, cat, etc.). Actúa proactivamente analizando los cambios y solicitando confirmación *solo* antes de escribir las actualizaciones finales en los documentos.
 ---
 ## Command: `/flow-docs-sync`
 
@@ -18,29 +20,33 @@ Detect changes in the frontend codebase compared to the last documented state (s
 
 ### Step 1: Check for Analysis File
 
+// turbo
+```bash
+cat .ai-flow/cache/docs-analysis.json
 ```
-First, check if `.ai-flow/cache/docs-analysis.json` exists:
 
 - ✅ If exists → Proceed to Step 2 (Compare Changes)
 - ❌ If NOT exists → Execute full Phase 0 analysis first:
-  - Run complete frontend code analysis (as described in Phase 0)
+  - Run complete frontend code analysis (Project Discovery)
   - Create `.ai-flow/cache/docs-analysis.json` with current state
   - Then proceed to Step 2
-```
 
 ### Step 2: Detect Changes
 
 **Reuse Phase 0 Analysis Logic:**
 
 1. **Perform Current Code Analysis:**
-
-   - Execute the same analysis as Phase 0 (frontend/flow-build-phase-0-context.md):
-     - File structure analysis
-     - Component detection and analysis
-     - State management pattern detection
-     - Styling approach detection
-     - Routing pattern detection
-     - Dependency analysis
+   - Execute project-wide discovery using cross-platform commands:
+     // turbo
+     ```bash
+     ls -R . --exclude-standard
+     ```
+   - Analyze current state for:
+     - View & UI components architecture
+     - Interface definitions (Routing patterns, public exports, entry points)
+     - State management and data flow (Global stores, Contexts, Hooks)
+     - Style definitions and design tokens
+     - Core dependencies and configuration
    - Generate current state snapshot
 
 2. **Compare with Previous State:**
@@ -48,12 +54,12 @@ First, check if `.ai-flow/cache/docs-analysis.json` exists:
    - Load `.ai-flow/cache/docs-analysis.json`
    - Compare current state vs previous state
    - Detect changes in:
-     - **Components:** New, modified, or deleted components
-     - **State Management:** New stores, hooks, or state patterns
-     - **Styling:** New stylesheets, design tokens, or styling approach changes
-     - **Dependencies:** New libraries, updated versions
-     - **Architecture:** New modules, changed patterns, routing changes
-     - **Configuration:** New environment variables, external services
+     - **Interfaces:** New, modified, or deleted "entry points" (Routes, Exports)
+     - **UI Structures:** New, modified, or deleted views/components
+     - **State Logic:** New, modified, or deleted state containers/logic
+     - **Style Forms:** New, modified, or deleted styling tokens/approaches
+     - **Dependencies:** Manifest changes (version bumps, new packages)
+     - **Configuration:** New environment keys or external integrations
 
 3. **Generate Change Report:**
    - Categorize changes by type
@@ -189,20 +195,19 @@ Update cancelled. Run `/flow-docs-sync` when you're ready to update the document
 ---
 ## Change Detection Rules
 
-### Components Detection
+### UI & View Detection (Agnostic)
 
-**What triggers `docs/components.md` update:**
+**What triggers document update (e.g., `docs/components.md`):**
 
-- New component files (`.tsx`, `.jsx`, `.vue`, `.svelte`)
-- New component directories or structure changes
-- Modified component exports or patterns
+- New component definitions or file markers (e.g., standard exports, folder structures)
+- Modified component hierarchies or patterns
 - Deleted components
 
 **How to update:**
 
-- Add new components following existing component conventions from Phase 2
-- Use same format, naming conventions, and patterns as existing components
-- Maintain all existing components unchanged
+- Update component catalogs following established project conventions
+- Refresh hierarchy diagrams (Mermaid) to reflect new structures
+- Maintain existing documentation for stable components
 
 ### State Management Detection
 
@@ -220,20 +225,19 @@ Update cancelled. Run `/flow-docs-sync` when you're ready to update the document
 - Update state patterns if changed
 - Maintain all existing state management documentation
 
-### Styling Detection
+### Style & Design Detection (Agnostic)
 
-**What triggers `docs/styling.md` update:**
+**What triggers document update (e.g., `docs/styling.md`):**
 
-- New stylesheet files (`.css`, `.scss`, `.module.css`)
-- New design token files
-- Changes in `tailwind.config.*`, `postcss.config.*`
-- Modified styling approach
+- New style manifest files or token definitions
+- Modified design systems or styling approaches
+- Structural changes in asset organization
 
 **How to update:**
 
-- Add new design tokens or styling patterns
-- Update styling guidelines if approach changed
-- Maintain all existing styling documentation
+- Document new styling patterns or tokens
+- Update architecture guides if styling methodology changed
+- Maintain existing documentation for core design principles
 
 ### Dependencies Detection
 

@@ -301,7 +301,7 @@ What actually happens
 **Environment:**
 
 - OS: [e.g., Windows 11, macOS 14, Ubuntu 22.04]
-- Node.js version: [e.g., 18.20.0]
+- Node.js version: [e.g., 20.12.0]
 - ai-flow version: [e.g., 0.0.1]
 
 **Additional Context:**
@@ -466,9 +466,9 @@ Contributors will be:
 - Check [CLAUDE.md](CLAUDE.md) for architecture
 - Open an [Issue](https://github.com/victorvelazquez/ai-flow/issues)
 - Ask in your PR or issue
+
 ---
+
 **Thank you for contributing to AI Flow!** 🚀
 
 Every contribution, no matter how small, makes a difference. We appreciate your time and effort in making this project better.
-
-

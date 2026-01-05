@@ -29,7 +29,7 @@ Break down technical roadmap tasks into user-centric Agile requirements (User St
 // turbo
 ### Step 10.1: Load Context from Roadmap
 
-**Extract from `docs/roadmap.md`:**
+**Extract from `planning/roadmap.md`:**
 
 ```
 CONTEXT LOADED
@@ -66,7 +66,7 @@ SCOPE SELECTION
 
 ### Step 10.3: Generate User Story Documents
 
-**For each Feature in roadmap, create `docs/user-stories/EP-XXX/HU-XXX-YYY.md`:**
+**For each Feature in roadmap, create `planning/user-stories/EP-XXX/HU-XXX-YYY.md`:**
 
 ```markdown
 # User Story: HU-{{EPIC}}-{{FEATURE}}
@@ -123,7 +123,7 @@ SCOPE SELECTION
 
 ## Tasks
 
-> Inherited from docs/roadmap.md Feature {{FEATURE_NUMBER}}
+> Inherited from planning/roadmap.md Feature {{FEATURE_NUMBER}}
 
 {{TASKS_FROM_ROADMAP}}
 
@@ -169,7 +169,7 @@ SCOPE SELECTION
 
 ### Step 10.4: Generate Test Cases (Separate Files)
 
-**For each User Story, create `docs/user-stories/EP-XXX/tests/TC-XXX-YYY.md`:**
+**For each User Story, create `planning/user-stories/EP-XXX/tests/TC-XXX-YYY.md`:**
 
 ```markdown
 # Test Cases: HU-{{EPIC}}-{{FEATURE}}
@@ -235,12 +235,12 @@ SCOPE SELECTION
 
 ### Step 10.5: Update Roadmap with Links
 
-**After generating, update `docs/roadmap.md`:**
+**After generating, update `planning/roadmap.md`:**
 
 ```markdown
 ### Feature 1.1: {{FEATURE_NAME}} • {{SP}} SP
 
-**User Story:** [HU-001-001](docs/user-stories/EP-001/HU-001-001.md)
+**User Story:** [HU-001-001](planning/user-stories/EP-001/HU-001-001.md)
 **Status:** Not Started
 
 **Tasks:**
@@ -311,11 +311,11 @@ PHASE 10 COMPLETE
 ├── Generated: X User Stories
 ├── Total SP: X SP
 ├── Test Cases: X
-├── Files: docs/user-stories/EP-XXX/
-└── Updated: docs/roadmap.md (added links)
+├── Files: planning/user-stories/EP-XXX/
+└── Updated: planning/roadmap.md (added links)
 
 Next steps:
-1. Review User Stories in docs/user-stories/
+1. Review User Stories in planning/user-stories/
 2. Start implementing: /flow-dev-feature HU-001-001
 3. Generate more: /flow-build fase 10 EP-XXX
 ```
@@ -326,8 +326,8 @@ Next steps:
 
 After Phase 10, generate/update:
 
-- `docs/user-stories/*.md` - Detailed Agile requirements
-- `docs/roadmap.md` - (updated with story links)
+- `planning/user-stories/*.md` - Detailed Agile requirements
+- `planning/roadmap.md` - (updated with story links)
 
 ---
 

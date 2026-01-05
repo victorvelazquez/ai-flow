@@ -1,394 +1,473 @@
-# Phase 5: Code Standards & Best Practices
+## PHASE 5: Code Standards (15-20 min)
 
-**Duration:** 15-20 minutes
-**Questions:** ~10 questions
-**Output:** docs/code-standards.md, parts of ai-instructions.md
+> **Order for this phase:** 5.1 → 5.2 → 5.3 → 5.4 → 5.5 → 5.6 → 5.7 → 5.8 → 5.9 → 5.10 → 5.11 → 5.12 → 5.13
+
+> **📌 Scope-based behavior:**
+>
+> - **MVP:** Ask 5.1-5.5 only (formatting, naming, structure, coverage target, Git workflow), skip 5.6-5.13 (advanced practices)
+> - **Production-Ready:** Ask all questions 5.1-5.13
+> - **Enterprise:** Ask all questions 5.1-5.13 with emphasis on governance and documentation
+
+### Objective
+
+Establish code quality rules, naming conventions, and development practices.
+
 ---
-## 🎯 Objective
 
-Define coding conventions and standards:
+## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-1. File and component naming conventions
-2. Code formatting and linting rules
-3. Import organization
-4. Commit message standards
-5. Code review practices
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 5:**
+
+- **Target File**: `docs/code-standards.md`
+- **Phase Name**: "CODE STANDARDS"
+- **Key Items**: Linters, formatters, naming conventions, code review process
+- **Typical Gaps**: Team-specific conventions, code review workflow
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
 ---
-## 📋 Questions
 
-### Question 5.1: File Naming Convention
+## Phase 5 Questions (Full Mode)
 
-**How will you name your files?**
+**5.1 Code Style & Formatting**
 
-#### React/Solid
+```
+Formatting preferences:
 
-A) ⭐ **PascalCase for components** (Recommended)
+Indentation:
+A) ⭐ 2 spaces - Recommended for JavaScript/TypeScript
+B) 4 spaces - Common for Python, Java
+C) Tabs
 
-- Components: `UserProfile.tsx`, `Button.tsx`
-- Hooks: `useAuth.ts`, `useLocalStorage.ts`
-- Utils: `formatDate.ts`, `apiClient.ts`
-- Best for: React ecosystem standard
+Quotes:
+A) ⭐ Single quotes - 'text' (JavaScript)
+B) Double quotes - "text" (Python, Java)
 
-B) **kebab-case for all files**
+Line length:
+A) ⭐ 80 characters - Traditional
+B) 100 characters - Modern balance
+C) 120 characters - Wide screens
 
-- Components: `user-profile.tsx`, `button.tsx`
-- Best for: Consistency with Vue/Angular
+Semicolons (JavaScript/TypeScript):
+A) ⭐ Required - Always use semicolons
+B) Optional - ASI (Automatic Semicolon Insertion)
 
-C) **camelCase for all files**
+Trailing commas:
+A) ⭐ Yes - ES5+ compatible, cleaner diffs
+B) No
 
-- Components: `userProfile.tsx`, `button.tsx`
-- Best for: JavaScript naming conventions
+Formatter & Linter:
+A) ⭐ Prettier + ESLint - Recommended combination
+   - Prettier: Auto-format on save (style/formatting)
+   - ESLint: Code quality and error detection
+   - Use eslint-config-prettier to avoid conflicts
 
-#### Vue
+B) ESLint only - With formatting rules
+   - Handles both linting and formatting
+   - More config overhead
 
-A) ⭐ **PascalCase for components** (Vue 3 recommended)
+C) Prettier only - Formatting without linting
+   - Fast, opinionated formatting
+   - No code quality checks
 
-- Components: `UserProfile.vue`, `BaseButton.vue`
-- Composables: `useAuth.ts`, `useLocalStorage.ts`
-- Utils: `formatDate.ts`
+D) EditorConfig only - Basic cross-editor consistency
 
-B) **kebab-case (Vue 2 style)**
+E) Manual formatting - Not recommended
 
-- Components: `user-profile.vue`, `base-button.vue`
-
-#### Angular
-
-A) ⭐ **kebab-case with suffixes** (Angular standard)
-
-- Components: `user-profile.component.ts`
-- Services: `auth.service.ts`
-- Modules: `user.module.ts`
-- Guards: `auth.guard.ts`
-
-#### Svelte
-
-A) ⭐ **PascalCase for components**
-
-- Components: `UserProfile.svelte`, `Button.svelte`
-
-**Your answer:**
----
-### Question 5.2: Component Naming Convention
-
-**How will you name components in code?**
-
-A) ⭐ **PascalCase** (All frameworks recommend)
-
-- Example: `<UserProfile />`, `<Button />`
-- Best for: Standard practice
-
-B) **Named exports vs default exports?**
-
-#### React/Vue/Solid
-
-A) ⭐ **Named exports** (Recommended)
-
-```typescript
-export const Button = () => { ... }
-// Usage: import { Button } from './Button'
+Your choice: __
 ```
 
-- Pros: Better IDE support, easier refactoring, explicit names
-- Cons: Slightly more verbose
+**5.2 Naming Conventions**
 
-B) **Default exports**
+```
+Naming style by type:
 
-```typescript
-export default function Button() { ... }
-// Usage: import Button from './Button'
+Files:
+A) ⭐ kebab-case - user-service.ts, api-controller.ts
+B) camelCase - userService.ts, apiController.ts
+C) PascalCase - UserService.ts, ApiController.ts
+
+Classes/Interfaces:
+A) ✅ PascalCase - UserService, IUserRepository
+
+Functions/Methods:
+A) ✅ camelCase - getUserById, createOrder
+
+Variables:
+A) ✅ camelCase - userName, totalPrice
+
+Constants:
+A) ✅ UPPER_SNAKE_CASE - MAX_RETRIES, API_BASE_URL
+
+Interfaces (TypeScript):
+A) ⭐ I-prefix - IUserService, IRepository
+B) No prefix - UserService, Repository
+C) -Interface suffix - UserServiceInterface
+
+Boolean variables:
+A) ✅ is/has/can prefix - isActive, hasPermission, canEdit
 ```
 
-- Pros: Shorter imports
-- Cons: Can rename on import, harder to refactor
+**5.3 File Organization**
 
-**Your answer:**
+> **Note:** The AI will adapt the following examples to match your selected language/framework from Phase 3 (questions 3.1 and 3.2). File extensions, naming conventions, and folder names will be automatically adjusted.
+
+```
+Project structure approach:
+
+A) ⭐ Feature-based (Modular) - Recommended for most projects
+
+Group by feature/module with subfolders for organization:
+
+[DYNAMIC EXAMPLE - AI will adapt based on your stack]
+
+TypeScript/NestJS example:
+src/
+  modules/
+    users/
+      dto/
+        create-user.dto.ts
+        update-user.dto.ts
+      entities/
+        user.entity.ts
+      users.controller.ts
+      users.service.ts
+      users.repository.ts
+      users.module.ts
+    orders/
+      dto/
+      entities/
+      orders.controller.ts
+  common/
+    guards/
+    interceptors/
+  config/
+
+Python/FastAPI example:
+src/
+  modules/
+    users/
+      schemas/
+        user_create.py
+        user_update.py
+      models/
+        user.py
+      users_controller.py
+      users_service.py
+      users_repository.py
+    orders/
+      schemas/
+      models/
+  common/
+    dependencies/
+    middleware/
+
+Java/Spring Boot example:
+src/main/java/com/myapp/
+  modules/
+    users/
+      dto/
+        CreateUserDto.java
+        UpdateUserDto.java
+      domain/
+        User.java
+      UsersController.java
+      UsersService.java
+      UsersRepository.java
+    orders/
+  common/
+    config/
+    security/
+
+Go example:
+src/
+  modules/
+    users/
+      models/
+        user.go
+      handlers/
+        user_handler.go
+      services/
+        user_service.go
+      repositories/
+        user_repository.go
+    orders/
+  common/
+    middleware/
+
+C#/.NET Core example:
+src/
+  Modules/
+    Users/
+      DTOs/
+        CreateUserDto.cs
+        UpdateUserDto.cs
+      Entities/
+        User.cs
+      UsersController.cs
+      UsersService.cs
+      UsersRepository.cs
+    Orders/
+      DTOs/
+      Entities/
+  Common/
+    Middleware/
+    Extensions/
+
+Benefits: Scalable, easy to find related code, clear module boundaries
 ---
-### Question 5.3: Linting & Formatting
+B) 🏆 Feature-based (Flat) - Simple projects
 
-**What linting/formatting tools will you use?**
+Flat structure within each feature (AI will adapt naming):
 
-A) ⭐ **ESLint + Prettier** (Recommended)
+src/
+  users/
+    user_controller
+    user_service
+    user_repository
+    user_dto
+    user_entity
+  orders/
+    order_controller
+    order_service
+    ...
 
-- ESLint: Code quality rules
-- Prettier: Code formatting
-- Best for: Most JavaScript/TypeScript projects
-
-B) **ESLint only**
-
-- Configure ESLint for both linting and formatting
-- Best for: Simpler setup
-
-C) **Biome**
-
-- All-in-one linter and formatter (faster than ESLint+Prettier)
-- Best for: Monorepos, performance-critical projects
-
-D) **No linting/formatting**
-
-- Manual code review only
-- Not recommended
-
-**Your answer:**
-
-**If ESLint, which config?**
-
-#### React
-
-A) ⭐ **eslint-config-airbnb** (Strict, popular)
-B) **@typescript-eslint/recommended** (TypeScript-focused)
-C) **eslint-config-react-app** (Create React App default)
-D) **Custom config**
-
-#### Vue
-
-A) ⭐ **eslint-plugin-vue** (Official Vue rules)
-B) **@vue/eslint-config-typescript** (Vue + TypeScript)
-
-#### Angular
-
-A) ⭐ **@angular-eslint** (Official Angular ESLint)
-
-**Prettier config:**
-
-- Print width: **\_** (default: 80)
-- Tabs or spaces: **\_** (default: 2 spaces)
-- Semicolons: Yes / No (default: Yes)
-- Single quotes: Yes / No (default: No)
-- Trailing commas: es5 / all / none (default: es5)
+Benefits: Simpler, fewer folders, good for small projects
 ---
-### Question 5.4: Import Organization
+C) Layer-based (Traditional) - Legacy style
 
-**How will you organize imports?**
+Group by technical layer/type (AI will adapt naming):
 
-A) ⭐ **Grouped by type** (Recommended)
+src/
+  controllers/
+    user_controller
+    order_controller
+  services/
+    user_service
+    order_service
+  repositories/
+    user_repository
+    order_repository
+  entities/
+    user_entity
+    order_entity
+  dto/
+    create_user_dto
+    create_order_dto
 
-```typescript
-// 1. External libraries
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+Benefits: Clear separation by type, familiar for MVC developers
+Drawbacks: Hard to see feature boundaries, files scattered
+---
+D) Hybrid - Domain + Shared layers
 
-// 2. Internal modules
-import { Button } from '@/components/Button';
-import { useAuth } from '@/hooks/useAuth';
+Modules for features + shared technical folders (AI will adapt):
 
-// 3. Relative imports
-import { UserCard } from './UserCard';
+src/
+  modules/
+    users/
+      (feature code)
+    orders/
+      (feature code)
+  shared/
+    services/
+    utils/
+  infrastructure/
+    database/
+    .ai-flow/cache/
 
-// 4. Types
-import type { User } from '@/types';
-
-// 5. Styles
-import styles from './styles.module.css';
+Your choice: __
+Why?
+---
+After you select, the AI will generate the exact folder structure with proper:
+- File extensions (.ts, .py, .java, .go)
+- Naming conventions (camelCase, snake_case, PascalCase)
+- Framework-specific folders (dto vs schemas, entities vs models vs domain)
+- Common patterns for your chosen stack
 ```
 
-B) **Alphabetical only**
+**5.4 Import Organization**
 
-- All imports alphabetically sorted
-- Best for: Simpler rule
+```
+Import ordering:
 
-C) **No specific order**
+A) ⭐ Recommended order:
+1.  External libraries (react, express, etc.)
+2.  Internal modules (@/services, @/utils)
+3.  Relative imports (./user.dto, ../shared)
+4.  Types/Interfaces
+5.  Styles/Assets
 
-- Not recommended
+B) Alphabetical
+C) No specific order
 
-**Your answer:**
+Path aliases:
+A) ✅ Yes - Use @ for src root
+- import { UserService } from '@/services/user.service';
 
-**Import alias for src/?**
-
-- `@/` (e.g., `import { Button } from '@/components/Button'`)
-- `~/` (e.g., `import { Button } from '~/components/Button'`)
-- No alias (relative paths only)
-
-**Auto-import sorting tool:**
-
-- `eslint-plugin-import` + `import/order` rule
-- `prettier-plugin-organize-imports`
-- Manual
----
-### Question 5.5: TypeScript Strictness
-
-**How strict should TypeScript be?**
-
-A) ⭐ **Strict mode** (Recommended)
-
-```json
-{
-  "strict": true,
-  "noUncheckedIndexedAccess": true,
-  "noImplicitOverride": true
-}
+B) No - Use relative paths only
 ```
 
-- Catches most type errors
-- Best for: New projects, type safety
+**5.5 TypeScript/Type Rules**
 
-B) **Moderate**
+```
+(Skip if not using TypeScript)
 
-```json
-{
-  "strict": true,
-  "noUncheckedIndexedAccess": false
-}
+A) ✅ Strict mode - Enable all strict checks ⭐
+B) ❌ any allowed - Use any when needed (not recommended)
+C) ⚠️ Gradual typing - Start loose, tighten over time
+
+Rules:
+- ✅ No implicit any
+- ✅ Strict null checks
+- ✅ No unused variables
+- ✅ Explicit function return types
+- ✅ Interface over type (when possible)
+
+Type preference:
+A) Interfaces for object shapes
+B) Types for unions/intersections
+C) Mix both as needed ⭐
 ```
 
-- Strict but allows some flexibility
+**5.6 Error Handling**
 
-C) **Lenient**
+```
+Error handling strategy:
 
-- Minimal type checking
-- Best for: Migration from JavaScript
+A) ⭐ Try-catch with custom error classes
+- Centralized error handler
+- HTTP error mapping
+- Detailed error messages
 
-**Your answer:**
+B) Error codes/enums
+- Consistent error codes across app
 
-**`any` type policy:**
-A) ❌ Never allow `any` (use `unknown` instead)
-B) ⚠️ Allow `any` with eslint warning
-C) ✅ Allow `any` freely (not recommended)
----
-### Question 5.6: Code Comments
+C) Result pattern
+- Never throw, return Result<T, Error>
 
-**What's your commenting policy?**
+Your approach: __
 
-A) ⭐ **JSDoc for public APIs, inline for complex logic**
+Error logging:
+A) ⭐ All errors logged with context
+B) Only server errors (5xx)
+C) Errors + warnings
 
+Error responses to client:
+A) ⭐ Detailed in dev, generic in production
+- Dev: Full stack trace
+- Prod: Error code + user-friendly message
+
+B) Always detailed
+C) Always generic
+```
+
+**5.7 Comments & Documentation**
+
+````
+When to comment:
+
+A) ⭐ Recommended approach:
+- Complex business logic
+- Non-obvious solutions
+- TODOs and FIXMEs
+- Public APIs (JSDoc/Docstrings)
+- Configuration decisions
+
+B) Minimal comments - Self-documenting code only
+C) Extensive comments - Every function
+
+Doc comments:
+A) ✅ JSDoc for TypeScript/JavaScript
+B) ✅ Docstrings for Python
+C) ✅ JavaDoc for Java
+
+Example:
 ```typescript
 /**
- * Fetches user data from the API
- * @param userId - The user's unique identifier
- * @returns User object or null if not found
+ * Calculates user's total order value for the current month
+ * @param userId - The unique user identifier
+ * @param includeDiscounts - Whether to apply promotional discounts
+ * @returns Total value in cents
  */
-export async function fetchUser(userId: string): Promise<User | null> {
-  // Check cache first to avoid unnecessary API call
-  const cached = cache.get(userId);
-  if (cached) return cached;
-
-  return api.get(`/users/${userId}`);
-}
+async function calculateMonthlyTotal(
+  userId: string,
+  includeDiscounts: boolean
+): Promise<number>;
 ```
 
-- Best for: Most projects
+````
 
-B) **JSDoc everywhere**
-
-- Comment all functions, even private ones
-- Best for: Libraries, public APIs
-
-C) **Minimal comments**
-
-- Self-documenting code only
-- Comments only for "why", not "what"
-
-D) **No comment policy**
-
-- Up to developers
-
-**Your answer:**
----
-### Question 5.7: Component Structure
-
-**How will you structure components?**
-
-A) ⭐ **Collocated files** (Recommended)
+**5.8 Testing Standards**
 
 ```
-Button/
-├── Button.tsx
-├── Button.test.tsx
-├── Button.stories.tsx
-├── Button.module.css
-└── index.ts (re-export)
-```
 
-- Best for: Modularity, easy to move/delete
+Test coverage requirements:
 
-B) **Separate folders**
+Minimum coverage:
+A) 🏆 80%+ - Enterprise standard
+B) ⭐ 70%+ - Recommended for most projects
+C) 50%+ - Minimum acceptable
+D) No requirement
 
-```
-components/Button.tsx
-styles/Button.module.css
-tests/Button.test.tsx
-```
+What to test:
 
-- Best for: Simpler structure, smaller projects
+- ✅ Services/Business logic - 80%+ coverage
+- ✅ Controllers/Routes - 60%+ coverage
+- ✅ Utilities/Helpers - 90%+ coverage
+- ✅ Database repositories - 70%+ coverage
+- ❓ DTOs/Entities - Usually no tests needed
 
-C) **Single file components** (Vue SFC style)
+Test file naming:
+A) ⭐ .spec.ts / .test.ts - Next to source file
+B) Separate tests/ folder
 
-```vue
-<template>...</template>
-<script>
-...
-</script>
-<style>
-...
-</style>
-```
-
-- Best for: Vue, Svelte
-
-**Your answer:**
----
-### Question 5.8: Error Handling Patterns
-
-**How will you handle errors in components?**
-
-A) ⭐ **Error Boundaries + Try-Catch**
-
-- Error Boundaries: Catch render errors
-- Try-Catch: Catch async errors
-- Best for: React, robust error handling
-
-B) **Global error handler**
-
-- Vue: `app.config.errorHandler`
-- Angular: `ErrorHandler`
-- Best for: Centralized error logging
-
-C) **Try-Catch everywhere**
-
-- Manual error handling in each function
-- Best for: Fine-grained control
-
-**Your answer:**
-
-**Error logging:**
-
-- Sentry
-- LogRocket
-- DataDog
-- Console only (development)
-- No logging
----
-### Question 5.9: Code Review Standards
-
-**What's required for code review approval?**
-
-Select all that apply:
-
-- [ ] Linting passes (no ESLint errors)
-- [ ] Tests pass (unit + integration)
-- [ ] Code coverage meets threshold (specify: \_\_\_%)
-- [ ] No TypeScript errors
-- [ ] At least 1 approval from team member
-- [ ] Self-review (author reviews their own PR)
-- [ ] Documentation updated (if public API changed)
-- [ ] No console.log statements
-- [ ] Accessibility review (for UI changes)
-
-**Minimum approvals required:** **\_**
-
-**Approval required from:**
-A) Any team member
-B) Senior/Lead developer
-C) Code owner (GitHub CODEOWNERS)
-
-**Your answer:**
----
-### Question 5.10: Commit Message Convention
-
-**What commit message format will you use?**
-
-A) ⭐ **Conventional Commits** (Recommended)
+Mocking strategy:
+A) ⭐ Mock external dependencies (DB, APIs)
+B) Integration tests with real DB
+C) Mix: Unit tests mock, integration tests don't
 
 ```
+
+**5.9 Code Complexity Limits**
+
+```
+
+Code quality metrics:
+
+Function length:
+A) ⭐ Max 50 lines per function
+B) Max 100 lines
+C) No limit
+
+Cyclomatic complexity:
+A) ⭐ Max complexity 10
+B) Max complexity 15
+C) No limit
+
+Parameters:
+A) ⭐ Max 4 parameters (use object for more)
+B) Max 6 parameters
+C) No limit
+
+Nesting depth:
+A) ⭐ Max 3 levels
+B) Max 4 levels
+C) No limit
+
+```
+
+**5.10 Git Commit Standards**
+
+````
+
+Commit message format:
+
+A) ⭐ Conventional Commits
+
+```
+
 <type>(<scope>): <subject>
 
 <body>
@@ -396,111 +475,229 @@ A) ⭐ **Conventional Commits** (Recommended)
 <footer>
 ```
 
-- Types: feat, fix, docs, style, refactor, test, chore
-- Example: `feat(auth): add Google OAuth login`
-- Best for: Automated changelogs, semantic versioning
+Types: feat, fix, docs, style, refactor, test, chore
 
-B) **Simple descriptive**
-
-- Example: "Add Google OAuth login"
-- Best for: Small teams, simple projects
-
-C) **No convention**
-
-- Free-form commit messages
-
-**Your answer:**
-
-**If Conventional Commits, enforce with:**
-
-- commitlint (pre-commit hook)
-- Manual review
-- No enforcement
-
-**Require commit body for:**
-A) All commits
-B) Only breaking changes
-C) Never required
----
-## 📊 Phase 5 Summary
+Example:
 
 ```
----
-📋 PHASE 5 SUMMARY: CODE STANDARDS
----
-File Naming: [Answer from 5.1]
-Component Naming: [Answer from 5.2]
-Linting/Formatting: [Answer from 5.3]
-Import Organization: [Answer from 5.4]
-TypeScript Strictness: [Answer from 5.5]
-Code Comments: [Answer from 5.6]
-Component Structure: [Answer from 5.7]
-Error Handling: [Answer from 5.8]
-Code Review: [Answer from 5.9]
-Commit Messages: [Answer from 5.10]
-Logging Standards: [Answer from 5.11]
-Documentation Tools: [Answer from 5.12]
+feat(auth): add JWT refresh token rotation
 
-Is this correct? (Y/n)
+- Implement token rotation on every refresh
+- Store refresh tokens in Redis
+- Add expiration cleanup job
+
+Closes #123
 ```
----
-## 📝 Document Generation
 
-Generate `docs/code-standards.md` with these placeholders:
+B) Simple descriptive messages
+C) No standard
 
-- `{{FILE_NAMING_CONVENTION}}` → File naming pattern
-- `{{COMPONENT_NAMING}}` → Component naming pattern
-- `{{LINTING_TOOLS}}` → ESLint + Prettier / Biome / etc.
-- `{{IMPORT_ORGANIZATION}}` → Import order rules
-- `{{TYPESCRIPT_STRICTNESS}}` → Strict / Moderate / Lenient
-- `{{COMMENT_POLICY}}` → Commenting guidelines
-- `{{COMPONENT_STRUCTURE}}` → File structure pattern
-- `{{ERROR_HANDLING}}` → Error handling approach
-- `{{CODE_REVIEW_RULES}}` → Review requirements
-- `{{COMMIT_CONVENTION}}` → Commit message format
+Branch naming:
+A) ⭐ feature/description, bugfix/description, hotfix/description
+B) Your initials + description (e.g., jd/add-auth)
+C) No standard
 
-Update `ai-instructions.md`:
+````
 
-```markdown
-## Code Standards
-
-- **File Naming:** {{FILE_NAMING_CONVENTION}}
-- **Component Naming:** {{COMPONENT_NAMING}}
-- **Linting:** {{LINTING_TOOLS}}
-- **TypeScript:** {{TYPESCRIPT_STRICTNESS}}
-
-### Rules
-
-- ✅ ALWAYS use {{FILE_NAMING_CONVENTION}} for file names
-- ✅ ALWAYS use {{COMPONENT_NAMING}} for component names
-- ✅ ALWAYS run linter before committing
-- ❌ NEVER commit code with ESLint errors
-- ❌ NEVER use `any` type (use `unknown` instead)
-- ✅ ALWAYS write JSDoc for exported functions
-- ✅ ALWAYS use {{IMPORT_ORGANIZATION}} for imports
-  {{#IF_CONVENTIONAL_COMMITS}}
-- ✅ ALWAYS use Conventional Commits format
-  {{/IF_CONVENTIONAL_COMMITS}}
-```
----
-## 🚀 Next Steps
+**5.11 Versioning & Changelog**
 
 ```
-✅ Phase 5 Complete!
 
-Documents Generated:
-  - docs/code-standards.md
-  - ai-instructions.md (updated)
+Versioning policy:
 
-Next: Phase 6 - Testing Strategy
+What versioning scheme will you use?
+A) ⭐ SemVer (Major.Minor.Patch) (recommended)
+B) Date (YYYY.MM.DD)
+C) Other: \_\_
 
-Read: .ai-flow/prompts/frontend/flow-build-phase-6-testing.md
+Migration strategy:
+How will you handle breaking changes and migrations?
+A) ⭐ Document in the changelog and provide migration scripts (recommended)
+B) Only document changes
+C) Other: \_\_
+
+Changelog:
+How will you document and communicate changes?
+A) ⭐ CHANGELOG.md in the repository (recommended)
+B) Releases on GitHub/GitLab
+C) Notes in documentation
+D) Other: \_\_
+
+Who will be responsible for updating the changelog?
+A) ⭐ Tech Lead (recommended)
+B) Author of the change (who does the PR)
+C) Documentation team
+D) Other: \_\_
+Example roles: Tech Lead, release manager, PR author, documentation team, etc.
+
 ```
+
+**5.12 Logging Standards**
+
+```
+What logging approach will you use?
+
+Log format:
+A) ⭐ Structured JSON - Machine-readable, easy to parse (recommended)
+B) Plain text - Human-readable, traditional
+C) Both - Different formats for different environments
+
+Log levels:
+- DEBUG: Detailed debugging info (development only)
+- INFO: General information (request start, successful operations)
+- WARN: Warnings (deprecated features, recoverable errors)
+- ERROR: Errors (failed operations, exceptions)
+- FATAL: Critical errors (system failures)
+
+Default log level:
+- Development: __
+- Production: __
+
+Log context to include:
+A) Request ID (for tracing)
+B) User ID (if authenticated)
+C) IP address
+D) User agent
+E) Request path
+F) Response status
+G) Duration
+H) Error stack traces
+
+→ Your selection (e.g., A, B, E, F, G): __
+
+Log aggregation tool:
+A) ⭐ CloudWatch (AWS)
+B) Datadog
+C) ELK Stack (Elasticsearch, Logstash, Kibana)
+D) Splunk
+E) Other: __
+
+Log retention: __ days
+```
+
+**5.13 Custom Project Rules**
+
+```
+Do you have any project-specific rules for AI assistants?
+
+❌ NEVER Rules (things that should NEVER be done):
+
+Examples of NEVER rules:
+- Never use ORM X, always use ORM Y
+- Never modify files in the /legacy folder
+- Never use inline styles in components
+- Never bypass the API gateway
+
+Your custom NEVER rules:
+1. __
+2. __
+3. __
+(Leave blank if none)
+
+✅ ALWAYS Rules (things that should ALWAYS be done):
+
+Examples of ALWAYS rules:
+- Always use the company's error handling wrapper
+- Always include tenant_id in database queries
+- Always use the shared logging utility
+- Always run security scan before commit
+
+Your custom ALWAYS rules:
+1. __
+2. __
+3. __
+(Leave blank if none)
+```
+
+### Phase 5 Output
+
+```
+📋 PHASE 5 SUMMARY:
+
+Formatting: [indentation, quotes, line length, formatter + linter]
+Naming: [files, classes, functions, variables, constants, interfaces style]
+File Organization: [feature-based / layer-based / hybrid + rationale]
+Imports: [ordering strategy, path aliases]
+Type Rules: [strict mode, rules applied, type preferences]
+Error Handling: [strategy, logging approach, client response format]
+Comments: [when to comment, doc style (JSDoc/Docstrings/JavaDoc)]
+Testing: [coverage % target, what to test, file naming, mocking strategy]
+Complexity: [function length, cyclomatic complexity, parameters, nesting depth limits]
+Git: [commit format (conventional/simple), branch naming convention]
+Versioning: [scheme (SemVer/Date), migration strategy, changelog method, responsibility]
+Logging Standards: [format (JSON/text), levels, context, aggregation tool, retention]
+Custom Rules: [NEVER rules count, ALWAYS rules count]
+
+Is this correct? (Yes/No)
+```
+
 ---
-**Last Updated:** 2025-01-XX
 
-**Version:** 1.2.0
+### 📄 Generate Phase 5 Documents
 
+**Before starting generation:**
 
+```
+📖 Loading context from previous phases...
+✅ Re-reading project-brief.md
+✅ Re-reading docs/architecture.md
+✅ Re-reading ai-instructions.md
+✅ Re-reading specs/security.md
+```
 
+**Generate documents automatically:**
+
+**1. `docs/code-standards.md`**
+
+- Use template: `.ai-flow/templates/docs/code-standards.template.md`
+- Fill with all code quality rules, naming conventions, formatting
+- Write to: `docs/code-standards.md`
+
+**2. Update `ai-instructions.md`**
+
+- Add code style rules to formatting section
+- Add complexity limits and testing requirements
+
+```
+✅ Generated: docs/code-standards.md
+✅ Updated: ai-instructions.md (code standards added)
+
+Documents have been created with all Phase 5 information.
+
+📝 Would you like to make any corrections before continuing?
+
+→ If yes: Edit the files and type "ready" when done. I'll re-read them.
+→ If no: Type "continue" to proceed to Phase 6.
+```
+
+**If user edits files:**
+Re-read files to refresh context before continuing.
+
+---
+
+**Proceed to Phase 6 only after documents are validated.**
+
+> ⚠️ **CRITICAL:** DO NOT generate README.md in this phase. README.md is ONLY generated in Phase 8 (step 8.5) after framework initialization.
+
+---
+
+## 📝 Generated Documents
+
+After Phase 5, generate/update:
+- `docs/code-standards.md` - Development practices and quality rules
+
+---
+
+**Next Phase:** Phase 6 - Testing Strategy (15-20 min)
+
+Read: `.ai-flow/prompts/backend/flow-build-phase-6.md`
+
+---
+
+**Last Updated:** 2025-12-20
+**Version:** 2.1.8
+
+---
+
+## PHASE 6: Testing Strategy (15-20 min)
 

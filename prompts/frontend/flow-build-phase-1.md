@@ -1,33 +1,54 @@
-# Phase 1: Discovery & UX Requirements
+## PHASE 1: Discovery & Business (15-20 min)
 
-**Duration:** 15-20 minutes
-**Questions:** ~11 questions
-**Output:** project-brief.md, parts of AGENT.md
+> **Order for this phase:** 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 → 1.7 → 1.8 → 1.9 → 1.10
+
+> **📌 Scope-based behavior:**
+> - **MVP/Basic Scope:** Focus only on core requirements. Skip advanced business logic questions.
+> - **Production-Ready Scope:** In-depth exploration of compliance, scalability, and long-term business goals.
+
+### Objective
+Define the project's core purpose, business rules, and high-level requirements to ensure the foundation is solid before technical design begins.
+
 ---
-## 🎯 Objective
 
-Understand the **user-facing aspects** and core goal of the application:
+## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-1. What is the core goal and purpose of the project?
-2. What type of application is being built?
-3. Who are the target users?
-4. What are the key user journeys?
-5. What devices and browsers must be supported?
-6. What are the UX priorities?
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+
+**Execute Pre-Flight Check for Phase 1:**
+
+- **Target File**: `project-brief.md`
+- **Phase Name**: "BUSINESS CONTEXT"
+- **Key Items**: Project name, description, users, objectives, system type, features, scope, constraints, metrics, business flows
+- **Typical Gaps**: Business objectives, success metrics, constraints
+
+**Proceed with appropriate scenario based on audit data from `.ai-flow/cache/audit-data.json`**
+
 ---
-## 📋 Questions
 
-### Question 1.1: Project Name & Description (with Smart Refinement)
+## Phase 1 Questions (Full Mode)
+
+> **📌 Note:** If Phase 0 was executed, some questions may already be answered. Skip those and only ask what's missing.
+
+**1.1 Project Name & Description (with Smart Refinement)**
 
 > **🧠 Intelligent Refinement System**: This question detects vague descriptions and guides the developer to enrich them. It only asks what's missing and responds in the developer's language.
 
 ```
+[If detected from Phase 0, show:]
+✅ Project Name: [detected name]
+✅ Description: [detected description]
+
+Is this correct? (Y/N)
+If no, please provide correct values.
+
+[If NOT detected, ask:]
 What is the project name?
 
 Provide an initial description of your project.
 (Don't worry about perfection - we'll refine it together if needed!)
 
-Example: "A frontend dashboard for managing inventory in real-time"
+Example: "A backend for managing gym memberships"
 ```
 
 **🔍 AI Internal: Ambiguity Analysis**
@@ -36,10 +57,10 @@ After receiving the description, silently analyze for these criteria:
 
 | Criterion | Check For | Score +1 if present |
 |-----------|-----------|---------------------|
-| **WHO** | Specific user type mentioned (not just "users") | "store managers", "traders", "students" |
-| **WHAT** | Specific action/function (not just "view", "show") | "compare prices", "edit profiles", "visualize data" |
-| **WHY** | Purpose or value mentioned | "to increase conversion", "to save time", "to improve UX" |
-| **DOMAIN** | Industry/vertical indicated | "fintech", "e-commerce", "social media" |
+| **WHO** | Specific user type mentioned (not just "users") | "gym members", "restaurant owners" |
+| **WHAT** | Specific action/function (not just "manage") | "track workouts", "process payments" |
+| **WHY** | Purpose or value mentioned | "to replace spreadsheets", "to launch app" |
+| **DOMAIN** | Industry/vertical indicated | "fitness", "fintech", "healthcare" |
 | **DETAIL** | Description has 10+ meaningful words | Not counting articles |
 
 **Scoring Rules:**
@@ -62,27 +83,28 @@ Your description: "[original description]"
 [ONLY show questions for MISSING criteria:]
 
 [If WHO is missing:]
-1️⃣ WHO will use this application?
+1️⃣ WHO will use this system?
    A) End consumers (B2C)
    B) Business users (B2B)
-   C) Internal team / Admin
-   D) Other: __
+   C) Internal team
+   D) Other systems (APIs)
+   E) Other: __
 
 [If WHAT is missing:]
-2️⃣ WHAT is the core UX action users will perform?
-   A) Browse & Shop
-   B) Manage & Configure
-   C) Read & Consume
-   D) Create & Publish
-   E) Analyze & Visualize
+2️⃣ WHAT is the core action users will perform?
+   A) Buy/sell products or services
+   B) Manage/organize information
+   C) Communicate/collaborate
+   D) Monitor/analyze data
+   E) Create/publish content
    F) Other: __
 
 [If WHY is missing:]
 3️⃣ WHY is this project needed?
-   A) Launch new product
-   B) Replace legacy UI
-   C) Better mobile experience
-   D) Specific new feature
+   A) Replace manual/legacy process
+   B) Launch new product/business
+   C) Improve existing system
+   D) Enable new capability
    E) Other: __
 
 [If DOMAIN is missing:]
@@ -95,7 +117,7 @@ Your description: "[original description]"
    F) Business tools (CRM, ERP)
    G) Other: __
 
-Your answers: __
+Your answers: __ (e.g., "A, B, A, E" or describe freely)
 ```
 
 ---
@@ -110,488 +132,495 @@ After gathering missing info, generate 3 polished versions:
 ✨ Based on your input, here are 3 professional descriptions:
 
 A) Concise (for package.json):
-   "[Generated 1-line description]"
+   "[Generated 1-line description with WHO + WHAT]"
 
 B) Descriptive (for README.md):
-   "[Generated 2-3 line description with UX focus]"
+   "[Generated 2-3 line description with WHO + WHAT + WHY]"
 
-C) Creative (for Marketing/Landing):
-   "[Generated catchy description]"
+C) Technical (for AGENT.md):
+   "[Generated technical description with DOMAIN + WHAT]"
 
 Which do you prefer? (1-3, or 4 to edit, 5 to start over)
 ```
 
-**Your choice:**
+---
+
+**✅ Final Confirmation**
+
+```
+✅ Your final project description:
+
+📋 Name: [project name]
+📝 Description: "[final polished description]"
+
+Proceed to next question? (Y to continue)
+```
 
 ---
 
-### Question 1.2: Application Type
+**1.2 Project Overview (Confirmation + Expansion)**
 
-**What type of frontend application are you building?**
+> **📌 Smart Skip**: If 1.1 already captured WHO/WHAT/WHY completely, this becomes a quick confirmation.
 
-A) ⭐ **Single Page Application (SPA)**
+```
+[If 1.1 refinement was complete (score >= 4), show:]
 
-- Example: Gmail, Notion, Figma
-- Characteristics: Client-side routing, dynamic updates, minimal page reloads
-- Best for: Web apps, dashboards, admin panels
+✅ Based on your description, I understand:
+   • Users: [WHO from 1.1]
+   • Core Action: [WHAT from 1.1]
+   • Purpose: [WHY from 1.1]
 
-B) 🔥 **Multi-Page Application (MPA)**
+Is this complete? (Y) Or would you like to add more context? (N)
 
-- Example: E-commerce sites, blogs, marketing sites
-- Characteristics: Server-rendered pages, traditional navigation
-- Best for: Content-heavy sites, SEO-critical apps
+[If user says Y → Skip to 1.3]
+[If user says N → Ask:]
+What additional context would you like to add?
 
-C) ⚡ **Progressive Web App (PWA)**
-
-- Example: Twitter Lite, Starbucks PWA
-- Characteristics: Offline support, installable, push notifications
-- Best for: Mobile-first apps, offline-first experiences
-
-D) 🏆 **Server-Side Rendered (SSR) App**
-
-- Example: Next.js apps, Nuxt apps
-- Characteristics: Initial server render, hydration, SEO-friendly
-- Best for: Hybrid apps, dynamic content with SEO needs
-
-E) **Static Site (SSG)**
-
-- Example: Documentation sites, portfolios
-- Characteristics: Pre-rendered at build time, fast, CDN-friendly
-- Best for: Blogs, documentation, landing pages
-
-**Your answer:**
 ---
-### Question 1.3: Target Users (Confirmation + Expansion)
+
+[If 1.1 was NOT refined OR any WHO/WHAT/WHY still missing, ask:]
+
+[ONLY ask for MISSING elements - check what was NOT captured in 1.1:]
+
+[If WHO still unclear:]
+Who are the primary users of this system?
+
+[If WHAT still unclear:]
+What is the core value proposition?
+
+[If WHY still unclear:]
+What makes this project necessary?
+
+Example:
+"A backend for a fitness tracking mobile app used by gym-goers (users). It allows users to log workouts, track progress over time, and share achievements with friends (value). This project is necessary to replace our legacy spreadsheet-based system and support our new iOS app launch."
+```
+
+**1.3 Target Users (Confirmation + Additional Types)**
+
+> **📌 Smart Skip**: If 1.1 already identified user types, this confirms and expands.
 
 ```
 [If WHO was captured in 1.1, show:]
 
 ✅ Based on your description, your target users are: [WHO from 1.1]
 
-Describe your user personas more deeply (3-5 bullet points):
+Would you like to add any additional user types? Select any that apply:
 
-- Demographics (age, tech-savviness, etc.)
-- Use cases / goals
-- Device preferences
-- Accessibility needs
+A) 🌐 External end-users (B2C) - Public-facing application
+B) 🏢 Internal employees (B2B/Enterprise) - Company internal tool
+C) 🔌 Other systems/services (API consumers) - Integration platform
+D) 👥 Partners/Third-parties - Partner ecosystem
+E) 📱 Mobile/Web apps - Backend for frontend
+F) ✅ No additional users - [WHO from 1.1] is complete
 
 ---
 
 [If WHO was NOT captured in 1.1, ask normally:]
 
-Who are your primary target users?
+Who will use this system? Select all that apply:
 
-Describe your user personas (3-5 bullet points):
+A) 🌐 External end-users (B2C) - Public-facing application
+B) 🏢 Internal employees (B2B/Enterprise) - Company internal tool
+C) 🔌 Other systems/services (API consumers) - Integration platform
+D) 👥 Partners/Third-parties - Partner ecosystem
+E) 📱 Mobile/Web apps - Backend for frontend
 
-- Demographics (age, tech-savviness, etc.)
-- Use cases / goals
-- Device preferences
-- Accessibility needs
+(Can select multiple)
 ```
 
-**Example:**
+**1.4 Business Objectives**
 
 ```
-- Small business owners (30-50 years old, moderate tech skills)
-- Goal: Manage inventory and track sales
-- Devices: Desktop (70%), Mobile (30%)
-- Accessibility: WCAG 2.1 AA compliance required
+What are the top 3 measurable objectives for this project?
+
+Examples:
+- Process 10,000 transactions/day
+- Reduce customer onboarding time by 50%
+- Support 1M active users
+- Achieve 99.9% uptime SLA
+
+Your objectives:
+1.
+2.
+3.
 ```
 
-**Your answer:**
----
-### Question 1.4: Key User Journeys (Confirmation + Expansion)
+**1.5 System Type (Confirmation + Validation)**
+
+> **📌 Smart Skip**: If 1.1 already identified the domain/industry, this confirms it.
 
 ```
-[If WHAT was captured in 1.1, show:]
+[If DOMAIN was captured in 1.1, show:]
 
-✅ Based on your description, a core journey is: [WHAT from 1.1]
+✅ Based on your description, this appears to be a: [DOMAIN from 1.1] system
 
-What are the 3-5 most critical user flows?
+Is this correct?
+
+A) ✅ Yes, that's correct
+B) 🔄 No, it's actually: [show options below]
 
 ---
 
-[If WHAT was NOT captured in 1.1, ask normally:]
+[If DOMAIN was NOT captured in 1.1, OR user selected B above:]
 
-What are the 3-5 most critical user flows?
+What type of system are you building? (This helps suggest common features)
+
+A) 🛒 E-commerce/Marketplace
+B) 📱 SaaS/B2B Platform
+C) 📊 CRM/ERP/Business Tool
+D) 🎮 Social/Community Platform
+E) 📋 Content Management
+F) 🏦 FinTech/Payment
+G) 🏥 Healthcare/Booking
+H) 📚 Education/Learning
+I) 🔧 DevTools/API Platform
+J) Other: __
+
+Your choice: __
 ```
 
-**Example:**
+**1.6 Core Features**
 
 ```
-1. Sign up → Email verification → Onboarding wizard → Dashboard
-2. Create new project → Add team members → Set up integrations
-3. Browse products → Add to cart → Checkout → Payment confirmation
-4. Search for content → Filter results → View details → Save favorite
+What are the main functionalities your system needs?
+
+Think about what your users will be able to do with your system. You can list them freely, or select from common features suggested below based on your system type.
+
+🛒 E-commerce common features:
+1) User authentication (register/login)
+2) Product catalog with search/filters
+3) Shopping cart
+4) Checkout and payment processing
+5) Order management
+6) Inventory tracking
+7) Admin dashboard
+📱 SaaS common features:
+1) User authentication with SSO
+2) Multi-tenant organization/workspace management
+3) Role-based access control (RBAC)
+4) Subscription and billing
+5) Dashboard and analytics
+6) API access
+7) Admin panel
+📊 CRM/Business Tool common features:
+1) User/team management
+2) Contact/customer database
+3) Activity tracking and logging
+4) Reporting and analytics
+5) Integrations (email, calendar, etc.)
+6) Search and filters
+7) Export functionality
+🎮 Social/Community common features:
+1) User profiles
+2) Posts/content creation
+3) Feed/timeline
+4) Comments and reactions
+5) Follow/friend system
+6) Notifications
+7) Moderation tools
+⭐ Your specific features (add any custom functionalities):
+-
+-
+-
+
+List all functionalities your system needs (select from above or add your own):
 ```
 
-**Your answer:**
----
-### Question 1.5: Device & Browser Support
-
-**What devices and browsers must you support?**
-
-A) ⭐ **Modern Browsers Only** (Last 2 versions)
-
-- Chrome, Firefox, Safari, Edge
-- Mobile: iOS Safari 14+, Chrome Android
-- Pros: Use latest web features, smaller bundle size
-- Cons: May exclude <5% of users
-
-B) 🔥 **Broad Compatibility** (Last 3-4 years)
-
-- Include IE11, older Safari versions
-- Requires polyfills and transpilation
-- Pros: Wider audience reach
-- Cons: Larger bundle, limited features
-
-C) **Mobile-First**
-
-- Prioritize iOS Safari and Chrome Android
-- Responsive design for desktop
-- Best for: Consumer apps, e-commerce
-
-D) **Desktop-First**
-
-- Optimize for desktop browsers
-- Mobile as secondary experience
-- Best for: Admin panels, dashboards, B2B tools
-
-**Your answer:**
----
-### Question 1.6: Responsive Strategy
-
-**How will you handle different screen sizes?**
-
-A) ⭐ **Mobile-First Responsive** (Recommended)
-
-- Design for mobile first, scale up for desktop
-- Breakpoints: 640px (mobile), 768px (tablet), 1024px (desktop)
-- Best for: Most modern apps
-
-B) **Desktop-First Responsive**
-
-- Design for desktop, scale down for mobile
-- Best for: Complex dashboards with dense data
-
-C) **Adaptive (Multiple Designs)**
-
-- Separate designs for mobile vs desktop
-- Example: Different layouts/features per breakpoint
-- Best for: Apps with very different mobile/desktop experiences
-
-D) **Fixed Width (Desktop Only)**
-
-- No mobile optimization
-- Best for: Internal tools, admin panels (desktop-only users)
-
-**Your answer:**
----
-### Question 1.7: Internationalization (i18n)
-
-**Do you need multi-language support?**
-
-A) ⭐ **Single Language Only**
-
-- No i18n needed
-- Fastest development
-
-B) **Multi-Language (Static)**
-
-- Support 2-5 languages
-- Translations managed in code (JSON files)
-- Example: English, Spanish, French
-
-C) 🌍 **Multi-Language (Dynamic)**
-
-- Support 10+ languages
-- CMS-driven translations or API-based
-- Example: Crowdin, Phrase integration
-
-D) **Right-to-Left (RTL) Support**
-
-- Include Arabic, Hebrew, etc.
-- Requires bidirectional layout support
-
-**Your answer:**
-
-**If multi-language selected, list target languages:**
----
-### Question 1.8: Authentication Requirements
-
-**What authentication method will you use?**
-
-A) ⭐ **Email/Password (Traditional)**
-
-- Users sign up with email and password
-- Requires password reset flow
-- Best for: Most apps
-
-B) 🔥 **Social Login (OAuth)**
-
-- Google, GitHub, Facebook, etc.
-- Faster signup, lower friction
-- Best for: Consumer apps
-
-C) **Magic Link / Passwordless**
-
-- Email-based login link
-- No password management
-- Best for: B2B SaaS, low-security apps
-
-D) **SSO / SAML (Enterprise)**
-
-- Okta, Auth0, Azure AD integration
-- Best for: Enterprise B2B apps
-
-E) **Multi-Factor Authentication (MFA)**
-
-- SMS, authenticator app, WebAuthn
-- Best for: High-security apps (finance, healthcare)
-
-F) **No Authentication**
-
-- Public app, no user accounts
-- Best for: Marketing sites, public tools
-
-**Your answer:**
----
-### Question 1.9: Data Privacy & Compliance
-
-**What data privacy requirements do you have?**
-
-A) ⭐ **Standard (No Special Requirements)**
-
-- Basic privacy policy
-- No regulated data
-
-B) **GDPR Compliance (EU)**
-
-- Cookie consent banner
-- Right to be forgotten
-- Data export capabilities
-
-C) **CCPA Compliance (California)**
-
-- "Do Not Sell" option
-- Data deletion requests
-
-D) 🏆 **HIPAA Compliance (Healthcare)**
-
-- Encrypted data transmission
-- Audit logs
-- Strict access controls
-
-E) **SOC 2 / ISO 27001 (Enterprise)**
-
-- Security audit requirements
-- Detailed logging and monitoring
-
-F) **Multiple Regulations**
-
-- Combine GDPR + CCPA + others
-- Most restrictive controls apply
-
-**Your answer:**
----
-### Question 1.10: Offline Support
-
-**Do users need offline access?**
-
-A) ⭐ **Online Only**
-
-- Requires internet connection
-- Simplest implementation
-
-B) **Basic Offline (Read-Only)**
-
-- Cache data for offline viewing
-- No offline editing
-- Example: News apps, documentation
-
-C) 🔥 **Full Offline (Sync)**
-
-- Offline editing with sync when online
-- Requires conflict resolution
-- Example: Note apps, task managers
-- Technologies: Service Workers, IndexedDB
-
-D) **Offline-First**
-
-- Works offline by default
-- Syncs in background
-- Best for: Mobile apps, unreliable networks
-
-**Your answer:**
----
-### Question 1.11: Performance Priorities
-
-**What are your performance priorities?** (Select top 3)
-
-A) ⭐ **Fast Initial Load (LCP < 2.5s)**
-
-- Optimize Core Web Vitals
-- Code splitting, lazy loading
-- Best for: SEO, user retention
-
-B) **Smooth Interactions (FID < 100ms)**
-
-- Debounce inputs, optimize re-renders
-- Best for: Interactive apps, dashboards
-
-C) **Visual Stability (CLS < 0.1)**
-
-- Prevent layout shifts
-- Reserve space for dynamic content
-- Best for: Content-heavy sites
-
-D) **Low Bundle Size**
-
-- Minimize JavaScript payload
-- Tree shaking, compression
-- Best for: Mobile users, slow networks
-
-E) **Fast Time to Interactive (TTI)**
-
-- Hydration optimization
-- Critical CSS inlining
-- Best for: SSR apps
-
-F) **Perceived Performance**
-
-- Skeleton screens, optimistic UI
-- Best for: User experience
-
-**Your answer (top 3):**
----
-## 📊 Phase 1 Summary
-
-Before proceeding to Phase 2, confirm the following:
+**1.7 Scope Definition**
 
 ```
----
-📋 PHASE 1 SUMMARY: DISCOVERY & UX
----
-Project Name: [Answer from 1.1]
-Project Description: [Answer from 1.1]
-Application Type: [Answer from 1.2]
-Target Users: [Answer from 1.3]
-Key User Journeys: [Answer from 1.4]
-Device/Browser Support: [Answer from 1.5]
-Responsive Strategy: [Answer from 1.6]
-Internationalization: [Answer from 1.7]
-Authentication: [Answer from 1.8]
-Data Privacy: [Answer from 1.9]
-Offline Support: [Answer from 1.10]
-Performance Priorities: [Answer from 1.11]
+Now let's prioritize: What will you build in this first version, and what will you leave for future versions?
 
-Is this correct? (Y/n)
+This helps us focus the documentation on what you're building now, while noting what comes later.
+
+📋 What will you build in this first version? (Select from the features listed above)
+
+[Show features from question 1.6 and allow selection]
+---
+⏭️ What will you leave for future versions? (What you're NOT building now)
+
+Common things to defer:
+1) Mobile native apps (building web/API first)
+2) Advanced analytics/ML features
+3) Third-party integrations (v2)
+4) White-label/multi-branding
+5) Internationalization (i18n)
+6) Advanced automation/workflows
+7) Video/live streaming features
+⭐ Other features to defer (add your own):
+-
+-
+-
+
+💡 Tip: It's okay to start simple! You can always expand later. This helps us create focused documentation for your current needs.
 ```
 
-If **Yes:** Proceed to Phase 2
+**1.8 Constraints**
 
-If **No:** Allow user to correct specific answers
+```
+What constraints does this project have? Select all that apply:
+
+A) ⏰ Time - Must launch by specific date
+B) 💰 Budget - Limited development resources
+C) 📜 Compliance - Regulatory requirements (GDPR, HIPAA, SOC2, etc.)
+D) 🔧 Technology - Must use specific tech stack
+E) 📊 Scale - Must handle specific traffic/data volume
+F) 🔐 Security - High security requirements
+G) ⚡ Performance - Strict latency/throughput requirements
+
+For each selected, provide details:
+
+Example:
+- Time: Must launch MVP by Q3 2024
+- Compliance: Must be GDPR compliant as we serve EU users
+```
+
+**1.9 Success Metrics**
+
+```
+How will you measure success?
+
+1. Expected Users:
+   - Initial launch: __ users
+   - Year 1 goal: __ users
+
+2. Performance Targets:
+   - Response time: < __ ms
+   - Uptime: __ %
+
+3. Business Goals:
+   - [Goal 1]
+   - [Goal 2]
+
+⭐ Standard for MVP:
+- Users: 1,000 initial / 10,000 Year 1
+- Response time: < 500ms (API), < 100ms (DB)
+- Uptime: 99.9% (Standard cloud SLA)
+
+🏆 Standard for Production/Scale:
+- Users: 100,000+ active
+- Response time: < 200ms (API), < 50ms (DB)
+- Uptime: 99.99% (High Availability)
+```
+
+**1.10 Main Business Flows**
+
+> Note: If you omit any common flow or functionality, the AI will suggest and document typical processes relevant to your system type, based on best practices and common use cases.
+
+`````
+List the main business flows of the system (e.g., sales, inventory update, invoicing, user registration).
+
+For each flow, you can add a brief description (optional).
+
+If you wish, you can specify the main steps of any flow (numbered format). If you do not specify them, the AI will deduce typical steps based on the name and description.
+
+Example:
+- Sales: Process of purchasing products by the customer.
+  1. Customer selects products
+  2. Order is created
+  3. Inventory is updated
+  4. Invoice is generated
+- Inventory: Automatic stock update after each sale.
+- Invoicing: Invoice generation after purchase.
+
+The AI will automatically generate flow diagrams (mermaid) for each documented process.
 ---
-## 📝 Document Generation (Partial)
+#### 🎨 MERMAID BUSINESS FLOW DIAGRAM FORMAT - CRITICAL
 
-At the end of Phase 1, generate or update:
+**Use this exact format** for business process flows:
 
-### 1. project-brief.md (Partial)
+````markdown
+```mermaid
+flowchart TD
+    Start([User Visits Site]) --> Browse[Browse Product Catalog]
+    Browse --> Search{Search or<br/>Browse Categories?}
 
-```markdown
-# {{PROJECT_NAME}} - Project Brief
+    Search -->|Use Search| Filter[Apply Search Filters]
+    Search -->|Browse| Category[Select Category]
 
-## Overview
+    Filter --> Results[View Search Results]
+    Category --> Results
 
-{{PROJECT_DESCRIPTION}}
+    Results --> Select[Select Product]
+    Select --> Details[View Product Details]
+    Details --> Decision{Add to Cart?}
 
-## Application Type
+    Decision -->|Yes| AddCart[Add Item to Cart]
+    Decision -->|No| Browse
 
-{{APPLICATION_TYPE}}
+    AddCart --> MoreShopping{Continue<br/>Shopping?}
+    MoreShopping -->|Yes| Browse
+    MoreShopping -->|No| Cart[View Shopping Cart]
 
-## Target Users
+    Cart --> ReviewCart{Cart OK?}
+    ReviewCart -->|Modify| Browse
+    ReviewCart -->|Proceed| Checkout[Start Checkout]
 
-{{TARGET_USERS}}
+    Checkout --> Address[Enter/Confirm Address]
+    Address --> Payment[Enter Payment Info]
+    Payment --> Review[Review Order]
+    Review --> ProcessPayment[Process Payment]
 
-## Key User Journeys
+    ProcessPayment --> PaymentResult{Payment<br/>Success?}
 
-1. {{USER_JOURNEY_1}}
-2. {{USER_JOURNEY_2}}
-3. {{USER_JOURNEY_3}}
-4. {{USER_JOURNEY_4}}
-5. {{USER_JOURNEY_5}}
+    PaymentResult -->|Success| Confirm[Order Confirmation]
+    PaymentResult -->|Declined| Retry{Retry<br/>Payment?}
 
-## Technical Requirements
+    Retry -->|Yes| Payment
+    Retry -->|No| SaveCart[Save Cart for Later]
+    SaveCart --> End1([Exit: Saved])
 
-### Browser Support
+    Confirm --> Email[Send Confirmation Email]
+    Email --> Inventory[Update Inventory]
+    Inventory --> Invoice[Generate Invoice]
+    Invoice --> End2([Order Complete])
 
-{{BROWSER_SUPPORT}}
+    style Start fill:#e1f5ff
+    style End1 fill:#ffe1e1
+    style End2 fill:#e1ffe1
+    style ProcessPayment fill:#fff4e1
+    style Confirm fill:#d4edda
+`````
 
-### Responsive Strategy
+````
 
-{{RESPONSIVE_STRATEGY}}
+**Flowchart Syntax:**
+- `flowchart TD` = Top-Down flow (recommended)
+- `flowchart LR` = Left-Right flow
+- `flowchart BT` = Bottom-Top
+- `flowchart RL` = Right-Left
 
-### Internationalization
+**Node Shapes:**
+- `[Rectangle]` = Process step/action
+- `{Diamond}` = Decision point (Yes/No, multiple options)
+- `([Rounded Rectangle])` = Start/End terminal
+- `[(Cylinder)]` = Database operation
+- `[[Subroutine]]` = Sub-process
+- `[/Parallelogram/]` = Input/Output
+- `((Circle))` = Connection point
 
-{{I18N_SUPPORT}}
+**Arrow Types:**
+- `-->` = Solid arrow (standard flow)
+- `-.->` = Dotted arrow (optional/conditional)
+- `==>` = Thick arrow (emphasis)
+- `-->|Label|` = Labeled arrow (decision branch)
 
-### Authentication
+**Best Practices for Business Flows:**
+1. **Always start with a terminal**: `([Start])`
+2. **Always end with a terminal**: `([End])`
+3. **Label decision branches**: Use `-->|Yes|` or `-->|No|`
+4. **Use line breaks in labels**: `{Continue<br/>Shopping?}` for readability
+5. **Apply consistent styling**: Same colors for similar node types
+6. **Keep it readable**: Avoid spaghetti flows, group related steps
+7. **Show all paths**: Every decision should have all branches defined
+8. **Include error paths**: Payment failures, validation errors, etc.
 
-{{AUTH_METHOD}}
+**Multiple Flow Example (Advanced):**
 
-### Data Privacy
+```mermaid
+flowchart TD
+    subgraph "Customer Journey"
+        C1[Browse] --> C2[Select]
+        C2 --> C3[Purchase]
+    end
 
-{{DATA_PRIVACY_COMPLIANCE}}
+    subgraph "Backend Processing"
+        B1[Validate Order] --> B2[Process Payment]
+        B2 --> B3[Update Inventory]
+        B3 --> B4[Send Notifications]
+    end
 
-### Offline Support
-
-{{OFFLINE_SUPPORT}}
-
-### Performance Priorities
-
-{{PERFORMANCE_PRIORITIES}}
+    C3 --> B1
+    B4 --> C4[Confirmation]
 ```
 
-### 2. AGENT.md (Partial)
+**Color Coding Guide:**
+- Blue (`#e1f5ff`): Start/Entry points
+- Green (`#e1ffe1`): Success/Completion
+- Red (`#ffe1e1`): Failure/Error states
+- Yellow (`#fff4e1`): Critical operations (Payment, Auth)
+- Purple (`#f0e1ff`): External integrations
 
-```markdown
-# AGENT.md
+**Common Business Flows to Document:**
+- User Registration/Login
+- Purchase/Checkout Process
+- Content Creation/Publishing
+- Approval/Review Workflows
+- Data Import/Export
+- Notification/Alert Flows
+- Customer Support Ticket Lifecycle
 
-## About This Project
+**Validation:** Test at https://mermaid.live/ before saving
+---
+```
 
-**Project Name:** {{PROJECT_NAME}}
+### Phase 1 Output
 
-**Type:** {{APPLICATION_TYPE}}
+After gathering all information, confirm:
 
-**Target Users:** {{TARGET_USERS}}
+```
+📋 PHASE 1 SUMMARY:
 
-## Key Features
+Project: [name]
+Description: [1 sentence]
+Users: [list]
+Objectives: [3 objectives]
+System Type: [E-commerce/SaaS/etc.]
+Core Features: [list of main functionalities]
+First Version Features: [what will be built now]
+Future Features: [what will be deferred]
+Constraints: [list with details]
+Success Metrics: [KPIs]
+Business Flows: [list of main flows]
 
-{{KEY_USER_JOURNEYS}}
-
-## Requirements
-
-- Browser Support: {{BROWSER_SUPPORT}}
-- Responsive: {{RESPONSIVE_STRATEGY}}
-- i18n: {{I18N_SUPPORT}}
-- Authentication: {{AUTH_METHOD}}
-- Compliance: {{DATA_PRIVACY_COMPLIANCE}}
+Is this correct? (Yes/No)
+If corrections needed, specify which section.
 ```
 ---
-## 🚀 Next Steps
+### 📄 Generate Phase 1 Documents
+
+**Generate `project-brief.md` automatically:**
+
+- Use template: `.ai-flow/templates/project-brief.template.md`
+- Fill with all Phase 1 information
+- Write to project root: `project-brief.md`
 
 ```
-✅ Phase 1 Complete!
+✅ Generated: project-brief.md
 
-Documents Generated:
-  - project-brief.md (partial)
-  - AGENT.md (partial)
+The document has been created with all the information from Phase 1.
 
-Next: Phase 2 - Components & Framework
+📝 Would you like to make any corrections before continuing?
 
-Read: .ai-flow/prompts/frontend/flow-build-phase-2-components.md
+→ If yes: Edit project-brief.md and type "ready" when done. I'll re-read it.
+→ If no: Type "continue" to proceed to Phase 2.
 ```
+
+**If user edits the file:**
+Execute `read_file('project-brief.md')` to refresh context before continuing.
 ---
-**Last Updated:** 2025-12-XX
 
-**Version:** 1.3.0
+## 📝 Generated Documents
+
+After Phase 1, generate/update:
+- `project-brief.md` - Core project discovery and requirements
+
+---
+
+**Next Phase:** Phase 2 - Data Architecture (15-20 min)
+
+Read: `.ai-flow/prompts/backend/flow-build-phase-2.md`
+
+---
+
+**Last Updated:** 2025-12-20
+**Version:** 2.1.8
+
+---
+
+## PHASE 2: Data Architecture (15-20 min)
+
+````
+
+
+

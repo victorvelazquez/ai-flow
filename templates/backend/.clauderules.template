@@ -75,10 +75,11 @@ This file contains Claude Code-specific preferences and workflows.
 
 ## 🚀 Claude Code Workflow
 
-### Plan Mode
-1. Always use plan mode for complex features
-2. Break down into small, testable chunks
-3. Get user approval before implementation
+### Workflow Modes
+1. **🚀 Forced Agent Mode:** When running any command starting with `/flow-`, **IMMEDIATELY enter AGENT/EXECUTION MODE**. Do not wait for a general plan approval.
+2. **Plan Mode:** Use plan mode for complex *custom* features that are not part of the standard `ai-flow` commands.
+3. Break down custom features into small, testable chunks.
+4. Get user approval before implementation for custom features.
 
 ### Implementation
 1. Follow architecture patterns strictly
