@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 30+ docs)
+- 🚀 Complete professional documentation (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 30+ docs)
 - 🧠 **Smart Description Refinement:** Detects ambiguity and iteratively guides you to a professional project definition.
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
@@ -40,7 +40,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 17 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 30+ docs)
+- 🚀 Documentación profesional completa (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 30+ docs)
 - 🧠 **Refinamiento Inteligente:** Detecta ambigüedad y te guía iterativamente hacia una descripción profesional.
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
@@ -68,7 +68,7 @@ ai-flow init .
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 30+ docs)
+- 🚀 Documentação profissional completa (Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 30+ docs)
 - 🚀 **Modo Agente:** Os assistentes de IA agora priorizam a execução proativa para todos os comandos `/flow-`.
 - 🧠 **Refinamento Inteligente:** Detecta ambiguidade e guia você para uma descrição profissional.
 - ⚡ **Dois modos:** Interactivo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
@@ -108,7 +108,7 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, Antigravity, any AI tool
-- 📚 **Professional Documentation** - Backend: 17, Frontend: 15, Mobile: 13, Fullstack: 30+ docs
+- 📚 **Professional Documentation** - Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 30+ docs
 - 🧠 **Smart Description Refinement** - AI detects vague inputs and helps you rich the context (WHO, WHAT, WHY).
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, all phases (90-120 min)
@@ -350,15 +350,17 @@ AI Flow organizes your project with clear separation of concerns:
   - `archive/` - Completed tasks (organized by month)
 
 > **Note on Cache Directory:**
-> 
+>
 > **In projects using AI Flow:**
+>
 > - Cache is stored in `.ai-flow/cache/` (analysis data for your project)
 > - Contains: `docs-analysis.json`, `audit-data.json`, `docs-snapshot.json`
-> 
+>
 > **In the AI Flow repository itself:**
+>
 > - Cache is stored in `cache/` at root (self-analysis data)
 > - Used by `/flow3-docs` to track documentation accuracy
-> 
+>
 > These are two different caches with different purposes.
 
 ## 💡 How It Works
@@ -387,7 +389,7 @@ AI Flow organizes your project with clear separation of concerns:
 
 ## 🎯 Generated Documentation
 
-**Backend** (17 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 14 technical docs/specs.
+**Backend** (14 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, plus 8 docs and 2 specs.
 
 **Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
 

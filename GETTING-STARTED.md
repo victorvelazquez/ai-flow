@@ -16,14 +16,14 @@
 
 **Already familiar with AI Flow?** Jump directly to:
 
-| Link                                          | Description                                                                  |
-| --------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Build Modes](#15-understanding-build-modes)  | Interactive vs Smart Auto-Suggest                                            |
-| [CLI Flags Reference](#cli-flags-reference)   | All `init` command flags                                                     |
-| [Commands Cheat Sheet](#commands-cheat-sheet) | All 16+ commands organized                                                   |
-| [Workflow Commands](#33-workflow-commands)    | `/flow-work`, `/flow-check`, `/flow-commit` (unified orchestrator)           |
-| [Troubleshooting](#troubleshooting)           | Common issues and solutions                                                  |
-| [Best Practices](#best-practices)             | Expert tips and recommendations                                              |
+| Link                                          | Description                                                        |
+| --------------------------------------------- | ------------------------------------------------------------------ |
+| [Build Modes](#15-understanding-build-modes)  | Interactive vs Smart Auto-Suggest                                  |
+| [CLI Flags Reference](#cli-flags-reference)   | All `init` command flags                                           |
+| [Commands Cheat Sheet](#commands-cheat-sheet) | All 16+ commands organized                                         |
+| [Workflow Commands](#33-workflow-commands)    | `/flow-work`, `/flow-check`, `/flow-commit` (unified orchestrator) |
+| [Troubleshooting](#troubleshooting)           | Common issues and solutions                                        |
+| [Best Practices](#best-practices)             | Expert tips and recommendations                                    |
 
 ---
 
@@ -640,14 +640,14 @@ C) ❌ Switch to Interactive Mode
 
 #### Comparison Table
 
-| Feature     | Interactive Mode | Smart Auto-Suggest      |
-| ----------- | ---------------- | ----------------------- |
-| Time        | 90-120 min (new) | 15-25 min               |
-| Phases      | 8-11 Phases      | 6 Critical Questions    |
-| Description | Smart Refinement | Smart Refinement        |
-| Control     | Full control     | Review & customize      |
-| Learning    | Deep dive        | Quick overview          |
-| Flexibility | Maximum          | High (can customize)    |
+| Feature     | Interactive Mode | Smart Auto-Suggest   |
+| ----------- | ---------------- | -------------------- |
+| Time        | 90-120 min (new) | 15-25 min            |
+| Phases      | 8-11 Phases      | 6 Critical Questions |
+| Description | Smart Refinement | Smart Refinement     |
+| Control     | Full control     | Review & customize   |
+| Learning    | Deep dive        | Quick overview       |
+| Flexibility | Maximum          | High (can customize) |
 
 #### Using Slash Commands
 
@@ -688,6 +688,7 @@ After running `/flow-build`, your project will have:
   - `.ai-flow/cache/` - Analysis cache (docs-analysis.json, audit-data.json)
 
 > **Cache Location:**
+>
 > - In **your projects**: `.ai-flow/cache/` stores analysis data
 > - In **AI Flow repo**: `cache/` at root (for self-analysis only)
 
@@ -701,6 +702,7 @@ After running `/flow-build`, your project will have:
 ### 1.4 Agent Mode: Proactive Execution 🚀
 
 Starting with v2.2.3, AI Flow enforces **Agent Mode** across all workflows. This means:
+
 - **No more planning loops:** Assistants won't ask "Would you like me to start Step 1?". They will just do it.
 - **Tool-First:** Assistants are strictly instructed to use tools (`read_file`, `write_file`, `run_command`) immediately.
 - **Workflow-Driven:** The interaction is driven by our master prompts, ensuring the AI stays on track without human micro-management.
@@ -2193,7 +2195,7 @@ Complete list of all available commands organized by category.
 ```bash
 ai-flow init [path] [options]   # Initialize project
 ai-flow check                    # Verify initialization
-ai-flow --version               # Show version (2.1.7)
+ai-flow --version               # Show version (2.4.1)
 ai-flow --help                  # Show help
 ```
 
@@ -2268,14 +2270,14 @@ ai-flow --help                  # Show help
 
 ### CLI Flags Reference
 
-| Flag            | Type    | Required | Values                                         | Description                    |
-| --------------- | ------- | -------- | ---------------------------------------------- | ------------------------------ |
+| Flag            | Type    | Required | Values                                                        | Description                    |
+| --------------- | ------- | -------- | ------------------------------------------------------------- | ------------------------------ |
 | `--ai`          | String  | Yes\*    | `claude`, `cursor`, `copilot`, `gemini`, `antigravity`, `all` | AI tool selection              |
-| `--type`        | String  | No       | `backend`, `frontend`, `mobile`, `fullstack`   | Project type                   |
-| `--name`        | String  | No       | Any string                                     | Project name                   |
-| `--description` | String  | No       | Any string                                     | Project description            |
-| `--verbose`     | Boolean | No       | -                                              | Enable detailed logging        |
-| `--dry-run`     | Boolean | No       | -                                              | Simulate without writing files |
+| `--type`        | String  | No       | `backend`, `frontend`, `mobile`, `fullstack`                  | Project type                   |
+| `--name`        | String  | No       | Any string                                                    | Project name                   |
+| `--description` | String  | No       | Any string                                                    | Project description            |
+| `--verbose`     | Boolean | No       | -                                                             | Enable detailed logging        |
+| `--dry-run`     | Boolean | No       | -                                                             | Simulate without writing files |
 
 \* If omitted, CLI prompts interactively.
 
@@ -2348,10 +2350,15 @@ chmod 755 .
    ```
 
    # For Cursor
+
    ls .cursor/commands/
 
    # For Copilot
+
    ls .github/prompts/
+
+   ```
+
    ```
 
 3. **Reinstall slash commands:**
