@@ -27,7 +27,7 @@ This file contains the detailed execution logic for code refactoring, imported b
 ### 3. Validation
 - Run `/flow-check` to verify no regressions
 - Confirm all tests pass
-- **Update completion status** if refactor was tracked in roadmap/user stories (see Phase 4 Step 1 in flow-work.md)
+- **Update completion status** if refactor was tracked in roadmap/user stories (see Phase 4 in flow-work.md)
 
 ---
 ## 🌿 Git Branching Strategy

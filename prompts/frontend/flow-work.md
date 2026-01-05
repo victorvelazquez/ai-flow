@@ -389,14 +389,32 @@ Review work.md? (Yes/Edit/No): _
    - **`/flow-docs-sync`**: Sincronizar la documentación técnica.
    - **`/flow-commit`**: Crear commits atómicos.
 
-3. **Proceso de Archivado (Automático tras aprobación)**:
+3. **Registro de Historial (Automático tras aprobación)**:
    - Una vez el usuario confirma que el trabajo está listo para ser cerrado:
-   - **Mover**: `.ai-flow/work/[task-name]/` → `.ai-flow/archive/YYYY-MM/[task-name]/`.
-   - **Actualizar `status.json`**: Cambiar `status` a `"COMPLETED"` y registrar `timestamps.completed`.
+   - **Extraer metadata** de `status.json` y `work.md`:
+     ```javascript
+     // Campos del registro JSONL (10 campos):
+     {
+       task: string,        // Nombre de la tarea (ej: "user-auth")
+       type: string,        // "feature" | "refactor" | "fix"
+       src: string,         // source: "HU-001-002" | "roadmap-2.3" | "manual"
+       dur: number,         // duración en minutos (completed - created)
+       start: string,       // timestamps.created (ISO 8601)
+       end: string,         // timestamps.completed (ISO 8601)
+       tasks: number,       // progress.totalTasks
+       sp?: number,         // Story Points extraídos de work.md (regex: "• (\d+) SP")
+       commits: number,     // git.commits.length
+       valid: boolean       // validation.tests.passed && validation.lint.passed
+     }
+     ```
+   - **Actualizar `status.json`**: Registrar `timestamps.completed` (ISO 8601).
+   - **Append a `.ai-flow/archive/analytics.jsonl`**: Agregar 1 línea con el objeto JSON (sin espacios ni saltos de línea internos).
+   - **Eliminar carpeta**: Remover `.ai-flow/work/[task-name]/` completa (incluye `work.md` y `status.json`).
    - **Cleanup**: Mantener limpia la carpeta `work` para que `/flow-work` detecte solo tareas activas.
 
 4. **Resumen Final**:
-   - Mostrar estadísticas finales de tiempo, archivos y cobertura antes de archivar.
+   - Mostrar estadísticas finales: duración total (en minutos), commits realizados, tasks completadas, validación exitosa.
+   - Ejemplo: `"✅ Archivado: 125 min, 8/8 tasks, 3 commits, validación ✓"`
 
 ---
 ## Orchestration Rules

@@ -24,7 +24,7 @@ This file contains the detailed execution logic for bug fixes, imported by `@flo
 - **Test-First Approach**: Add failing test that reproduces bug
 - Apply the fix following work.md tasks
 - Verify tests pass
-- **Update completion status** if fix was tracked in roadmap/user stories (see Phase 4 Step 1 in flow-work.md)
+- **Update completion status** if fix was tracked in roadmap/user stories (see Phase 4 in flow-work.md)
 
 ---
 ## 🌿 Git Branching Strategy
