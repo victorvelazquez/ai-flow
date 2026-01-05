@@ -136,61 +136,61 @@ function printBanner() {
   );
   console.log(
     chalk.cyan('    ║') +
-    '                                                                   ' +
-    chalk.cyan('║')
+      '                                                                   ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('          █████╗ ██╗    ███████╗██╗      ██████╗ ██╗    ██╗') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('          █████╗ ██╗    ███████╗██╗      ██████╗ ██╗    ██╗') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('         ██╔══██╗██║    ██╔════╝██║     ██╔═══██╗██║    ██║') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('         ██╔══██╗██║    ██╔════╝██║     ██╔═══██╗██║    ██║') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('         ███████║██║    █████╗  ██║     ██║   ██║██║ █╗ ██║') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('         ███████║██║    █████╗  ██║     ██║   ██║██║ █╗ ██║') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('         ██╔══██║██║    ██╔══╝  ██║     ██║   ██║██║███╗██║') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('         ██╔══██║██║    ██╔══╝  ██║     ██║   ██║██║███╗██║') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.bold.cyan('         ██║  ██║██║    ██║     ███████╗╚██████╔╝╚███╔███╔╝') +
-    '        ' +
-    chalk.cyan('║')
+      chalk.bold.cyan('         ██║  ██║██║    ██║     ███████╗╚██████╔╝╚███╔███╔╝') +
+      '        ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    chalk.cyan('         ╚═╝  ╚═╝╚═╝    ╚═╝     ╚══════╝ ╚═════╝  ╚══╝╚══╝') +
-    '         ' +
-    chalk.cyan('║')
+      chalk.cyan('         ╚═╝  ╚═╝╚═╝    ╚═╝     ╚══════╝ ╚═════╝  ╚══╝╚══╝') +
+      '         ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    '                                                                   ' +
-    chalk.cyan('║')
+      '                                                                   ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    '           ' +
-    chalk.white('✨ From Idea to Production with AI Guidance') +
-    '             ' +
-    chalk.cyan('║')
+      '           ' +
+      chalk.white('✨ From Idea to Production with AI Guidance') +
+      '             ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ║') +
-    '                                                                   ' +
-    chalk.cyan('║')
+      '                                                                   ' +
+      chalk.cyan('║')
   );
   console.log(
     chalk.cyan('    ╚═══════════════════════════════════════════════════════════════════╝')
@@ -326,7 +326,7 @@ async function createBootstrapStructure(
   targetPath: string,
   aiTools: string[],
   projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' = 'backend',
-  dryRun?: boolean,
+  dryRun?: boolean
 ): Promise<void> {
   const spinner = ora('Creating .ai-flow structure...').start();
   try {
@@ -477,7 +477,7 @@ async function setupSlashCommands(
   targetPath: string,
   aiTools: string[],
   projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' = 'backend',
-  dryRun?: boolean,
+  dryRun?: boolean
 ): Promise<void> {
   const spinner = ora('Setting up slash commands...').start();
   try {
@@ -582,20 +582,10 @@ async function initializeProject(
 
     console.log(chalk.cyan('\n📦 Initializing AI Flow...\n'));
 
-    await createBootstrapStructure(
-      targetPath,
-      aiTools,
-      selectedProjectType,
-      flags?.dryRun
-    );
+    await createBootstrapStructure(targetPath, aiTools, selectedProjectType, flags?.dryRun);
     await copyTemplates(targetPath, selectedProjectType, aiTools, flags?.dryRun);
     await copyPrompts(targetPath, flags?.dryRun);
-    await setupSlashCommands(
-      targetPath,
-      aiTools,
-      selectedProjectType,
-      flags?.dryRun
-    );
+    await setupSlashCommands(targetPath, aiTools, selectedProjectType, flags?.dryRun);
 
     console.log(chalk.green('\n✅ AI Flow initialized successfully!'));
     console.log(chalk.white('\nSummary:'));
