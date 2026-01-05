@@ -1,6 +1,6 @@
 # AI Flow
 
-[![CI Status](https://github.com/victorvelazquez/ai-flow/actions/flow-dev-workflows/nodejs.yml/badge.svg?branch=main)](https://github.com/victorvelazquez/ai-flow/actions/flow-dev-workflows/nodejs.yml)
+[![CI Status](https://github.com/victorvelazquez/ai-flow/actions/workflows/nodejs.yml/badge.svg)](https://github.com/victorvelazquez/ai-flow/actions/workflows/nodejs.yml)
 
 ## English
 
