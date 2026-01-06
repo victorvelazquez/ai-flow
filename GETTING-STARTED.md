@@ -59,7 +59,7 @@ Verify installation:
 
 ```bash
 ai-flow --version
-# Output: 2.4.1
+# Output: 2.4.3
 ```
 
 _Note: Package name is `ai-flow-dev`, but the CLI command remains `ai-flow`_
@@ -2195,7 +2195,7 @@ Complete list of all available commands organized by category.
 ```bash
 ai-flow init [path] [options]   # Initialize project
 ai-flow check                    # Verify initialization
-ai-flow --version               # Show version (2.4.1)
+ai-flow --version               # Show version (2.4.3)
 ai-flow --help                  # Show help
 ```
 
