@@ -114,7 +114,7 @@ Each phase is modularized for better maintainability and reduced context usage.
 ## 📋 Scope Selection (MVP / Production / Enterprise)
 
 Before starting Phase 1, ask the user to select the Project Scope.
-> 📎 **Reference:** See [scope-levels.md](.ai-flow/prompts/shared/scope-levels.md)
+> 📎 **Reference:** See [scope-levels.md](../../.ai-flow/prompts/shared/scope-levels.md)
 
 ---
 ## 🔄 Documentation Sync

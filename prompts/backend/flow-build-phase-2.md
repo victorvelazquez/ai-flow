@@ -14,7 +14,7 @@ Design the database model, entities, and relationships.
 
 ## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](.ai-flow/prompts/shared/smart-skip-preflight.md) for the complete smart skip logic.
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../../.ai-flow/prompts/shared/smart-skip-preflight.md) for the complete smart skip logic.
 
 **Execute Pre-Flight Check for Phase 2:**
 
@@ -528,7 +528,7 @@ Is this correct? (Yes/No)
 
 #### 🎨 MERMAID ER DIAGRAM FORMAT - CRITICAL
 
-> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](.ai-flow/prompts/shared/mermaid-guidelines.md) for ER diagram syntax, relationship notation, and common mistakes.
+> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../../.ai-flow/prompts/shared/mermaid-guidelines.md) for ER diagram syntax, relationship notation, and common mistakes.
 
 ## **Example ER Diagram:**
 
