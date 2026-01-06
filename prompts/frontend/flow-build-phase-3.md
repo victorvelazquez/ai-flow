@@ -20,7 +20,7 @@ Define the technical stack, architecture patterns, and system design.
 
 ## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../shared/smart-skip-preflight.md) for the complete smart skip logic.
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](.ai-flow/prompts/shared/smart-skip-preflight.md) for the complete smart skip logic.
 
 **Execute Pre-Flight Check for Phase 3:**
 
@@ -39,7 +39,7 @@ Define the technical stack, architecture patterns, and system design.
 
 #### 🎨 MERMAID ARCHITECTURE DIAGRAM FORMAT - CRITICAL
 
-> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../shared/mermaid-guidelines.md) for architecture diagram syntax, node shapes, and styling.
+> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](.ai-flow/prompts/shared/mermaid-guidelines.md) for architecture diagram syntax, node shapes, and styling.
 
 **Example Architecture Diagram:**
 

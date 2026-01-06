@@ -32,7 +32,7 @@ Thank you for your interest in contributing to AI Flow! This document provides g
 
 ### Prerequisites
 
-- Node.js 20 or higher
+- Node.js >=20.0.0
 - npm or yarn
 - Git
 - A GitHub account
