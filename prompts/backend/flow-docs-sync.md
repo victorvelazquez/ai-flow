@@ -93,24 +93,24 @@ No se requiere ninguna actualización.
 ---
 ## 📊 MERMAID DIAGRAM REGENERATION GUIDELINES
 
-> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../shared/mermaid-guidelines.md) for all Mermaid diagram formatting rules (ER, Architecture, Flow).
+> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](.ai-flow/prompts/shared/mermaid-guidelines.md) for all Mermaid diagram formatting rules (ER, Architecture, Flow).
 
 ### ER Diagrams (data-model.md)
 
-> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../shared/mermaid-guidelines.md) for ER diagram syntax, relationship notation, and common mistakes.
+> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](.ai-flow/prompts/shared/mermaid-guidelines.md) for ER diagram syntax, relationship notation, and common mistakes.
 ---
 ### Architecture Diagrams (architecture.md)
 
-> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../shared/mermaid-guidelines.md) for architecture diagram syntax, node shapes, and styling.
+> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](.ai-flow/prompts/shared/mermaid-guidelines.md) for architecture diagram syntax, node shapes, and styling.
 ---
 ---
 ### Business Flow Diagrams (project-brief.md)
 
-> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../shared/mermaid-guidelines.md) for business flow syntax, decision points, and styling.
+> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](.ai-flow/prompts/shared/mermaid-guidelines.md) for business flow syntax, decision points, and styling.
 ---
 ### Common Formatting Rules (ALL Diagrams)
 
-> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](../shared/mermaid-guidelines.md) for critical code fence syntax and indentation rules.
+> 📎 **Reference:** See [prompts/shared/mermaid-guidelines.md](.ai-flow/prompts/shared/mermaid-guidelines.md) for critical code fence syntax and indentation rules.
 ---
 - Do NOT indent the entire code block
 

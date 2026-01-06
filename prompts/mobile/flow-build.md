@@ -112,7 +112,7 @@ Your choice (A/B): __
 ## 📋 Scope Selection (MVP / Production / Enterprise)
 
 Before starting Phase 1, ask the user to select the Project Scope.
-> 📎 **Reference:** See [shared/scope-levels.md](../shared/scope-levels.md)
+> 📎 **Reference:** See [scope-levels.md](.ai-flow/prompts/shared/scope-levels.md)
 
 ---
 ## 🔄 Documentation Sync
