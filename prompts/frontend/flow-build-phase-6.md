@@ -22,7 +22,7 @@ Define testing approach, tools, and quality gates.
 
 ## 🔍 Pre-Flight Check (Smart Skip Logic)
 
-> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](.ai-flow/prompts/shared/smart-skip-preflight.md) for the complete smart skip logic.
+> 📎 **Reference:** See [prompts/shared/smart-skip-preflight.md](../../.ai-flow/prompts/shared/smart-skip-preflight.md) for the complete smart skip logic.
 
 **Execute Pre-Flight Check for Phase 6:**
 
