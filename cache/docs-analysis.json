@@ -1,1 +1,22 @@
-{"timestamp":"2026-01-06T20:15:00-03:00","files":{"src/cli.ts":"2026-01-05T00:00:00-03:00","package.json":"2026-01-06T19:28:00-03:00","templates/":"2025-12-23T00:00:00-03:00","prompts/":"2026-01-06T17:10:09-03:00"},"version":"2.4.4","lastAnalysis":{"backend_templates":14,"frontend_templates":15,"mobile_templates":13,"fullstack_templates":4,"backend_prompts":22,"frontend_prompts":22,"mobile_prompts":22,"total_prompts":66,"gaps_found":1,"gaps_fixed":1}}
+{
+  "lastAnalysis": {
+    "frontend_prompts": 22,
+    "gaps_fixed": 3,
+    "mobile_prompts": 22,
+    "mobile_templates": 13,
+    "backend_prompts": 22,
+    "fullstack_templates": 4,
+    "frontend_templates": 15,
+    "gaps_found": 3,
+    "backend_templates": 14,
+    "total_prompts": 66
+  },
+  "files": {
+    "templates/": "2025-12-23T00:00:00-03:00",
+    "src/cli.ts": "2026-01-05T00:00:00-03:00",
+    "package.json": "2026-01-06T19:28:00-03:00",
+    "prompts/": "2026-01-06T17:10:09-03:00"
+  },
+  "timestamp": "2026-01-06T17:33:47.4334813-03:00",
+  "version": "2.4.5"
+}
