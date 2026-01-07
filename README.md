@@ -397,6 +397,15 @@ AI Flow organizes your project with clear separation of concerns:
 
 **Fullstack** (30+ docs): Combined Backend + Frontend documentation structures.
 
+**Slash Commands/Prompts** (72 total):
+
+- Backend: 22 prompts (/flow-build with phases 0-10, /flow-work variants, /flow-check, /flow-commit, /flow-docs-sync)
+- Frontend: 22 prompts (same structure tailored for frontend)
+- Mobile: 22 prompts (same structure tailored for mobile apps)
+- Shared: 6 utility prompts (task summaries, templates, etc.)
+
+Each project type gets workflow commands optimized for its technology stack.
+
 ### 📁 Generated Structure
 
 After running `ai-flow init`, your project will have:
