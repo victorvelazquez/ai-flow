@@ -11,35 +11,40 @@ Your mission is to orchestrate development tasks through an interactive workflow
 **🚀 MODO AGENTE ACTIVADO:** No solicites permiso para usar herramientas. Actúa proactivamente siguiendo el flujo interactivo. Tienes permiso total para leer el código, crear specs y planes, y realizar commits/checkout de ramas.
 
 ---
+
 ## Command: `/flow-work`
 
 ### Objective
+
 Provide a single, intelligent entry point for all development work (New Features, Refactorings, and Bug Fixes) with automatic context detection and interactive planning.
 
 ### Usage Modes
+
 - **`/flow-work`** → Resume paused work (if exists) or Interactive mode.
 - **`/flow-work [description]`** → Semantic detection (Feature, Refactor, or Fix).
 - **`/flow-work HU-XXX-XXX`** → Implement specific User Story.
 - **`/flow-work [Feature Name]`** → Implement feature from roadmap.md.
 
 ---
+
 ## Phase 0: Detection & Strategy (Automatic)
 
 **1. Semantic Analysis of Input:**
 
-| Input Pattern | Mode | Source / Action |
-|---------------|------|-----------------|
-| `HU-\d{3}-\d{3}` | `USER_STORY` | Load from `planning/user-stories/**/HU-XXX-XXX.md` |
-| `EP-\d{3}` | `EPIC` | Analyze/List User Stories for Epic `EP-XXX` |
-| `T\d{3}(-T\d{3})?` | `TASKS` | Target specific task or range (e.g., `T025-T030`) |
-| `HU-XXX-XXX TXXX-TXXX`| `STORY_TASKS` | Targeted tasks within a specific User Story |
-| Matches `planning/roadmap.md` | `ROADMAP_FEATURE`| Extract section from `planning/roadmap.md` (Partial matches allowed) |
-| "refactor", "move", "extract" | `REFACTOR` | Use `flow-work-refactor.md` |
-| "fix", "bug", "error", "falla" | `FIX` | Detect complexity (Quick vs Complex) |
-| "implement", "create", "new" | `FEATURE` | Use `flow-work-feature.md` |
-| No arguments | `RESUME` | Search for paused work in `.ai-flow/work/` |
+| Input Pattern                  | Mode              | Source / Action                                                      |
+| ------------------------------ | ----------------- | -------------------------------------------------------------------- |
+| `HU-\d{3}-\d{3}`               | `USER_STORY`      | Load from `planning/user-stories/**/HU-XXX-XXX.md`                   |
+| `EP-\d{3}`                     | `EPIC`            | Analyze/List User Stories for Epic `EP-XXX`                          |
+| `T\d{3}(-T\d{3})?`             | `TASKS`           | Target specific task or range (e.g., `T025-T030`)                    |
+| `HU-XXX-XXX TXXX-TXXX`         | `STORY_TASKS`     | Targeted tasks within a specific User Story                          |
+| Matches `planning/roadmap.md`  | `ROADMAP_FEATURE` | Extract section from `planning/roadmap.md` (Partial matches allowed) |
+| "refactor", "move", "extract"  | `REFACTOR`        | Use `flow-work-refactor.md`                                          |
+| "fix", "bug", "error", "falla" | `FIX`             | Detect complexity (Quick vs Complex)                                 |
+| "implement", "create", "new"   | `FEATURE`         | Use `flow-work-feature.md`                                           |
+| No arguments                   | `RESUME`          | Search for paused work in `.ai-flow/work/`                           |
 
 **2. Detection Logic Details:**
+
 - **USER_STORY / EPIC**: Load metadata from `planning/user-stories/` or `planning/roadmap.md`.
 - **ROADMAP_FEATURE**: Fuzzy search in `planning/roadmap.md` for titles like "User Management" or "Feature 2.2".
 - **TASK RANGES**: If `T025-T030` is provided, find the parent Story or Feature in current context or roadmap.
@@ -47,13 +52,15 @@ Provide a single, intelligent entry point for all development work (New Features
 - **COMPLEX FIX**: Multi-file, architectural, performance/security. → Use `flow-work-fix.md` (Deep).
 
 ---
+
 ## Phase 1: Analysis & Refinement
 
 **1. Context Loading (Multi-Source):**
 
 **CRITICAL**: Regardless of whether a `USER_STORY` ID or a `ROADMAP_FEATURE` name is provided, you MUST attempt to load context from **BOTH** sources:
+
 - **`planning/roadmap.md`**: To understand high-level scope, epic relationships, and technical dependencies.
-- **`planning/user-stories/**/HU-XXX-XXX.md`**: To get granular details (Acceptance Criteria, Gherkin Scenarios, QA cases).
+- **`planning/user-stories/**/HU-XXX-XXX.md`\*\*: To get granular details (Acceptance Criteria, Gherkin Scenarios, QA cases).
 
 **2. Detail Level Detection (if Manual input):**
 
@@ -81,35 +88,40 @@ detail_level = analyze_description(input)
 **3. Interactive Refinement (Conditional):**
 
 **IF detail_level == "HIGH":**
+
 - Skip refinement questions
 - Proceed directly to Phase 2 (Planning)
 - Show: "✅ Sufficient detail detected. Proceeding with planning..."
 
 **IF detail_level == "MEDIUM":**
+
 - Ask 1-2 targeted questions (only missing items)
 - Use Multiple Choice with defaults (⭐)
 
 **IF detail_level == "LOW":**
+
 - Full refinement flow (3-5 questions)
 - Use Multiple Choice with defaults (⭐)
 - Focus on: approach, scope, constraints, priorities
 
 **Example Interaction (LOW detail):**
+
 > 📝 I need to clarify some details for this feature:
+>
 > 1. What authentication provider should we use? [default: A]
 >    A) JWT (Local) ⭐
 >    B) OAuth2 (Google/GitHub)
 >    C) Firebase Auth
->
 > 2. Should we implement audit logs for this? [default: B]
 >    A) Yes
 >    B) No ⭐
 >
-> Your answers (or Enter for defaults): _
+> Your answers (or Enter for defaults): \_
 
 **4. Refined Objective Generation (if Manual):**
 
 After refinement, generate clear objective statement:
+
 ```
 ✅ Refined Objective:
 
@@ -127,6 +139,7 @@ Is this correct? (Yes/Edit/Cancel): _
 **5. Documentation Compliance Check:**
 
 Read relevant documentation:
+
 - `ai-instructions.md` (NEVER/ALWAYS rules)
 - `docs/architecture.md` (patterns, structure)
 - `docs/code-standards.md` (naming, quality)
@@ -137,6 +150,7 @@ Read relevant documentation:
 Compare refined objective against documentation:
 
 **IF deviation detected:**
+
 ```
 🚨 POTENTIAL DEVIATION
 
@@ -155,6 +169,7 @@ Your choice: _
 ```
 
 **IF user chooses B (Override):**
+
 ```
 ⚠️ OVERRIDE CONFIRMATION
 
@@ -167,11 +182,13 @@ Provide justification: _
 ```
 
 ---
+
 ## Phase 2: Planning & Documentation
 
 **1. Read Required Documentation (MANDATORY)**
 
 Before generating work.md, read relevant documentation:
+
 - `ai-instructions.md` → Extract NEVER/ALWAYS rules
 - `docs/architecture.md` → Identify layer, pattern, file structure
 - `docs/code-standards.md` → Extract naming conventions, quality rules
@@ -183,6 +200,7 @@ Before generating work.md, read relevant documentation:
 **2. Analyze Existing Codebase (MANDATORY)**
 
 Find similar features/patterns in codebase:
+
 - Identify existing files to use as reference (e.g., ProductService.ts for UserService.ts)
 - Check naming conventions in actual code
 - Verify architectural consistency
@@ -198,36 +216,44 @@ Create single consolidated file: `.ai-flow/work/[task-name]/work.md`
 # [Type]: [Feature Name]
 
 ## Context
+
 **Source**: HU-001-002 | Roadmap 2.3 | Manual [+ DEVIATION if override]
 **SP**: 5 | **Branch**: feature/user-auth | **Deps**: None
 
 ## Objective
+
 [1-2 clear paragraphs describing WHAT will be implemented]
 
 ## Documentation Constraints
+
 **Read**: ai-instructions.md, architecture.md, code-standards.md, [security.md]
 
 **Key Rules**:
+
 - ✅ ALWAYS: [List specific rules that apply]
 - ❌ NEVER: [List specific prohibitions]
 - 📐 Pattern: [Architectural pattern from docs]
 - 📁 Location: [File structure from architecture.md]
 
 ## Approach
+
 **Layer**: [Data | Business Logic | API | UI]
 **Files**: [List files to create/modify]
 **Reference**: [Existing file to follow as pattern]
 
 **Phases**:
+
 1. [Phase 1 description]
 2. [Phase 2 description]
 3. [Phase 3 description]
 4. [Phase 4 description]
 
 ## Tasks
+
 [SEE TASK GENERATION LOGIC BELOW]
 
 ## Validation
+
 - [ ] All NEVER/ALWAYS rules followed
 - [ ] Tests pass (coverage per docs/testing.md)
 - [ ] No hardcoded secrets
@@ -238,6 +264,7 @@ Create single consolidated file: `.ai-flow/work/[task-name]/work.md`
 **Task Generation Logic:**
 
 **IF source is User Story:**
+
 ```python
 tasks = read_user_story_tasks()
 if tasks.are_detailed():  # Has: path, constraints, SP, deps
@@ -254,6 +281,7 @@ else:
 ```
 
 **IF source is Roadmap:**
+
 ```python
 feature = read_roadmap_feature()
 if feature.has_detailed_tasks():
@@ -271,8 +299,10 @@ else:
 **IF source is Manual OR tasks need expansion:**
 
 Generate detailed tasks with this format:
+
 ```markdown
 ## Tasks
+
 **Source**: Manual | Roadmap X.X (expanded) | HU-XXX-XXX (expanded)
 
 - [ ] T001 [D] Create User entity → src/entities/User.ts • 1 SP
@@ -286,6 +316,7 @@ Generate detailed tasks with this format:
 ```
 
 **Task Detail Requirements:**
+
 - Specific file path
 - Pattern/reference to follow
 - Key constraints from docs
@@ -324,6 +355,7 @@ Create: `.ai-flow/work/[task-name]/status.json`
 **5. User Approval**
 
 Show work.md for review:
+
 ```
 📄 Generated: .ai-flow/work/[task-name]/work.md
 
@@ -335,6 +367,7 @@ Review work.md? (Yes/Edit/No): _
 - **No**: Cancel workflow
 
 ---
+
 ## Phase 3: Execution (Branch Creation)
 
 **Upon confirmation to start implementation:**
@@ -351,12 +384,13 @@ Review work.md? (Yes/Edit/No): _
    - Update `status.json` progress
 
 ---
+
 ## Phase 4: Finalization & Archiving
 
 **When all tasks in `work.md` are complete (✅) and validated:**
 
 1. **Update Source Documentation (Automatic - ALWAYS UPDATE BOTH IF BOTH EXIST)**:
-   
+
    **Step 1a: Check and Update User Story (if exists)**
    - Look for User Story reference in `status.json` or work context
    - IF User Story `HU-XXX-XXX` exists:
@@ -364,7 +398,7 @@ Review work.md? (Yes/Edit/No): _
      - Mark ALL DoD checklist items as complete: `- [ ]` → `- [x]`
      - Add completion timestamp comment: `<!-- Completed: YYYY-MM-DD HH:MM -->`
      - Save file
-   
+
    **Step 1b: Check and Update Roadmap (if exists)**
    - Look for Feature reference in `status.json` or work context
    - IF Feature exists in `planning/roadmap.md`:
@@ -372,13 +406,13 @@ Review work.md? (Yes/Edit/No): _
      - Find the Feature section by name/number
      - Mark Feature checkbox as complete: `- [ ]` → `- [x]`
      - Save file
-   
+
    **Step 1c: Show Completion Summary**
    - IF both updated: "✅ Updated roadmap.md (Feature X.X) AND HU-XXX-XXX.md (Y/Y DoD items)"
    - IF only roadmap: "✅ Updated roadmap.md (Feature X.X)"
    - IF only user story: "✅ Updated HU-XXX-XXX.md (Y/Y DoD items)"
    - IF neither exists: "⚠️ No roadmap or user story found to update"
-   
+
    **Error Handling:**
    - If file doesn't exist: Log warning, continue with other file
    - If checkbox not found: Log warning with helpful message, continue
@@ -412,11 +446,58 @@ Review work.md? (Yes/Edit/No): _
    - **Eliminar carpeta**: Remover `.ai-flow/work/[task-name]/` completa (incluye `work.md` y `status.json`).
    - **Cleanup**: Mantener limpia la carpeta `work` para que `/flow-work` detecte solo tareas activas.
 
-4. **Resumen Final**:
-   - Mostrar estadísticas finales: duración total (en minutos), commits realizados, tasks completadas, validación exitosa.
-   - Ejemplo: `"✅ Archivado: 125 min, 8/8 tasks, 3 commits, validación ✓"`
+4. **Generar Resumen Universal para Sistema de Tickets (Automático)**:
+
+   Después del archivado, generar un resumen completo compatible con ClickUp, Jira, Linear, Asana, Trello, GitHub Projects, Azure DevOps, y cualquier sistema de gestión de tareas.
+
+   **Template Source**: `.ai-flow/prompts/shared/task-summary-template.md`
+
+   **Instrucciones**:
+   1. Leer el template completo desde `.ai-flow/prompts/shared/task-summary-template.md`
+   2. Extraer datos de las fuentes especificadas en el template:
+      - `status.json` (type, timestamps, commits, validation, branch)
+      - `work.md` (objective, tasks, story points)
+      - `analytics.jsonl` (última línea: duración, sp, commits)
+      - `TECH-DEBT.md` (si existe antes de eliminar)
+      - Git commands (`git diff --stat`, `git log --oneline`, etc.)
+   3. Aplicar inferencia automática según reglas del template:
+      - Tags/Labels (Backend, API, Security, etc.)
+      - Prioridad (Critical, High, Medium, Low)
+      - Scope (módulo principal afectado)
+      - Impacto (UX, Security, Performance, Maintainability)
+   4. Poblar todos los campos del template con datos reales
+   5. Mostrar el resumen completo formateado listo para copiar/pegar
+
+   **Nota**: El template es modular y puede actualizarse independientemente sin modificar este archivo.
+
+5. **Presentación de Resultados**:
+
+   Mostrar resumen del template `.ai-flow/prompts/shared/task-summary-template.md` seguido de:
+
+   ```
+   ---
+
+   📋 Copiar el resumen de arriba a tu sistema de tickets
+      (ClickUp, Jira, Linear, Asana, Trello, GitHub Projects, etc.)
+
+   ---
+   ```
+
+   Luego preguntar al usuario:
+
+   ```
+   ¿Deseas hacer push al remoto?
+
+   git push origin [branch-name]
+
+   (y/n): _
+   ```
+
+   - Si responde **y**: Ejecutar `git push origin [branch-name]` y mostrar resultado
+   - Si responde **n**: Terminar con mensaje "✅ Trabajo completado. Push pendiente."
 
 ---
+
 ## Orchestration Rules
 
 - **DRY Logic**: This file handles the high-level orchestration.
@@ -428,4 +509,5 @@ Review work.md? (Yes/Edit/No): _
 - **State Persistence**: Always read/write to `.ai-flow/work/[name]/status.json` to maintain state across sessions.
 
 ---
+
 **BEGIN EXECUTION when user runs `/flow-work [args]`**
