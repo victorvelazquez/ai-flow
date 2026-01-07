@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 30+ docs)
+- 🚀 Complete professional documentation (Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Fullstack: 30+ files)
 - 🧠 **Smart Description Refinement:** Detects ambiguity and iteratively guides you to a professional project definition.
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
@@ -40,7 +40,7 @@ Transforma tu idea en un proyecto listo para producción y documentado para IA e
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 14 docs, Frontend: 15 docs, Mobile: 13 docs, Fullstack: 30+ docs)
+- 🚀 Documentación profesional completa (Backend: 17 archivos, Frontend: 15 archivos, Mobile: 13 archivos, Fullstack: 30+ archivos)
 - 🧠 **Refinamiento Inteligente:** Detecta ambigüedad y te guía iterativamente hacia una descripción profesional.
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
@@ -140,7 +140,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-## **Current version:** 2.5.0
+## **Current version:** 2.5.1
 
 ## 🚀 Quick Start
 
@@ -389,13 +389,13 @@ AI Flow organizes your project with clear separation of concerns:
 
 ## 🎯 Generated Documentation
 
-**Backend** (14 docs): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, plus 8 docs and 2 specs.
+**Backend** (17 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 4 specs/configs.
 
-**Frontend** (15 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
+**Frontend** (15 files): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
 
-**Mobile** (13 docs): AGENT.md, ai-instructions.md, project-brief.md, plus 10 technical docs/specs.
+**Mobile** (13 files): AGENT.md, ai-instructions.md, project-brief.md, plus 10 technical docs/specs.
 
-**Fullstack** (30+ docs): Combined Backend + Frontend documentation structures.
+**Fullstack** (30+ files): Combined Backend + Frontend documentation structures.
 
 **Slash Commands/Prompts** (72 total):
 
