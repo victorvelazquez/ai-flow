@@ -266,9 +266,9 @@ After initialization, use these slash commands in your AI tool:
 
 > **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
 
-**Backend Projects:** 16 commands  
-**Frontend Projects:** 13 commands  
-**Mobile Projects:** 13 commands  
+**Backend Projects:** 22 prompts (/flow-build with phases 0-10, /flow-work, /flow-check, /flow-commit, /flow-docs-sync)  
+**Frontend Projects:** 22 prompts (same structure tailored for frontend)  
+**Mobile Projects:** 22 prompts (same structure tailored for mobile apps)  
 **Fullstack Projects:** Combined backend + frontend commands
 
 **Documentation & Build:**
@@ -402,7 +402,8 @@ AI Flow organizes your project with clear separation of concerns:
 - Backend: 22 prompts (/flow-build with phases 0-10, /flow-work variants, /flow-check, /flow-commit, /flow-docs-sync)
 - Frontend: 22 prompts (same structure tailored for frontend)
 - Mobile: 22 prompts (same structure tailored for mobile apps)
-- Shared: 6 utility prompts (task summaries, templates, etc.)
+- Shared: 6 prompts (task-format.md, story-points.md, task-summary-template.md, etc.)
+- **Total: 72 prompts** across all project types
 
 Each project type gets workflow commands optimized for its technology stack.
 
