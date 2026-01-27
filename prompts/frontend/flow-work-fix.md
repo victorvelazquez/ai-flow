@@ -29,7 +29,9 @@ This file contains the detailed execution logic for bug fixes, imported by `@flo
 ---
 ## 🌿 Git Branching Strategy
 - **QUICK**: Usually work on current branch
+  - ⚠️ **Exception:** If on protected branch (`main`, `master`, `develop`, `development`), create fix branch even for quick fixes
 - **COMPLEX**: Execute `git checkout -b fix/[slug]`
+- **Never commit directly TO protected branches**
 
 ---
 ## 📦 status.json Persistence
