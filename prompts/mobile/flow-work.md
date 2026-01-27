@@ -372,6 +372,100 @@ Review work.md? (Yes/Edit/No): _
 
 **Upon confirmation to start implementation:**
 
+**🛡️ CRITICAL: Protected Branch Check**
+
+```bash
+git branch --show-current
+git status --porcelain
+```
+
+**If current branch is protected** (`main`, `master`, `develop`, `development`):
+
+**A) If there are uncommitted changes:**
+
+1.  **Analyze changes to generate branch name:**
+
+    ```bash
+    git status --porcelain
+    git diff --stat
+    ```
+
+    **Detection rules:**
+    - **New screens/features** → `feature/`
+    - **Bug fixes** (crash fixes, error handling) → `fix/`
+    - **Refactoring/Optimization** (code improvements, performance) → `refactor/`
+    - **Native configs** (android/, ios/, dependencies) → `chore/`
+    - **Tests only** → `test/`
+    - **Documentation only** → `docs/`
+
+    **Naming strategy:**
+    - Extract screen/module/feature name
+    - Remove extensions (.tsx, .ts, .js)
+    - Convert to kebab-case
+    - Limit to 3-4 words max
+
+    **Examples:**
+
+    ```
+    src/screens/ProfileScreen.tsx (new)         → feature/profile-screen
+    src/navigation/AppNavigator.tsx (fix)       → fix/app-navigation
+    src/hooks/useAuth.ts (modified)             → refactor/auth-hook
+    android/ + ios/ (configs)                   → chore/native-config
+    src/screens/Auth* + src/services/auth*      → feature/authentication
+    src/components/ (multiple)                  → refactor/ui-components
+    ```
+
+2.  **Warn user:**
+
+    ```
+    ⚠️  Working on protected branch '[branch-name]' with uncommitted changes.
+
+    Analyzed changes:
+    - [file1] (new)
+    - [file2] (modified)
+    - [file3] (modified)
+    ... [N] more files
+
+    Detected type: [feature|fix|refactor|chore]
+    Suggested branch: [type]/[descriptive-slug]
+    ```
+
+3.  **Offer options:**
+    - **A)** Create branch: `[type]/[suggested-name]` ⭐
+    - **B)** Edit branch name (user provides custom slug)
+    - **C)** Stash changes and continue: `git stash`
+    - **D)** Cancel
+
+4.  If user chooses A:
+
+    ```bash
+    git checkout -b [type]/[suggested-name]
+    ```
+
+    Then show:
+
+    ```
+    ✅ Created and switched to '[type]/[suggested-name]'
+
+    Next steps:
+    1. Run /flow-commit to commit these changes
+    2. Return to protected branch: git checkout [protected-branch]
+    3. Continue with /flow-work for new task
+
+    Or continue working on this branch if it's your intended work.
+    ```
+
+5.  If user chooses B:
+    ```
+    Enter branch name (without type prefix): _
+    ```
+    Then create: `[detected-type]/[user-input]`
+
+**B) If NO uncommitted changes:**
+
+- ✅ Proceed normally - creating work branches FROM protected branches is correct workflow
+- Protected branches serve as base for new work
+
 1. **Generate Branch Name**:
    - `feature/[slug]`
    - `refactor/[slug]`
