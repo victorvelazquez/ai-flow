@@ -68,7 +68,7 @@ ai-flow init .
 Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 30+ docs)
+- 🚀 Documentação profissional completa (Backend: 17 arquivos, Frontend: 15 arquivos, Mobile: 13 arquivos, Fullstack: 30+ arquivos)
 - 🚀 **Modo Agente:** Os assistentes de IA agora priorizam a execução proativa para todos os comandos `/flow-`.
 - 🧠 **Refinamento Inteligente:** Detecta ambiguidade e guia você para uma descrição profissional.
 - ⚡ **Dois modos:** Interactivo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
@@ -108,7 +108,7 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, Antigravity, any AI tool
-- 📚 **Professional Documentation** - Backend: 14, Frontend: 15, Mobile: 13, Fullstack: 30+ docs
+- 📚 **Professional Documentation** - Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Fullstack: 30+ files
 - 🧠 **Smart Description Refinement** - AI detects vague inputs and helps you rich the context (WHO, WHAT, WHY).
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, all phases (90-120 min)
