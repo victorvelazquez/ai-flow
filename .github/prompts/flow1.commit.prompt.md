@@ -2,11 +2,52 @@
 
 Automate atomic commits following Conventional Commits standard. Execute steps sequentially without user interaction except where explicitly required.
 
-**Display Behavior:** Show step title (`## Step N/4: Name`) in your response BEFORE executing commands in that step.
+**Display Behavior:** Show step title (`## Step N/5: Name`) in your response BEFORE executing commands in that step.
 
 ---
 
-## 🔍 Step 1/4: Detect Changes
+## 🛡️ Step 0/5: Branch Protection Check
+
+**CRITICAL VALIDATION** - Execute BEFORE any commit operation:
+
+```bash
+git branch --show-current
+```
+
+**Protected branches:** `main`, `master`, `develop`, `development`
+
+**If current branch is protected:**
+
+1. **Inform user:**
+
+   ```
+   ⚠️  Working on protected branch. Creating a new branch for your changes...
+   ```
+
+2. **Analyze changes** (automatic - no user interaction):
+
+   ```bash
+   git status --porcelain
+   git diff --stat
+   ```
+
+   - Detect branch type from changes (feature/fix/refactor/chore)
+
+3. **Generate branch name:**
+   - Extract slug from changed files
+   - Format: `[type]/[descriptive-slug]`
+
+4. **Create and switch:**
+
+   ```bash
+   git checkout -b [type]/[slug]
+   ```
+
+5. **Confirm and continue to Step 1**
+
+**If branch is NOT protected:** Continue to Step 1.
+
+## 🔍 Step 1/5: Detect Changes
 
 Use native git commands via `run_in_terminal` with `isBackground: false`. Execute all commands automatically (read-only operations):
 
@@ -21,7 +62,7 @@ git diff --cached --stat
 
 **If no changes detected:** Stop execution and inform user "No changes to commit."
 
-## ⚡ Step 2/4: Group Changes
+## ⚡ Step 2/5: Group Changes
 
 Analyze modified files and group by functional relationship. Create atomic commits per group.
 
@@ -66,7 +107,7 @@ Analyze modified files and group by functional relationship. Create atomic commi
 | `prompts/*.md`, `slash-commands/**`, `.github/prompts/*.md` | `prompts`   |
 | `README.md`                                                 | `readme`    |
 
-## ✅ Step 3/4: Generate Commits
+## ✅ Step 3/5: Generate Commits
 
 For each group from Step 2, execute via `run_in_terminal`. **User must click Allow for each commit.**
 
@@ -104,7 +145,7 @@ git add templates/README.template.md && git commit -m "docs(templates): improve 
 git add .github/prompts/flow1.commit.prompt.md && git commit -m "docs(prompts): refactor commit automation"
 ```
 
-## 🚀 Step 4/4: Finalize
+## 🚀 Step 4/5: Finalize
 
 ### Show commit history (automatic)
 
@@ -115,8 +156,10 @@ git log --oneline --graph --decorate -n <count>
 ### Push to remote (requires Allow)
 
 ```bash
-git push origin main
+git push origin [current-branch]
 ```
+
+**⚠️ NEVER suggest:** `git push origin main` or `git push origin master` or `git push origin develop` or `git push origin development`
 
 **If push fails:** Show error and suggest resolution (e.g., pull first if behind remote).
 
@@ -126,6 +169,7 @@ git push origin main
 
 | Step   | Commands                                              | User Action            |
 | ------ | ----------------------------------------------------- | ---------------------- |
+| Step 0 | `git branch --show-current`                           | Automatic (validation) |
 | Step 1 | `git reset`, `git status`, `git diff`, `git ls-files` | Automatic (read-only)  |
 | Step 2 | Analysis and grouping                                 | Automatic              |
 | Step 3 | `git add` + `git commit`                              | Click Allow per commit |
