@@ -53,14 +53,106 @@ Provide a single, intelligent entry point for all development work (New Features
 
 ---
 
+## Phase 0.5: Complexity Classification (CRITICAL)
+
+**Analyze task scope to determine workflow:**
+
+| Metric        | SIMPLE (⚡) | MEDIUM (📝) | COMPLEX (🏗️)  |
+| ------------- | ----------- | ----------- | ------------- |
+| Files         | 1           | 2-5         | >5            |
+| Lines         | <20         | 20-100      | >100          |
+| Tests         | No          | Optional    | Required      |
+| Docs          | None        | Minor       | Significant   |
+| Architecture  | None        | Minimal     | Major changes |
+| Time estimate | <15 min     | 15-60 min   | >60 min       |
+
+**Classification Rules:**
+
+**⚡ SIMPLE Task:**
+
+- Examples: Fix typo, rename variable, update constant, add log, adjust CSS
+- **Workflow**: In-chat plan → Execute → Done (NO files created)
+- **Context**: Only `ai-instructions.md` if relevant
+
+**📝 MEDIUM Task:**
+
+- Examples: Add component, refactor hook, simple bug fix, update API call
+- **Workflow**: Create `work.md` only (NO `status.json`) → Execute → Simple archive
+- **Context**: Load 2-3 relevant docs
+
+**🏗️ COMPLEX Task:**
+
+- Examples: New feature, major refactor, security fix, multi-file changes
+- **Workflow**: Full workflow (`work.md` + `status.json` + branch + archiving)
+- **Context**: Load all relevant docs
+
+**Detection Logic:**
+
+```python
+if files_affected == 1 and lines_changed < 20 and no_tests_needed and no_architecture_impact:
+    complexity = "SIMPLE"
+elif files_affected <= 5 and lines_changed <= 100 and architecture_impact == "minimal":
+    complexity = "MEDIUM"
+else:
+    complexity = "COMPLEX"
+```
+
+**Show classification:**
+
+```
+🔍 Task Complexity: [SIMPLE ⚡ | MEDIUM 📝 | COMPLEX 🏗️]
+
+Detected:
+- Files: [N]
+- Estimated lines: [~X]
+- Tests needed: [Yes/No]
+- Architecture impact: [None/Minimal/Major]
+
+Proceeding with [SIMPLE/MEDIUM/COMPLEX] workflow.
+```
+
+---
+
 ## Phase 1: Analysis & Refinement
 
-**1. Context Loading (Multi-Source):**
+**1. Context Loading (Smart & Selective):**
 
-**CRITICAL**: Regardless of whether a `USER_STORY` ID or a `ROADMAP_FEATURE` name is provided, you MUST attempt to load context from **BOTH** sources:
+**CRITICAL: Load context based on task complexity and type:**
 
-- **`planning/roadmap.md`**: To understand high-level scope, epic relationships, and technical dependencies.
-- **`planning/user-stories/**/HU-XXX-XXX.md`\*\*: To get granular details (Acceptance Criteria, Gherkin Scenarios, QA cases).
+**IF complexity == "SIMPLE":**
+
+- Load ONLY `ai-instructions.md` if task involves code changes
+- Skip all other documentation
+- Use existing patterns in nearby code as reference
+
+**IF complexity == "MEDIUM":**
+
+- Load `ai-instructions.md` (core rules)
+- Load 1-2 specific docs based on task type:
+  - Component changes → `docs/components.md`
+  - Routing changes → `docs/routing.md`
+  - State management → `docs/state-management.md`
+  - Styling → `docs/styling.md`
+- Skip architecture.md unless creating new patterns
+
+**IF complexity == "COMPLEX":**
+
+- Load `ai-instructions.md` (NEVER/ALWAYS rules)
+- Load `docs/architecture.md` (patterns, structure)
+- Load task-specific docs:
+  - Components → `docs/components.md`
+  - Routing/Navigation → `docs/routing.md`
+  - State → `docs/state-management.md`
+  - API Integration → `docs/api-integration.md`
+  - Testing → `docs/testing.md`
+- Load `docs/code-standards.md` only if creating new files
+
+**Source Documentation (User Stories/Roadmap):**
+
+**IF** `HU-XXX-XXX` or roadmap feature provided:
+
+- **`planning/roadmap.md`**: Load for high-level scope
+- **`planning/user-stories/**/HU-XXX-XXX.md`\*\*: Load for detailed requirements
 
 **2. Detail Level Detection (if Manual input):**
 
@@ -183,34 +275,112 @@ Provide justification: _
 
 ---
 
+## Phase 1.5: SIMPLE Task Fast-Track
+
+**IF complexity == "SIMPLE": Execute immediately without creating files**
+
+1. **Show in-chat plan:**
+
+   ```
+   ⚡ SIMPLE Task - Fast Execution
+
+   What: [1-line description]
+   File: [path]
+   Change: [specific modification]
+   Lines: ~[N] (estimated)
+
+   Execute now? (y/n): _
+   ```
+
+2. **IF user confirms ('y'):**
+   - Make the change immediately
+   - Show git diff preview
+   - Skip to Phase 3 (no branch creation if already on feature branch)
+   - Show: "✅ Done. Run `/flow-commit` to commit."
+   - **END WORKFLOW** (no archiving needed)
+
+3. **IF user declines ('n'):**
+   - Cancel task
+   - **END WORKFLOW**
+
+**Note:** SIMPLE tasks don't create work.md, status.json, or archive records.
+
+---
+
 ## Phase 2: Planning & Documentation
 
-**1. Read Required Documentation (MANDATORY)**
+**⚠️ SKIP THIS PHASE IF complexity == "SIMPLE"**
 
-Before generating work.md, read relevant documentation:
+**1. Read Required Documentation (Based on Complexity)**
 
-- `ai-instructions.md` → Extract NEVER/ALWAYS rules
-- `docs/architecture.md` → Identify layer, pattern, file structure
-- `docs/code-standards.md` → Extract naming conventions, quality rules
-- IF touching database: `docs/data-model.md`
-- IF auth/security: `specs/security.md`
-- IF creating/modifying API: `docs/api.md`
-- IF tests required: `docs/testing.md`
+**IF complexity == "MEDIUM":**
+
+- `ai-instructions.md` (core rules)
+- Load ONLY task-specific docs:
+  - Components → `docs/components.md`
+  - Routing → `docs/routing.md`
+  - State → `docs/state-management.md`
+  - Styling → `docs/styling.md`
+
+**IF complexity == "COMPLEX":**
+
+- `ai-instructions.md` (NEVER/ALWAYS rules)
+- `docs/architecture.md` (layer, pattern, structure)
+- Task-specific docs:
+  - Components → `docs/components.md`
+  - Routing/Navigation → `docs/routing.md`
+  - State → `docs/state-management.md`
+  - API Integration → `docs/api-integration.md`
+  - Testing → `docs/testing.md`
+- `docs/code-standards.md` (only if creating new files)
 
 **2. Analyze Existing Codebase (MANDATORY)**
 
 Find similar features/patterns in codebase:
 
-- Identify existing files to use as reference (e.g., ProductService.ts for UserService.ts)
+- Identify existing files to use as reference (e.g., UserProfile.tsx for ProductCard.tsx)
 - Check naming conventions in actual code
 - Verify architectural consistency
-- Look for reusable components/services
+- Look for reusable components/hooks
 
-**3. Generate work.md**
+**3. Generate work.md (Conditional)**
 
-Create single consolidated file: `.ai-flow/work/[task-name]/work.md`
+**IF complexity == "MEDIUM":**
 
-**Structure** (~30-40 lines):
+- Create simplified `.ai-flow/work/[task-name]/work.md` (~15-20 lines)
+- Skip status.json
+
+**IF complexity == "COMPLEX":**
+
+- Create full `.ai-flow/work/[task-name]/work.md` (~30-40 lines)
+- Create `status.json` (see step 4)
+
+**Structure for MEDIUM tasks** (~15-20 lines):
+
+```markdown
+# [Type]: [Feature Name]
+
+**Source**: [HU-XXX | Roadmap X.X | Manual]
+**Files**: [2-5 files listed]
+**Estimated**: [20-60 min]
+
+## Objective
+
+[1 clear paragraph]
+
+## Tasks
+
+- [ ] Task 1 → path/Component.tsx
+- [ ] Task 2 → path/hook.ts
+- [ ] Task 3 (optional tests)
+
+## Key Rules
+
+- ✅ [1-2 relevant ALWAYS rules]
+- ❌ [1-2 relevant NEVER rules]
+```
+
+**Structure for COMPLEX tasks** (~30-40 lines):
 
 ```markdown
 # [Type]: [Feature Name]
@@ -323,7 +493,9 @@ Generate detailed tasks with this format:
 - Dependencies (if applicable)
 - Story Points
 
-**4. Generate status.json**
+**4. Generate status.json (ONLY for COMPLEX tasks)**
+
+**IF complexity == "COMPLEX":**
 
 Create: `.ai-flow/work/[task-name]/status.json`
 
@@ -479,116 +651,364 @@ git status --porcelain
 
 ---
 
-## Phase 4: Finalization & Archiving
+## Phase 4: Finalization (User-Controlled)
 
-**When all tasks in `work.md` are complete (✅) and validated:**
+**⚠️ SKIP THIS PHASE IF complexity == "SIMPLE"** (already handled in Phase 1.5)
 
-1. **Update Source Documentation (Automatic - ALWAYS UPDATE BOTH IF BOTH EXIST)**:
+**Trigger Options:**
 
-   **Step 1a: Check and Update User Story (if exists)**
-   - Look for User Story reference in `status.json` or work context
-   - IF User Story `HU-XXX-XXX` exists:
-     - Read `planning/user-stories/EP-XXX/HU-XXX-XXX.md`
-     - Mark ALL DoD checklist items as complete: `- [ ]` → `- [x]`
-     - Add completion timestamp comment: `<!-- Completed: YYYY-MM-DD HH:MM -->`
-     - Save file
+- User types: `/flow-work complete`
+- All checkboxes in work.md marked complete
+- User explicitly requests finalization
 
-   **Step 1b: Check and Update Roadmap (if exists)**
-   - Look for Feature reference in `status.json` or work context
-   - IF Feature exists in `planning/roadmap.md`:
-     - Read `planning/roadmap.md`
-     - Find the Feature section by name/number
-     - Mark Feature checkbox as complete: `- [ ]` → `- [x]`
-     - Save file
+**CRITICAL: This phase requires EXPLICIT user confirmations at each step.**
 
-   **Step 1c: Show Completion Summary**
-   - IF both updated: "✅ Updated roadmap.md (Feature X.X) AND HU-XXX-XXX.md (Y/Y DoD items)"
-   - IF only roadmap: "✅ Updated roadmap.md (Feature X.X)"
-   - IF only user story: "✅ Updated HU-XXX-XXX.md (Y/Y DoD items)"
-   - IF neither exists: "⚠️ No roadmap or user story found to update"
+---
 
-   **Error Handling:**
-   - If file doesn't exist: Log warning, continue with other file
-   - If checkbox not found: Log warning with helpful message, continue
-   - Never fail the entire finalization due to documentation update errors
+### Step 1: Validation Check
 
-2. **Sugerir Próximos Pasos**:
-   - **`/flow-check`**: Ejecutar tests y revisión de código combinada.
-   - **`/flow-docs-sync`**: Sincronizar la documentación técnica.
-   - **`/flow-commit`**: Crear commits atómicos.
+```
+🔍 Running validation...
+```
 
-3. **Registro de Historial (Automático tras aprobación)**:
-   - Una vez el usuario confirma que el trabajo está listo para ser cerrado:
-   - **Extraer metadata** de `status.json` y `work.md`:
-     ```javascript
-     // Campos del registro JSONL (10 campos):
-     {
-       task: string,        // Nombre de la tarea (ej: "user-auth")
-       type: string,        // "feature" | "refactor" | "fix"
-       src: string,         // source: "HU-001-002" | "roadmap-2.3" | "manual"
-       dur: number,         // duración en minutos (completed - created)
-       start: string,       // timestamps.created (ISO 8601)
-       end: string,         // timestamps.completed (ISO 8601)
-       tasks: number,       // progress.totalTasks
-       sp?: number,         // Story Points extraídos de work.md (regex: "• (\d+) SP")
-       commits: number,     // git.commits.length
-       valid: boolean       // validation.tests.passed && validation.lint.passed
-     }
-     ```
-   - **Actualizar `status.json`**: Registrar `timestamps.completed` (ISO 8601).
-   - **Append a `.ai-flow/archive/analytics.jsonl`**: Agregar 1 línea con el objeto JSON (sin espacios ni saltos de línea internos).
-   - **Eliminar carpeta**: Remover `.ai-flow/work/[task-name]/` completa (incluye `work.md` y `status.json`).
-   - **Cleanup**: Mantener limpia la carpeta `work` para que `/flow-work` detecte solo tareas activas.
+Execute:
 
-4. **Generar Resumen Universal para Sistema de Tickets (Automático)**:
+```bash
+npm test  # or project-specific test command
+npm run lint  # or project-specific lint command
+```
 
-   Después del archivado, generar un resumen completo compatible con ClickUp, Jira, Linear, Asana, Trello, GitHub Projects, Azure DevOps, y cualquier sistema de gestión de tareas.
+Show results:
 
-   **Template Source**: `.ai-flow/prompts/shared/task-summary-template.md`
+```
+📊 Validation Results
 
-   **Instrucciones**:
-   1. Leer el template completo desde `.ai-flow/prompts/shared/task-summary-template.md`
-   2. Extraer datos de las fuentes especificadas en el template:
-      - `status.json` (type, timestamps, commits, validation, branch)
-      - `work.md` (objective, tasks, story points)
-      - `analytics.jsonl` (última línea: duración, sp, commits)
-      - `TECH-DEBT.md` (si existe antes de eliminar)
-      - Git commands (`git diff --stat`, `git log --oneline`, etc.)
-   3. Aplicar inferencia automática según reglas del template:
-      - Tags/Labels (Backend, API, Security, etc.)
-      - Prioridad (Critical, High, Medium, Low)
-      - Scope (módulo principal afectado)
-      - Impacto (UX, Security, Performance, Maintainability)
-   4. Poblar todos los campos del template con datos reales
-   5. Mostrar el resumen completo formateado listo para copiar/pegar
+Tests: [✅ Passed | ❌ Failed (N tests)]
+Lint: [✅ Clean | ⚠️ N warnings | ❌ N errors]
+Coverage: [X%]
 
-   **Nota**: El template es modular y puede actualizarse independientemente sin modificar este archivo.
+Proceed with finalization?
 
-5. **Presentación de Resultados**:
+a) Yes, continue ⭐
+b) No, let me fix issues
+c) Skip validation (not recommended)
 
-   Mostrar resumen del template `.ai-flow/prompts/shared/task-summary-template.md` seguido de:
+Your choice: _
+```
+
+- **'b'**: Return to Phase 3 for fixes, END finalization
+- **'c'**: Show warning, ask confirmation again, then continue
+- **'a'**: Continue to Step 2
+
+---
+
+### Step 2: Source Documentation Update (Interactive)
+
+**Detect source references:**
+
+```python
+source = extract_from_work_md_or_status_json()
+# Returns: "HU-001-002" | "roadmap-2.3" | "manual" | None
+```
+
+**IF source exists (HU or roadmap):**
+
+```
+📚 Update Source Documentation?
+
+Found:
+- planning/roadmap.md → Feature 2.3 "User Profile Component"
+- planning/user-stories/EP-001/HU-001-002.md
+
+What to update?
+
+a) Update both ⭐
+b) Update roadmap only
+c) Update user story only
+d) Skip (I'll update manually later)
+
+Your choice: _
+```
+
+**Execute selected updates:**
+
+- Read files
+- Mark checkboxes as complete: `- [ ]` → `- [x]`
+- Add timestamp comment: `<!-- Completed: YYYY-MM-DD HH:MM -->`
+- Save files
+
+**Show confirmation:**
+
+```
+✅ Updated:
+- planning/roadmap.md (Feature 2.3)
+- planning/user-stories/EP-001/HU-001-002.md (5/5 DoD items)
+```
+
+**IF update fails:**
+
+```
+❌ Failed to update [file]: [reason]
+
+Options:
+1) Retry update
+2) Skip this file
+3) Cancel finalization
+
+Your choice: _
+```
+
+**IF source is "manual" or None:**
+
+```
+⏭️ No source documentation to update (manual task)
+```
+
+---
+
+### Step 3: Archiving Decision (Explicit Confirmation)
+
+**Show current state:**
+
+```bash
+git diff --stat
+git log --oneline origin/[base-branch]..HEAD
+```
+
+**Present archiving options:**
+
+```
+💾 Task Completion Options
+
+Current work:
+- Branch: [branch-name]
+- Files changed: [N]
+- Commits: [N]
+- Duration: [X min]
+
+What do you want to do?
+
+a) Complete & Archive ⭐
+   → Record analytics, delete work files, clean state
+
+b) Complete & Keep
+   → Record analytics, rename folder to [task]-completed
+
+c) Mark as Paused
+   → Keep work files for later resume
+
+d) Cancel
+   → Go back to editing
+
+Your choice: _
+```
+
+**IF 'a' (Complete & Archive):**
+
+```
+✅ Archiving task...
+```
+
+1. **Extract metadata:**
+
+   ```javascript
+   // IF complexity == "COMPLEX" (has status.json):
+   analytics = {
+     task: '[task-name]',
+     type: '[feature|refactor|fix]',
+     src: '[HU-001-002|roadmap-2.3|manual]',
+     dur: Math.round((completed - created) / 60000), // minutes
+     start: timestamps.created,
+     end: new Date().toISOString(),
+     tasks: progress.totalTasks,
+     sp: extract_story_points_from_work_md(),
+     commits: git.commits.length,
+     valid: validation.tests.passed && validation.lint.passed,
+   };
+
+   // IF complexity == "MEDIUM" (only work.md):
+   analytics = {
+     task: '[task-name]',
+     type: '[detected-from-folder-name]',
+     src: 'manual',
+     dur: estimate_duration_from_git_log(),
+     start: get_first_commit_timestamp(),
+     end: new Date().toISOString(),
+     tasks: count_checkboxes_in_work_md(),
+     sp: extract_story_points_from_work_md() || null,
+     commits: count_commits_in_branch(),
+     valid: validation_passed,
+   };
+   ```
+
+2. **Append to analytics:**
+
+   ```bash
+   echo '{json}' >> .ai-flow/archive/analytics.jsonl
+   ```
+
+3. **Delete work folder:**
+
+   ```bash
+   rm -rf .ai-flow/work/[task-name]/
+   ```
+
+4. **Show confirmation:**
 
    ```
-   ---
+   ✅ Task archived successfully
 
-   📋 Copiar el resumen de arriba a tu sistema de tickets
-      (ClickUp, Jira, Linear, Asana, Trello, GitHub Projects, etc.)
-
-   ---
+   📊 Analytics recorded:
+   - Duration: [X] min
+   - Story Points: [N]
+   - Commits: [N]
+   - Validation: [✅ Passed | ❌ Failed]
    ```
 
-   Luego preguntar al usuario:
+**IF 'b' (Complete & Keep):**
+
+1. Record analytics (same as 'a')
+2. Rename folder:
+   ```bash
+   mv .ai-flow/work/[task] .ai-flow/work/[task]-completed/
+   ```
+3. Show: `✅ Task marked complete. Files kept in: .ai-flow/work/[task]-completed/`
+
+**IF 'c' (Mark as Paused):**
+
+1. Add marker file:
+   ```bash
+   echo "Paused: $(date)" > .ai-flow/work/[task]/PAUSED
+   ```
+2. Show: `⏸️ Task paused. Resume with: /flow-work`
+3. **END finalization**
+
+**IF 'd' (Cancel):**
+
+1. Show: `❌ Finalization cancelled. Task remains active.`
+2. **END finalization**
+
+---
+
+### Step 4: Ticket Summary (Optional)
+
+**Only ask if task was archived (option 'a' or 'b'):**
+
+```
+📋 Generate ticket summary?
+
+(For ClickUp, Jira, Linear, Asana, Trello, GitHub Projects, etc.)
+
+y/n: _
+```
+
+**IF 'y':**
+
+1. Check if template exists:
+
+   ```bash
+   [ -f .ai-flow/prompts/shared/task-summary-template.md ]
+   ```
+
+2. **IF template exists:**
+   - Read template
+   - Extract data from:
+     - Last line of `analytics.jsonl`
+     - Git stats: `git diff --stat`, `git log --oneline`
+     - Branch info
+   - Populate template with real data
+   - Show formatted summary
+
+3. **IF template doesn't exist:**
+   - Generate basic summary:
 
    ```
-   ¿Deseas hacer push al remoto?
+   📋 Task Summary
 
+   **Task**: [task-name]
+   **Type**: [feature|refactor|fix]
+   **Duration**: [X min]
+   **Story Points**: [N]
+   **Commits**: [N]
+   **Branch**: [branch-name]
+   **Status**: ✅ Complete
+
+   **Changes**:
+   [git diff --stat output]
+
+   **Commits**:
+   [git log --oneline output]
+   ```
+
+4. Show: `📋 Copy the summary above to your ticket system`
+
+**IF 'n':**
+
+```
+⏭️ Skipping ticket summary
+```
+
+---
+
+### Step 5: Git Push (Final Step)
+
+```
+🚀 Push changes to remote?
+
+git push origin [branch-name]
+
+y/n: _
+```
+
+**IF 'y':**
+
+```bash
+git push origin [branch-name]
+```
+
+Show result:
+
+```
+✅ Pushed to origin/[branch-name]
+
+Next steps:
+- Create Pull Request/Merge Request
+- Request code review
+- Update project board
+```
+
+**IF 'n':**
+
+```
+⏭️ Skipping push
+
+⚠️ Remember to push later:
    git push origin [branch-name]
+```
 
-   (y/n): _
-   ```
+---
 
-   - Si responde **y**: Ejecutar `git push origin [branch-name]` y mostrar resultado
-   - Si responde **n**: Terminar con mensaje "✅ Trabajo completado. Push pendiente."
+### Finalization Complete
+
+```
+✅ Task Finalization Complete
+
+📊 Summary:
+- [✅|⚠️] Validation passed
+- [✅|⏭️] Documentation updated
+- [✅|⏭️] Task archived
+- [✅|⏭️] Ticket summary generated
+- [✅|⏭️] Pushed to remote
+
+Task: [task-name]
+Branch: [branch-name]
+Duration: [X min]
+Commits: [N]
+
+🎉 Great work!
+```
+
+**END WORKFLOW**
 
 ---
 
