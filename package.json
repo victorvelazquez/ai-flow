@@ -1,6 +1,6 @@
 {
   "name": "ai-flow-dev",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "AI-powered development workflow from idea to production. Generate specs, plan features, and build with AI assistance throughout your project lifecycle.",
   "type": "module",
   "main": "dist/cli.js",
