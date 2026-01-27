@@ -1,23 +1,23 @@
 {
   "files": {
-    "prompts/": "2026-01-07T10:54:44.6941315-03:00",
-    "package.json": "2026-01-07T10:54:44.6546982-03:00",
+    "package.json": "2026-01-07T11:24:20.2008694-03:00",
+    "prompts/": "2026-01-27T14:34:06.0863184-03:00",
     "src/cli.ts": "2026-01-07T10:54:44.6941315-03:00",
-    "templates/": "2026-01-07T10:54:44.6968815-03:00"
+    "templates/": "2026-01-07T11:24:20.2585317-03:00"
   },
   "lastAnalysis": {
-    "backend_prompts": 22,
-    "total_prompts": 72,
-    "backend_templates": 14,
-    "frontend_templates": 15,
-    "mobile_prompts": 22,
     "gaps_fixed": 2,
-    "frontend_prompts": 22,
-    "shared_prompts": 6,
     "mobile_templates": 13,
+    "total_prompts": 72,
+    "fullstack_templates": 4,
+    "frontend_templates": 15,
+    "frontend_prompts": 22,
+    "mobile_prompts": 22,
     "gaps_found": 2,
-    "fullstack_templates": 4
+    "shared_prompts": 6,
+    "backend_prompts": 22,
+    "backend_templates": 17
   },
-  "timestamp": "2026-01-07T11:07:05.0457957-03:00",
-  "version": "2.5.0"
+  "timestamp": "2026-01-27T15:21:28.7602944-03:00",
+  "version": "2.5.1"
 }

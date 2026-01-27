@@ -3,7 +3,9 @@
 > Universal AI Assistant Configuration
 >
 > This file provides context for ALL AI development tools (Claude, Copilot, Cursor, Gemini, etc.)
+
 ---
+
 ## 📋 About This Project
 
 **Project Name:** {{PROJECT_NAME}}
@@ -31,7 +33,9 @@
 
 > This project uses AI-assisted development with comprehensive documentation.
 > All files below provide context to AI assistants for consistent, high-quality code generation.
+
 ---
+
 ## 🏗️ Documentation Architecture
 
 This project follows **AI-assisted development** with comprehensive documentation.
@@ -109,7 +113,9 @@ All documentation is structured to guide AI assistants in understanding the proj
     - Required environment variables
     - Default/local values
     - Secrets handling guidance
+
 ---
+
 ## ⚡ Quick Reference
 
 ### Tech Stack
@@ -136,7 +142,9 @@ All documentation is structured to guide AI assistants in understanding the proj
 
 **✅ ALWAYS:**
 {{ALWAYS_RULES}}
+
 ---
+
 ## 🤖 AI Assistant Workflow
 
 When working on this project:
@@ -151,22 +159,24 @@ When working on this project:
    - Check relevant documentation for the area you're working on
    - Understand the business context from `project-brief.md`
 
-2. **When implementing features:**
+3. **When implementing features:**
    - Follow architecture patterns from `docs/architecture.md`
    - Respect data models from `docs/data-model.md`
    - Apply code standards from `docs/code-standards.md`
    - Add tests according to `docs/testing.md`
 
-3. **When handling security:**
+4. **When handling security:**
    - Consult `specs/security.md` for auth/authz
    - Never hardcode secrets (use `specs/configuration.md`)
    - Follow security headers and encryption requirements
 
-4. **When deploying:**
+5. **When deploying:**
    - Follow procedures in `docs/operations.md`
    - Update configuration per environment
    - Check health endpoints
+
 ---
+
 ## 🛠️ Tool-Specific Configurations
 
 Different AI tools have specific configuration files that extend this AGENT.md:
@@ -189,16 +199,16 @@ Different AI tools have specific configuration files that extend this AGENT.md:
 - **Purpose:** Copilot workspace instructions
 - **References:** This AGENT.md + project docs
 
-**All tool-specific configs reference this AGENT.md as the source of truth.**
----
+## **All tool-specific configs reference this AGENT.md as the source of truth.**
+
 ## 📊 Project Status
 
 **Current Phase:** {{PROJECT_PHASE}}
 
 **Architecture:** {{ARCHITECTURE_PATTERN}}
 
-**Compliance:** {{COMPLIANCE_REQUIREMENTS}}
----
+## **Compliance:** {{COMPLIANCE_REQUIREMENTS}}
+
 ## 🚀 Getting Started
 
 ### For AI Assistants
@@ -211,16 +221,16 @@ Different AI tools have specific configuration files that extend this AGENT.md:
 
 ### For Developers
 
-See `README.md` for installation and setup instructions.
----
+## See `README.md` for installation and setup instructions.
+
 ## 📝 Document Update Policy
 
 - Documents are **living artifacts** - update as project evolves
 - Breaking changes to architecture → Update `docs/architecture.md`
-**Architecture:** {{ARCHITECTURE_PATTERN}}
-**Primary Language:** {{LANGUAGE}} {{LANGUAGE_VERSION}}
-**Framework:** {{FRAMEWORK}}
-**Database:** {{DATABASE}} with {{ORM}}
+  **Architecture:** {{ARCHITECTURE_PATTERN}}
+  **Primary Language:** {{LANGUAGE}} {{LANGUAGE_VERSION}}
+  **Framework:** {{FRAMEWORK}}
+  **Database:** {{DATABASE}} with {{ORM}}
 
 **Key Characteristics:**
 
@@ -231,7 +241,9 @@ See `README.md` for installation and setup instructions.
 
 > This project uses AI-assisted development with comprehensive documentation.
 > All files below provide context to AI assistants for consistent, high-quality code generation.
+
 ---
+
 ## 🏗️ Documentation Architecture
 
 This project follows **AI-assisted development** with comprehensive documentation.
@@ -309,7 +321,9 @@ All documentation is structured to guide AI assistants in understanding the proj
     - Required environment variables
     - Default/local values
     - Secrets handling guidance
+
 ---
+
 ## ⚡ Quick Reference
 
 ### Tech Stack
@@ -336,7 +350,9 @@ All documentation is structured to guide AI assistants in understanding the proj
 
 **✅ ALWAYS:**
 {{ALWAYS_RULES}}
+
 ---
+
 ## 🤖 AI Assistant Workflow
 
 When working on this project:
@@ -351,22 +367,24 @@ When working on this project:
    - Check relevant documentation for the area you're working on
    - Understand the business context from `project-brief.md`
 
-2. **When implementing features:**
+3. **When implementing features:**
    - Follow architecture patterns from `docs/architecture.md`
    - Respect data models from `docs/data-model.md`
    - Apply code standards from `docs/code-standards.md`
    - Add tests according to `docs/testing.md`
 
-3. **When handling security:**
+4. **When handling security:**
    - Consult `specs/security.md` for auth/authz
    - Never hardcode secrets (use `specs/configuration.md`)
    - Follow security headers and encryption requirements
 
-4. **When deploying:**
+5. **When deploying:**
    - Follow procedures in `docs/operations.md`
    - Update configuration per environment
    - Check health endpoints
+
 ---
+
 ## 🛠️ Tool-Specific Configurations
 
 Different AI tools have specific configuration files that extend this AGENT.md:
@@ -389,16 +407,16 @@ Different AI tools have specific configuration files that extend this AGENT.md:
 - **Purpose:** Copilot workspace instructions
 - **References:** This AGENT.md + project docs
 
-**All tool-specific configs reference this AGENT.md as the source of truth.**
----
+## **All tool-specific configs reference this AGENT.md as the source of truth.**
+
 ## 📊 Project Status
 
 **Current Phase:** {{PROJECT_PHASE}}
 
 **Architecture:** {{ARCHITECTURE_PATTERN}}
 
-**Compliance:** {{COMPLIANCE_REQUIREMENTS}}
----
+## **Compliance:** {{COMPLIANCE_REQUIREMENTS}}
+
 ## 🚀 Getting Started
 
 ### For AI Assistants
@@ -411,8 +429,8 @@ Different AI tools have specific configuration files that extend this AGENT.md:
 
 ### For Developers
 
-See `README.md` for installation and setup instructions.
----
+## See `README.md` for installation and setup instructions.
+
 ## 📝 Document Update Policy
 
 - Documents are **living artifacts** - update as project evolves
@@ -422,4 +440,4 @@ See `README.md` for installation and setup instructions.
 
 **Last Updated:** {{GENERATION_DATE}}
 
-**Generated by:** AI Flow v2.2.4
+**Generated by:** AI Flow v2.5.1
