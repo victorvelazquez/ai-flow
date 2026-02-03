@@ -355,4 +355,97 @@ describe('ai-flow CLI', () => {
     expect(output).toContain('Mobile');
     expect(output).toContain('mobile');
   });
+
+  it('initializes desktop project when --type desktop is supplied', () => {
+    execFileSync(
+      'node',
+      [
+        CLI_PATH,
+        'init',
+        tempDir,
+        '--ai',
+        'cursor',
+        '--type',
+        'desktop',
+        '--name',
+        'Desktop App',
+        '--description',
+        'Desktop Test Description',
+      ],
+      {
+        cwd: PROJECT_ROOT,
+        stdio: 'pipe',
+      }
+    );
+
+    const configPath = path.join(tempDir, '.ai-flow', 'core', 'config.json');
+    expect(fs.existsSync(configPath)).toBe(true);
+
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    expect(config.aiTools).toEqual(['cursor']);
+    expect(config.projectType).toBe('desktop');
+    expect(config.desktop).toBe(true);
+
+    // Verify desktop prompts are copied
+    const desktopPromptPath = path.join(tempDir, '.cursor', 'commands', 'flow-build.md');
+    expect(fs.existsSync(desktopPromptPath)).toBe(true);
+
+    // Verify desktop templates are copied to .ai-flow/templates/ WITHOUT rendering
+    const desktopTemplatePath = path.join(tempDir, '.ai-flow', 'templates', 'README.template.md');
+    expect(fs.existsSync(desktopTemplatePath)).toBe(true);
+
+    // Verify desktop-specific template exists in .ai-flow/templates/
+    const desktopSpecificTemplatePath = path.join(
+      tempDir,
+      '.ai-flow',
+      'templates',
+      'docs',
+      'docs',
+      'architecture.template.md'
+    );
+    expect(fs.existsSync(desktopSpecificTemplatePath)).toBe(true);
+
+    // Verify desktop UI template exists
+    const desktopUITemplatePath = path.join(
+      tempDir,
+      '.ai-flow',
+      'templates',
+      'specs',
+      'specs',
+      'configuration.template.md'
+    );
+    expect(fs.existsSync(desktopUITemplatePath)).toBe(true);
+  });
+
+  it('reports initialized status via the check command (desktop)', () => {
+    execFileSync(
+      'node',
+      [
+        CLI_PATH,
+        'init',
+        tempDir,
+        '--ai',
+        'claude',
+        '--type',
+        'desktop',
+        '--name',
+        'Desktop Project',
+        '--description',
+        'Desktop Description',
+      ],
+      {
+        cwd: PROJECT_ROOT,
+        stdio: 'pipe',
+      }
+    );
+
+    const output = execFileSync('node', [CLI_PATH, 'check'], {
+      cwd: tempDir,
+      stdio: 'pipe',
+      encoding: 'utf8',
+    });
+
+    expect(output).toContain('Desktop');
+    expect(output).toContain('desktop');
+  });
 });

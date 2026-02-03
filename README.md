@@ -4,13 +4,13 @@
 
 ## English
 
-Transform your idea into a production-ready, AI-documented project (backend, frontend, fullstack, or mobile) in minutes.
+Transform your idea into a production-ready, AI-documented project (backend, frontend, fullstack, mobile, or desktop) in minutes.
 
 AI Flow is an interactive CLI that creates comprehensive professional documentation and provides an AI-powered development workflow from idea to production. Compatible with Claude, Copilot, Cursor, Gemini, Antigravity, and any AI assistant.
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Fullstack: 30+ files)
+- 🚀 Complete professional documentation (Backend: 14 files, Frontend: 15 files, Mobile: 13 files, Desktop: 14 files, Fullstack: 30+ files)
 - 🧠 **Smart Description Refinement:** Detects ambiguity and iteratively guides you to a professional project definition.
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
@@ -36,11 +36,11 @@ ai-flow init .
 
 ## Español
 
-Transforma tu idea en un proyecto listo para producción y documentado para IA en minutos (backend, frontend, fullstack o mobile).
+Transforma tu idea en un proyecto listo para producción y documentado para IA en minutos (backend, frontend, fullstack, mobile o desktop).
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 17 archivos, Frontend: 15 archivos, Mobile: 13 archivos, Fullstack: 30+ archivos)
+- 🚀 Documentación profesional completa (Backend: 14 archivos, Frontend: 15 archivos, Mobile: 13 archivos, Desktop: 14 archivos, Fullstack: 30+ archivos)
 - 🧠 **Refinamiento Inteligente:** Detecta ambigüedad y te guía iterativamente hacia una descripción profesional.
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
@@ -65,10 +65,10 @@ ai-flow init .
 
 ## Português
 
-Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
+Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos (backend, frontend, fullstack, mobile ou desktop).
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 17 arquivos, Frontend: 15 arquivos, Mobile: 13 arquivos, Fullstack: 30+ arquivos)
+- 🚀 Documentação profissional completa (Backend: 14 arquivos, Frontend: 15 arquivos, Mobile: 13 arquivos, Desktop: 14 arquivos, Fullstack: 30+ arquivos)
 - 🚀 **Modo Agente:** Os assistentes de IA agora priorizam a execução proativa para todos os comandos `/flow-`.
 - 🧠 **Refinamento Inteligente:** Detecta ambiguidade e guia você para uma descrição profissional.
 - ⚡ **Dois modos:** Interactivo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
@@ -93,7 +93,7 @@ ai-flow init .
 
 ## 🎯 What is AI Flow?
 
-AI Flow is an interactive CLI tool that generates comprehensive professional documentation and provides an AI-powered development workflow throughout your project lifecycle (backend, frontend, fullstack, or mobile). It creates the foundation for AI-assisted development with any AI tool, from initial setup to feature development and maintenance.
+AI Flow is an interactive CLI tool that generates comprehensive professional documentation and provides an AI-powered development workflow throughout your project lifecycle (backend, frontend, fullstack, mobile, or desktop). It creates the foundation for AI-assisted development with any AI tool, from initial setup to feature development and maintenance.
 
 **The Problem:** Starting a project requires hours of documentation setup. Existing projects lack proper AI-ready documentation. Without proper docs, AI assistants work inefficiently.
 **The Solution:**
@@ -108,7 +108,7 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, Antigravity, any AI tool
-- 📚 **Professional Documentation** - Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Fullstack: 30+ files
+- 📚 **Professional Documentation** - Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Desktop: 13 files, Fullstack: 30+ files
 - 🧠 **Smart Description Refinement** - AI detects vague inputs and helps you rich the context (WHO, WHAT, WHY).
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, all phases (90-120 min)
@@ -187,7 +187,7 @@ $ ai-flow check
 
 ```bash
 --ai <tool>              # claude, cursor, copilot, gemini, antigravity, all (interactive if omitted)
---type <type>            # backend, frontend, mobile, fullstack (interactive if omitted)
+--type <type>            # backend, frontend, mobile, desktop, fullstack (interactive if omitted)
 --name <name>            # Project name (interactive if omitted)
 --description <desc>     # Project description (interactive if omitted)
 --verbose                # Detailed logging (init only)
@@ -214,6 +214,9 @@ ai-flow init . --ai claude --type fullstack
 
 # Mobile project example
 ai-flow init . --ai claude --type mobile
+
+# Desktop project example (NetBeans/Eclipse)
+ai-flow init . --ai claude --type desktop
 
 # Enable verbose output (detailed logging) - only for init command
 ai-flow init . --verbose
@@ -273,7 +276,7 @@ After initialization, use these slash commands in your AI tool:
 
 **Documentation & Build:**
 
-- `/flow-build` - Flujo completo: todas las fases en orden (11 fases backend, 11 frontend/mobile)
+- `/flow-build` - Flujo completo: todas las fases en orden (11 fases backend, 11 frontend/mobile/desktop)
 - `/flow-build fase N` - Ejecutar fase específica (ver lista de fases abajo)
 - `/flow-work` - Development orchestrator (feature, refactor, fix, resume)
 - `/flow-check` - Combined code review & testing workflow
@@ -294,7 +297,7 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-build fase 9` - Implementation Roadmap (opcional)
 - `/flow-build fase 10` - User Stories Generation (opcional, requiere Fase 9)
 
-**Fases disponibles (Frontend/Mobile):**
+**Fases disponibles (Frontend/Mobile/Desktop):**
 
 - `/flow-build fase 0` - Context Discovery (solo proyectos existentes)
 - `/flow-build fase 1` - Discovery & UX / Platform Selection
@@ -501,7 +504,7 @@ AI Flow follows: **Documentation as Executable Code**
 
 **Perfect for:**
 
-- ✅ Backend/frontend/mobile developers starting new projects
+- ✅ Backend/frontend/mobile/desktop developers starting new projects
 - ✅ Teams with existing codebases needing AI-ready documentation
 - ✅ Projects requiring comprehensive documentation
 - ✅ Teams adopting AI-assisted development
@@ -516,7 +519,7 @@ AI Flow follows: **Documentation as Executable Code**
 
 ## 🚀 Roadmap
 
-- [x] Backend, frontend, mobile, fullstack support ✅
+- [x] Backend, frontend, mobile, desktop, fullstack support ✅
 - [ ] Template customization
 - [ ] VS Code extension
 - [ ] Interactive web UI
