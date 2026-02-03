@@ -59,7 +59,7 @@ Verify installation:
 
 ```bash
 ai-flow --version
-# Output: 2.5.0
+# Output: 2.5.4
 ```
 
 _Note: Package name is `ai-flow-dev`, but the CLI command remains `ai-flow`_
@@ -1168,6 +1168,7 @@ The `ai-flow init` command accepts multiple flags for automation and customizati
 | `--type <type>`        | String  | No       | Project type             | `--type backend`           |
 | `--name <name>`        | String  | No       | Project name             | `--name "My API"`          |
 | `--description <desc>` | String  | No       | Project description      | `--description "REST API"` |
+| `--dry-run`            | Boolean | No       | Simulate without writing | `--dry-run`                |
 | `--verbose`            | Boolean | No       | Enable detailed logging  | `--verbose`                |
 | `--dry-run`            | Boolean | No       | Simulate without writing | `--dry-run`                |
 
