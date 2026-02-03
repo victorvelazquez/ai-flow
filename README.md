@@ -4,13 +4,13 @@
 
 ## English
 
-Transform your idea into a production-ready, AI-documented project (backend, frontend, fullstack, or mobile) in minutes.
+Transform your idea into a production-ready, AI-documented project (backend, frontend, fullstack, mobile, or desktop) in minutes.
 
 AI Flow is an interactive CLI that creates comprehensive professional documentation and provides an AI-powered development workflow from idea to production. Compatible with Claude, Copilot, Cursor, Gemini, Antigravity, and any AI assistant.
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Desktop: 13 files, Fullstack: 30+ files)
+- 🚀 Complete professional documentation (Backend: 14 files, Frontend: 15 files, Mobile: 13 files, Desktop: 14 files, Fullstack: 30+ files)
 - 🧠 **Smart Description Refinement:** Detects ambiguity and iteratively guides you to a professional project definition.
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
@@ -36,11 +36,11 @@ ai-flow init .
 
 ## Español
 
-Transforma tu idea en un proyecto listo para producción y documentado para IA en minutos (backend, frontend, fullstack o mobile).
+Transforma tu idea en un proyecto listo para producción y documentado para IA en minutos (backend, frontend, fullstack, mobile o desktop).
 
 **Características:**
 
-- 🚀 Documentación profesional completa (Backend: 17 archivos, Frontend: 15 archivos, Mobile: 13 archivos, Desktop: 13 archivos, Fullstack: 30+ archivos)
+- 🚀 Documentación profesional completa (Backend: 14 archivos, Frontend: 15 archivos, Mobile: 13 archivos, Desktop: 14 archivos, Fullstack: 30+ archivos)
 - 🧠 **Refinamiento Inteligente:** Detecta ambigüedad y te guía iterativamente hacia una descripción profesional.
 - ⚡ **Dos modos:** Interactivo (90-120 min, control total) o Auto-Sugerido (15-25 min, 6 preguntas)
 - 🌍 Soporte universal - 12 lenguajes, 60+ frameworks, 35+ ORMs
@@ -65,10 +65,10 @@ ai-flow init .
 
 ## Português
 
-Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos.
+Transforme sua ideia em um projeto pronto para produção e documentado para IA em minutos (backend, frontend, fullstack, mobile ou desktop).
 **Características:**
 
-- 🚀 Documentação profissional completa (Backend: 17 arquivos, Frontend: 15 arquivos, Mobile: 13 arquivos, Desktop: 13 arquivos, Fullstack: 30+ arquivos)
+- 🚀 Documentação profissional completa (Backend: 14 arquivos, Frontend: 15 arquivos, Mobile: 13 arquivos, Desktop: 14 arquivos, Fullstack: 30+ arquivos)
 - 🚀 **Modo Agente:** Os assistentes de IA agora priorizam a execução proativa para todos os comandos `/flow-`.
 - 🧠 **Refinamento Inteligente:** Detecta ambiguidade e guia você para uma descrição profissional.
 - ⚡ **Dois modos:** Interactivo (90-120 min, controle total) ou Auto-Sugestão (15-25 min, 6 perguntas)
