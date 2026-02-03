@@ -122,6 +122,32 @@ Java:
 H) 🏆 Spring Boot - Enterprise standard
 I) Quarkus - Modern (cloud-native, fast startup)
 
+Java (NetBeans - Ant Based):
+J) ⚡ NetBeans + Servlets/JSP - Traditional Java web
+   - Java EE web applications
+   - Servlet containers (Tomcat, GlassFish)
+   - JSP for server-side rendering
+   - JDBC for database access
+
+K) 🔥 NetBeans + JAX-RS - RESTful API
+   - Jersey or RESTEasy implementation
+   - JSON/XML response formats
+   - Bean Validation support
+   - GlassFish or Payara server
+
+L) 🏆 NetBeans + Spring Framework (Ant)
+   - Spring MVC or Spring Boot
+   - Dependency injection
+   - Can use Ant instead of Maven
+   - Tomcat embedded or standalone
+
+Java (Eclipse - Maven/Gradle):
+M) 🏆 Eclipse + Spring Boot (Maven/Gradle)
+   - Spring MVC or Spring REST
+   - Modern build tools
+   - Better dependency management
+   - Extensive Eclipse tooling
+
 Go:
 J) ⚡ Gin - Popular (fast, minimalist)
 K) Echo - Feature-rich (middleware, routing)
@@ -165,6 +191,31 @@ C) ⚡ yarn - Popular alternative
 D) 🚀 bun - Ultra fast (if using Bun runtime)
 E) 🐍 pip/poetry (Python)
 F) ☕ Maven/Gradle (Java)
+G) 🐜 Apache Ant (NetBeans default, Java)
+
+**For NetBeans Projects:**
+
+Build Tool:
+A) ⭐ Apache Ant - Default for NetBeans (build.xml)
+B) Maven - Modern alternative (pom.xml)
+C) Gradle - Modern alternative (build.gradle)
+
+If using Ant:
+- Dependencies managed via lib/ folder
+- Manual JAR management or Ant + Ivy
+- Build targets: compile, jar, run, clean
+
+**For Eclipse Projects:**
+
+Build Tool:
+A) ⭐ Maven - Recommended (pom.xml)
+B) 🔥 Gradle - Modern alternative (build.gradle)
+C) Ant - Legacy (build.xml)
+
+Eclipse uses:
+- m2e (Maven integration)
+- Buildship (Gradle integration)
+- Automatic classpath management
 ```
 
 **3.3 Architecture Pattern**
@@ -763,6 +814,7 @@ Execute `read_file()` for both documents to refresh context before continuing.
 ## 📝 Generated Documents
 
 After Phase 3, generate/update:
+
 - `docs/architecture.md` - Technical stack and patterns
 - `ai-instructions.md` - Instructions for AI agents
 
