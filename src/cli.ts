@@ -88,6 +88,22 @@ const PROJECT_PHASES: Record<string, { label: string; phases: string[] }> = {
       'fase 10: User Stories Generation (opcional)',
     ],
   },
+  desktop: {
+    label: 'Desktop',
+    phases: [
+      'fase 0: Context Discovery (proyectos existentes)',
+      'fase 1: Discovery & UX Desktop',
+      'fase 2: UI Components (Swing/JavaFX/SWT)',
+      'fase 3: Architecture Desktop',
+      'fase 4: Data & Storage',
+      'fase 5: Code Standards',
+      'fase 6: Testing',
+      'fase 7: Packaging & Deployment',
+      'fase 8: Project Setup & Final Docs',
+      'fase 9: Implementation Roadmap (opcional)',
+      'fase 10: User Stories Generation (opcional)',
+    ],
+  },
 };
 
 // Read package.json for version (Sync for top-level usage)
@@ -124,6 +140,8 @@ function getProjectTypeLabel(type: string): string {
       return 'Full Stack';
     case 'mobile':
       return 'Mobile';
+    case 'desktop':
+      return 'Desktop';
     default:
       return type;
   }
@@ -292,15 +310,15 @@ async function selectAITool(providedTool?: string): Promise<string[]> {
 
 async function selectProjectType(
   providedType?: string
-): Promise<'backend' | 'frontend' | 'fullstack' | 'mobile'> {
+): Promise<'backend' | 'frontend' | 'fullstack' | 'mobile' | 'desktop'> {
   if (providedType) {
-    const valid = ['backend', 'frontend', 'fullstack', 'mobile'];
+    const valid = ['backend', 'frontend', 'fullstack', 'mobile', 'desktop'];
     if (!valid.includes(providedType)) {
       console.error(chalk.red(`❌ Invalid project type: ${providedType}`));
-      console.log(chalk.yellow('Available options: backend, frontend, fullstack, mobile'));
+      console.log(chalk.yellow('Available options: backend, frontend, fullstack, mobile, desktop'));
       process.exit(EXIT.INVALID_ARGS);
     }
-    return providedType as 'backend' | 'frontend' | 'fullstack' | 'mobile';
+    return providedType as 'backend' | 'frontend' | 'fullstack' | 'mobile' | 'desktop';
   }
 
   if (!process.stdin.isTTY) return 'backend';
@@ -312,10 +330,11 @@ async function selectProjectType(
       { name: '🎨 Frontend Application', value: 'frontend' },
       { name: '🚀 Full Stack Application', value: 'fullstack' },
       { name: '📱 Mobile Application', value: 'mobile' },
+      { name: '🖥️  Desktop Application', value: 'desktop' },
     ],
     default: 'backend',
   });
-  return projectType as 'backend' | 'frontend' | 'fullstack' | 'mobile';
+  return projectType as 'backend' | 'frontend' | 'fullstack' | 'mobile' | 'desktop';
 }
 
 async function checkIfInitialized(targetPath: string): Promise<boolean> {
@@ -325,7 +344,7 @@ async function checkIfInitialized(targetPath: string): Promise<boolean> {
 async function createBootstrapStructure(
   targetPath: string,
   aiTools: string[],
-  projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' = 'backend',
+  projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' | 'desktop' = 'backend',
   dryRun?: boolean
 ): Promise<void> {
   const spinner = ora('Creating .ai-flow structure...').start();
@@ -349,6 +368,7 @@ async function createBootstrapStructure(
       backend: projectType === 'backend' || projectType === 'fullstack',
       frontend: projectType === 'frontend' || projectType === 'fullstack',
       mobile: projectType === 'mobile',
+      desktop: projectType === 'desktop',
     };
 
     await fs.writeJSON(path.join(bootstrapPath, 'core', 'config.json'), config, { spaces: 2 });
@@ -361,7 +381,7 @@ async function createBootstrapStructure(
 
 async function copyTemplates(
   targetPath: string,
-  projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' = 'backend',
+  projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' | 'desktop' = 'backend',
   aiTools: string[] = [],
   dryRun?: boolean
 ): Promise<void> {
@@ -422,6 +442,11 @@ async function copyTemplates(
         source: path.join(ROOT_DIR, 'templates', 'mobile'),
         base: path.join(ROOT_DIR, 'templates', 'mobile'),
       });
+    else if (projectType === 'desktop')
+      templateSources.push({
+        source: path.join(ROOT_DIR, 'templates', 'desktop'),
+        base: path.join(ROOT_DIR, 'templates', 'desktop'),
+      });
 
     for (const { source, base } of templateSources) {
       for (const file of await walk(source)) {
@@ -476,7 +501,7 @@ async function copyPrompts(targetPath: string, dryRun?: boolean): Promise<void> 
 async function setupSlashCommands(
   targetPath: string,
   aiTools: string[],
-  projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' = 'backend',
+  projectType: 'backend' | 'frontend' | 'fullstack' | 'mobile' | 'desktop' = 'backend',
   dryRun?: boolean
 ): Promise<void> {
   const spinner = ora('Setting up slash commands...').start();
@@ -489,6 +514,8 @@ async function setupSlashCommands(
       promptSources.push({ dir: 'frontend', prefix: 'frontend-' });
     } else if (projectType === 'mobile') {
       promptSources.push({ dir: 'mobile' });
+    } else if (projectType === 'desktop') {
+      promptSources.push({ dir: 'desktop' });
     }
 
     for (const { dir, prefix } of promptSources) {
