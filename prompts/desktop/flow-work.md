@@ -27,6 +27,88 @@ Provide a single, intelligent entry point for all development work (New Features
 
 ---
 
+## Phase -1: Intent Classification (PRE-DETECTION)
+
+**CRITICAL: Determine if this is an INFORMATIVE request vs EXECUTION request BEFORE any workflow.**
+
+**🔍 INFORMATIVE Patterns (Answer directly, NO execution workflow):**
+
+- **Questions:** Starts with `¿`, `how`, `why`, `what`, `when`, `cómo`, `por qué`, `qué`, `cuál`
+- **Analysis verbs:** `explain`, `show`, `list`, `analyze`, `describe`, `compare`, `explica`, `muestra`, `analiza`, `describe`, `compara`
+- **Report requests:** `report`, `informe`, `document`, `documenta`, `summary`, `resumen`, `generate report`, `genera informe`
+- **Exploration:** `find`, `search`, `busca`, `encuentra`, `where is`, `dónde está`
+- **Review requests:** `review`, `revisa`, `check`, `verifica`, `audit`, `audita`
+
+**🛠️ EXECUTION Patterns (Enter workflow):**
+
+- **Action verbs:** `implement`, `create`, `refactor`, `fix`, `add`, `remove`, `update`, `delete`, `build`, `develop`
+- **Task codes:** `HU-\d{3}-\d{3}`, `EP-\d{3}`, `T\d{3}`
+- **Imperative:** `new feature`, `nueva feature`, `crear`, `implementar`
+
+**Detection Logic:**
+
+```python
+import re
+
+# Normalize input
+input_lower = input.strip().lower()
+
+# INFORMATIVE patterns (high priority)
+informative_patterns = [
+    r'^(¿|how|why|what|when|where|cómo|por qué|qué|cuál|dónde)',
+    r'^(explain|show|list|analyze|describe|compare|explica|muestra|analiza|describe|compara)',
+    r'(report|informe|document|documenta|summary|resumen)',
+    r'(find|search|busca|encuentra)',
+    r'(review|revisa|check|verifica|audit|audita)',
+]
+
+for pattern in informative_patterns:
+    if re.search(pattern, input_lower):
+        return "INFORMATIVE"  # → Jump to Phase 99
+
+# EXECUTION patterns
+execution_patterns = [
+    r'(HU-\d{3}-\d{3}|EP-\d{3}|T\d{3})',  # Task codes
+    r'^(implement|create|refactor|fix|add|remove|update|delete|build|develop)',
+    r'(implementar|crear|nueva feature|new feature)',
+]
+
+for pattern in execution_patterns:
+    if re.search(pattern, input_lower):
+        return "EXECUTION"  # → Continue to Phase 0
+
+# Ambiguous case - ask user
+return "AMBIGUOUS"
+```
+
+**Action based on detection:**
+
+**IF mode == "INFORMATIVE":**
+
+```
+🔍 Detected: Informative request (question/report/analysis)
+
+I'll provide a detailed answer without creating work files or branches.
+```
+
+→ **Jump to Phase 99: Informative Response**
+
+**IF mode == "EXECUTION":**
+
+→ **Continue to Phase 0** (current workflow)
+
+**IF mode == "AMBIGUOUS":**
+
+```
+❓ I'm not sure if this is:
+  A) A question/report request (I'll answer directly)
+  B) A task to implement (I'll create work plan and execute)
+
+Please clarify (A/B): _
+```
+
+---
+
 ## Phase 0: Detection & Strategy (Automatic)
 
 **1. Semantic Analysis of Input:**
@@ -1020,4 +1102,289 @@ Commits: [N]
 
 ---
 
+## Phase 99: Informative Response
+
+**This phase handles questions, reports, and analysis requests WITHOUT creating work files or branches.**
+
+### 1. Analyze Request Type
+
+**Classify the informative request:**
+
+- **Technical Question:** How does X work? Why do we use Y?
+- **UI Component Explanation:** Explain this window/panel/dialog
+- **Architecture Review:** Show me the application structure/threading model
+- **Project Report:** Generate report on dependencies/JAR size/test coverage
+- **File Location:** Where is X class? Find Y service
+- **Comparison:** Compare Swing vs JavaFX approach
+- **Best Practices:** What's the best way to handle X in desktop apps?
+
+### 2. Load Relevant Context
+
+**Based on request type, load specific documentation:**
+
+**IF question about architecture/patterns:**
+
+- Read `ai-instructions.md` (NEVER/ALWAYS rules)
+- Read `docs/architecture.md` (MVC/MVP/MVVM, threading, layers)
+- Search codebase for examples
+
+**IF question about specific component:**
+
+- Search codebase for class/form files
+- Read relevant specs from `specs/`
+- Check UI thread handling
+
+**IF report request:**
+
+- Run appropriate analysis (JAR size, dependencies, coverage)
+- Read relevant docs for context
+- Generate structured report
+
+**IF file location request:**
+
+- Search codebase with grep/semantic search
+- List relevant classes with descriptions
+
+### 3. Provide Comprehensive Answer
+
+**Structure your response:**
+
+```markdown
+## [Question/Request]
+
+### Answer
+
+[Detailed explanation with code examples if relevant]
+
+### Related Documentation
+
+- [Link to relevant docs]
+- [Link to class/component examples]
+
+### Additional Context
+
+[Architecture decisions, threading considerations, platform differences]
+
+### Related User Stories/Features
+
+[If applicable, link to planning docs]
+```
+
+**Guidelines:**
+
+- **Be comprehensive:** Load all relevant context, don't guess
+- **Show examples:** Include actual code from the project
+- **Reference docs:** Link to `docs/`, `specs/`, `planning/`
+- **Explain trade-offs:** Why was Swing chosen over JavaFX?
+- **Threading safety:** Highlight EDT/Platform.runLater usage
+- **Provide sources:** Always cite where information comes from
+
+### 4. Offer Follow-up Actions
+
+**After answering, offer next steps:**
+
+```
+✅ Answer provided.
+
+Would you like me to:
+  A) Implement changes based on this analysis
+  B) Create a work plan for improvements
+  C) Generate a spec/doc for this
+  D) Nothing, just the answer
+
+Your choice (or just ask another question): _
+```
+
+**IF user chooses A or B:**
+
+- Return to Phase 0 with refined objective
+- Create appropriate work.md and proceed with execution
+
+**IF user chooses C:**
+
+- Create spec/doc file in appropriate location
+- Commit with descriptive message
+
+**IF user chooses D or asks another question:**
+
+- **END WORKFLOW** (no files created, no branches)
+
+### 5. Example Interactions
+
+**Example 1: Technical Question**
+
+````
+User: /flow-work ¿cómo funciona el threading model en Swing?
+
+Agent:
+🔍 Detected: Informative request (question)
+
+## How Threading Works in This Desktop Application
+
+### Swing Threading Model
+
+Our application follows Swing's single-threaded model:
+- **EDT (Event Dispatch Thread):** All UI updates
+- **Worker Threads:** Background tasks (DB, network, file I/O)
+
+### Implementation Pattern
+
+```java
+// Example from UserService.java
+public void loadUsersAsync(Consumer<List<User>> callback) {
+    // Background thread for DB query
+    SwingWorker<List<User>, Void> worker = new SwingWorker<>() {
+        @Override
+        protected List<User> doInBackground() throws Exception {
+            return userRepository.findAll(); // Runs on worker thread
+        }
+
+        @Override
+        protected void done() {
+            try {
+                List<User> users = get();
+                SwingUtilities.invokeLater(() -> {
+                    callback.accept(users); // Update UI on EDT
+                });
+            } catch (Exception e) {
+                handleError(e);
+            }
+        }
+    };
+    worker.execute();
+}
+````
+
+### Key Rules in This Project
+
+1. **NEVER block EDT:** All long operations use SwingWorker
+2. **ALWAYS update UI on EDT:** Use `SwingUtilities.invokeLater()`
+3. **Use SwingWorker for progress:** `publish()` and `process()` for updates
+
+### Common Patterns
+
+```java
+// Pattern 1: Simple async task
+SwingUtilities.invokeLater(() -> {
+    label.setText("Updated"); // Safe: runs on EDT
+});
+
+// Pattern 2: Background with progress
+SwingWorker<Result, Integer> worker = new SwingWorker<>() {
+    @Override
+    protected Result doInBackground() {
+        for (int i = 0; i < 100; i++) {
+            // Long operation
+            publish(i); // Report progress
+        }
+        return result;
+    }
+
+    @Override
+    protected void process(List<Integer> chunks) {
+        progressBar.setValue(chunks.get(chunks.size() - 1));
+    }
+};
+```
+
+### Where to Find Examples
+
+- `src/services/UserService.java` - Database operations
+- `src/ui/MainWindow.java` - File loading
+- `src/ui/ReportDialog.java` - Report generation
+
+### Related Documentation
+
+- `ai-instructions.md` - Threading rules (NEVER block EDT)
+- `docs/architecture.md` - Service layer patterns
+
+Would you like me to review other classes for threading issues? (Y/N): \_
+
+```
+
+**Example 2: Report Request**
+
+```
+
+User: /flow-work genera un informe de dependencias del proyecto
+
+Agent:
+🔍 Detected: Informative request (report)
+
+## Project Dependencies Report
+
+[Analyzes pom.xml/build.gradle]
+
+### Build System: Maven
+
+### Java Version: 17
+
+### Total Dependencies: 18 (12 compile, 6 test)
+
+#### Core Dependencies
+
+| Dependency          | Version | Scope   | Size   | Purpose            |
+| ------------------- | ------- | ------- | ------ | ------------------ |
+| H2 Database         | 2.1.214 | runtime | 2.3 MB | Embedded database  |
+| FlatLaf             | 3.2.1   | compile | 1.1 MB | Modern Look & Feel |
+| Jackson Databind    | 2.15.2  | compile | 1.5 MB | JSON processing    |
+| SLF4J + Logback     | 2.0.9   | compile | 800 KB | Logging            |
+| Apache Commons Lang | 3.13.0  | compile | 640 KB | Utilities          |
+| Apache Commons IO   | 2.13.0  | compile | 510 KB | File operations    |
+
+#### Test Dependencies
+
+| Dependency    | Version | Scope | Purpose           |
+| ------------- | ------- | ----- | ----------------- |
+| JUnit Jupiter | 5.10.0  | test  | Unit testing      |
+| AssertJ Core  | 3.24.2  | test  | Fluent assertions |
+| AssertJ Swing | 3.17.1  | test  | UI testing        |
+| Mockito       | 5.5.0   | test  | Mocking           |
+
+### JAR Size Analysis
+
+- Application JAR: 450 KB
+- Dependencies: ~8 MB
+- **Total**: ~8.5 MB
+
+### Dependency Tree
+
+```
+com.example.app:1.0.0
+├── H2 Database:2.1.214
+├── FlatLaf:3.2.1
+│   └── FlatLaf Core (transitive)
+├── Jackson Databind:2.15.2
+│   ├── Jackson Core (transitive)
+│   └── Jackson Annotations (transitive)
+└── Logback:1.4.11
+    └── SLF4J API (transitive)
+```
+
+### Security Report
+
+✅ No known vulnerabilities (checked against CVE database)
+
+### Recommendations
+
+1. ✅ All dependencies up to date
+2. ✅ No deprecated libraries
+3. 💡 Consider ProGuard/R8 for distribution (reduce size by ~40%)
+4. 💡 H2 database could be replaced with SQLite (smaller: 1.2 MB)
+
+### License Compliance
+
+- Apache 2.0: 14 dependencies ✅
+- MIT: 3 dependencies ✅
+- EPL 2.0: 1 dependency (H2) ✅
+
+All licenses compatible with commercial use.
+
+Would you like me to create a plan to reduce bundle size? (Y/N): \_
+
+```
+
+---
+
 **BEGIN EXECUTION when user runs `/flow-work [args]`**
+```
