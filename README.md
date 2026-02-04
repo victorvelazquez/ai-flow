@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Desktop: 16 files, Fullstack: 30+ files)
+- 🚀 Complete professional documentation (Backend: 14 files, Frontend: 15 files, Mobile: 13 files, Desktop: 14 files, Fullstack: 30+ files)
 - 🧠 **Smart Description Refinement:** Detects ambiguity and iteratively guides you to a professional project definition.
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
@@ -108,7 +108,7 @@ The result is interconnected documentation that guides AI assistants and human d
 
 - 🌍 **Universal Support** - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
 - 🤖 **AI-Agnostic** - Claude, Copilot, Cursor, Gemini, Antigravity, any AI tool
-- 📚 **Professional Documentation** - Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Desktop: 16 files, Fullstack: 30+ files
+- 📚 **Professional Documentation** - Backend: 14 files, Frontend: 15 files, Mobile: 13 files, Desktop: 14 files, Fullstack: 30+ files
 - 🧠 **Smart Description Refinement** - AI detects vague inputs and helps you rich the context (WHO, WHAT, WHY).
 - ⚡ **Two Questionnaire Modes:**
   - **Interactive Mode:** Full control, all phases (90-120 min)
@@ -140,7 +140,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-## **Current version:** 2.6.0
+## **Current version:** 2.7.0
 
 ## 🚀 Quick Start
 
