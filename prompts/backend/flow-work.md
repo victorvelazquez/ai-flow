@@ -27,6 +27,88 @@ Provide a single, intelligent entry point for all development work (New Features
 
 ---
 
+## Phase -1: Intent Classification (PRE-DETECTION)
+
+**CRITICAL: Determine if this is an INFORMATIVE request vs EXECUTION request BEFORE any workflow.**
+
+**🔍 INFORMATIVE Patterns (Answer directly, NO execution workflow):**
+
+- **Questions:** Starts with `¿`, `how`, `why`, `what`, `when`, `cómo`, `por qué`, `qué`, `cuál`
+- **Analysis verbs:** `explain`, `show`, `list`, `analyze`, `describe`, `compare`, `explica`, `muestra`, `analiza`, `describe`, `compara`
+- **Report requests:** `report`, `informe`, `document`, `documenta`, `summary`, `resumen`, `generate report`, `genera informe`
+- **Exploration:** `find`, `search`, `busca`, `encuentra`, `where is`, `dónde está`
+- **Review requests:** `review`, `revisa`, `check`, `verifica`, `audit`, `audita`
+
+**🛠️ EXECUTION Patterns (Enter workflow):**
+
+- **Action verbs:** `implement`, `create`, `refactor`, `fix`, `add`, `remove`, `update`, `delete`, `build`, `develop`
+- **Task codes:** `HU-\d{3}-\d{3}`, `EP-\d{3}`, `T\d{3}`
+- **Imperative:** `new feature`, `nueva feature`, `crear`, `implementar`
+
+**Detection Logic:**
+
+```python
+import re
+
+# Normalize input
+input_lower = input.strip().lower()
+
+# INFORMATIVE patterns (high priority)
+informative_patterns = [
+    r'^(¿|how|why|what|when|where|cómo|por qué|qué|cuál|dónde)',
+    r'^(explain|show|list|analyze|describe|compare|explica|muestra|analiza|describe|compara)',
+    r'(report|informe|document|documenta|summary|resumen)',
+    r'(find|search|busca|encuentra)',
+    r'(review|revisa|check|verifica|audit|audita)',
+]
+
+for pattern in informative_patterns:
+    if re.search(pattern, input_lower):
+        return "INFORMATIVE"  # → Jump to Phase 99
+
+# EXECUTION patterns
+execution_patterns = [
+    r'(HU-\d{3}-\d{3}|EP-\d{3}|T\d{3})',  # Task codes
+    r'^(implement|create|refactor|fix|add|remove|update|delete|build|develop)',
+    r'(implementar|crear|nueva feature|new feature)',
+]
+
+for pattern in execution_patterns:
+    if re.search(pattern, input_lower):
+        return "EXECUTION"  # → Continue to Phase 0
+
+# Ambiguous case - ask user
+return "AMBIGUOUS"
+```
+
+**Action based on detection:**
+
+**IF mode == "INFORMATIVE":**
+
+```
+🔍 Detected: Informative request (question/report/analysis)
+
+I'll provide a detailed answer without creating work files or branches.
+```
+
+→ **Jump to Phase 99: Informative Response**
+
+**IF mode == "EXECUTION":**
+
+→ **Continue to Phase 0** (current workflow)
+
+**IF mode == "AMBIGUOUS":**
+
+```
+❓ I'm not sure if this is:
+  A) A question/report request (I'll answer directly)
+  B) A task to implement (I'll create work plan and execute)
+
+Please clarify (A/B): _
+```
+
+---
+
 ## Phase 0: Detection & Strategy (Automatic)
 
 **1. Semantic Analysis of Input:**
@@ -1017,6 +1099,187 @@ Commits: [N]
   - Detailed Fix logic → `@flow-work-fix.md`
   - Resume logic → `@flow-work-resume.md`
 - **State Persistence**: Always read/write to `.ai-flow/work/[name]/status.json` to maintain state across sessions.
+
+---
+
+## Phase 99: Informative Response
+
+**This phase handles questions, reports, and analysis requests WITHOUT creating work files or branches.**
+
+### 1. Analyze Request Type
+
+**Classify the informative request:**
+
+- **Technical Question:** How does X work? Why do we use Y?
+- **Code Explanation:** Explain this component/service/function
+- **Architecture Review:** Show me the architecture/patterns
+- **Project Report:** Generate report on tests/coverage/dependencies
+- **File Location:** Where is X? Find Y
+- **Comparison:** Compare X vs Y
+- **Best Practices:** What's the best way to do X?
+
+### 2. Load Relevant Context
+
+**Based on request type, load specific documentation:**
+
+**IF question about architecture/patterns:**
+
+- Read `ai-instructions.md` (NEVER/ALWAYS rules)
+- Read `docs/architecture.md` (patterns, layers, structure)
+- Search codebase for examples
+
+**IF question about specific feature:**
+
+- Search codebase for related files
+- Read relevant specs from `specs/`
+- Check `planning/roadmap.md` or User Stories
+
+**IF report request:**
+
+- Run appropriate analysis (coverage, dependencies, etc.)
+- Read relevant docs for context
+- Generate structured report
+
+**IF file location request:**
+
+- Search codebase with grep/semantic search
+- List relevant files with descriptions
+
+### 3. Provide Comprehensive Answer
+
+**Structure your response:**
+
+```markdown
+## [Question/Request]
+
+### Answer
+
+[Detailed explanation with code examples if relevant]
+
+### Related Documentation
+
+- [Link to relevant docs]
+- [Link to code examples]
+
+### Additional Context
+
+[Architecture decisions, best practices, warnings]
+
+### Related User Stories/Features
+
+[If applicable, link to planning docs]
+```
+
+**Guidelines:**
+
+- **Be comprehensive:** Load all relevant context, don't guess
+- **Show examples:** Include actual code from the project
+- **Reference docs:** Link to `docs/`, `specs/`, `planning/`
+- **Explain trade-offs:** Why was X chosen over Y?
+- **Provide sources:** Always cite where information comes from
+
+### 4. Offer Follow-up Actions
+
+**After answering, offer next steps:**
+
+```
+✅ Answer provided.
+
+Would you like me to:
+  A) Implement changes based on this analysis
+  B) Create a work plan for improvements
+  C) Generate a spec/doc for this
+  D) Nothing, just the answer
+
+Your choice (or just ask another question): _
+```
+
+**IF user chooses A or B:**
+
+- Return to Phase 0 with refined objective
+- Create appropriate work.md and proceed with execution
+
+**IF user chooses C:**
+
+- Create spec/doc file in appropriate location
+- Commit with descriptive message
+
+**IF user chooses D or asks another question:**
+
+- **END WORKFLOW** (no files created, no branches)
+
+### 5. Example Interactions
+
+**Example 1: Technical Question**
+
+```
+User: /flow-work ¿cómo funciona la autenticación JWT?
+
+Agent:
+🔍 Detected: Informative request (question)
+
+## How JWT Authentication Works in This Project
+
+### Implementation
+
+Our JWT implementation is in `src/services/auth.service.ts`:
+- Token generation: `generateToken(userId, email)`
+- Token validation: `verifyToken(token)`
+- Refresh mechanism: `refreshToken(refreshToken)`
+
+[Shows actual code from project]
+
+### Flow
+1. User logs in → POST /auth/login
+2. Server validates credentials
+3. Generates JWT with 1h expiration
+4. Returns { accessToken, refreshToken }
+5. Client includes token in Authorization header
+
+### Security Considerations
+- Tokens are signed with HS256
+- Secret stored in environment variable
+- Refresh tokens have 7-day expiration
+- No sensitive data in payload
+
+### Related Documentation
+- `specs/security.md` - Authentication specs
+- `docs/api.md` - Auth endpoints
+
+Would you like me to implement any changes to this? (Y/N): _
+```
+
+**Example 2: Report Request**
+
+```
+User: /flow-work genera un informe de cobertura de tests
+
+Agent:
+🔍 Detected: Informative request (report)
+
+## Test Coverage Report
+
+[Runs coverage analysis]
+
+### Overall Coverage: 78.5%
+
+| Category        | Coverage | Files |
+|-----------------|----------|-------|
+| Services        | 92%      | 12/13 |
+| Controllers     | 85%      | 8/10  |
+| Repositories    | 95%      | 10/10 |
+| Utilities       | 45%      | 5/11  |
+
+### Areas Needing Improvement
+1. `src/utils/validators.ts` - 20% coverage
+2. `src/utils/formatters.ts` - 35% coverage
+3. `src/controllers/reports.controller.ts` - 60% coverage
+
+### Recommendation
+Focus on utilities first (high reusability, low coverage).
+
+Would you like me to create a work plan to improve coverage? (Y/N): _
+```
 
 ---
 

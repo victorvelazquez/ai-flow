@@ -27,6 +27,88 @@ Provide a single, intelligent entry point for all development work (New Features
 
 ---
 
+## Phase -1: Intent Classification (PRE-DETECTION)
+
+**CRITICAL: Determine if this is an INFORMATIVE request vs EXECUTION request BEFORE any workflow.**
+
+**🔍 INFORMATIVE Patterns (Answer directly, NO execution workflow):**
+
+- **Questions:** Starts with `¿`, `how`, `why`, `what`, `when`, `cómo`, `por qué`, `qué`, `cuál`
+- **Analysis verbs:** `explain`, `show`, `list`, `analyze`, `describe`, `compare`, `explica`, `muestra`, `analiza`, `describe`, `compara`
+- **Report requests:** `report`, `informe`, `document`, `documenta`, `summary`, `resumen`, `generate report`, `genera informe`
+- **Exploration:** `find`, `search`, `busca`, `encuentra`, `where is`, `dónde está`
+- **Review requests:** `review`, `revisa`, `check`, `verifica`, `audit`, `audita`
+
+**🛠️ EXECUTION Patterns (Enter workflow):**
+
+- **Action verbs:** `implement`, `create`, `refactor`, `fix`, `add`, `remove`, `update`, `delete`, `build`, `develop`
+- **Task codes:** `HU-\d{3}-\d{3}`, `EP-\d{3}`, `T\d{3}`
+- **Imperative:** `new feature`, `nueva feature`, `crear`, `implementar`
+
+**Detection Logic:**
+
+```python
+import re
+
+# Normalize input
+input_lower = input.strip().lower()
+
+# INFORMATIVE patterns (high priority)
+informative_patterns = [
+    r'^(¿|how|why|what|when|where|cómo|por qué|qué|cuál|dónde)',
+    r'^(explain|show|list|analyze|describe|compare|explica|muestra|analiza|describe|compara)',
+    r'(report|informe|document|documenta|summary|resumen)',
+    r'(find|search|busca|encuentra)',
+    r'(review|revisa|check|verifica|audit|audita)',
+]
+
+for pattern in informative_patterns:
+    if re.search(pattern, input_lower):
+        return "INFORMATIVE"  # → Jump to Phase 99
+
+# EXECUTION patterns
+execution_patterns = [
+    r'(HU-\d{3}-\d{3}|EP-\d{3}|T\d{3})',  # Task codes
+    r'^(implement|create|refactor|fix|add|remove|update|delete|build|develop)',
+    r'(implementar|crear|nueva feature|new feature)',
+]
+
+for pattern in execution_patterns:
+    if re.search(pattern, input_lower):
+        return "EXECUTION"  # → Continue to Phase 0
+
+# Ambiguous case - ask user
+return "AMBIGUOUS"
+```
+
+**Action based on detection:**
+
+**IF mode == "INFORMATIVE":**
+
+```
+🔍 Detected: Informative request (question/report/analysis)
+
+I'll provide a detailed answer without creating work files or branches.
+```
+
+→ **Jump to Phase 99: Informative Response**
+
+**IF mode == "EXECUTION":**
+
+→ **Continue to Phase 0** (current workflow)
+
+**IF mode == "AMBIGUOUS":**
+
+```
+❓ I'm not sure if this is:
+  A) A question/report request (I'll answer directly)
+  B) A task to implement (I'll create work plan and execute)
+
+Please clarify (A/B): _
+```
+
+---
+
 ## Phase 0: Detection & Strategy (Automatic)
 
 **1. Semantic Analysis of Input:**
@@ -1024,4 +1106,215 @@ Commits: [N]
 
 ---
 
+## Phase 99: Informative Response
+
+**This phase handles questions, reports, and analysis requests WITHOUT creating work files or branches.**
+
+### 1. Analyze Request Type
+
+**Classify the informative request:**
+
+- **Technical Question:** How does X work? Why do we use Y?
+- **Component Explanation:** Explain this component/hook/utility
+- **Architecture Review:** Show me the component structure/state management
+- **Project Report:** Generate report on bundle size/dependencies/performance
+- **File Location:** Where is X component? Find Y hook
+- **Comparison:** Compare X vs Y approach
+- **Best Practices:** What's the best way to do X in React/Vue/Angular?
+
+### 2. Load Relevant Context
+
+**Based on request type, load specific documentation:**
+
+**IF question about architecture/patterns:**
+
+- Read `ai-instructions.md` (NEVER/ALWAYS rules)
+- Read `docs/architecture.md` (component structure, state management)
+- Search codebase for examples
+
+**IF question about specific component:**
+
+- Search codebase for component files
+- Read relevant specs from `specs/`
+- Check related hooks/utilities
+
+**IF report request:**
+
+- Run appropriate analysis (bundle size, performance, dependencies)
+- Read relevant docs for context
+- Generate structured report
+
+**IF file location request:**
+
+- Search codebase with grep/semantic search
+- List relevant components with descriptions
+
+### 3. Provide Comprehensive Answer
+
+**Structure your response:**
+
+```markdown
+## [Question/Request]
+
+### Answer
+
+[Detailed explanation with code examples if relevant]
+
+### Related Documentation
+
+- [Link to relevant docs]
+- [Link to component examples]
+
+### Additional Context
+
+[Architecture decisions, design patterns, performance considerations]
+
+### Related User Stories/Features
+
+[If applicable, link to planning docs]
+```
+
+**Guidelines:**
+
+- **Be comprehensive:** Load all relevant context, don't guess
+- **Show examples:** Include actual code from the project
+- **Reference docs:** Link to `docs/`, `specs/`, `planning/`
+- **Explain trade-offs:** Why was X pattern chosen over Y?
+- **Provide sources:** Always cite where information comes from
+
+### 4. Offer Follow-up Actions
+
+**After answering, offer next steps:**
+
+```
+✅ Answer provided.
+
+Would you like me to:
+  A) Implement changes based on this analysis
+  B) Create a work plan for improvements
+  C) Generate a spec/doc for this
+  D) Nothing, just the answer
+
+Your choice (or just ask another question): _
+```
+
+**IF user chooses A or B:**
+
+- Return to Phase 0 with refined objective
+- Create appropriate work.md and proceed with execution
+
+**IF user chooses C:**
+
+- Create spec/doc file in appropriate location
+- Commit with descriptive message
+
+**IF user chooses D or asks another question:**
+
+- **END WORKFLOW** (no files created, no branches)
+
+### 5. Example Interactions
+
+**Example 1: Technical Question**
+
+````
+User: /flow-work ¿cómo funciona el state management con Context API?
+
+Agent:
+🔍 Detected: Informative request (question)
+
+## How State Management Works in This Project
+
+### Implementation
+
+We use Context API with custom hooks in `src/contexts/`:
+- `AuthContext.tsx` - User authentication state
+- `ThemeContext.tsx` - Theme preferences
+- `AppContext.tsx` - Global app state
+
+[Shows actual code from project]
+
+### Pattern
+```typescript
+// Example from AuthContext.tsx
+const AuthProvider: FC<Props> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Context value
+  const value = { user, loading, login, logout };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+````
+
+### Usage in Components
+
+```typescript
+// Any component
+const { user, login, logout } = useAuth();
+```
+
+### Why Context API vs Redux?
+
+- Lighter weight for our use case
+- No external dependencies
+- Sufficient for current app complexity
+- Can migrate to Redux if state grows
+
+### Related Documentation
+
+- `docs/architecture.md` - State management patterns
+- `docs/components.md` - Component guidelines
+
+Would you like me to implement any changes to this? (Y/N): \_
+
+```
+
+**Example 2: Report Request**
+
+```
+
+User: /flow-work genera un informe del tamaño del bundle
+
+Agent:
+🔍 Detected: Informative request (report)
+
+## Bundle Size Report
+
+[Runs bundle analysis]
+
+### Total Bundle Size: 245 KB (gzipped: 78 KB)
+
+| Asset      | Size   | Gzipped | % of Total |
+| ---------- | ------ | ------- | ---------- |
+| main.js    | 180 KB | 58 KB   | 73.5%      |
+| vendor.js  | 45 KB  | 15 KB   | 18.4%      |
+| styles.css | 20 KB  | 5 KB    | 8.1%       |
+
+### Largest Dependencies
+
+1. `react-dom` - 42 KB
+2. `axios` - 15 KB
+3. `date-fns` - 12 KB
+4. `lodash` - 8 KB (⚠️ not tree-shaken)
+
+### Recommendations
+
+1. Use `lodash-es` for tree-shaking (saves ~6 KB)
+2. Consider lazy loading routes (saves ~30 KB initial)
+3. Move `date-fns` locales to dynamic imports
+
+### Comparison to Target
+
+- Target: <100 KB gzipped ✅
+- Current: 78 KB gzipped ✅
+- Margin: 22 KB available
+
+Would you like me to create a work plan to optimize further? (Y/N): \_
+
+```
+
+---
+
 **BEGIN EXECUTION when user runs `/flow-work [args]`**
+```
