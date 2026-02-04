@@ -56,7 +56,21 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Check if version already published
+        id: check
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          echo "version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+          if npm view ai-flow-dev@$PACKAGE_VERSION version 2>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "⚠️ Version $PACKAGE_VERSION already exists on npm. Skipping publish."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "✅ Version $PACKAGE_VERSION is new. Ready to publish."
+          fi
+
       - name: Publish to npm
+        if: steps.check.outputs.exists == 'false'
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
