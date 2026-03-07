@@ -115,7 +115,7 @@ Please clarify (A/B): _
 
 | Input Pattern                  | Mode              | Source / Action                                                      |
 | ------------------------------ | ----------------- | -------------------------------------------------------------------- |
-| `api\s+([a-z0-9\-_]+)`         | `API_MODULE`      | Invoke `.ai-flow/prompts/mobile/flow-api-module.md` analyzer         |
+| `api\s+([a-z0-9\-_]+)`         | `API_MODULE`      | Invoke `.ai-flow/prompts/mobile/flow-work-api.md` analyzer           |
 | `HU-\d{3}-\d{3}`               | `USER_STORY`      | Load from `planning/user-stories/**/HU-XXX-XXX.md`                   |
 | `EP-\d{3}`                     | `EPIC`            | Analyze/List User Stories for Epic `EP-XXX`                          |
 | `T\d{3}(-T\d{3})?`             | `TASKS`           | Target specific task or range (e.g., `T025-T030`)                    |
@@ -145,7 +145,7 @@ This phase manages API URL configuration, invokes the specialized API analyzer, 
 **🏗️ Architecture Design:**
 
 - **This prompt (flow-work)**: Orchestrator with state management (cache, validation, retry logic)
-- **Sub-prompt (flow-api-module)**: Pure analyzer (stateless, receives validated URL)
+- **Sub-prompt (flow-work-api)**: Pure analyzer (stateless, receives validated URL)
 - **Cache location**: `.ai-flow/cache/api-config.json`
 - **Why this separation?**:
   - Reusability: analyzer can be used from different orchestrators
@@ -442,7 +442,7 @@ console.log(`\n🔍 Analyzing API module: ${moduleName}`);
 console.log(`📡 Fetching OpenAPI spec from: ${apiUrl}\n`);
 
 const analysisResult: OpenAPIAnalysisResult = await invoke_subprompt(
-  '.ai-flow/prompts/mobile/flow-api-module.md',
+  '.ai-flow/prompts/mobile/flow-work-api.md',
   {
     module: moduleName,
     apiUrl: apiUrl, // Validated URL

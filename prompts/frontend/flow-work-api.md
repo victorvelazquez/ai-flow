@@ -27,7 +27,7 @@ description: Analyze OpenAPI specification to extract complete module metadata f
 **Architecture:**
 
 - `flow-work` = Orchestrator (stateful, manages cache)
-- `flow-api-module` = Analyzer (stateless, pure function)
+- `flow-work-api` = Analyzer (stateless, pure function)
 
 ---
 
