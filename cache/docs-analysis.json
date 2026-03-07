@@ -1,23 +1,23 @@
 {
   "lastAnalysis": {
-    "gaps_found": 2,
-    "mobile_templates": 13,
-    "frontend_templates": 15,
-    "total_prompts": 94,
-    "gaps_fixed": 2,
-    "desktop_prompts": 22,
-    "desktop_templates": 14,
-    "frontend_prompts": 22,
-    "backend_prompts": 22,
+    "gaps_found": 5,
+    "gaps_fixed": 5,
     "backend_templates": 14,
-    "mobile_prompts": 22
+    "frontend_templates": 15,
+    "mobile_templates": 13,
+    "desktop_templates": 14,
+    "backend_prompts": 22,
+    "frontend_prompts": 23,
+    "mobile_prompts": 23,
+    "desktop_prompts": 22,
+    "total_prompts": 90
   },
   "files": {
-    "package.json": "2026-02-04T15:23:52.7594786-03:00",
-    "prompts/": "2026-02-04T15:17:54.1209389-03:00",
-    "templates/": "2026-02-04T15:23:52.7594786-03:00",
-    "src/cli.ts": "2026-02-04T15:17:54.1345976-03:00"
+    "src/cli.ts": "C:\Users\victor\Developer\ai-flow\src\cli.ts.LastWriteTime.ToString('o')",
+    "package.json": "C:\Users\victor\Developer\ai-flow\package.json.LastWriteTime.ToString('o')",
+    "templates/": "C:\Users\victor\Developer\ai-flow\templates.LastWriteTime.ToString('o')",
+    "prompts/": "C:\Users\victor\Developer\ai-flow\prompts.LastWriteTime.ToString('o')"
   },
   "version": "2.7.0",
-  "timestamp": "2026-02-04T18:27:47.3645313Z"
+  "timestamp": "2026-03-07T19:47:08.3473127-03:00"
 }
