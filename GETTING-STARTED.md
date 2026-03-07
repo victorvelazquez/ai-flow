@@ -1169,8 +1169,6 @@ The `ai-flow init` command accepts multiple flags for automation and customizati
 | `--name <name>`        | String  | No       | Project name             | `--name "My API"`          |
 | `--description <desc>` | String  | No       | Project description      | `--description "REST API"` |
 | `--dry-run`            | Boolean | No       | Simulate without writing | `--dry-run`                |
-| `--verbose`            | Boolean | No       | Enable detailed logging  | `--verbose`                |
-| `--dry-run`            | Boolean | No       | Simulate without writing | `--dry-run`                |
 
 \* If omitted, CLI will prompt interactively.
 
@@ -1186,10 +1184,11 @@ The `ai-flow init` command accepts multiple flags for automation and customizati
 
 **`--type` values:**
 
-- `backend` - Backend API/Service (17 docs)
-- `frontend` - Frontend Application (12 docs)
-- `mobile` - Mobile Application (15 docs)
-- `fullstack` - Fullstack Application (~20 docs)
+- `backend` - Backend API/Service (14 docs)
+- `frontend` - Frontend Application (15 docs)
+- `mobile` - Mobile Application (13 docs)
+- `desktop` - Desktop Application (14 docs)
+- `fullstack` - Fullstack Application (~30 docs)
 
 #### Usage Examples
 
@@ -2196,7 +2195,7 @@ Complete list of all available commands organized by category.
 ```bash
 ai-flow init [path] [options]   # Initialize project
 ai-flow check                    # Verify initialization
-ai-flow --version               # Show version (2.5.1)
+ai-flow --version               # Show version (2.7.0)
 ai-flow --help                  # Show help
 ```
 
