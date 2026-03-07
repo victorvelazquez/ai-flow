@@ -5,21 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2026-03-07
+
+### Changed
+
+- **Dependencies Updated:** Upgraded to latest stable versions
+  - ejs: 3.1.10 → 5.0.1 (major, ESM-compatible)
+  - eslint: 9.39.2 → 10.0.3 (major)
+  - @typescript-eslint/eslint-plugin: updated to 8.56.1
+  - @typescript-eslint/parser: updated to 8.56.1
+
+### Fixed
+
+- All tests passing (23/23)
+- Build compatibility with latest dependencies
 
 ## [2.4.1] - 2025-12-23
 
 ### Fixed
+
 - **Lint warnings**: Removed unused functions (`logVerbose`, `isValidDescription`) and parameters
 - **Cache paths**: Ensured all prompts use `.ai-flow/cache/` instead of `cache/` for user projects
 - **Directory creation**: Added automatic creation of `.ai-flow/cache/`, `.ai-flow/work/`, `.ai-flow/archive/`
 
 ### Documentation
+
 - Clarified cache directory usage (AI Flow repo vs user projects)
 - Updated all documentation references for version 2.4.1
 
 ## [2.4.0] - 2025-12-23
 
 ### Changed
+
 - **Project Structure Reorganization:** Improved separation of concerns for better clarity
   - Moved `planning/roadmap.md` → `planning/roadmap.md` (requirements, not documentation)
   - Moved `planning/user-stories/` → `planning/user-stories/` (requirements, not documentation)
@@ -28,18 +45,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added `.ai-flow/` to `.gitignore` (optional)
 
 ### Added
+
 - New `planning/` directory for requirements and roadmap
 - New `.ai-flow/` directory for temporary workflow state
 - Project structure documentation in README.md and GETTING-STARTED.md
 
 ### Documentation
+
 - **`docs/`** - Descriptive documentation (WHAT the project IS)
-- **`specs/`** - Technical specifications (HOW to IMPLEMENT)  
+- **`specs/`** - Technical specifications (HOW to IMPLEMENT)
 - **`planning/`** - Requirements and roadmap (WHAT to DO)
 - **`.ai-flow/`** - Temporary development state
 
 ## [2.3.0] - 2025-12-23
+
 ### Added
+
 - **Consolidated work.md Structure:** `/flow-work` now generates a single consolidated `work.md` file for planning and task management
   - Concise format: ~30-40 lines per work item
   - Improves context window efficiency (~30% reduction in tokens)
@@ -60,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Criteria: file path, constraints, SP, dependencies
 
 ### Changed
+
 - Updated all 15 flow-work prompt files (backend, frontend, mobile) to use work.md
 - Updated flow-work-resume.md to load work.md for context restoration
 - Phase 1 now includes detail detection and conditional refinement
@@ -67,7 +89,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README.md and GETTING-STARTED.md updated with work.md documentation
 
 ## [2.2.5] - 2025-12-23
+
 ### Added
+
 - **Automatic Completion Tracking:** `/flow-work` now automatically marks tasks as complete in `planning/roadmap.md` and user story DoD checklists when implementation finishes
   - Updates Feature checkboxes in roadmap.md when Features are completed
   - Marks Definition of Done items in user story files (planning/user-stories/)
@@ -76,17 +100,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all 15 flow-work prompt files (backend, frontend, mobile) with Phase 4 completion tracking logic
 
 ### Changed
+
 - Phase 4 (Finalization) in flow-work now includes automatic documentation updates as Step 1
 - Updated README.md and GETTING-STARTED.md to document automatic completion tracking behavior
 
 ## [2.2.4] - 2025-12-23
+
 ### Changed
+
 - Synchronized Fullstack documentation counts across all guides.
 - Formatted source code in `src/cli.ts` for consistency.
 - Corrected versioning placeholders in Agent template.
 
 ## [2.2.3] - 2025-12-22
+
 ### Refactor
+
 - Significant refactoring of `src/cli.ts` for better maintainability and modularity.
 - Extracted static data (banner, slash commands, project phases) into centralized constants.
 - Modularized `initializeProject` and unified help output logic across commands.
@@ -95,6 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.2] - 2025-12-22
 
 ### Fixed
+
 - **CLI Help Improvements:**
   - Added missing `/flow-work`, `/flow-check`, and `/flow-commit` to help output.
   - Fixed "Fases disponibles" for Mobile applications (previously showed Frontend phases).
@@ -104,6 +134,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.1] - 2025-12-22
 
 ### Added
+
 - **Smart Skip Logic:** Intelligent phase skipping for Phases 1-10 with 3 scenarios
   - Shared template system (`prompts/shared/smart-skip-preflight.md`)
   - Phase 0 Layer 4: Documentation audit with consistency scoring
@@ -114,11 +145,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Reduces documentation time for existing projects: 90min → 15-20min (≥95% consistency)
 
 ### Changed
+
 - Phases 1-8 now support smart skip for existing projects (backend, frontend, mobile)
 - Phases 9-10 auto-skip for projects with implemented code
 - All 34 phase files updated with Pre-Flight Check references
 
 ### Technical Details
+
 - 10 commits implementing Smart Skip Logic system
 - Phases 1-7: Full smart skip with Pre-Flight Check
 - Phase 8: Final documentation generation (AGENT.md, README.md, api.md, etc.)
@@ -127,10 +160,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.0] - 2025-12-21
 
 ### Added
+
 - **Workflow Automation:** Introduced `// turbo` directive support across all workflows (`flow1-commit`, `flow2-check`, `flow3-docs`, `flow4-release`) to enable seamless, automated execution in agentic AI environments.
 - **Automated Verification:** New automated read-only steps in `flow3-docs` and `flow4-release` to programmatically extract project context.
 
 ### Changed
+
 - **Synchronization:** Finalized inventory and count synchronization for **Frontend** (15 docs), **Mobile** (13 docs), and **Fullstack** (4 docs) across all main documentation files.
 - **Prompt Refinement:** Updated tool-specific slash-commands (Claude, Cursor, Copilot) to include `CHANGELOG.md` in documentation analysis.
 - **UX:** Improved project banner and status reporting in the CLI.
