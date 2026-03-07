@@ -115,6 +115,7 @@ Please clarify (A/B): _
 
 | Input Pattern                  | Mode              | Source / Action                                                      |
 | ------------------------------ | ----------------- | -------------------------------------------------------------------- |
+| `api\s+([a-z0-9\-_]+)`         | `API_MODULE`      | Invoke `.ai-flow/prompts/frontend/flow-api-module.md` analyzer       |
 | `HU-\d{3}-\d{3}`               | `USER_STORY`      | Load from `planning/user-stories/**/HU-XXX-XXX.md`                   |
 | `EP-\d{3}`                     | `EPIC`            | Analyze/List User Stories for Epic `EP-XXX`                          |
 | `T\d{3}(-T\d{3})?`             | `TASKS`           | Target specific task or range (e.g., `T025-T030`)                    |
@@ -132,6 +133,453 @@ Please clarify (A/B): _
 - **TASK RANGES**: If `T025-T030` is provided, find the parent Story or Feature in current context or roadmap.
 - **SIMPLE FIX**: Affects 1 file, obvious cause, <10 lines fix. → Use `flow-work-fix.md` (Quick).
 - **COMPLEX FIX**: Multi-file, architectural, performance/security. → Use `flow-work-fix.md` (Deep).
+
+---
+
+## Phase 0.1: API Module Analysis (Conditional)
+
+**ONLY execute if `mode == "API_MODULE"`**
+
+This phase manages API URL configuration, invokes the specialized API analyzer, and enriches workflow context with OpenAPI metadata.
+
+**🏗️ Architecture Design:**
+
+- **This prompt (flow-work)**: Orchestrator with state management (cache, validation, retry logic)
+- **Sub-prompt (flow-api-module)**: Pure analyzer (stateless, receives validated URL)
+- **Cache location**: `.ai-flow/cache/api-config.json`
+- **Why this separation?**:
+  - Reusability: analyzer can be used from different orchestrators
+  - Testability: pure analyzers are easier to test
+  - Maintainability: state management centralized in one place
+
+### Step 1: Load or Detect API URL (Cache Management)
+
+**1.1. Parse User Input**
+
+Extract module name and optional API URL override:
+
+```typescript
+// Input examples:
+// - "/flow-work api users"
+// - "api organizations --api-url=http://localhost:3000/api/docs-json"
+
+const pattern = /api\s+([a-z0-9\-_]+)(\s+--api-url=(.+))?/;
+const match = userInput.match(pattern);
+
+const moduleName = match[1]; // 'users', 'organizations', etc.
+const customApiUrl = match[3]; // Optional override from user
+```
+
+**1.2. Check Cache**
+
+```javascript
+const cacheFile = '.ai-flow/cache/api-config.json';
+let apiUrl = null;
+let cacheStatus = 'none';
+
+if (await fileExists(cacheFile)) {
+  const cache = JSON.parse(await readFile(cacheFile));
+
+  // Check if cache is recent (< 24 hours)
+  const lastVerified = new Date(cache.lastVerified);
+  const hoursSinceVerified = (Date.now() - lastVerified) / 3600000;
+
+  if (hoursSinceVerified < 24) {
+    apiUrl = cache.apiUrl;
+    cacheStatus = 'valid';
+    console.log(`✅ Using cached API URL (verified ${Math.round(hoursSinceVerified)}h ago)`);
+    console.log(`   ${apiUrl}`);
+  } else {
+    apiUrl = cache.apiUrl; // Still use it, but will re-validate
+    cacheStatus = 'expired';
+    console.log(`⚠️  Cache expired (${Math.round(hoursSinceVerified)}h old), will re-validate`);
+    console.log(`   ${apiUrl}`);
+  }
+}
+
+// User override via --api-url flag takes precedence
+if (customApiUrl) {
+  apiUrl = customApiUrl;
+  cacheStatus = 'override';
+  console.log(`🔧 Using URL override from command: ${apiUrl}`);
+}
+
+// Default fallback
+if (!apiUrl) {
+  apiUrl = 'http://localhost:3001/api/docs-json';
+  cacheStatus = ' default';
+  console.log(`🔗 Using default API URL: ${apiUrl}`);
+}
+```
+
+**1.3. Validate URL (Quick Test)**
+
+```typescript
+if (cacheStatus === 'valid') {
+  // Skip validation for recent cache (trust it)
+  console.log(`⏭️  Skipping validation (cache is recent)`);
+} else {
+  // Validate URL before invoking analyzer
+  console.log(`\n🔗 Validating API URL: ${apiUrl}`);
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s quick test
+
+    const response = await fetch(apiUrl, {
+      method: 'HEAD', // Just check if endpoint exists
+      signal: controller.signal,
+      headers: { Accept: 'application/json' },
+    });
+
+    clearTimeout(timeoutId);
+
+    if (response.ok) {
+      console.log(`✅ Connection successful`);
+    } else {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+  } catch (error) {
+    // Connection failed - prompt user
+    return await handleConnectionError(error, apiUrl, cacheFile);
+  }
+}
+```
+
+**1.4. Handle Connection Errors (Interactive)**
+
+```typescript
+async function handleConnectionError(error: Error, attemptedUrl: string, cacheFile: string) {
+  const errorMessage =
+    error.name === 'AbortError'
+      ? 'Connection timeout (backend might not be running)'
+      : error.message;
+
+  console.log(`
+❌ Failed to connect to OpenAPI documentation
+
+Attempted URL: ${attemptedUrl}
+Error: ${errorMessage}
+
+Common causes:
+  1. Backend server is not running (npm run dev / npm start)
+  2. Wrong port (check backend .env or package.json)
+  3. Different path (/api/docs vs /api/docs-json)
+  4. CORS not configured for your frontend origin
+
+Options:
+  a) Provide correct URL ⭐
+  b) Retry current URL (if backend is starting up)
+  c) Skip API analysis (manual mode - no OpenAPI specs)
+  d) Cancel
+
+Your choice: _
+  `);
+
+  const choice = await readUserInput();
+
+  if (choice === 'a') {
+    const newUrl = await promptForUrl(cacheFile);
+    return { apiUrl: newUrl, validated: true };
+  }
+
+  if (choice === 'b') {
+    console.log('\n⏳ Waiting 3 seconds for backend to start...');
+    await sleep(3000);
+
+    // Retry validation
+    try {
+      await fetch(attemptedUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
+      console.log('✅ Connection successful after retry');
+      return { apiUrl: attemptedUrl, validated: true };
+    } catch (retryError) {
+      console.log('❌ Still failing. Please check backend status.');
+      return await handleConnectionError(retryError, attemptedUrl, cacheFile);
+    }
+  }
+
+  if (choice === 'c') {
+    console.log('\n⏭️  Skipping API analysis. Switching to manual FEATURE mode...');
+    return { mode: 'FEATURE', apiUrl: null, validated: false };
+  }
+
+  if (choice === 'd') {
+    throw new Error('User cancelled operation');
+  }
+
+  // Invalid choice - ask again
+  console.log('\n❌ Invalid option. Please enter a, b, c, or d.');
+  return await handleConnectionError(error, attemptedUrl, cacheFile);
+}
+```
+
+**1.5. Prompt for URL (with Validation)**
+
+```typescript
+async function promptForUrl(cacheFile: string): Promise<string> {
+  console.log(`\n📝 Enter OpenAPI Documentation URL\n
+Common patterns:
+  NestJS:     http://localhost:3000/api/docs-json
+  Express:    http://localhost:3001/api-docs
+  FastAPI:    http://localhost:8000/openapi.json
+  Spring:     http://localhost:8080/v3/api-docs
+
+URL: _
+  `);
+
+  const url = await readUserInput();
+
+  // Validate format
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    console.log('\n❌ URL must start with http:// or https://');
+    return await promptForUrl(cacheFile);
+  }
+
+  // Test URL
+  console.log(`\n🔗 Testing connection to: ${url}`);
+
+  try {
+    const response = await fetch(url, {
+      method: 'HEAD',
+      signal: AbortSignal.timeout(5000),
+      headers: { Accept: 'application/json' },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    console.log(`
+✅ Connection successful!
+
+💾 Saving URL to cache for future commands...
+    `);
+
+    // Save to cache
+    await saveToCache(cacheFile, {
+      apiUrl: url,
+      lastVerified: new Date().toISOString(),
+      projectType: 'frontend',
+    });
+
+    return url;
+  } catch (error) {
+    const errorMsg = error.name === 'AbortError' ? 'Connection timeout' : error.message;
+
+    console.log(`\n❌ Failed to connect to ${url}\n   Error: ${errorMsg}\n
+Try again? (y/n): _
+    `);
+
+    const retry = await readUserInput();
+    if (retry.toLowerCase() === 'y') {
+      return await promptForUrl(cacheFile);
+    } else {
+      throw new Error('User cancelled after failed URL validation');
+    }
+  }
+}
+```
+
+**1.6. Cache Management Functions**
+
+```typescript
+async function saveToCache(
+  cacheFile: string,
+  data: { apiUrl: string; lastVerified: string; projectType: string }
+) {
+  const cacheDir = '.ai-flow/cache';
+
+  // Ensure directory exists
+  if (!(await fileExists(cacheDir))) {
+    await createDirectory(cacheDir);
+  }
+
+  // Load existing cache or create new
+  let cache: any = { history: [] };
+  if (await fileExists(cacheFile)) {
+    try {
+      cache = JSON.parse(await readFile(cacheFile));
+    } catch {
+      // Corrupted cache, start fresh
+      cache = { history: [] };
+    }
+  }
+
+  // Update cache
+  cache.apiUrl = data.apiUrl;
+  cache.lastVerified = data.lastVerified;
+  cache.projectType = data.projectType;
+
+  // Add to history
+  cache.history = cache.history || [];
+  cache.history.unshift({
+    url: data.apiUrl,
+    timestamp: data.lastVerified,
+    status: 'success',
+  });
+
+  // Keep only last 10 entries
+  cache.history = cache.history.slice(0, 10);
+
+  // Save
+  await writeFile(cacheFile, JSON.stringify(cache, null, 2));
+}
+
+async function clearCache(cacheFile: string) {
+  if (await fileExists(cacheFile)) {
+    await deleteFile(cacheFile);
+    console.log('✅ API cache cleared');
+  }
+}
+```
+
+### Step 2: Invoke API Module Analyzer
+
+**Call sub-prompt with validated URL:**
+
+```typescript
+console.log(`\n🔍 Analyzing API module: ${moduleName}`);
+console.log(`📡 Fetching OpenAPI spec from: ${apiUrl}\n`);
+
+const analysisResult: OpenAPIAnalysisResult = await invoke_subprompt(
+  '.ai-flow/prompts/frontend/flow-api-module.md',
+  {
+    module: moduleName,
+    apiUrl: apiUrl, // Validated URL
+  }
+);
+```
+
+**Sub-prompt responsibilities:**
+
+- Fetch OpenAPI spec from backend
+- Detect project stack (MUI, MRT, React Hook Form, Zod, TanStack Query, etc.)
+- Extract all endpoints for the module
+- Parse DTOs (Response, Create, Update)
+- Detect field specifications with validation rules
+- Identify relationships (foreign keys, populated entities)
+- Detect features (pagination, search, sorting, filters)
+- Calculate complexity (SIMPLE/MEDIUM/COMPLEX)
+- Return structured `OpenAPIAnalysisResult` JSON
+
+### Step 3: Handle Sub-Prompt Result
+
+**IF `analysisResult.success === true`:**
+
+```
+✅ API Analysis Complete
+
+Module: ${analysisResult.module}
+Endpoints: ${analysisResult.endpoints.length}
+Complexity: ${analysisResult.complexity.level}
+
+💾 Updating cache with successful connection...
+
+Proceeding with enriched context...
+```
+
+Store in workflow context:
+
+```typescript
+workflow_context.analysis = analysisResult;
+workflow_context.mode = 'API_MODULE';
+workflow_context.module = analysisResult.module;
+
+// Update cache with successful analysis
+await saveToCache(cacheFile, {
+  apiUrl: apiUrl,
+  lastVerified: new Date().toISOString(),
+  projectType: 'frontend',
+});
+```
+
+**IF `analysisResult.success === false`:**
+
+```
+❌ API Analysis Failed
+
+Error: ${analysisResult.error}
+Details: ${analysisResult.details}
+
+Suggestions:
+${analysisResult.suggestions.map((s, i) => `  ${i+1}. ${s}`).join('\n')}
+
+The API URL might have changed or the backend spec is invalid.
+
+Options:
+  A) Update URL and retry
+  B) Clear cache and try default URL
+  C) Proceed with manual mode (no OpenAPI analysis)
+  D) Cancel
+
+Your choice: _
+```
+
+**User selects:**
+
+- **A**: Prompt for new URL, save to cache, retry Phase 0.1
+- **B**: Clear cache, use default, retry Phase 0.1
+- **C**: Switch to `FEATURE` mode, continue without OpenAPI
+- **D**: Abort workflow
+
+### Step 4: Enrich Workflow Context
+
+Merge analysis into workflow context for use in subsequent phases:
+
+```typescript
+workflow_context = {
+  ...workflow_context,
+
+  // From API analysis
+  projectStandards: analysisResult.projectStandards,
+  openapi: analysisResult.openapi,
+  endpoints: analysisResult.endpoints,
+  schemas: analysisResult.schemas,
+  fields: analysisResult.fields,
+  features: analysisResult.features,
+  relationships: analysisResult.relationships,
+
+  // For Phase 2 (work.md generation)
+  template: 'api-module', // Use specialized template
+
+  // For Phase 0.5 (complexity override)
+  complexity_override: analysisResult.complexity.level,
+  estimatedSP: analysisResult.complexity.estimatedSP,
+  estimatedHours: analysisResult.complexity.estimatedHours,
+};
+```
+
+### Step 5: Show Analysis Summary
+
+Present structured summary to user (condensed version):
+
+```
+📋 API Module Analysis Summary
+
+📊 Module: ${moduleName}
+🔗 API: ${apiUrl}
+
+📐 Detected Project Stack:
+  UI: ${projectStandards.stack.ui}
+  Table: ${projectStandards.stack.table} ✅
+  Forms: ${projectStandards.stack.forms} + ${projectStandards.stack.validation} ✅
+  Data: ${projectStandards.stack.query} ✅
+
+🔧 Endpoints: ${endpoints.length} detected
+📦 Entity: ${schemas.response.fields.length} fields
+🔗 Relationships: ${relationships.length}
+🏗️ Complexity: ${complexity.level} (${complexity.estimatedHours}h estimated)
+
+✅ All standards locked. Module will match existing patterns.
+
+Proceeding to Phase 0.5...
+```
+
+### Step 6: Continue to Phase 0.5
+
+With enriched context, proceed to complexity classification.
+
+**Note**: In API_MODULE mode, complexity is already determined by the analyzer, so Phase 0.5 will use `workflow_context.complexity_override` instead of calculating it.
 
 ---
 
@@ -171,7 +619,10 @@ Please clarify (A/B): _
 **Detection Logic:**
 
 ```python
-if files_affected == 1 and lines_changed < 20 and no_tests_needed and no_architecture_impact:
+# Special case: API_MODULE mode (complexity already determined)
+if mode == "API_MODULE":
+    complexity = workflow_context.complexity_override  # From API analyzer
+elif files_affected == 1 and lines_changed < 20 and no_tests_needed and no_architecture_impact:
     complexity = "SIMPLE"
 elif files_affected <= 5 and lines_changed <= 100 and architecture_impact == "minimal":
     complexity = "MEDIUM"
