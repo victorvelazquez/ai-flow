@@ -270,8 +270,9 @@ After initialization, use these slash commands in your AI tool:
 > **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
 
 **Backend Projects:** 22 prompts (/flow-build with phases 0-10, /flow-work, /flow-check, /flow-commit, /flow-docs-sync)  
-**Frontend Projects:** 22 prompts (same structure tailored for frontend)  
-**Mobile Projects:** 22 prompts (same structure tailored for mobile apps)  
+**Frontend Projects:** 23 prompts (same structure tailored for frontend)  
+**Mobile Projects:** 23 prompts (same structure tailored for mobile apps)  
+**Desktop Projects:** 22 prompts (same structure tailored for desktop apps)  
 **Fullstack Projects:** Combined backend + frontend commands
 
 **Documentation & Build:**
@@ -392,21 +393,23 @@ AI Flow organizes your project with clear separation of concerns:
 
 ## 🎯 Generated Documentation
 
-**Backend** (17 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 4 specs/configs.
+**Backend** (14 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 2 specs.
 
 **Frontend** (15 files): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
 
 **Mobile** (13 files): AGENT.md, ai-instructions.md, project-brief.md, plus 10 technical docs/specs.
 
+**Desktop** (14 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 2 specs.
+
 **Fullstack** (30+ files): Combined Backend + Frontend documentation structures.
 
-**Slash Commands/Prompts** (72 total):
+**Slash Commands/Prompts** (90 total):
 
 - Backend: 22 prompts (/flow-build with phases 0-10, /flow-work variants, /flow-check, /flow-commit, /flow-docs-sync)
-- Frontend: 22 prompts (same structure tailored for frontend)
-- Mobile: 22 prompts (same structure tailored for mobile apps)
-- Shared: 6 prompts (task-format.md, story-points.md, task-summary-template.md, etc.)
-- **Total: 72 prompts** across all project types
+- Frontend: 23 prompts (same structure tailored for frontend + /flow-work-api)
+- Mobile: 23 prompts (same structure tailored for mobile apps + /flow-work-api)
+- Desktop: 22 prompts (same structure tailored for desktop apps)
+- **Total: 90 prompts** across all project types
 
 Each project type gets workflow commands optimized for its technology stack.
 
