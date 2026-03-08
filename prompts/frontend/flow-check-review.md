@@ -6,6 +6,8 @@ description: Technical Reference - Code Review Methodology for flow-check
 
 This document provides detailed technical reference for the 5-perspective code review within `/flow-check` workflow.
 
+> **📝 Language-Agnostic Note:** This document uses examples in multiple programming languages (Java, Python, TypeScript, Go, etc.) to illustrate security vulnerabilities, performance issues, and code quality patterns. The principles and detection criteria apply universally to any language or framework. Adapt the syntax and tools to match your technology stack.
+
 ---
 
 ## 🎯 Overview
@@ -29,17 +31,17 @@ Professional code review analyzes code quality from multiple perspectives. This 
 
 **Pattern to detect:**
 
-```typescript
-// ❌ CRITICAL - Direct string concatenation
-const query = 'SELECT * FROM users WHERE id = ' + userId;
-db.query(query);
+```text
+❌ CRITICAL - String concatenation/interpolation:
+→ TypeScript: 'SELECT * FROM users WHERE id = ' + userId
+→ TypeScript: `DELETE FROM posts WHERE author = '${username}'`
+→ Java: "SELECT * FROM users WHERE id = " + userId
+→ Python: f"SELECT * FROM users WHERE id = {user_id}"
 
-// ❌ CRITICAL - Template literals with user input
-const query = `DELETE FROM posts WHERE author = '${username}'`;
-
-// ✅ SAFE - Parameterized queries
-db.query('SELECT * FROM users WHERE id = ?', [userId]);
-db.query('SELECT * FROM users WHERE id = $1', [userId]);
+✅ SAFE - Parameterized queries/PreparedStatements:
+→ TypeScript: db.query('... WHERE id = ?', [userId])
+→ Java: PreparedStatement stmt = conn.prepareStatement("... WHERE id = ?"); stmt.setInt(1, userId);
+→ Python: cursor.execute("... WHERE id = %s", (user_id,)) OR use ORM (SQLAlchemy, Django)
 ```
 
 **Priority:** 🔴 CRITICAL
@@ -49,16 +51,19 @@ db.query('SELECT * FROM users WHERE id = $1', [userId]);
 
 **Pattern to detect:**
 
-```typescript
-// ❌ CRITICAL - Direct innerHTML with user input
-element.innerHTML = userComment;
+```text
+❌ CRITICAL - Unescaped user input in HTML:
+→ TypeScript (Vanilla): element.innerHTML = userComment
+→ TypeScript (React): <div dangerouslySetInnerHTML={{__html: userContent}} />
+→ Python (Jinja2): {{ user_input | safe }} OR html = f"<div>{user_input}</div>"
+→ Java (JSP): <%= request.getParameter("comment") %>
+→ Java (Thymeleaf): <div th:utext="${userComment}"></div>
 
-// ❌ CRITICAL - React dangerouslySetInnerHTML
-<div dangerouslySetInnerHTML={{__html: userContent}} />
-
-// ✅ SAFE - Escaped content
-element.textContent = userComment;
-<div>{userContent}</div>  // React auto-escapes
+✅ SAFE - Auto-escaped or explicit escaping:
+→ TypeScript: element.textContent = userComment OR <div>{userContent}</div> (React auto-escapes)
+→ Python: {{ user_input }} (Jinja2 auto-escapes) OR escape(user_input)
+→ Java (JSP): <c:out value="${param.comment}" /> (JSTL auto-escapes)
+→ Java (Thymeleaf): <div th:text="${userComment}"></div> (th:text auto-escapes)
 ```
 
 **Priority:** 🔴 CRITICAL (stored XSS), 🟡 WARNING (reflected XSS)
@@ -153,25 +158,16 @@ app.post('/api/transfer', csrfProtection, (req, res) => {
 
 **Pattern to detect:**
 
-```typescript
-// ❌ CRITICAL - N+1 queries
-const posts = await db.posts.findAll();
-for (const post of posts) {
-  post.author = await db.users.findById(post.authorId);  // N queries!
-}
+```text
+❌ CRITICAL - Loop + query inside (N+1 pattern):
+→ TypeScript: const posts = await db.posts.findAll(); for (post of posts) { post.author = await db.users.findById(post.authorId); }
+→ Python: posts = Post.objects.all(); for post in posts: post.author = User.objects.get(id=post.author_id)
+→ Java: List<Post> posts = query("SELECT p FROM Post p"); for (Post post : posts) { User author = post.getAuthor(); } // Lazy loading!
 
-// Python example
-posts = Post.objects.all()
-for post in posts:
-    post.author = User.objects.get(id=post.author_id)  # N queries!
-
-// ✅ OPTIMIZED - Single query with JOIN
-const posts = await db.posts.findAll({
-  include: [{ model: User, as: 'author' }]
-});
-
-// Python with select_related
-posts = Post.objects.select_related('author').all()
+✅ OPTIMIZED - Single query with JOIN/eager loading:
+→ TypeScript: await db.posts.findAll({ include: [{ model: User, as: 'author' }] })
+→ Python: Post.objects.select_related('author').all() OR prefetch_related('tags') for M2M
+→ Java: query("SELECT p FROM Post p JOIN FETCH p.author") OR @EntityGraph(attributePaths = {"author", "tags"})
 ```
 
 **Detection heuristic:**
@@ -187,32 +183,21 @@ posts = Post.objects.select_related('author').all()
 
 **Pattern to detect:**
 
-```typescript
-// ❌ WARNING - Event listener not removed
-class Component {
-  constructor() {
-    eventEmitter.on('update', this.handleUpdate);
-    // Missing cleanup in destructor
-  }
-}
+```text
+❌ WARNING - Resources not cleaned up:
+→ TypeScript: eventEmitter.on('update', handler) // Never removed with .off()
+→ TypeScript: cache[key] = value // Unbounded cache, never cleared
+→ Java: FileInputStream fis = new FileInputStream(path); // No try-with-resources, never closed
+→ Java: static Map<String, Object> cache = new HashMap<>(); cache.put(key, value); // Grows unbounded
+→ Python: f = open(path) // Never explicitly closed
+→ Python: child.parent = self; self.children.append(child); // Circular reference prevents GC
 
-// ❌ WARNING - Circular references
-const cache = {};
-function addToCache(key, value) {
-  cache[key] = value; // Never cleared!
-}
-
-// ✅ SAFE - Proper cleanup
-class Component {
-  constructor() {
-    this.handler = this.handleUpdate.bind(this);
-    eventEmitter.on('update', this.handler);
-  }
-
-  destroy() {
-    eventEmitter.off('update', this.handler);
-  }
-}
+✅ SAFE - Proper cleanup/resource management:
+→ TypeScript: destroy() { eventEmitter.off('update', this.handler); } // Cleanup in destructor
+→ Java: try (FileInputStream fis = new FileInputStream(path)) { ... } // Auto-closes
+→ Java: Use WeakHashMap or implement eviction policy for caches
+→ Python: with open(path) as f: ... // Auto-closes with context manager
+→ Python: Use weakref.ref() for circular references
 ```
 
 **Priority:** 🟡 WARNING
@@ -222,30 +207,16 @@ class Component {
 
 **Pattern to detect:**
 
-```typescript
-// ❌ WARNING - Synchronous I/O in request handler
-app.get('/data', (req, res) => {
-  const data = fs.readFileSync('./large-file.json'); // Blocks event loop!
-  res.json(JSON.parse(data));
-});
+```text
+❌ WARNING - Synchronous I/O in request handlers:
+→ TypeScript: app.get('/data', (req, res) => { const data = fs.readFileSync('./file.json'); ... }) // Blocks event loop!
+→ Java: @GetMapping("/data") public ResponseEntity getData() { String content = Files.readString(path); ... } // Blocks thread!
+→ Python: @app.get("/data") def get_data(): with open('file.json', 'r') as f: return json.load(f) // Blocks event loop!
 
-// ❌ WARNING - CPU-intensive in main thread
-app.post('/analyze', (req, res) => {
-  const result = complexAnalysis(req.body.data); // Blocks for seconds!
-  res.json(result);
-});
-
-// ✅ OPTIMIZED - Async I/O
-app.get('/data', async (req, res) => {
-  const data = await fs.promises.readFile('./large-file.json');
-  res.json(JSON.parse(data));
-});
-
-// ✅ OPTIMIZED - Worker thread
-app.post('/analyze', async (req, res) => {
-  const result = await workerPool.exec('complexAnalysis', [req.body.data]);
-  res.json(result);
-});
+✅ OPTIMIZED - Async I/O:
+→ TypeScript: async (req, res) => { const data = await fs.promises.readFile('./file.json'); ... }
+→ Java: CompletableFuture<ResponseEntity> getData() { return CompletableFuture.supplyAsync(() -> Files.readString(path)); }
+→ Python: async def get_data(): async with aiofiles.open('file.json', 'r') as f: content = await f.read(); ...
 ```
 
 **Priority:** 🔴 CRITICAL (request handlers), 🟡 WARNING (background tasks)
@@ -385,51 +356,19 @@ describe('Users', () => {
 
 **Pattern to detect:**
 
-```typescript
-// ❌ WARNING - Too many responsibilities
-class UserService {
-  createUser() {
-    /* DB logic */
-  }
-  sendWelcomeEmail() {
-    /* Email logic */
-  }
-  logUserActivity() {
-    /* Logging logic */
-  }
-  validateUserData() {
-    /* Validation logic */
-  }
-  generateReport() {
-    /* Reporting logic */
-  }
-}
+```text
+❌ WARNING - Too many responsibilities (God class):
+→ TypeScript: class UserService { createUser() { /* DB */ } sendWelcomeEmail() { /* Email */ } logUserActivity() { /* Logging */ } validateUserData() { /* Validation */ } generateReport() { /* Reporting */ } } // 5 different concerns!
+→ Java: class OrderProcessor { saveOrder() {...} calculateTotal() {...} sendConfirmationEmail() {...} generateInvoice() {...} processPayment() {...} } // DB + Business + Email + PDF + Payment!
+→ Python: class UserManager { def create_user(data): validate + save + email + log all mixed! } // 4 responsibilities in one method!
 
-// ✅ PROPER - Single responsibility
-class UserRepository {
-  createUser() {
-    /* DB logic only */
-  }
-}
+✅ PROPER - Single responsibility per class:
+→ TypeScript: class UserRepository { createUser() {...} } class EmailService { sendWelcomeEmail() {...} } class UserValidator { validate() {...} }
+→ Java: class OrderRepository { save() {...} } class OrderCalculator { calculateTotal() {...} } class EmailService { sendConfirmation() {...} }
+→ Python: class UserRepository { def save(user): ... } class UserValidator { def validate(data): ... } class EmailService { def send_welcome(user): ... }
 
-class EmailService {
-  sendWelcomeEmail() {
-    /* Email logic only */
-  }
-}
-
-class UserValidator {
-  validate() {
-    /* Validation logic only */
-  }
-}
+Detection heuristic: Class > 300 lines OR > 10 methods OR method names suggest different domains (send*, log*, validate*, generate*)
 ```
-
-**Detection heuristic:**
-
-- Class > 300 lines
-- Class has > 10 methods
-- Method names suggest different domains (send*, log*, validate*, generate*)
 
 **Priority:** 🟡 WARNING (large classes), 🟢 SUGGESTION (medium classes)
 
@@ -437,33 +376,21 @@ class UserValidator {
 
 **Pattern to detect:**
 
-```typescript
-// ❌ WARNING - Duplicated code
-app.get('/api/users', (req, res) => {
-  if (!req.headers.authorization) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-  // ... handler logic
-});
+```text
+❌ WARNING - Duplicated logic across functions/handlers:
+→ TypeScript: app.get('/users', (req, res) => { if (!req.headers.authorization) return 401; ... }); app.get('/posts', (req, res) => { if (!req.headers.authorization) return 401; ... }); // Same auth check!
+→ Java: @PostMapping createUser(@RequestBody User u) { if (u.getEmail() == null || !u.getEmail().contains("@")) throw ...; } @PutMapping updateUser(...) { if (u.getEmail() == null || !u.getEmail().contains("@")) throw ...; } // Same validation!
+→ Python: @app.route('/users') def get_users(): if not request.headers.get('Auth'): return 401; ... @app.route('/posts') def get_posts(): if not request.headers.get('Auth'): return 401; ... // Same check!
 
-app.get('/api/posts', (req, res) => {
-  if (!req.headers.authorization) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-  // ... handler logic
-});
-
-// ✅ DRY - Extracted middleware
-const requireAuth = (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-  next();
-};
-
-app.get('/api/users', requireAuth, usersHandler);
-app.get('/api/posts', requireAuth, postsHandler);
+✅ DRY - Extract to middleware/decorator/validation:
+→ TypeScript: const requireAuth = (req, res, next) => { if (!req.headers.auth) return 401; next(); }; app.get('/users', requireAuth, handler);
+→ Java: class User { @NotNull @Email private String email; } @PostMapping createUser(@Valid @RequestBody User user) { ... }
+→ Python: def require_auth(f): @wraps(f) def wrapper(): if not request.headers.get('Auth'): return 401; return f(); @app.route('/users') @require_auth def get_users(): ...
 ```
+
+def get_users(): # ... handler logic
+
+````
 
 **Detection:** Code blocks with > 5 lines duplicated in 3+ locations
 
@@ -491,7 +418,7 @@ class OrderService {
     private logger: Logger // Interface
   ) {}
 }
-```
+````
 
 **Priority:** 🟡 WARNING
 
