@@ -564,7 +564,7 @@ db.query('SELECT * FROM users WHERE id = ?', [userId]);
 ✅ Quality check complete!
 
 📊 Summary:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 ⛔ Tests:        15/17 passed (88%)
 ⚠️  Linting:      3 errors, 12 warnings
 ✅ Type Check:   Passed
