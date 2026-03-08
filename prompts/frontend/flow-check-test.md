@@ -6,6 +6,8 @@ description: Technical Reference - Testing Methodology for flow-check
 
 This document provides detailed technical reference for test execution and analysis within the `/flow-check` workflow.
 
+> **📝 Language-Agnostic Note:** This document covers testing strategies across multiple languages and frameworks (Node.js/Jest, Python/pytest, Java/JUnit, Go, Ruby/RSpec, PHP/PHPUnit, Rust/Cargo, C#/.NET). The execution commands and result parsing examples are provided for all major ecosystems. Apply the methodology that matches your technology stack.
+
 ---
 
 ## 🎯 Overview
