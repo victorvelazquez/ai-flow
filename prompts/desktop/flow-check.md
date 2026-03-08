@@ -31,19 +31,40 @@ Before starting, verify the project setup:
    - Location: `.ai-flow/work/status.json`
 
 2. **Detect Test Runner**
-   - Check `package.json` scripts: `test`, `test:unit`, `test:integration`
-   - Common runners: `npm test`, `pytest`, `jest`, `vitest`, `go test`
+   - Check project configuration files:
+     - Node.js: `package.json` → scripts: `test`, `test:unit`, `test:integration`
+     - Python: `pytest.ini`, `pyproject.toml`, `tox.ini`
+     - Java: `pom.xml` (Maven), `build.gradle` (Gradle), `build.xml` (Ant)
+     - Ruby: `Rakefile`, `.rspec`
+     - Go: `*_test.go` files
+     - PHP: `phpunit.xml`, `composer.json`
+     - Rust: `Cargo.toml`
+     - C#/.NET: `*.csproj`, `.sln`
+   - Common runners: `npm test`, `pytest`, `jest`, `vitest`, `mvn test`, `gradle test`, `cargo test`, `dotnet test`, `go test`, `rspec`, `phpunit`
    - If missing: Skip test execution, note in report
 
 3. **Detect Linter**
-   - Check for: `eslint`, `.eslintrc.*`, `ruff`, `pylint`, `golangci-lint`
-   - Commands: `npm run lint`, `ruff check`, `golangci-lint run`
+   - Check for configuration files:
+     - JavaScript/TypeScript: `eslint`, `.eslintrc.*`, `biome.json`
+     - Python: `ruff`, `pylint`, `flake8`, `.pylintrc`, `pyproject.toml`
+     - Go: `golangci-lint`, `.golangci.yml`
+     - Java: `checkstyle.xml`, `pmd.xml`, `spotbugs.xml`
+     - Ruby: `.rubocop.yml`, `rubocop`
+     - PHP: `phpcs.xml`, `phpstan.neon`, `psalm.xml`
+     - Rust: `clippy` (built-in)
+     - C#: `.editorconfig`, `StyleCop`, `Roslyn analyzers`
+   - Commands: `npm run lint`, `ruff check`, `golangci-lint run`, `rubocop`, `phpcs`, `cargo clippy`, `dotnet format --verify-no-changes`
    - If missing: Skip linting, note in report
 
 4. **Detect Type Checker**
-   - TypeScript: Check `tsconfig.json`, run `tsc --noEmit`
-   - Python: Check `mypy`, `pyright`
-   - Go: Built-in type system
+   - JavaScript/TypeScript: Check `tsconfig.json`, run `tsc --noEmit`
+   - Python: Check `mypy`, `pyright`, `pytype`, `pyre`
+   - Go: Built-in type system (`go build`)
+   - Java: Built-in type system (`javac`, Maven/Gradle compile)
+   - Ruby: `sorbet`, `rbs`, `steep`
+   - PHP: `psalm`, `phpstan`
+   - Rust: Built-in type system (`cargo check`)
+   - C#: Built-in type system (`dotnet build`)
    - If missing: Skip type check, note in report
 
 ---
@@ -66,15 +87,23 @@ fi
 
 ### Option B: No Git
 
-- Analyze all source files in: `src/`, `lib/`, `app/`, `backend/`, `api/`
-- Exclude: `node_modules/`, `dist/`, `build/`, `__pycache__/`, `.ai-flow/`
+- Analyze all source files in common directories:
+  - General: `src/`, `lib/`, `app/`, `backend/`, `api/`, `internal/`, `pkg/`
+  - Java: `src/main/java/`, `src/test/java/`
+  - Python: `src/`, `lib/`, package directories
+  - Ruby: `lib/`, `app/`
+  - PHP: `src/`, `app/`, `lib/`
+  - Go: `cmd/`, `pkg/`, `internal/`
+  - Rust: `src/`, `tests/`
+  - C#: project directories with `.cs` files
+- Exclude: `node_modules/`, `dist/`, `build/`, `__pycache__/`, `.ai-flow/`, `target/`, `vendor/`, `bin/`, `obj/`, `out/`
 
 ### Store Scope
 
 ```json
 "validation": {
   "scope": {
-    "files": ["src/api/users.ts", "src/models/user.ts"],
+    "files": ["src/api/users.java", "src/models/user.java"],
     "totalFiles": 2,
     "detectionMethod": "git-diff"
   }
@@ -118,14 +147,32 @@ fi
 **Detect and run test command:**
 
 ```bash
-# Example for Node.js
+# Node.js/JavaScript
 npm test -- --coverage --json > .ai-flow/cache/test-results.json 2>&1
 
-# Example for Python
+# Python
 pytest --cov --json-report --json-report-file=.ai-flow/cache/test-results.json
 
-# Example for Go
+# Go
 go test -v -coverprofile=.ai-flow/cache/coverage.out ./... 2>&1 | tee .ai-flow/cache/test-results.txt
+
+# Java (Maven)
+mvn test -q > .ai-flow/cache/test-results.txt 2>&1
+
+# Java (Gradle)
+gradle test --quiet > .ai-flow/cache/test-results.txt 2>&1
+
+# Ruby (RSpec)
+rspec --format json --out .ai-flow/cache/test-results.json
+
+# PHP (PHPUnit)
+phpunit --log-junit .ai-flow/cache/test-results.xml
+
+# Rust (Cargo)
+cargo test --quiet > .ai-flow/cache/test-results.txt 2>&1
+
+# C# (.NET)
+dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory .ai-flow/cache/
 ```
 
 **Parse results:**
@@ -156,7 +203,7 @@ go test -v -coverprofile=.ai-flow/cache/coverage.out ./... 2>&1 | tee .ai-flow/c
     "summary": "15/17 passed (88%)",
     "status": "failed",
     "failedTests": [
-      {"name": "User.create should validate email", "file": "tests/user.test.ts"}
+      {"name": "User.create should validate email", "file": "tests/user_test.java"}
     ]
   }
 }
@@ -167,14 +214,29 @@ go test -v -coverprofile=.ai-flow/cache/coverage.out ./... 2>&1 | tee .ai-flow/c
 **Run linter:**
 
 ```bash
-# ESLint
+# JavaScript/TypeScript (ESLint)
 npm run lint -- --format json > .ai-flow/cache/lint-results.json 2>&1
 
-# Ruff (Python)
+# Python (Ruff)
 ruff check --output-format json > .ai-flow/cache/lint-results.json
 
-# golangci-lint
+# Go (golangci-lint)
 golangci-lint run --out-format json > .ai-flow/cache/lint-results.json
+
+# Java (Checkstyle)
+checkstyle -f json -c checkstyle.xml src/ > .ai-flow/cache/lint-results.json
+
+# Ruby (RuboCop)
+rubocop --format json --out .ai-flow/cache/lint-results.json
+
+# PHP (PHP_CodeSniffer)
+phpcs --report=json --report-file=.ai-flow/cache/lint-results.json
+
+# Rust (Clippy)
+cargo clippy --message-format=json > .ai-flow/cache/lint-results.json 2>&1
+
+# C# (.NET)
+dotnet format --verify-no-changes --report .ai-flow/cache/lint-results.json
 ```
 
 **Parse results:**
@@ -208,14 +270,29 @@ golangci-lint run --out-format json > .ai-flow/cache/lint-results.json
 **Run type checker:**
 
 ```bash
-# TypeScript
+# JavaScript/TypeScript
 tsc --noEmit --pretty false > .ai-flow/cache/type-results.txt 2>&1
 
-# Python mypy
+# Python (mypy)
 mypy src/ --json-report .ai-flow/cache/
 
 # Go (built-in)
 go build -o /dev/null ./... 2>&1
+
+# Java (javac - usually via build tool)
+mvn compile -q > .ai-flow/cache/type-results.txt 2>&1
+
+# Ruby (Sorbet)
+srb tc --lsp-disable-diagnostics > .ai-flow/cache/type-results.txt 2>&1
+
+# PHP (Psalm)
+psalm --output-format=json > .ai-flow/cache/type-results.json
+
+# Rust (cargo check)
+cargo check --message-format=json > .ai-flow/cache/type-results.json 2>&1
+
+# C# (dotnet build)
+dotnet build --no-incremental > .ai-flow/cache/type-results.txt 2>&1
 ```
 
 **Parse results:**
@@ -258,13 +335,13 @@ Analyze code from **5 critical perspectives**. For detailed methodology, see `@f
 
 ```markdown
 🔴 **CRITICAL - SQL Injection**
-File: `src/api/users.ts:45`
-Raw query with user input: `db.query("SELECT * FROM users WHERE id = " + userId)`
-**Fix:** Use parameterized queries
+File: `src/api/UserController.java:45`
+Raw query with user input: `executeQuery("SELECT * FROM users WHERE id = " + userId)`
+**Fix:** Use parameterized queries or prepared statements
 
 ⚠️ **WARNING - Hardcoded Secret**
-File: `src/config/database.ts:12`
-Found potential API key: `const API_KEY = "sk_live_..."`
+File: `src/config/DatabaseConfig.java:12`
+Found potential API key: `String API_KEY = "sk_live_..."`
 **Fix:** Move to environment variables
 ```
 
@@ -283,14 +360,14 @@ Found potential API key: `const API_KEY = "sk_live_..."`
 
 ```markdown
 🔴 **CRITICAL - N+1 Query**
-File: `src/api/posts.ts:23-28`
+File: `src/api/PostController.java:23-28`
 Loop executes query per item (100 queries for 100 items)
-**Fix:** Use batch query with JOIN or IN clause
+**Fix:** Use batch query with JOIN, IN clause, or eager loading
 
 🟡 **WARNING - Blocking Operation**
-File: `src/utils/parser.ts:56`
-Synchronous file read in request handler
-**Fix:** Use async readFile() or stream
+File: `src/utils/FileParser.java:56`
+Synchronous I/O operation in request handler
+**Fix:** Use async I/O, streaming, or move to background thread
 ```
 
 #### Perspective 3: 🧪 Testing Quality
@@ -308,18 +385,19 @@ Synchronous file read in request handler
 
 ```markdown
 🟡 **WARNING - Missing Edge Cases**
-File: `tests/validators.test.ts`
+File: `tests/ValidatorTest.java`
 Email validator tests only happy path, missing:
 
 - Empty string
-- Null/undefined
+- Null values
 - Invalid formats
 - Very long emails (>254 chars)
+- Special characters
 
 🟢 **SUGGESTION - Improve Assertions**
-File: `tests/api.test.ts:34`
-Weak assertion: `expect(response).toBeTruthy()`
-**Better:** `expect(response.status).toBe(200)`
+File: `tests/ApiTest.java:34`
+Weak assertion: `assertTrue(response != null)`
+**Better:** `assertEquals(200, response.getStatusCode())`
 ```
 
 #### Perspective 4: 📐 Architecture Analysis
@@ -337,14 +415,14 @@ Weak assertion: `expect(response).toBeTruthy()`
 
 ```markdown
 🟡 **WARNING - SRP Violation**
-File: `src/services/UserService.ts`
+File: `src/services/UserService.java`
 Class handles user CRUD + email sending + notifications + logging
 **Fix:** Extract EmailService, NotificationService
 
 🟢 **SUGGESTION - DRY Violation**
-Files: `src/api/users.ts:23`, `src/api/posts.ts:45`
+Files: `src/api/UserController.java:23`, `src/api/PostController.java:45`
 Authentication check duplicated in 8 endpoints
-**Fix:** Create authMiddleware
+**Fix:** Create authentication interceptor/middleware/filter
 ```
 
 #### Perspective 5: 🎨 Code Quality
@@ -362,12 +440,12 @@ Authentication check duplicated in 8 endpoints
 
 ```markdown
 🟡 **WARNING - High Complexity**
-File: `src/utils/processor.ts:processData()`
+File: `src/utils/DataProcessor.java:processData()`
 Cyclomatic complexity: 15 (threshold: 10)
-**Fix:** Extract smaller functions
+**Fix:** Extract smaller methods, apply Extract Method refactoring
 
 🟢 **SUGGESTION - Magic Number**
-File: `src/config/limits.ts:8`
+File: `src/config/ApplicationLimits.java:8`
 Hardcoded: `if (count > 100)`
 **Fix:** Extract to named constant: `MAX_ITEMS_PER_PAGE`
 ```
@@ -429,18 +507,21 @@ Hardcoded: `if (count > 100)`
 
 ### 1. SQL Injection Vulnerability
 
-**File:** [src/api/users.ts](src/api/users.ts#L45)
+**File:** [src/api/UserController.java](src/api/UserController.java#L45)
 **Category:** Security
 **Description:** Raw SQL query with user input
 **Impact:** High - Database compromise possible
 **Fix:**
 
-```typescript
+```java
 // Before
-db.query('SELECT * FROM users WHERE id = ' + userId);
+String query = "SELECT * FROM users WHERE id = " + userId;
+statement.executeQuery(query);
 
 // After
-db.query('SELECT * FROM users WHERE id = ?', [userId]);
+PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
+stmt.setInt(1, userId);
+stmt.executeQuery();
 ```
 ````
 
@@ -465,8 +546,8 @@ db.query('SELECT * FROM users WHERE id = ?', [userId]);
 **Coverage:** 78.5%
 **Failed Tests:**
 
-1. User.create should validate email
-   - File: tests/user.test.ts:23
+1. User creation should validate email format
+   - File: tests/UserTest.java:23
    - Error: Expected email validation to reject invalid format
 
 ---
@@ -509,7 +590,7 @@ db.query('SELECT * FROM users WHERE id = ?', [userId]);
     "reportPath": ".ai-flow/reviews/check-20260307-103045.md",
     "overallStatus": "FAIL",
     "scope": {
-      "files": ["src/api/users.ts", "src/models/user.ts"],
+      "files": ["src/api/UserController.java", "src/models/User.java"],
       "totalFiles": 12,
       "detectionMethod": "git-diff"
     },
