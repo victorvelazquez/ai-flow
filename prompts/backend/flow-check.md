@@ -573,10 +573,6 @@ stmt.executeQuery();
 
 ````
 
-**Save report:**
-- Location: `.ai-flow/reviews/check-{timestamp}.md`
-- Example: `.ai-flow/reviews/check-20260307-103045.md`
-
 ---
 ### Stage 4: Status Update
 
@@ -587,7 +583,6 @@ stmt.executeQuery();
 {
   "validation": {
     "lastCheck": "2026-03-07T10:30:45Z",
-    "reportPath": ".ai-flow/reviews/check-20260307-103045.md",
     "overallStatus": "FAIL",
     "scope": {
       "files": ["src/api/UserController.java", "src/models/User.java"],
@@ -652,9 +647,6 @@ stmt.executeQuery();
 🔴 Critical:     2 issues
 🟡 Warnings:     8 issues
 🟢 Suggestions:  15 items
-
-📄 Full report saved to:
-.ai-flow/reviews/check-20260307-103045.md
 
 🚨 Action required: Fix 2 critical issues before proceeding.
 ```
