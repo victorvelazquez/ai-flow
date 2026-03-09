@@ -1,23 +1,28 @@
 {
   "files": {
     "templates/": "2026-03-07T20:02:23.5841697-03:00",
-    "prompts/": "2026-02-04T15:17:54.1209389-03:00",
+    "prompts/": "2026-03-09T00:00:00.0000000-03:00",
     "package.json": "2026-03-07T20:02:23.5805118-03:00",
-    "src/cli.ts": "2026-03-07T19:35:16.1172489-03:00"
+    "src/cli.ts": "2026-03-07T19:35:16.1172489-03:00",
+    "README.md": "2026-03-09T00:00:00.0000000-03:00",
+    "GETTING-STARTED.md": "2026-03-09T00:00:00.0000000-03:00",
+    "CONTRIBUTING.md": "2026-03-09T00:00:00.0000000-03:00"
   },
-  "timestamp": "2026-03-07T23:41:52.0915404-03:00",
+  "timestamp": "2026-03-09T00:00:00.0000000-03:00",
   "version": "2.7.0",
   "lastAnalysis": {
     "frontend_templates": 15,
-    "frontend_prompts": 23,
-    "mobile_prompts": 23,
-    "backend_prompts": 22,
-    "backend_templates": 14,
-    "gaps_fixed": 6,
-    "gaps_found": 6,
-    "total_prompts": 90,
-    "desktop_templates": 14,
+    "frontend_prompts": 24,
+    "mobile_prompts": 24,
+    "backend_prompts": 23,
+    "backend_templates": 17,
+    "gaps_fixed": 15,
+    "gaps_found": 15,
+    "total_prompts": 94,
+    "desktop_templates": 16,
     "mobile_templates": 13,
-    "desktop_prompts": 22
+    "desktop_prompts": 23,
+    "new_features_documented": 1,
+    "phantom_flags_removed": 1
   }
 }
