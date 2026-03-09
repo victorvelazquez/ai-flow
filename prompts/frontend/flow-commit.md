@@ -24,11 +24,11 @@ Automate commit creation with:
 
 ---
 
-## Workflow: 5 Steps
+## Workflow: 4 Steps
 
 ### Step 0: Branch Protection Check
 
-**🛡️ CRITICAL VALIDATION** - Execute BEFORE any commit operation:
+**🛡️ Execute BEFORE any commit:**
 
 ```bash
 git branch --show-current
@@ -36,48 +36,15 @@ git branch --show-current
 
 **Protected branches:** `main`, `master`, `develop`, `development`
 
-**If current branch is protected:**
+**If protected:**
 
-1. **Inform user:**
+1. Analyze changes: `git status --porcelain && git diff --stat`
+2. Determine type: features/components → `feature/`, fixes → `fix/`, refactoring/styling → `refactor/`, config → `chore/`
+3. Generate descriptive slug from changed files
+4. Create branch: `git checkout -b [type]/[slug]` (e.g., `feature/add-user-dashboard`)
+5. Inform user and continue to Step 1
 
-   ```
-   ⚠️  Working on protected branch '[branch-name]'.
-   Creating a new branch for your changes...
-   ```
-
-2. **Analyze changes** to determine branch type:
-
-   ```bash
-   git status --porcelain
-   git diff --stat
-   ```
-
-   - If changes include features/new components → `feature/`
-   - If changes are fixes/bug corrections → `fix/`
-   - If changes are refactoring/styling → `refactor/`
-   - If configuration/dependencies → `chore/`
-
-3. **Generate branch name:**
-   - Extract meaningful slug from changed files or content
-   - Format: `[type]/[descriptive-slug]`
-   - Example: `feature/add-user-dashboard`, `fix/button-click-handler`
-
-4. **Create and switch to new branch:**
-
-   ```bash
-   git checkout -b [type]/[slug]
-   ```
-
-5. **Confirm to user:**
-
-   ```
-   ✅ Created and switched to branch '[branch-name]'
-   Proceeding with commit workflow...
-   ```
-
-6. **Continue to Step 1**
-
-**If branch is NOT protected:** Continue to Step 1.
+**If NOT protected:** Continue to Step 1.
 
 ### Step 1: Detect Changes
 
@@ -96,15 +63,17 @@ Group files by:
 
 ### Step 3: Create Commits
 
-1. Generate Conventional Commit message.
-2. `git add [files] && git commit -m "[message]"`.
-3. **Wait for user confirmation.**
+For each group:
 
-### Step 5: Summary & Push
+1. Generate Conventional Commit message
+2. Execute: `git add [files] && git commit -m "[message]"`
+3. **Wait for user confirmation before proceeding**
 
-- Show `git log` of new commits.
-- Suggest `git push origin [branch]`.
-- **NEVER suggest push to protected branches** (main, master, develop, development).
+### Step 4: Summary
+
+- Show `git log` of new commits
+- Display commit count and current branch
+- **DO NOT suggest or perform push operations**
 
 ---
 
