@@ -1194,48 +1194,9 @@ git status --porcelain
 - All checkboxes in work.md marked complete
 - User explicitly requests finalization
 
-**CRITICAL: This phase requires EXPLICIT user confirmations at each step.**
-
 ---
 
-### Step 1: Validation Check
-
-```
-🔍 Running validation...
-```
-
-Execute:
-
-```bash
-npm test  # or project-specific test command
-npm run lint  # or project-specific lint command
-```
-
-Show results:
-
-```
-📊 Validation Results
-
-Tests: [✅ Passed | ❌ Failed (N tests)]
-Lint: [✅ Clean | ⚠️ N warnings | ❌ N errors]
-Coverage: [X%]
-
-Proceed with finalization?
-
-a) Yes, continue ⭐
-b) No, let me fix issues
-c) Skip validation (not recommended)
-
-Your choice: _
-```
-
-- **'b'**: Return to Phase 3 for fixes, END finalization
-- **'c'**: Show warning, ask confirmation again, then continue
-- **'a'**: Continue to Step 2
-
----
-
-### Step 2: Source Documentation Update (Interactive)
+### Source Documentation Update (Interactive)
 
 **Detect source references:**
 
@@ -1299,246 +1260,97 @@ Your choice: _
 
 ---
 
-### Step 3: Archiving Decision (Explicit Confirmation)
+## ✅ Development Work Complete
 
-**Show current state:**
+Your code is ready for finalization. You have two options:
 
-```bash
-git diff --stat
-git log --oneline origin/[base-branch]..HEAD
+### Option A: Run Full Finalization Now (Recommended) ⭐
+
+Execute `/flow-finish` to complete all finalization steps automatically:
+
+- ✅ **Smart Validation** - Runs tests + lint only if needed (or revalidates if requested)
+- 📦 **Work Archiving** - Records analytics to `.ai-flow/archive/analytics.jsonl`, cleans workspace
+- 🤖 **AI-Powered Summaries** - Generates professional PR/Jira descriptions (~1,200 tokens)
+- 🚀 **Optional Push** - Pushes to remote with explicit confirmation
+
+**To proceed:** Type `/flow-finish` in the chat
+
+---
+
+### Option B: Manual Finalization
+
+If you prefer granular control over each step:
+
+1. **Validation:** `/flow-check` - Run comprehensive validation (tests + code review)
+2. **Commit:** `/flow-commit` - Create conventional commit with auto-generated message
+3. **Archive:** Manually record analytics and clean `.ai-flow/work/[task-name]/`
+4. **Push:** `git push origin [branch-name]` when ready
+
+---
+
+**What would you like to do?**
+
 ```
-
-**Present archiving options:**
-
-```
-💾 Task Completion Options
-
-Current work:
-- Branch: [branch-name]
-- Files changed: [N]
-- Commits: [N]
-- Duration: [X min]
-
-What do you want to do?
-
-a) Complete & Archive ⭐
-   → Record analytics, delete work files, clean state
-
-b) Complete & Keep
-   → Record analytics, rename folder to [task]-completed
-
-c) Mark as Paused
-   → Keep work files for later resume
-
-d) Cancel
-   → Go back to editing
+a) Run /flow-finish now ⭐ (Recommended - comprehensive automation)
+b) I'll handle finalization manually (granular control)
+c) Tell me more about what /flow-finish does
 
 Your choice: _
 ```
 
-**IF 'a' (Complete & Archive):**
+**If 'a':** Execute `/flow-finish` immediately
+
+**If 'b':** Show confirmation and end workflow:
 
 ```
-✅ Archiving task...
-```
+✅ Understood. Development complete.
 
-1. **Extract metadata:**
+📋 Manual finalization checklist:
+- [ ] Run validation: /flow-check
+- [ ] Commit changes: /flow-commit
+- [ ] Archive work folder
+- [ ] Push to remote
+- [ ] Create PR/MR
 
-   ```javascript
-   // IF complexity == "COMPLEX" (has status.json):
-   analytics = {
-     task: '[task-name]',
-     type: '[feature|refactor|fix]',
-     src: '[HU-001-002|roadmap-2.3|manual]',
-     dur: Math.round((completed - created) / 60000), // minutes
-     start: timestamps.created,
-     end: new Date().toISOString(),
-     tasks: progress.totalTasks,
-     sp: extract_story_points_from_work_md(),
-     commits: git.commits.length,
-     valid: validation.tests.passed && validation.lint.passed,
-   };
-
-   // IF complexity == "MEDIUM" (only work.md):
-   analytics = {
-     task: '[task-name]',
-     type: '[detected-from-folder-name]',
-     src: 'manual',
-     dur: estimate_duration_from_git_log(),
-     start: get_first_commit_timestamp(),
-     end: new Date().toISOString(),
-     tasks: count_checkboxes_in_work_md(),
-     sp: extract_story_points_from_work_md() || null,
-     commits: count_commits_in_branch(),
-     valid: validation_passed,
-   };
-   ```
-
-2. **Append to analytics:**
-
-   ```bash
-   echo '{json}' >> .ai-flow/archive/analytics.jsonl
-   ```
-
-3. **Delete work folder:**
-
-   ```bash
-   rm -rf .ai-flow/work/[task-name]/
-   ```
-
-4. **Show confirmation:**
-
-   ```
-   ✅ Task archived successfully
-
-   📊 Analytics recorded:
-   - Duration: [X] min
-   - Story Points: [N]
-   - Commits: [N]
-   - Validation: [✅ Passed | ❌ Failed]
-   ```
-
-**IF 'b' (Complete & Keep):**
-
-1. Record analytics (same as 'a')
-2. Rename folder:
-   ```bash
-   mv .ai-flow/work/[task] .ai-flow/work/[task]-completed/
-   ```
-3. Show: `✅ Task marked complete. Files kept in: .ai-flow/work/[task]-completed/`
-
-**IF 'c' (Mark as Paused):**
-
-1. Add marker file:
-   ```bash
-   echo "Paused: $(date)" > .ai-flow/work/[task]/PAUSED
-   ```
-2. Show: `⏸️ Task paused. Resume with: /flow-work`
-3. **END finalization**
-
-**IF 'd' (Cancel):**
-
-1. Show: `❌ Finalization cancelled. Task remains active.`
-2. **END finalization**
-
----
-
-### Step 4: Ticket Summary (Optional)
-
-**Only ask if task was archived (option 'a' or 'b'):**
-
-```
-📋 Generate ticket summary?
-
-(For ClickUp, Jira, Linear, Asana, Trello, GitHub Projects, etc.)
-
-y/n: _
-```
-
-**IF 'y':**
-
-1. Check if template exists:
-
-   ```bash
-   [ -f .ai-flow/prompts/shared/task-summary-template.md ]
-   ```
-
-2. **IF template exists:**
-   - Read template
-   - Extract data from:
-     - Last line of `analytics.jsonl`
-     - Git stats: `git diff --stat`, `git log --oneline`
-     - Branch info
-   - Populate template with real data
-   - Show formatted summary
-
-3. **IF template doesn't exist:**
-   - Generate basic summary:
-
-   ```
-   📋 Task Summary
-
-   **Task**: [task-name]
-   **Type**: [feature|refactor|fix]
-   **Duration**: [X min]
-   **Story Points**: [N]
-   **Commits**: [N]
-   **Branch**: [branch-name]
-   **Status**: ✅ Complete
-
-   **Changes**:
-   [git diff --stat output]
-
-   **Commits**:
-   [git log --oneline output]
-   ```
-
-4. Show: `📋 Copy the summary above to your ticket system`
-
-**IF 'n':**
-
-```
-⏭️ Skipping ticket summary
-```
-
----
-
-### Step 5: Git Push (Final Step)
-
-```
-🚀 Push changes to remote?
-
-git push origin [branch-name]
-
-y/n: _
-```
-
-**IF 'y':**
-
-```bash
-git push origin [branch-name]
-```
-
-Show result:
-
-```
-✅ Pushed to origin/[branch-name]
-
-Next steps:
-- Create Pull Request/Merge Request
-- Request code review
-- Update project board
-```
-
-**IF 'n':**
-
-```
-⏭️ Skipping push
-
-⚠️ Remember to push later:
-   git push origin [branch-name]
-```
-
----
-
-### Finalization Complete
-
-```
-✅ Task Finalization Complete
-
-📊 Summary:
-- [✅|⚠️] Validation passed
-- [✅|⏭️] Documentation updated
-- [✅|⏭️] Task archived
-- [✅|⏭️] Ticket summary generated
-- [✅|⏭️] Pushed to remote
-
-Task: [task-name]
-Branch: [branch-name]
-Duration: [X min]
-Commits: [N]
+💡 Tip: You can run /flow-finish anytime to automate these steps.
 
 🎉 Great work!
+```
+
+**If 'c':** Show detailed explanation:
+
+```
+📖 About /flow-finish
+
+/flow-finish is an intelligent finalization workflow that:
+
+1️⃣ **Smart Validation (Step 1)**
+   - Detects if /flow-check was already run successfully
+   - Only re-runs if explicitly requested or validation failed
+   - Shows comprehensive test + lint results
+
+2️⃣ **Smart Commit (Step 2)**
+   - Detects uncommitted changes automatically
+   - Runs /flow-commit only if needed
+   - Generates conventional commit messages
+
+3️⃣ **Work Archiving (Step 3)**
+   - Extracts analytics: duration, story points, commits
+   - Appends to .ai-flow/archive/analytics.jsonl
+   - Deletes .ai-flow/work/[task-name]/ folder
+
+4️⃣ **AI Summaries (Step 4)**
+   - Reads git diff + commit history
+   - Generates professional PR description
+   - Generates ticket update (Jira/ClickUp/Linear)
+   - ~1,200 tokens, markdown-formatted
+
+5️⃣ **Optional Push (Step 5)**
+   - Always asks for confirmation
+   - Shows branch name and remote
+   - Never pushes without explicit approval
+
+**Would you like to run it now?** (y/n): _
 ```
 
 **END WORKFLOW**
