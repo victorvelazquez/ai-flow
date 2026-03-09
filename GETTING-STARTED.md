@@ -1218,14 +1218,11 @@ ai-flow init . \
 **Debugging and testing:**
 
 ```bash
-# Verbose logging (see all internal operations)
-ai-flow init . --ai claude --verbose
-
 # Dry run (simulate without creating files)
 ai-flow init . --ai all --dry-run
 
-# Combine both
-ai-flow init . --ai gemini --verbose --dry-run
+# Check initialization status
+ai-flow check
 ```
 
 **Different directories:**
@@ -2276,7 +2273,6 @@ ai-flow --help                  # Show help
 | `--type`        | String  | No       | `backend`, `frontend`, `mobile`, `fullstack`                  | Project type                   |
 | `--name`        | String  | No       | Any string                                                    | Project name                   |
 | `--description` | String  | No       | Any string                                                    | Project description            |
-| `--verbose`     | Boolean | No       | -                                                             | Enable detailed logging        |
 | `--dry-run`     | Boolean | No       | -                                                             | Simulate without writing files |
 
 \* If omitted, CLI prompts interactively.
@@ -2414,10 +2410,10 @@ chmod 755 .
    ls .ai-flow/templates/
    ```
 
-3. **Run with verbose logging:**
+3. **Run with dry-run to simulate:**
 
    ```bash
-   ai-flow init . --verbose
+   ai-flow init . --dry-run
    ```
 
 4. **Check AI tool output** for error messages
@@ -2531,7 +2527,7 @@ chmod 755 .
 
 ```bash
 # Automated initialization
-ai-flow init . --ai all --type backend --name "My API" --description "REST API" --verbose
+ai-flow init . --ai all --type backend --name "My API" --description "REST API"
 
 # Quick feature iteration
 /flow-dev-feature new → Build → /flow-dev-review → /flow-dev-work archive

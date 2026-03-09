@@ -168,7 +168,7 @@ git commit -m "type(scope): description"
 **Examples:**
 
 ```bash
-git commit -m "feat(cli): add --verbose flag for detailed output"
+git commit -m "feat(cli): add --dry-run flag for simulation mode"
 git commit -m "fix(templates): correct placeholder syntax in AGENT.md"
 git commit -m "docs(readme): update installation instructions"
 git commit -m "test(cli): add integration tests for init command"
