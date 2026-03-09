@@ -312,14 +312,14 @@ After initialization, use these slash commands in your AI tool:
 
 **Workflows (All project types):**
 
-- `/flow-work` - **Unified orchestrator** for Features/Refactors/Fixes with smart detection, automatic completion tracking, and consolidated planning
+- `/flow-work` - **Development orchestrator** for Features/Refactors/Fixes with smart detection, automatic completion tracking, and consolidated planning. Updates source documentation (roadmap/user stories), then guides you to run `/flow-finish`.
 - `/flow-check` - **Combined validation**: Tests + Code Review in one command
 - `/flow-commit` - Automate commits with Conventional Commits (3-5 min)
-- `/flow-finish` - **Finalize work**: Archive metrics, generate professional PR/Jira descriptions with AI (~1200 tokens), optional push
+- `/flow-finish` - **Finalization workflow**: Smart validation (reuses /flow-check results), work archiving, AI-powered PR/Jira descriptions (~1200 tokens), optional push. Separate from `/flow-work` for better modularity.
 - `/flow-docs-sync` - **Sync documentation** when code changes occur
 - `/flow-release` - **Version release automation**: Semantic versioning, Git tags, Swagger UI updates, CHANGELOG generation
 
-> **Note:** `/flow-work` automatically marks tasks as complete in `planning/roadmap.md` and user story DoD checklists when implementation finishes. It generates a consolidated `work.md` file for efficient planning and context management.
+> **Architecture:** `/flow-work` focuses on development (planning → implementation → source docs update), while `/flow-finish` handles finalization (validation → archiving → summaries → push). This separation follows Unix philosophy: one tool, one responsibility. At the end of `/flow-work`, you get an interactive prompt to run `/flow-finish` immediately or handle finalization manually.
 
 ## **📚 See [GETTING-STARTED.md](GETTING-STARTED.md) for complete command reference**
 
