@@ -507,7 +507,7 @@ Hardcoded: `if (count > 100)`
 
 ### 1. SQL Injection Vulnerability
 
-**File:** [src/api/UserController.java](src/api/UserController.java#L45)
+**File:** `src/api/UserController.java:45`
 **Category:** Security
 **Description:** Raw SQL query with user input
 **Impact:** High - Database compromise possible

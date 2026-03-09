@@ -350,7 +350,7 @@ go test -coverprofile=coverage.out ./...
 ````markdown
 ### Failed Test 1: User.create should validate email
 
-**File:** [tests/user.test.ts](tests/user.test.ts#L23)
+**File:** `tests/user.test.ts:23`
 **Error:** AssertionError: Expected email validation to reject invalid format
 
 ```typescript
