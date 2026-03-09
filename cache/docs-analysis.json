@@ -1,27 +1,29 @@
 {
+  "timestamp": "2026-03-09T20:05:37.0984194Z",
   "lastAnalysis": {
-    "gaps_fixed": 2,
-    "frontend_templates": 15,
-    "template_count_corrected": true,
     "backend_templates": 14,
+    "gaps_found": 3,
+    "mobile_prompts": 25,
+    "frontend_templates": 15,
+    "version_updated": true,
     "backend_prompts": 24,
     "mobile_templates": 13,
-    "gaps_found": 2,
-    "mobile_prompts": 25,
-    "desktop_templates": 14,
     "desktop_prompts": 24,
+    "gaps_fixed": 3,
+    "total_prompts": 98,
     "frontend_prompts": 25,
-    "total_prompts": 98
+    "changelog_updated": true,
+    "desktop_templates": 14,
+    "template_count_corrected": true
   },
   "files": {
-    "package.json": "2026-03-07T20:02:23.5805118-03:00",
-    "CONTRIBUTING.md": "2026-03-09T08:22:50.2719474-03:00",
-    "GETTING-STARTED.md": "2026-03-09T11:23:53.8530900-03:00",
-    "templates/": "2026-03-07T20:02:23.5841697-03:00",
-    "prompts/": "2026-02-04T15:17:54.1209389-03:00",
-    "README.md": "2026-03-09T11:31:06.4598151-03:00",
-    "src/cli.ts": "2026-03-07T19:35:16.1172489-03:00"
+    "CONTRIBUTING.md": "2026-03-09T11:22:50.2719474Z",
+    "package.json": "2026-03-09T14:47:59.6081699Z",
+    "templates/": "2026-03-07T23:02:23.5841697Z",
+    "GETTING-STARTED.md": "2026-03-09T20:05:18.5507531Z",
+    "README.md": "2026-03-09T20:05:18.3733506Z",
+    "prompts/": "2026-03-09T19:55:25.4851629Z",
+    "src/cli.ts": "2026-03-07T22:35:16.1172489Z"
   },
-  "version": "2.7.0",
-  "timestamp": "2026-03-09T11:32:52.3417456-03:00"
+  "version": "2.8.0"
 }

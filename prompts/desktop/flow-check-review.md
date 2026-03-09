@@ -566,7 +566,7 @@ setTimeout(callback, RETRY_DELAY_MS);
 ````markdown
 ### [Priority] [Category] - [Title]
 
-**File:** [path/to/file.ts](path/to/file.ts#L45)
+**File:** `path/to/file.ts:45`
 **Category:** Security | Performance | Testing | Architecture | Quality
 **Impact:** [Description of impact]
 **Effort:** [Estimation - Quick/Medium/Large]
@@ -598,7 +598,7 @@ setTimeout(callback, RETRY_DELAY_MS);
 ```markdown
 ### 🔴 CRITICAL - SQL Injection Vulnerability
 
-**File:** [src/api/users.ts](src/api/users.ts#L45)
+**File:** `src/api/users.ts:45`
 **Category:** Security
 **Impact:** High - Database compromise, data theft possible
 **Effort:** Quick (5 minutes)
