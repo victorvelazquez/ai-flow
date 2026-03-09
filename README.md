@@ -393,13 +393,13 @@ AI Flow organizes your project with clear separation of concerns:
 
 ## 🎯 Generated Documentation
 
-**Backend** (17 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 4 specs.
+**Backend** (14 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 9 technical docs/specs.
 
 **Frontend** (15 files): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
 
 **Mobile** (13 files): AGENT.md, ai-instructions.md, project-brief.md, plus 10 technical docs/specs.
 
-**Desktop** (16 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 3 specs.
+**Desktop** (14 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 9 technical docs/specs.
 
 **Fullstack** (30+ files): Combined Backend + Frontend documentation structures.
 
