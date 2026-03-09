@@ -667,12 +667,14 @@ After initialization, you have access to **16+ slash commands**:
 
 ```
 
-/flow-work   # Unified orchestrator: Features/Refactors/Fixes with smart detection
+/flow-work   # Development orchestrator: Features/Refactors/Fixes with smart detection
 /flow-check  # Combined validation: Tests + Code Review
 /flow-commit # Automate commits with Conventional Commits (3-5 min)
-/flow-finish # Finalize work: archive, AI-powered PR/Jira descriptions, optional push
+/flow-finish # Finalization workflow: validation, archiving, AI summaries, push
 
 ```
+
+> **Two-Step Development Flow:** `/flow-work` handles development (planning → implementation → source docs update), then offers an interactive prompt to run `/flow-finish` immediately for finalization (validation → archiving → AI-powered summaries → push). This modular architecture lets you choose between fully automated finalization or granular manual control.
 
 > **Automatic Completion Tracking:** When you complete work with `/flow-work`, the system automatically updates `planning/roadmap.md` (marks Feature checkboxes) and `planning/user-stories/` files (marks DoD checklist items). This keeps your documentation synchronized with actual implementation progress.
 
@@ -2235,10 +2237,12 @@ ai-flow --help                  # Show help
 #### Workflow Commands - Universal (4)
 
 ```
-/flow-work                              # Unified orchestrator: Features/Refactors/Fixes
+/flow-work                              # Development orchestrator: Features/Refactors/Fixes
+                                        # Guides to /flow-finish at completion
 /flow-check                             # Combined validation: Tests + Code Review
 /flow-commit                            # Automate commits with Conventional Commits
-/flow-finish                            # Finalize: archive, AI PR/Jira descriptions, push
+/flow-finish                            # Finalization workflow: validation, archive, AI summaries, push
+                                        # Separate from /flow-work for modularity
 ```
 
 #### Workflow Commands - Backend Only (5)
