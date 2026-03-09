@@ -116,7 +116,7 @@ The result is interconnected documentation that guides AI assistants and human d
 - 🔍 **Smart 3-Layer Detection** - Analyzes existing projects in 15s-5min
 - 💾 **Intelligent Caching** - 0 seconds on re-runs with no changes
 - 🚀 **Agent Mode** - Immediate, proactive execution for all AI workflows
-- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-work`, `/flow-check`, `/flow-commit`
+- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-work`, `/flow-check`, `/flow-commit`, `/flow-release`
 - ⏱️ **Time Efficient** - Save 10-20 hours per project
 
 ---
@@ -190,7 +190,6 @@ $ ai-flow check
 --type <type>            # backend, frontend, mobile, desktop, fullstack (interactive if omitted)
 --name <name>            # Project name (interactive if omitted)
 --description <desc>     # Project description (interactive if omitted)
---verbose                # Detailed logging (init only)
 --dry-run                # Simulate without writing (init only)
 ```
 
@@ -218,11 +217,8 @@ ai-flow init . --ai claude --type mobile
 # Desktop project example (NetBeans/Eclipse)
 ai-flow init . --ai claude --type desktop
 
-# Enable verbose output (detailed logging) - only for init command
-ai-flow init . --verbose
-
 # Simulate initialization without writing files (dry-run)
-ai-flow init . --dry-run --verbose
+ai-flow init . --dry-run
 
 # Show detailed help with all commands and options
 ai-flow --help
@@ -269,10 +265,10 @@ After initialization, use these slash commands in your AI tool:
 
 > **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
 
-**Backend Projects:** 22 prompts (/flow-build with phases 0-10, /flow-work, /flow-check, /flow-commit, /flow-docs-sync)  
-**Frontend Projects:** 23 prompts (same structure tailored for frontend)  
-**Mobile Projects:** 23 prompts (same structure tailored for mobile apps)  
-**Desktop Projects:** 22 prompts (same structure tailored for desktop apps)  
+**Backend Projects:** 23 prompts (/flow-build with phases 0-10, /flow-work, /flow-check, /flow-commit, /flow-docs-sync, /flow-release)  
+**Frontend Projects:** 24 prompts (same structure tailored for frontend)  
+**Mobile Projects:** 24 prompts (same structure tailored for mobile apps)  
+**Desktop Projects:** 23 prompts (same structure tailored for desktop apps)  
 **Fullstack Projects:** Combined backend + frontend commands
 
 **Documentation & Build:**
@@ -283,6 +279,7 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-check` - Combined code review & testing workflow
 - `/flow-commit` - Atomic commits (Conventional Commits)
 - `/flow-docs-sync` - Update documentation when code changes
+- `/flow-release` - Semantic versioning automation with Git tags and Swagger UI updates
 
 **Fases disponibles (Backend):**
 
@@ -318,6 +315,7 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-check` - **Combined validation**: Tests + Code Review in one command
 - `/flow-commit` - Automate commits with Conventional Commits (3-5 min)
 - `/flow-docs-sync` - **Sync documentation** when code changes occur
+- `/flow-release` - **Version release automation**: Semantic versioning, Git tags, Swagger UI updates, CHANGELOG generation
 
 > **Note:** `/flow-work` automatically marks tasks as complete in `planning/roadmap.md` and user story DoD checklists when implementation finishes. It generates a consolidated `work.md` file for efficient planning and context management.
 
@@ -393,23 +391,23 @@ AI Flow organizes your project with clear separation of concerns:
 
 ## 🎯 Generated Documentation
 
-**Backend** (14 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 2 specs.
+**Backend** (17 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 4 specs.
 
 **Frontend** (15 files): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
 
 **Mobile** (13 files): AGENT.md, ai-instructions.md, project-brief.md, plus 10 technical docs/specs.
 
-**Desktop** (14 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 2 specs.
+**Desktop** (16 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 8 docs (in docs/) and 3 specs.
 
 **Fullstack** (30+ files): Combined Backend + Frontend documentation structures.
 
-**Slash Commands/Prompts** (90 total):
+**Slash Commands/Prompts** (94 total):
 
-- Backend: 22 prompts (/flow-build with phases 0-10, /flow-work variants, /flow-check, /flow-commit, /flow-docs-sync)
-- Frontend: 23 prompts (same structure tailored for frontend + /flow-work-api)
-- Mobile: 23 prompts (same structure tailored for mobile apps + /flow-work-api)
-- Desktop: 22 prompts (same structure tailored for desktop apps)
-- **Total: 90 prompts** across all project types
+- Backend: 23 prompts (/flow-build with phases 0-10, /flow-work variants, /flow-check, /flow-commit, /flow-docs-sync, /flow-release)
+- Frontend: 24 prompts (same structure tailored for frontend + /flow-work-api + /flow-release)
+- Mobile: 24 prompts (same structure tailored for mobile apps + /flow-work-api + /flow-release)
+- Desktop: 23 prompts (same structure tailored for desktop apps + /flow-release)
+- **Total: 94 prompts** across all project types
 
 Each project type gets workflow commands optimized for its technology stack.
 
