@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`/flow-finish` command**: Universal workflow finalization command for all project types (backend, frontend, mobile, desktop)
+  - Smart validation: Only runs `/flow-check` if tests not executed or code changed since last validation
+  - Smart commit: Only runs `/flow-commit` if uncommitted changes exist
+  - Automatic archiving: Saves metrics to `.ai-flow/archive/analytics.jsonl` before push
+  - AI-powered descriptions: Generates professional PR and Jira descriptions with optimized token usage (~1200 tokens)
+  - Language/framework agnostic: Detects migrations, env vars, dependencies automatically
+  - Git platform detection: Auto-generates commit links for GitHub, GitLab, Bitbucket, Azure DevOps
+  - Optional push: Always asks for confirmation before pushing
+  - Tests are blocking: Stops workflow if tests fail
+  - Deployment notes detection: Automatically includes migration, env vars, and dependency requirements
+
+### Changed
+
+- **Total prompts**: Increased from 94 to 98 across all project types
+- **Documentation**: Updated README, GETTING-STARTED, CLAUDE, and copilot-instructions to reflect new universal workflow commands
+
 ## [2.7.0] - 2026-03-07
 
 ### Changed
