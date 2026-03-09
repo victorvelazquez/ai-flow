@@ -480,7 +480,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ╚════════════════════════════════════════════════════════════╝
 
 Changelog Preview:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 
 ## [1.3.0] - 2026-03-09
 
@@ -496,7 +496,7 @@ Changelog Preview:
 ### Changed
 - Updated express 4.18.0 → 4.18.2
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 
 Options:
   [Y] Continue with release 1.3.0
