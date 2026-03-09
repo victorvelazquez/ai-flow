@@ -10,7 +10,7 @@ AI Flow is an interactive CLI that creates comprehensive professional documentat
 
 **Key Features:**
 
-- 🚀 Complete professional documentation (Backend: 14 files, Frontend: 15 files, Mobile: 13 files, Desktop: 14 files, Fullstack: 30+ files)
+- 🚀 Complete professional documentation (Backend: 17 files, Frontend: 15 files, Mobile: 13 files, Desktop: 16 files, Fullstack: 30+ files)
 - 🧠 **Smart Description Refinement:** Detects ambiguity and iteratively guides you to a professional project definition.
 - ⚡ **Two modes:** Interactive (90-120 min, full control) or Smart Auto-Suggest (15-25 min, 6 questions)
 - 🌍 Universal support - 12 languages, 60+ frameworks, 35+ ORMs (98% coverage)
@@ -116,7 +116,7 @@ The result is interconnected documentation that guides AI assistants and human d
 - 🔍 **Smart 3-Layer Detection** - Analyzes existing projects in 15s-5min
 - 💾 **Intelligent Caching** - 0 seconds on re-runs with no changes
 - 🚀 **Agent Mode** - Immediate, proactive execution for all AI workflows
-- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-work`, `/flow-check`, `/flow-commit`, `/flow-release`
+- 💡 **Slash Commands** - Easy execution with `/flow-build`, `/flow-work`, `/flow-check`, `/flow-commit`, `/flow-finish`, `/flow-release`
 - ⏱️ **Time Efficient** - Save 10-20 hours per project
 
 ---
@@ -265,10 +265,10 @@ After initialization, use these slash commands in your AI tool:
 
 > **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
 
-**Backend Projects:** 23 prompts (/flow-build with phases 0-10, /flow-work, /flow-check, /flow-commit, /flow-docs-sync, /flow-release)  
-**Frontend Projects:** 24 prompts (same structure tailored for frontend)  
-**Mobile Projects:** 24 prompts (same structure tailored for mobile apps)  
-**Desktop Projects:** 23 prompts (same structure tailored for desktop apps)  
+**Backend Projects:** 24 prompts (/flow-build with phases 0-10, /flow-work, /flow-check, /flow-commit, /flow-finish, /flow-docs-sync, /flow-release)  
+**Frontend Projects:** 25 prompts (same structure tailored for frontend)  
+**Mobile Projects:** 25 prompts (same structure tailored for mobile apps)  
+**Desktop Projects:** 24 prompts (same structure tailored for desktop apps)  
 **Fullstack Projects:** Combined backend + frontend commands
 
 **Documentation & Build:**
@@ -278,6 +278,7 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-work` - Development orchestrator (feature, refactor, fix, resume)
 - `/flow-check` - Combined code review & testing workflow
 - `/flow-commit` - Atomic commits (Conventional Commits)
+- `/flow-finish` - Finalize work: archive, generate PR/Jira descriptions with AI, push
 - `/flow-docs-sync` - Update documentation when code changes
 - `/flow-release` - Semantic versioning automation with Git tags and Swagger UI updates
 
@@ -314,6 +315,7 @@ After initialization, use these slash commands in your AI tool:
 - `/flow-work` - **Unified orchestrator** for Features/Refactors/Fixes with smart detection, automatic completion tracking, and consolidated planning
 - `/flow-check` - **Combined validation**: Tests + Code Review in one command
 - `/flow-commit` - Automate commits with Conventional Commits (3-5 min)
+- `/flow-finish` - **Finalize work**: Archive metrics, generate professional PR/Jira descriptions with AI (~1200 tokens), optional push
 - `/flow-docs-sync` - **Sync documentation** when code changes occur
 - `/flow-release` - **Version release automation**: Semantic versioning, Git tags, Swagger UI updates, CHANGELOG generation
 
@@ -401,13 +403,13 @@ AI Flow organizes your project with clear separation of concerns:
 
 **Fullstack** (30+ files): Combined Backend + Frontend documentation structures.
 
-**Slash Commands/Prompts** (94 total):
+**Slash Commands/Prompts** (98 total):
 
-- Backend: 23 prompts (/flow-build with phases 0-10, /flow-work variants, /flow-check, /flow-commit, /flow-docs-sync, /flow-release)
-- Frontend: 24 prompts (same structure tailored for frontend + /flow-work-api + /flow-release)
-- Mobile: 24 prompts (same structure tailored for mobile apps + /flow-work-api + /flow-release)
-- Desktop: 23 prompts (same structure tailored for desktop apps + /flow-release)
-- **Total: 94 prompts** across all project types
+- Backend: 24 prompts (/flow-build with phases 0-10, /flow-work variants, /flow-check, /flow-commit, /flow-finish, /flow-docs-sync, /flow-release)
+- Frontend: 25 prompts (same structure tailored for frontend + /flow-work-api + /flow-finish + /flow-release)
+- Mobile: 25 prompts (same structure tailored for mobile apps + /flow-work-api + /flow-finish + /flow-release)
+- Desktop: 24 prompts (same structure tailored for desktop apps + /flow-finish + /flow-release)
+- **Total: 98 prompts** across all project types
 
 Each project type gets workflow commands optimized for its technology stack.
 

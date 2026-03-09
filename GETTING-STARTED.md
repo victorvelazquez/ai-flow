@@ -16,14 +16,14 @@
 
 **Already familiar with AI Flow?** Jump directly to:
 
-| Link                                          | Description                                                        |
-| --------------------------------------------- | ------------------------------------------------------------------ |
-| [Build Modes](#15-understanding-build-modes)  | Interactive vs Smart Auto-Suggest                                  |
-| [CLI Flags Reference](#cli-flags-reference)   | All `init` command flags                                           |
-| [Commands Cheat Sheet](#commands-cheat-sheet) | All 16+ commands organized                                         |
-| [Workflow Commands](#33-workflow-commands)    | `/flow-work`, `/flow-check`, `/flow-commit` (unified orchestrator) |
-| [Troubleshooting](#troubleshooting)           | Common issues and solutions                                        |
-| [Best Practices](#best-practices)             | Expert tips and recommendations                                    |
+| Link                                          | Description                                                 |
+| --------------------------------------------- | ----------------------------------------------------------- |
+| [Build Modes](#15-understanding-build-modes)  | Interactive vs Smart Auto-Suggest                           |
+| [CLI Flags Reference](#cli-flags-reference)   | All `init` command flags                                    |
+| [Commands Cheat Sheet](#commands-cheat-sheet) | All 16+ commands organized                                  |
+| [Workflow Commands](#33-workflow-commands)    | `/flow-work`, `/flow-check`, `/flow-commit`, `/flow-finish` |
+| [Troubleshooting](#troubleshooting)           | Common issues and solutions                                 |
+| [Best Practices](#best-practices)             | Expert tips and recommendations                             |
 
 ---
 
@@ -670,6 +670,7 @@ After initialization, you have access to **16+ slash commands**:
 /flow-work   # Unified orchestrator: Features/Refactors/Fixes with smart detection
 /flow-check  # Combined validation: Tests + Code Review
 /flow-commit # Automate commits with Conventional Commits (3-5 min)
+/flow-finish # Finalize work: archive, AI-powered PR/Jira descriptions, optional push
 
 ```
 
@@ -2231,6 +2232,15 @@ ai-flow --help                  # Show help
 /flow-build fase 7        # Deployment
 ```
 
+#### Workflow Commands - Universal (4)
+
+```
+/flow-work                              # Unified orchestrator: Features/Refactors/Fixes
+/flow-check                             # Combined validation: Tests + Code Review
+/flow-commit                            # Automate commits with Conventional Commits
+/flow-finish                            # Finalize: archive, AI PR/Jira descriptions, push
+```
+
 #### Workflow Commands - Backend Only (5)
 
 ```
@@ -2249,7 +2259,7 @@ ai-flow --help                  # Show help
 /frontend-docs-update               # Fullstack: frontend only
 ```
 
-**Total Commands:** 25+ (varies by project type)
+**Total Commands:** 29+ (varies by project type)
 
 ### Project Type Comparison
 

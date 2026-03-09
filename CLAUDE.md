@@ -7,12 +7,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **What:** Node.js/TypeScript CLI that generates professional documentation (15-17 docs) for backend/frontend/mobile/fullstack projects through interactive questionnaires.
 
 **Flow:**
+
 1. User installs: `npm install -g ai-flow-dev`
 2. Runs: `ai-flow init .` → Creates `.ai-flow/` with templates, prompts, slash commands
 3. Opens AI tool → Executes `/flow-build`
 4. AI guides through 8-10 phases → Generates docs filling `{{PLACEHOLDER}}` tokens
 
 **Key files:**
+
 - `src/cli.ts` - All CLI logic (Commander.js + Inquirer)
 - `templates/*.template.md` - Document templates with placeholders
 - `prompts/backend/` - Phase prompts and workflow commands
@@ -43,12 +45,14 @@ rm -rf test-folder
 **Module System:** ES modules (`"type": "module"` in package.json), TypeScript strict mode
 
 **CLI Commands:**
+
 - `init [path]` - Initialize project with flags: `--ai`, `--type`, `--name`, `--description`, `--verbose`, `--dry-run`
 - `check` - Verify initialization status
 
 **Init flow:** `createBuildStructure()` → `copyTemplates()` → `copyPrompts()` → `setupSlashCommands()`
 
 **AI Tool → Slash Command Location:**
+
 - `claude` → `.claude/commands/`
 - `cursor` → `.cursor/commands/`
 - `copilot` → `.github/prompts/`
@@ -57,6 +61,7 @@ rm -rf test-folder
 **Project Types:** backend, frontend, mobile, fullstack (each has different template sets)
 
 **Two Questionnaire Modes:**
+
 - Interactive: Full control, all questions (90-120 min)
 - Smart Auto-Suggest: 6 critical questions, AI suggests rest (15-25 min)
 
@@ -66,9 +71,21 @@ Templates use `{{PLACEHOLDER}}` format. They are copied to `.ai-flow/templates/`
 
 **Critical:** Never modify placeholders when editing templates. Downstream AI agents expand them.
 
-## Workflow Commands (Backend Only)
+## Workflow Commands
+
+### Universal Commands (All Project Types)
+
+Located in `prompts/backend/`, `prompts/frontend/`, `prompts/mobile/`, `prompts/desktop/`:
+
+- `flow-work.md` - Unified orchestrator: Features/Refactors/Fixes
+- `flow-check.md` - Combined validation: Tests + Code Review
+- `flow-commit.md` - Conventional commits automation
+- `flow-finish.md` - Finalize work: archive, AI PR/Jira descriptions, push
+
+### Backend-Only Commands
 
 Located in `prompts/backend/`:
+
 - `flow-dev-feature.md` - Create/modify features with Story Points
 - `flow-dev-fix.md` - Bug fixes (adaptive complexity)
 - `flow-dev-commit.md` - Conventional commits automation
@@ -88,6 +105,7 @@ These are separate contexts; don't confuse them.
 ## Code Standards
 
 **Naming:**
+
 - Files: `kebab-case.ts`
 - Functions: `camelCase`
 - Classes/Interfaces: `PascalCase`
@@ -122,12 +140,14 @@ rm -rf test-project
 ## Key Implementation Details
 
 **Path resolution:** CLI uses `__dirname` relative to `dist/cli.js` to locate bundled assets:
+
 ```typescript
 const ROOT_DIR = path.resolve(__dirname, '..');
 const templatesSource = path.join(ROOT_DIR, 'templates');
 ```
 
 **Config location:** `.ai-flow/core/config.json`
+
 ```json
 {
   "version": "2.1.3",
@@ -140,16 +160,19 @@ const templatesSource = path.join(ROOT_DIR, 'templates');
 ## Extending
 
 **Add AI tool:**
+
 1. Add to `AI_TOOLS` array in `src/cli.ts`
 2. Add case in `setupSlashCommands()` for folder mapping
 3. Update README.md
 
 **Add phase:**
+
 1. Create `prompts/backend/flow-build-phase-N.md`
 2. Update flow-build.md to reference it
 3. Add any new template placeholders
 
 **Add template:**
+
 1. Create `templates/{name}.template.md` with `{{PLACEHOLDERS}}`
 2. Update prompts to gather values for new placeholders
 3. Update AGENT.template.md to reference new doc
