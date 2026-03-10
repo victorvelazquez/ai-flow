@@ -492,10 +492,14 @@ await saveToCache(cacheFile, {
   projectType: 'frontend',
 });
 
-// ⚠️ IMPORTANT: Do NOT create separate analysis files
+// ⚠️ IMPORTANT: Do NOT create SEPARATE ANALYSIS FILES
 // The analysis result is stored in memory (workflow_context.analysis)
-// and will be used to generate the comprehensive work.md file.
-// NO files like .ai-flow/analysis/*.md or .ai-flow/work/[task]/analysis.md
+// and will be merged into work.md during Phase 2.
+//
+// ❌ DO NOT CREATE: .ai-flow/analysis/*.md or .ai-flow/work/[task]/analysis.md
+// ✅ MUST CREATE (in Phase 2): .ai-flow/work/[task]/work.md and status.json
+//
+// The analysis data is included INSIDE work.md, not as a separate file.
 ```
 
 **IF `analysisResult.success === false`:**
@@ -890,7 +894,15 @@ Find similar features/patterns in codebase:
 - The `work.md` file should be comprehensive and self-contained
 - For COMPLEX tasks with API analysis, include all OpenAPI metadata directly in `work.md`
 
-**IF complexity == "MEDIUM":**
+**📦 For API_MODULE mode specifically:**
+
+- The analysis from `flow-work-api.md` sub-prompt is stored in `workflow_context.analysis`
+- ✅ YOU MUST CREATE `.ai-flow/work/api-[module-name]/work.md` with all analysis data embedded
+- ✅ YOU MUST CREATE `.ai-flow/work/api-[module-name]/status.json` (API modules are COMPLEX)
+- Include OpenAPI endpoints, schemas, field specs, validation rules, and relationships in `work.md`
+- Do NOT skip file creation just because you received pre-analyzed data
+
+**IF complexity == "MEDIUM":\*\***
 
 - Create simplified `.ai-flow/work/[task-name]/work.md` (~15-20 lines)
 - Skip status.json

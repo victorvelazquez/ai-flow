@@ -43,12 +43,14 @@ Parse OpenAPI backend specification and return structured analysis data that `fl
 2. Execute CRUD implementation with mobile-specific patterns (React Native)
 3. Ensure type-safety between mobile app and backend
 
-**⚠️ CRITICAL: Do NOT create separate analysis files**
+**⚠️ CRITICAL: Do NOT create ANY files in this sub-prompt**
 
 - This sub-prompt ONLY returns a JSON object (`OpenAPIAnalysisResult`)
-- NO files like `.ai-flow/analysis/*.md` or `.ai-flow/work/[task]/analysis.md` should be created
-- The parent prompt (`flow-work`) handles all file creation (only `work.md` and `status.json`)
-- All analysis data is stored in memory and used to populate `work.md`
+- ❌ NO files like `.ai-flow/analysis/*.md` should be created
+- ❌ NO files like `.ai-flow/work/[task]/analysis.md` should be created
+- ❌ NO files like `.ai-flow/work/[task]/work.md` should be created here
+- ✅ The parent prompt (`flow-work`) will create `.ai-flow/work/[task]/work.md` and `status.json` in Phase 2
+- All analysis data is returned as JSON and will be embedded into `work.md` by the parent prompt
 
 ---
 
