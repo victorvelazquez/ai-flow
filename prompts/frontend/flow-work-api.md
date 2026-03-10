@@ -43,6 +43,13 @@ Parse OpenAPI backend specification and return structured analysis data that `fl
 2. Execute CRUD implementation with project-specific patterns
 3. Ensure type-safety between frontend and backend
 
+**⚠️ CRITICAL: Do NOT create separate analysis files**
+
+- This sub-prompt ONLY returns a JSON object (`OpenAPIAnalysisResult`)
+- NO files like `.ai-flow/analysis/*.md` or `.ai-flow/work/[task]/analysis.md` should be created
+- The parent prompt (`flow-work`) handles all file creation (only `work.md` and `status.json`)
+- All analysis data is stored in memory and used to populate `work.md`
+
 ---
 
 ## Input Parameters
