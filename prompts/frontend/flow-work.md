@@ -491,6 +491,11 @@ await saveToCache(cacheFile, {
   lastVerified: new Date().toISOString(),
   projectType: 'frontend',
 });
+
+// ⚠️ IMPORTANT: Do NOT create separate analysis files
+// The analysis result is stored in memory (workflow_context.analysis)
+// and will be used to generate the comprehensive work.md file.
+// NO files like .ai-flow/analysis/*.md or .ai-flow/work/[task]/analysis.md
 ```
 
 **IF `analysisResult.success === false`:**
@@ -877,6 +882,13 @@ Find similar features/patterns in codebase:
 - Look for reusable components/hooks
 
 **3. Generate work.md (Conditional)**
+
+**⚠️ IMPORTANT: work.md is the ONLY planning file**
+
+- All analysis results, API specs, field specifications, and implementation plan go into `work.md`
+- Do NOT create separate files like `analysis.md`, `api-analysis.md`, or `spec.md`
+- The `work.md` file should be comprehensive and self-contained
+- For COMPLEX tasks with API analysis, include all OpenAPI metadata directly in `work.md`
 
 **IF complexity == "MEDIUM":**
 
