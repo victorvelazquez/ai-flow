@@ -591,9 +591,15 @@ function generate_commit_links() {
       fi
 
       if [ -n "$COMMIT_URL_PATTERN" ]; then
-        COMMIT_HASHES_SUMMARY+="[${hash}](${COMMIT_URL_PATTERN}${hash})"
+        # Build markdown link in parts to avoid VSCode link detection
+        COMMIT_HASHES_SUMMARY+="["
+        COMMIT_HASHES_SUMMARY+="$hash"
+        COMMIT_HASHES_SUMMARY+="]("
+        COMMIT_HASHES_SUMMARY+="$COMMIT_URL_PATTERN"
+        COMMIT_HASHES_SUMMARY+="$hash"
+        COMMIT_HASHES_SUMMARY+=")"
       else
-        COMMIT_HASHES_SUMMARY+="\`${hash}\`"
+        COMMIT_HASHES_SUMMARY+='`'"${hash}"'`'
       fi
     fi
     count=$((count + 1))
@@ -702,7 +708,7 @@ Read the structured summary from `/tmp/ai-context-summary.md` (400-600 words) an
 
 **AI Prompt:**
 
-```markdown
+```````markdown
 Genera dos descripciones profesionales (PR y Jira) basándote en este resumen estructurado:
 
 <context-summary>
@@ -756,55 +762,50 @@ Commit Hashes Summary: $COMMIT_HASHES_SUMMARY
 - Si breaking changes, resáltalos con ⚠️ en sección Métricas
 - Si deployment notes, sé específico con cada requirement
 
-**Output en formato (CRÍTICO - respetar delimitadores):**
+**Output Format:**
 
-\`\`\`markdown
+IMPORTANTE: Responde directamente con este formato EXACTO usando 5 BACKTICKS (máxima robustez):
 
-<!-- PR_DESCRIPTION_START -->
+---
 
-[contenido completo de PR description aquí]
+## 📋 PULL REQUEST DESCRIPTION
 
-<!-- PR_DESCRIPTION_END -->
+\`\`\`\`\`markdown
+[Aquí va el contenido completo de la PR description, empezando con ## Refactor: ...]
+\`\`\`\`\`
 
-<!-- JIRA_DESCRIPTION_START -->
+---
 
-[contenido completo de Jira description aquí]
+## 🎫 JIRA DESCRIPTION
 
-<!-- JIRA_DESCRIPTION_END -->
+\`\`\`\`\`markdown
+[Aquí va el contenido completo de la Jira description, empezando con ## Refactor: ...]
+\`\`\`\`\`
 
-\`\`\`
+---
+
+**Listo para copiar y pegar** 📋 Solo copia el contenido dentro de los bloques de código markdown.
+
+**CRÍTICO PARA EVITAR CONFLICTOS:**
+
+1. Los encabezados "## 📋 PULL REQUEST DESCRIPTION" y "## 🎫 JIRA DESCRIPTION" deben estar FUERA de los bloques de código
+2. USA EXACTAMENTE 5 BACKTICKS (\`\`\`\`\`) para abrir/cerrar cada bloque
+3. ¿Por qué 5? Cubre hasta 4 backticks internos (bloques anidados) sin conflictos
+4. Código normal usa 3 (```), nested usa 4 (````), entonces 5 (``````) es prácticamente imposible de conflictuar
+5. Más de 5 es innecesario (over-engineering)
 
 Analiza el contexto y genera las descripciones óptimas ahora.
-```
+```````
 
-**After AI generates the descriptions, extract and save them:**
+**After AI generates the descriptions:**
 
 ```bash
-# Extract PR description
-sed -n '/<!-- PR_DESCRIPTION_START -->/,/<!-- PR_DESCRIPTION_END -->/p' /tmp/ai-output.md | \
-  sed '1d;$d' > /tmp/pr-description.md
-
-# Extract Jira description
-sed -n '/<!-- JIRA_DESCRIPTION_START -->/,/<!-- JIRA_DESCRIPTION_END -->/p' /tmp/ai-output.md | \
-  sed '1d;$d' > /tmp/jira-description.md
-
-# Display descriptions
+# La IA responde directamente en el chat con las descripciones
+# en formato markdown listo para copiar y pegar.
+# No requiere post-procesamiento ni archivos temporales.
 echo ""
-echo "---"
-echo "📋 DESCRIPCIÓN PARA PULL REQUEST (GitHub/GitLab/Bitbucket)"
-echo "---"
-echo ""
-cat /tmp/pr-description.md
-echo ""
-echo ""
-echo "---"
-echo "🎫 DESCRIPCIÓN PARA JIRA/CLICKUP/LINEAR (Markdown)"
-echo "---"
-echo ""
-cat /tmp/jira-description.md
-echo ""
-echo ""
-echo "💡 Copia las descripciones de arriba para tus tickets"
+echo "💡 Las descripciones han sido generadas arriba en el chat."
+echo "📋 Copia directamente el contenido de los bloques markdown."
 echo ""
 ```
 
