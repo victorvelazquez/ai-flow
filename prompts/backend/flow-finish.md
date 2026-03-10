@@ -587,13 +587,13 @@ function generate_commit_links() {
   for hash in $commits; do
     if [ $count -lt 5 ]; then
       if [ -n "$COMMIT_HASHES_SUMMARY" ]; then
-        COMMIT_HASHES_SUMMARY="${COMMIT_HASHES_SUMMARY}, "
+        COMMIT_HASHES_SUMMARY+=", "
       fi
 
       if [ -n "$COMMIT_URL_PATTERN" ]; then
-        COMMIT_HASHES_SUMMARY="${COMMIT_HASHES_SUMMARY}[${hash}](${COMMIT_URL_PATTERN}${hash})"
+        COMMIT_HASHES_SUMMARY+="[${hash}](${COMMIT_URL_PATTERN}${hash})"
       else
-        COMMIT_HASHES_SUMMARY="${COMMIT_HASHES_SUMMARY}\`${hash}\`"
+        COMMIT_HASHES_SUMMARY+="\`${hash}\`"
       fi
     fi
     count=$((count + 1))

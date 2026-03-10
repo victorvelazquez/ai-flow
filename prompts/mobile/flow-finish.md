@@ -117,6 +117,7 @@ echo ""
 ### Step 1: Smart Validation
 
 **Only execute `/flow-check` if:**
+
 - `TESTS_EXECUTED == false` (never executed), **OR**
 - `NEEDS_REVALIDATION == true` (commits after last validation)
 
@@ -137,11 +138,11 @@ if [ "$SHOULD_RUN_CHECK" = "true" ]; then
   # INVOKE /flow-check HERE
   # Execute the complete /flow-check workflow
   # This will update status.json with results
-  
+
   # After execution, re-read validation results
   TESTS_PASSED=$(jq -r '.validation.tests.passed' "$TASK_PATH/status.json" 2>/dev/null || echo "0")
   TESTS_FAILED=$(jq -r '.validation.tests.failed' "$TASK_PATH/status.json" 2>/dev/null || echo "0")
-  
+
   # If tests FAIL → STOP EVERYTHING
   if [ "$TESTS_FAILED" -gt 0 ]; then
     echo ""
@@ -161,12 +162,13 @@ fi
 ### Step 2: Smart Commit
 
 **Only execute `/flow-commit` if:**
+
 - `HAS_UNCOMMITTED_CHANGES == true`
 
 ```bash
 if [ "$HAS_UNCOMMITTED_CHANGES" = "true" ]; then
   echo "📝 Cambios sin commitear detectados. Ejecutando /flow-commit..."
-  
+
   # INVOKE /flow-commit HERE
   # Execute the complete /flow-commit workflow
   # This will update status.json with new commits
@@ -204,12 +206,12 @@ if [ -f "$TASK_PATH/status.json" ]; then
   TASK_SOURCE=$(jq -r '.source' "$TASK_PATH/status.json")
   CREATED_AT=$(jq -r '.timestamps.created' "$TASK_PATH/status.json")
   COMPLETED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-  
+
   # Calculate duration in minutes
   CREATED_TS=$(date -d "$CREATED_AT" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$CREATED_AT" +%s 2>/dev/null || echo "0")
   COMPLETED_TS=$(date +%s)
   DURATION_MIN=$(( ($COMPLETED_TS - $CREATED_TS) / 60 ))
-  
+
   TOTAL_TASKS=$(jq -r '.progress.totalTasks' "$TASK_PATH/status.json")
   COMMIT_COUNT=$(jq -r '.git.commits | length' "$TASK_PATH/status.json")
   VALIDATION_PASSED=$( [ "$TESTS_FAILED" -eq 0 ] && echo "true" || echo "false" )
@@ -224,24 +226,24 @@ else
   elif echo "$TASK_FOLDER" | grep -qiE '^refactor'; then
     TASK_TYPE="refactor"
   fi
-  
+
   TASK_SOURCE="manual"
-  
+
   # First commit timestamp
   FIRST_COMMIT=$(git log --reverse --format=%ct --all -- "$TASK_PATH/work.md" 2>/dev/null | head -n 1)
   CREATED_AT=$(date -u -d "@$FIRST_COMMIT" +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || date -u +"%Y-%m-%dT%H:%M:%SZ")
   COMPLETED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-  
+
   CREATED_TS=$FIRST_COMMIT
   COMPLETED_TS=$(date +%s)
   DURATION_MIN=$(( ($COMPLETED_TS - $CREATED_TS) / 60 ))
-  
+
   # Count checkboxes in work.md
   TOTAL_TASKS=$(grep -c '^\- \[ \]' "$TASK_PATH/work.md" 2>/dev/null || echo "0")
-  
+
   # Count commits in branch
   COMMIT_COUNT=$(git log --oneline "$CURRENT_BRANCH" ^main 2>/dev/null | wc -l | tr -d ' ')
-  
+
   VALIDATION_PASSED="true"
 fi
 
@@ -314,7 +316,7 @@ function extract_objective_from_work_md() {
     git log "$CURRENT_BRANCH" --format="%B" -1 | head -n 3 | tr '\n' ' ' | sed 's/  */ /g'
     return
   fi
-  
+
   # Extract Objective section
   awk '/^## Objective$/,/^## [^O]/' ".ai-flow/work/$TASK_FOLDER/work.md" 2>/dev/null | \
     grep -v '^##' | sed '/^$/d' | head -n 3 | tr '\n' ' ' | sed 's/  */ /g' | sed 's/^ *//;s/ *$//'
@@ -326,7 +328,7 @@ function extract_completed_tasks() {
     echo "Tareas completadas (ver commits)"
     return
   fi
-  
+
   awk '/^## Tasks$/,/^## [^T]/' ".ai-flow/work/$TASK_FOLDER/work.md" 2>/dev/null | \
     grep '^\- \[x\]' | sed 's/^\- \[x\] /✅ /' | head -n 8
 }
@@ -334,14 +336,14 @@ function extract_completed_tasks() {
 # Categorize changed files
 function categorize_changed_files() {
   local all_files=$(git diff --name-only main..HEAD 2>/dev/null || git diff --name-only --staged)
-  
+
   local backend_count=$(echo "$all_files" | grep -icE '(controller|service|repository|handler|route|api)' 2>/dev/null || echo 0)
   local frontend_count=$(echo "$all_files" | grep -icE '(component|view|page|screen|widget)' 2>/dev/null || echo 0)
   local db_count=$(echo "$all_files" | grep -icE '(migration|entity|model|schema|\.sql)' 2>/dev/null || echo 0)
   local test_count=$(echo "$all_files" | grep -icE '(test|spec|e2e)' 2>/dev/null || echo 0)
   local doc_count=$(echo "$all_files" | grep -icE '\.md$' 2>/dev/null || echo 0)
   local config_count=$(echo "$all_files" | grep -icE '(\.json|\.yaml|\.yml|\.env|docker|k8s)' 2>/dev/null || echo 0)
-  
+
   cat <<EOF
 - Backend: $backend_count files
 - Frontend: $frontend_count files
@@ -355,7 +357,7 @@ EOF
 # Detect file purpose
 function detect_file_purpose() {
   local file=$1
-  
+
   case "$file" in
     *controller*|*route*|*handler*) echo "API endpoint" ;;
     *service*|*repository*) echo "Business logic" ;;
@@ -370,7 +372,7 @@ function detect_file_purpose() {
 # Show top 3 files by impact
 function show_top_3_files_summary() {
   local top_files=$(git diff --stat main..HEAD 2>/dev/null | sort -rn -k3 | head -n 3 | awk '{print $1}')
-  
+
   echo "### Most Impacted Files"
   for file in $top_files; do
     local lines_changed=$(git diff --stat main..HEAD -- "$file" 2>/dev/null | tail -n 1 | awk '{print $4}')
@@ -382,7 +384,7 @@ function show_top_3_files_summary() {
 # Detect deployment requirements
 function detect_deployment_requirements() {
   local changed_files=$(git diff --name-only main..HEAD 2>/dev/null || echo "")
-  
+
   # Migrations (universal)
   HAS_MIGRATIONS=false
   MIGRATION_FILES=""
@@ -390,18 +392,18 @@ function detect_deployment_requirements() {
     HAS_MIGRATIONS=true
     MIGRATION_FILES=$(echo "$changed_files" | grep -iE '(migration|migrate)' | wc -l | tr -d ' ')
   fi
-  
+
   # Environment variables (universal)
   NEW_ENV_VARS=""
   ENV_FILES=$(echo "$changed_files" | grep -iE '(\.env\.example|\.env\.template|\.env\.sample|env\.example|env\.sample)')
   if [ -n "$ENV_FILES" ]; then
     NEW_ENV_VARS=$(git diff main..HEAD -- $ENV_FILES 2>/dev/null | grep -E '^\+[A-Z_0-9]+=' | sed 's/^+//' | cut -d'=' -f1 | sort -u)
   fi
-  
+
   # Dependencies (language-agnostic)
   HAS_NEW_DEPS=false
   INSTALL_CMD=""
-  
+
   if echo "$changed_files" | grep -qE 'package\.json'; then
     HAS_NEW_DEPS=true
     INSTALL_CMD="npm install"
@@ -430,13 +432,13 @@ function detect_deployment_requirements() {
     HAS_NEW_DEPS=true
     INSTALL_CMD="gradle build"
   fi
-  
+
   # Determine if showing deployment section
   SHOW_DEPLOYMENT_NOTES=false
   if [ "$HAS_MIGRATIONS" = "true" ] || [ -n "$NEW_ENV_VARS" ] || [ "$HAS_NEW_DEPS" = "true" ]; then
     SHOW_DEPLOYMENT_NOTES=true
   fi
-  
+
   # Export variables
   export HAS_MIGRATIONS
   export MIGRATION_FILES
@@ -451,11 +453,11 @@ function detect_impact_area() {
   local changed_files=$(git diff --name-only main..HEAD 2>/dev/null || echo "")
   local area="General"
   local module=""
-  
+
   # Backend API (framework-agnostic)
   if echo "$changed_files" | grep -qiE '(controller|service|repository|handler|route|api|endpoint)'; then
     area="Backend API"
-    
+
     # Module by subdirectory or filename
     if echo "$changed_files" | grep -qiE '(auth|login|jwt|user|session)'; then
       module="Authentication"
@@ -466,11 +468,11 @@ function detect_impact_area() {
     elif echo "$changed_files" | grep -qiE '(report|analytics|dashboard)'; then
       module="Analytics"
     fi
-    
+
   # Frontend (framework-agnostic)
   elif echo "$changed_files" | grep -qiE '(component|view|page|screen|widget|template)'; then
     area="Frontend"
-    
+
     if echo "$changed_files" | grep -qiE '(auth|login)'; then
       module="Authentication UI"
     elif echo "$changed_files" | grep -qiE '(dashboard|home)'; then
@@ -478,30 +480,30 @@ function detect_impact_area() {
     elif echo "$changed_files" | grep -qiE '(profile|account|settings)'; then
       module="User Profile"
     fi
-    
+
   # Mobile (agnostic: React Native, Flutter, Native)
   elif echo "$changed_files" | grep -qiE '(ios/|android/|mobile/|\.swift|\.kt|\.dart)'; then
     area="Mobile"
-    
+
   # Database (agnostic)
   elif echo "$changed_files" | grep -qiE '(migration|schema|seed|model|entity|\.sql)'; then
     area="Database"
     module="Schema"
-    
+
   # Infrastructure (agnostic)
   elif echo "$changed_files" | grep -qiE '(docker|k8s|kubernetes|terraform|ansible|\.yaml|\.yml|ci|cd|\.github|\.gitlab)'; then
     area="Infrastructure"
     module="DevOps"
-    
+
   # Testing (agnostic)
   elif echo "$changed_files" | grep -qiE '(test|spec|\.test\.|\.spec\.|e2e|integration)'; then
     area="Testing"
-    
+
   # Documentation
   elif echo "$changed_files" | grep -qiE '(\.md$|docs?/|README)'; then
     area="Documentation"
   fi
-  
+
   # Final format
   if [ -n "$module" ]; then
     echo "$area - $module"
@@ -513,60 +515,60 @@ function detect_impact_area() {
 # Detect Git platform and generate commit URLs
 function get_commit_urls() {
   local remote_url=$(git config --get remote.origin.url 2>/dev/null)
-  
+
   if [ -z "$remote_url" ]; then
     echo "⚠️  No se detectó remote origin, commits sin links"
     COMMIT_URL_PATTERN=""
     PLATFORM="Unknown"
     return 1
   fi
-  
+
   # Normalize URL (SSH -> HTTPS)
   local base_url=""
-  
+
   # GitHub
   if echo "$remote_url" | grep -qE 'github\.com'; then
     base_url=$(echo "$remote_url" | sed -E 's|git@github.com:(.*)|https://github.com/\1|' | sed 's|\.git$||')
     COMMIT_URL_PATTERN="${base_url}/commit/"
     PLATFORM="GitHub"
-    
+
   # GitLab
   elif echo "$remote_url" | grep -qE 'gitlab\.com'; then
     base_url=$(echo "$remote_url" | sed -E 's|git@gitlab.com:(.*)|https://gitlab.com/\1|' | sed 's|\.git$||')
     COMMIT_URL_PATTERN="${base_url}/-/commit/"
     PLATFORM="GitLab"
-    
+
   # Bitbucket
   elif echo "$remote_url" | grep -qE 'bitbucket\.org'; then
     base_url=$(echo "$remote_url" | sed -E 's|git@bitbucket.org:(.*)|https://bitbucket.org/\1|' | sed 's|\.git$||')
     COMMIT_URL_PATTERN="${base_url}/commits/"
     PLATFORM="Bitbucket"
-    
+
   # Azure DevOps
   elif echo "$remote_url" | grep -qE 'dev\.azure\.com'; then
     base_url=$(echo "$remote_url" | sed -E 's|git@ssh\.dev\.azure\.com:v3/(.*)|https://dev.azure.com/\1|' | sed 's|\.git$||')
     COMMIT_URL_PATTERN="${base_url}/commit/"
     PLATFORM="Azure DevOps"
-    
+
   # GitLab Self-Hosted
   elif echo "$remote_url" | grep -qE 'gitlab'; then
     base_url=$(echo "$remote_url" | sed -E 's|git@([^:]+):(.*)|https://\1/\2|' | sed 's|\.git$||')
     COMMIT_URL_PATTERN="${base_url}/-/commit/"
     PLATFORM="GitLab (Self-Hosted)"
-    
+
   # GitHub Enterprise
   elif echo "$remote_url" | grep -qE 'github'; then
     base_url=$(echo "$remote_url" | sed -E 's|git@([^:]+):(.*)|https://\1/\2|' | sed 's|\.git$||')
     COMMIT_URL_PATTERN="${base_url}/commit/"
     PLATFORM="GitHub Enterprise"
-    
+
   else
     echo "⚠️  Plataforma Git no reconocida, commits sin links"
     COMMIT_URL_PATTERN=""
     PLATFORM="Unknown"
     return 1
   fi
-  
+
   echo "✅ Detectado: $PLATFORM"
   export COMMIT_URL_PATTERN
   export PLATFORM
@@ -577,26 +579,26 @@ function generate_commit_links() {
   local max_commits=${1:-5}
   local commits=$(git log main..HEAD --format="%h" -${max_commits} 2>/dev/null)
   local total_commits=$(git log main..HEAD --format="%h" 2>/dev/null | wc -l | tr -d ' ')
-  
+
   # For summary line (first 5 hashes)
   COMMIT_HASHES_SUMMARY=""
   local count=0
-  
+
   for hash in $commits; do
     if [ $count -lt 5 ]; then
       if [ -n "$COMMIT_HASHES_SUMMARY" ]; then
-        COMMIT_HASHES_SUMMARY="${COMMIT_HASHES_SUMMARY}, "
+        COMMIT_HASHES_SUMMARY+=", "
       fi
-      
+
       if [ -n "$COMMIT_URL_PATTERN" ]; then
-        COMMIT_HASHES_SUMMARY="${COMMIT_HASHES_SUMMARY}[${hash}](${COMMIT_URL_PATTERN}${hash})"
+        COMMIT_HASHES_SUMMARY+="[${hash}](${COMMIT_URL_PATTERN}${hash})"
       else
-        COMMIT_HASHES_SUMMARY="${COMMIT_HASHES_SUMMARY}\`${hash}\`"
+        COMMIT_HASHES_SUMMARY+="\`${hash}\`"
       fi
     fi
     count=$((count + 1))
   done
-  
+
   # Add indicator if more commits
   if [ $total_commits -gt 5 ]; then
     COMMIT_HASHES_SUMMARY="${COMMIT_HASHES_SUMMARY}, ... (${total_commits} total)"
@@ -605,7 +607,7 @@ function generate_commit_links() {
   else
     COMMIT_HASHES_SUMMARY="No commits"
   fi
-  
+
   export COMMIT_HASHES_SUMMARY
   export TOTAL_COMMITS=$total_commits
 }
@@ -656,13 +658,13 @@ cat > /tmp/ai-context-summary.md <<EOF
 
 ## Work Overview
 Objective: $WORK_OBJECTIVE
-Completed Tasks: 
+Completed Tasks:
 $WORK_TASKS
 Type: $TASK_TYPE
 Story Points: $STORY_POINTS
 
 ## Changes Made
-Commits (subjects only): 
+Commits (subjects only):
 $COMMIT_SUBJECTS
 
 Breaking Changes: $([ "$HAS_BREAKING_CHANGES" = true ] && echo "YES" || echo "NO")
@@ -745,6 +747,7 @@ Commit Hashes Summary: $COMMIT_HASHES_SUMMARY
    - Referencias con commits
 
 **Reglas Importantes:**
+
 - Usa lenguaje profesional pero claro
 - Sé específico con cambios técnicos
 - Usa los commit links ya formateados en $COMMIT_HASHES_SUMMARY
@@ -756,13 +759,19 @@ Commit Hashes Summary: $COMMIT_HASHES_SUMMARY
 **Output en formato (CRÍTICO - respetar delimitadores):**
 
 \`\`\`markdown
+
 <!-- PR_DESCRIPTION_START -->
+
 [contenido completo de PR description aquí]
+
 <!-- PR_DESCRIPTION_END -->
 
 <!-- JIRA_DESCRIPTION_START -->
+
 [contenido completo de Jira description aquí]
+
 <!-- JIRA_DESCRIPTION_END -->
+
 \`\`\`
 
 Analiza el contexto y genera las descripciones óptimas ahora.
@@ -819,9 +828,9 @@ if [[ "$CONFIRM_PUSH" =~ ^[Yy]$ ]]; then
   echo ""
   echo "⬆️  Subiendo cambios a origin/$CURRENT_BRANCH..."
   echo ""
-  
+
   git push origin "$CURRENT_BRANCH"
-  
+
   if [ $? -eq 0 ]; then
     echo ""
     echo "---"
