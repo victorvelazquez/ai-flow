@@ -95,6 +95,15 @@ Located in `prompts/backend/`:
 
 Work artifacts stored in `.ai-flow/work/` with `status.json` for resume capability.
 
+### File Structure Rules
+
+**CRITICAL:** Only ONE planning file per task:
+
+- ✅ `work.md` - Contains ALL analysis, specs, and implementation plan
+- ❌ NO separate `analysis.md`, `api-analysis.md`, or `spec.md` files
+- For API module analysis (frontend/mobile), all OpenAPI metadata goes INTO `work.md`
+- The `flow-work-api.md` sub-prompt returns JSON only, never creates files
+
 ## Cache Contexts (Important)
 
 **This repo:** `cache/docs-analysis.json` at root level - tracks this project's docs
