@@ -180,4 +180,4 @@ Use Conventional Commits:
 
 ---
 **Last Updated:** 2025-12-19
-**Version:** 2.1.3
+**Version:** 2.8.2
