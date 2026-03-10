@@ -1,29 +1,28 @@
 {
-  "timestamp": "2026-03-09T20:05:37.0984194Z",
-  "lastAnalysis": {
-    "backend_templates": 14,
-    "gaps_found": 3,
-    "mobile_prompts": 25,
-    "frontend_templates": 15,
-    "version_updated": true,
-    "backend_prompts": 24,
-    "mobile_templates": 13,
-    "desktop_prompts": 24,
-    "gaps_fixed": 3,
-    "total_prompts": 98,
-    "frontend_prompts": 25,
-    "changelog_updated": true,
-    "desktop_templates": 14,
-    "template_count_corrected": true
-  },
+  "version": "2.8.1",
   "files": {
-    "CONTRIBUTING.md": "2026-03-09T11:22:50.2719474Z",
-    "package.json": "2026-03-09T14:47:59.6081699Z",
-    "templates/": "2026-03-07T23:02:23.5841697Z",
-    "GETTING-STARTED.md": "2026-03-09T20:05:18.5507531Z",
-    "README.md": "2026-03-09T20:05:18.3733506Z",
-    "prompts/": "2026-03-09T19:55:25.4851629Z",
-    "src/cli.ts": "2026-03-07T22:35:16.1172489Z"
+    "prompts/": "2026-02-04T18:17:54.1209389Z",
+    "package.json": "2026-03-10T10:57:18.5672676Z",
+    "templates/": "2026-03-10T10:55:53.0318824Z",
+    "CONTRIBUTING.md": "2026-03-10T10:55:04.1474276Z",
+    "src/cli.ts": "2026-03-07T22:35:16.1172489Z",
+    "GETTING-STARTED.md": "2026-03-10T11:04:38.7411452Z",
+    "README.md": "2026-03-10T11:04:20.9539090Z"
   },
-  "version": "2.8.0"
+  "timestamp": "2026-03-10T11:04:53.8255308Z",
+  "lastAnalysis": {
+    "mobile_prompts": 25,
+    "gaps_found": 3,
+    "backend_templates": 14,
+    "mobile_templates": 13,
+    "changelog_updated": false,
+    "gaps_fixed": 3,
+    "frontend_prompts": 25,
+    "version_updated": true,
+    "total_prompts": 98,
+    "desktop_prompts": 24,
+    "frontend_templates": 15,
+    "desktop_templates": 14,
+    "backend_prompts": 24
+  }
 }
