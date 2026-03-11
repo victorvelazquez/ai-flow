@@ -159,7 +159,7 @@ const templatesSource = path.join(ROOT_DIR, 'templates');
 
 ```json
 {
-  "version": "2.8.2",
+  "version": "2.9.0",
   "aiTools": ["claude"],
   "projectType": "backend",
   "createdAt": "..."
