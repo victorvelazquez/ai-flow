@@ -232,8 +232,6 @@ B) No, skip audit (continue to Phase 1)
 - `docs/api.md` → Endpoints and methods
 - `specs/requirements.md` → Business requirements
 
-**Save to:** `.ai-flow/cache/docs-snapshot.json`
-
 ### 0.4.3 Compare Code vs Documentation
 
 **Compare:**
