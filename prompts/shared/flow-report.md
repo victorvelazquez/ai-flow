@@ -373,7 +373,7 @@ Generate a concise 3-5 line summary:
 
 ```
 📊 RESUMEN - [Period Label]
-━━━━━━━━━━━━━━━━━━━━━━━
+---
 ✅ [X] tareas ([Y] SP)
 ⏱️  [H]h [M]min
 📈 [V] SP/hora
@@ -465,7 +465,7 @@ Compare with previous period:
 📊 COMPARATIVA - [Period Label]
 
 Métrica          Período Actual  Período Anterior  Δ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 Tareas           [X]             [Y]              [+/-Z%]
 SP               [X]             [Y]              [+/-Z%]
 Tiempo           [X]h            [Y]h             [+/-Z%]
@@ -522,14 +522,14 @@ if [ -n "$OUTPUT_FILE" ]; then
 REPORT_END
 
   echo ""
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "---"
   echo "✅ Reporte guardado en: $OUTPUT_FILE"
   echo ""
   echo "💾 Para ver el reporte:"
   echo "   cat $OUTPUT_FILE"
 else
   echo ""
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "---"
   echo ""
   echo "💾 ¿Guardar reporte en archivo?"
   read -p "[S/n]: " save_choice
@@ -633,3 +633,4 @@ echo "✨ Reporte completado"
 - **Use visual elements** like bars (█), emojis for better readability
 
 **Remember:** The goal is to provide actionable productivity insights, not just data dumps.
+
