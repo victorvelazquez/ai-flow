@@ -16,14 +16,14 @@
 
 **Already familiar with AI Flow?** Jump directly to:
 
-| Link                                          | Description                                                 |
-| --------------------------------------------- | ----------------------------------------------------------- |
-| [Build Modes](#15-understanding-build-modes)  | Interactive vs Smart Auto-Suggest                           |
-| [CLI Flags Reference](#cli-flags-reference)   | All `init` command flags                                    |
-| [Commands Cheat Sheet](#commands-cheat-sheet) | All 16+ commands organized                                  |
-| [Workflow Commands](#33-workflow-commands)    | `/flow-work`, `/flow-check`, `/flow-commit`, `/flow-finish` |
-| [Troubleshooting](#troubleshooting)           | Common issues and solutions                                 |
-| [Best Practices](#best-practices)             | Expert tips and recommendations                             |
+| Link                                          | Description                                                                 |
+| --------------------------------------------- | --------------------------------------------------------------------------- |
+| [Build Modes](#15-understanding-build-modes)  | Interactive vs Smart Auto-Suggest                                           |
+| [CLI Flags Reference](#cli-flags-reference)   | All `init` command flags                                                    |
+| [Commands Cheat Sheet](#commands-cheat-sheet) | All 17+ commands organized                                                  |
+| [Workflow Commands](#33-workflow-commands)    | `/flow-work`, `/flow-check`, `/flow-commit`, `/flow-finish`, `/flow-report` |
+| [Troubleshooting](#troubleshooting)           | Common issues and solutions                                                 |
+| [Best Practices](#best-practices)             | Expert tips and recommendations                                             |
 
 ---
 
@@ -59,7 +59,7 @@ Verify installation:
 
 ```bash
 ai-flow --version
-# Output: 2.8.1
+# Output: 2.8.2
 ```
 
 _Note: Package name is `ai-flow-dev`, but the CLI command remains `ai-flow`_
@@ -671,6 +671,7 @@ After initialization, you have access to **16+ slash commands**:
 /flow-check  # Combined validation: Tests + Code Review
 /flow-commit # Automate commits with Conventional Commits (3-5 min)
 /flow-finish # Finalization workflow: validation, archiving, AI summaries, push
+/flow-report # Productivity reports: AI-powered analytics from completed tasks
 
 ```
 
@@ -2234,7 +2235,7 @@ ai-flow --help                  # Show help
 /flow-build fase 7        # Deployment
 ```
 
-#### Workflow Commands - Universal (4)
+#### Workflow Commands - Universal (5)
 
 ```
 /flow-work                              # Development orchestrator: Features/Refactors/Fixes
@@ -2243,6 +2244,8 @@ ai-flow --help                  # Show help
 /flow-commit                            # Automate commits with Conventional Commits
 /flow-finish                            # Finalization workflow: validation, archive, AI summaries, push
                                         # Separate from /flow-work for modularity
+/flow-report                            # Productivity reports: AI-powered analytics from completed tasks
+                                        # Interactive menu: period (day/week/month/quarter/year) + type
 ```
 
 #### Workflow Commands - Backend Only (5)
@@ -2263,7 +2266,7 @@ ai-flow --help                  # Show help
 /frontend-docs-update               # Fullstack: frontend only
 ```
 
-**Total Commands:** 29+ (varies by project type)
+**Total Commands:** 30+ (varies by project type)
 
 ### Project Type Comparison
 

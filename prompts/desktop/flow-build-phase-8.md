@@ -62,7 +62,23 @@ Check that all required documents exist:
 
 ### 8.1.2 Generate .gitignore
 
+**Action: Intelligent Merge Strategy**
+
+**Step 1: Detect existing .gitignore**
+
+```bash
+if [ -f ".gitignore" ]; then
+  echo "📋 Existing .gitignore detected"
+  GITIGNORE_EXISTS=true
+else
+  echo "📄 Creating new .gitignore"
+  GITIGNORE_EXISTS=false
+fi
 ```
+
+**Step 2: Select base patterns for Java Desktop**
+
+```gitignore
 # Generated .gitignore for Desktop Java Project
 
 # Build outputs
@@ -117,10 +133,63 @@ Thumbs.db
 *.sqlite
 *.h2.db
 
-# Keep .ai-flow but ignore work
-.ai-flow/work/
-.ai-flow/archive/
+# ============================================================
+# AI Flow - Workspace Management
+# ============================================================
+# Ignore temporary cache (regenerable)
 .ai-flow/cache/
+
+# Ignore work-in-progress state (personal, deleted on completion)
+.ai-flow/work/
+
+# COMMIT .ai-flow/archive/ by default (contains team metrics)
+# ============================================================
+```
+
+**Step 3: Merge or Create**
+
+**If .gitignore exists (Existing Project):**
+
+```bash
+# Check if AI Flow rules already present
+if grep -q ".ai-flow/cache/" .gitignore; then
+  echo "✅ AI Flow rules already configured"
+else
+  echo "" >> .gitignore
+  echo "# ============================================================" >> .gitignore
+  echo "# AI Flow - Workspace Management" >> .gitignore
+  echo "# ============================================================" >> .gitignore
+  echo "# Ignore temporary cache (regenerable)" >> .gitignore
+  echo ".ai-flow/cache/" >> .gitignore
+  echo "" >> .gitignore
+  echo "# Ignore work-in-progress state (personal, deleted on completion)" >> .gitignore
+  echo ".ai-flow/work/" >> .gitignore
+  echo "" >> .gitignore
+  echo "# COMMIT .ai-flow/archive/ by default (contains team metrics)" >> .gitignore
+  echo "# ============================================================" >> .gitignore
+
+  echo "✅ Added AI Flow rules to existing .gitignore"
+fi
+```
+
+**If .gitignore does NOT exist (New Project):**
+
+```bash
+# Create complete .gitignore with all patterns
+cat > .gitignore << 'EOF'
+[Insert complete template above]
+EOF
+
+echo "✅ Created new .gitignore"
+```
+
+**Output Summary:**
+
+```
+✅ .gitignore configured successfully!
+   Base patterns: Java Desktop + [NetBeans/Eclipse] + [Maven/Gradle/Ant]
+   AI Flow rules: ✅ Added (.ai-flow/cache/, .ai-flow/work/)
+   Status: [Created new | Updated existing]
 ```
 
 ### 8.1.3 Generate README.md

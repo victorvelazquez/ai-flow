@@ -4,8 +4,8 @@
 
 **Duration:** 10-15 minutes
 
-**Goal:** Set up the project structure and create comprehensive documentation that consolidates all information from previous phases.
----
+## **Goal:** Set up the project structure and create comprehensive documentation that consolidates all information from previous phases.
+
 ## 📋 Phase 8 Overview
 
 This final phase will:
@@ -16,8 +16,11 @@ This final phase will:
 4. **Generate master index** (AGENT.md)
 5. **Generate README.md** (with intelligent merge if needed)
 6. **Create tool-specific configs** (based on AI tool selection)
+
 ---
+
 // turbo
+
 ## 8.1: Project State Detection
 
 ```
@@ -56,7 +59,9 @@ Found:
 
 Recommendation: [Next action based on state]
 ```
+
 ---
+
 ## 8.2: Framework Initialization (Optional)
 
 **Only if:** Project state = "New Project"
@@ -221,7 +226,9 @@ You can initialize manually later with:
 
 Proceeding to documentation generation...
 ```
+
 ---
+
 ## 8.3: Generate Final Documentation
 
 ```
@@ -302,21 +309,25 @@ Generating...
 ```
 ✅ Generated: docs/contributing.md
 ```
+
 ---
+
 ## 8.3.4: Generate .gitignore
 
 **IMPORTANT:** Generate a comprehensive `.gitignore` file based on the framework, bundler, and tools selected in previous phases.
 
 ```
-📝 Generating .gitignore for your frontend stack...
+📝 Configuring .gitignore for your frontend stack...
 ```
 
 **Strategy:**
 
-1. **Detect framework from Phase 3** (React, Vue, Angular, etc.)
-2. **Detect bundler/meta-framework** (Vite, Next.js, Create React App, etc.)
-3. **Detect package manager** (npm, yarn, pnpm)
-4. **Combine relevant patterns**
+1. **Check if .gitignore exists**
+2. **Detect framework from Phase 3** (React, Vue, Angular, etc.)
+3. **Detect bundler/meta-framework** (Vite, Next.js, Create React App, etc.)
+4. **Detect package manager** (npm, yarn, pnpm)
+5. **Combine relevant patterns + AI Flow rules**
+6. **Merge intelligently** (append only missing rules)
 
 **Base patterns for JavaScript/TypeScript projects:**
 
@@ -385,6 +396,18 @@ npm-debug.log*
 
 # Storybook
 storybook-static/
+
+# ============================================================
+# AI Flow - Workspace Management
+# ============================================================
+# Ignore temporary cache (regenerable)
+.ai-flow/cache/
+
+# Ignore work-in-progress state (personal, deleted on completion)
+.ai-flow/work/
+
+# COMMIT .ai-flow/archive/ by default (contains team metrics)
+# ============================================================
 ```
 
 **Framework-specific additions:**
@@ -435,21 +458,77 @@ dist/
 .cache/
 ```
 
-**📝 Action:** Generate and write `.gitignore` to project root.
+**📝 Action: Intelligent Merge Strategy**
 
-**Selection logic:**
+**Step 1: Detect existing .gitignore**
+
+```bash
+if [ -f ".gitignore" ]; then
+  echo "📋 Existing .gitignore detected"
+  GITIGNORE_EXISTS=true
+else
+  echo "📄 Creating new .gitignore"
+  GITIGNORE_EXISTS=false
+fi
+```
+
+**Step 2: Select base patterns**
 
 - If React + Vite → Base + Vite patterns
 - If Next.js → Base + Next.js patterns
 - If Angular → Base + Angular patterns
 - If Vue + Vite → Base + Vite patterns
 - If Nuxt → Base + Nuxt patterns
+- **Always include AI Flow rules** (.ai-flow/cache/, .ai-flow/work/)
+
+**Step 3: Merge or Create**
+
+**If .gitignore exists (Existing Project):**
+
+```bash
+# Check if AI Flow rules already present
+if grep -q ".ai-flow/cache/" .gitignore; then
+  echo "✅ AI Flow rules already configured"
+else
+  echo "" >> .gitignore
+  echo "# ============================================================" >> .gitignore
+  echo "# AI Flow - Workspace Management" >> .gitignore
+  echo "# ============================================================" >> .gitignore
+  echo "# Ignore temporary cache (regenerable)" >> .gitignore
+  echo ".ai-flow/cache/" >> .gitignore
+  echo "" >> .gitignore
+  echo "# Ignore work-in-progress state (personal, deleted on completion)" >> .gitignore
+  echo ".ai-flow/work/" >> .gitignore
+  echo "" >> .gitignore
+  echo "# COMMIT .ai-flow/archive/ by default (contains team metrics)" >> .gitignore
+  echo "# ============================================================" >> .gitignore
+
+  echo "✅ Added AI Flow rules to existing .gitignore"
+fi
+```
+
+**If .gitignore does NOT exist (New Project):**
+
+```bash
+# Create complete .gitignore with all patterns
+cat > .gitignore << 'EOF'
+[Insert complete template based on framework]
+EOF
+
+echo "✅ Created new .gitignore"
+```
+
+**Output Summary:**
 
 ```
-✅ Generated: .gitignore
-   Patterns included: [Framework] + [Bundler] + Base JavaScript patterns
+✅ .gitignore configured successfully!
+   Base patterns: [Framework] + [Bundler]
+   AI Flow rules: ✅ Added (.ai-flow/cache/, .ai-flow/work/)
+   Status: [Created new | Updated existing]
 ```
+
 ---
+
 ## 8.4: Generate AGENT.md (Master Index)
 
 - **Template:** `.ai-flow/templates/AGENT.template.md`
@@ -534,7 +613,9 @@ dist/
 ```
 ✅ Generated: .ai-flow/AGENT.md (Master Index)
 ```
+
 ---
+
 ## 8.5: Generate README.md (Intelligent Merge)
 
 - **Template:** `.ai-flow/templates/README.template.md`
@@ -574,7 +655,9 @@ dist/
 ✅ Generated: .ai-flow/README.md
    [If merged] Merged with framework's setup instructions
 ```
+
 ---
+
 ## 8.6: Create Tool-Specific Configs
 
 **Based on AI tool selection from Phase 3:**
@@ -687,7 +770,9 @@ Master index: `.ai-flow/AGENT.md`
 ✅ Generated tool-specific configs:
    [List generated files based on selection]
 ```
+
 ---
+
 ## 8.7: Final Validation & Success Message
 
 ```
@@ -801,7 +886,9 @@ Your AI assistant (Claude, Cursor, Copilot) will now:
 
 Happy building! 🎉
 ```
+
 ---
+
 ## EXECUTION CHECKLIST FOR AI ASSISTANT
 
 When executing Phase 8:
@@ -856,8 +943,8 @@ When executing Phase 8:
 - [ ] Validate file references
 - [ ] Show success message
 
-**ESTIMATED TIME:** 10-15 minutes
----
+## **ESTIMATED TIME:** 10-15 minutes
+
 **Next Phase:** Phase 9 - Project Roadmap (Post-Documentation)
 
 Read: `.ai-flow/prompts/frontend/flow-build-phase-9.md`
@@ -866,7 +953,3 @@ Read: `.ai-flow/prompts/frontend/flow-build-phase-9.md`
 
 **Last Updated:** 2025-12-21
 **Version:** 2.1.9
-
-
-
-

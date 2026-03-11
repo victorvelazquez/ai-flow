@@ -37,7 +37,41 @@ tmp/
 temp/
 *.tmp
 
-# AI Flow temporary state (optional - team decision)
-# Uncomment to ignore workflow state
-# .ai-flow/work/
-# .ai-flow/archive/
+# ============================================================
+# AI Flow - Workspace Management
+# ============================================================
+# AI Flow creates three directories under .ai-flow/:
+#
+# 1. .ai-flow/cache/    - Regenerable analysis & test results
+#    ├── docs-analysis.json  (costly to regenerate)
+#    ├── audit-data.json     (Phase 0 metadata)
+#    ├── test-results.json   (test outputs)
+#    ├── lint-results.json   (linting outputs)
+#    └── type-results.json   (type checking outputs)
+#
+# 2. .ai-flow/work/     - Temporary WIP state (personal)
+#    ├── [task-name]/work.md     (implementation plan)
+#    ├── [task-name]/status.json (validation state)
+#    └── [task-name]/PAUSED      (pause flag)
+#
+# 3. .ai-flow/archive/  - Historical metrics (team-shared)
+#    └── analytics.jsonl (append-only development metrics)
+#
+# Default Strategy:
+# - Ignore cache/ and work/ (temporary, regenerable)
+# - Commit archive/ (non-regenerable team metrics)
+#
+# Exception for Large Monorepos:
+# If docs-analysis.json takes >5 minutes to generate,
+# consider committing .ai-flow/cache/docs-analysis.json
+# to share analysis across team (add to repo explicitly).
+# ============================================================
+
+# Ignore temporary cache (regenerable)
+.ai-flow/cache/
+
+# Ignore work-in-progress state (personal, deleted on task completion)
+.ai-flow/work/
+
+# COMMIT .ai-flow/archive/ by default (contains team metrics)
+# Contains analytics.jsonl with development velocity data

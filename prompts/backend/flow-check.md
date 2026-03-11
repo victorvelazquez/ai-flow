@@ -147,40 +147,55 @@ fi
 **Detect and run test command:**
 
 ```bash
-# Node.js/JavaScript
+# Node.js/JavaScript - JSON output preferred
 npm test -- --coverage --json > .ai-flow/cache/test-results.json 2>&1
 
-# Python
+# Python - JSON output preferred
 pytest --cov --json-report --json-report-file=.ai-flow/cache/test-results.json
 
-# Go
-go test -v -coverprofile=.ai-flow/cache/coverage.out ./... 2>&1 | tee .ai-flow/cache/test-results.txt
+# Go - Coverage file only (needed for reports), output to terminal
+go test -v -coverprofile=.ai-flow/cache/coverage.out ./... 2>&1
 
-# Java (Maven)
-mvn test -q > .ai-flow/cache/test-results.txt 2>&1
+# Java (Maven) - Output to terminal, parse summary
+mvn test -q 2>&1
 
-# Java (Gradle)
-gradle test --quiet > .ai-flow/cache/test-results.txt 2>&1
+# Java (Gradle) - Output to terminal, parse summary
+gradle test --quiet 2>&1
 
-# Ruby (RSpec)
+# Ruby (RSpec) - JSON output preferred
 rspec --format json --out .ai-flow/cache/test-results.json
 
-# PHP (PHPUnit)
+# PHP (PHPUnit) - XML/JSON output preferred
 phpunit --log-junit .ai-flow/cache/test-results.xml
 
-# Rust (Cargo)
-cargo test --quiet > .ai-flow/cache/test-results.txt 2>&1
+# Rust (Cargo) - Output to terminal, parse summary
+cargo test --quiet 2>&1
 
-# C# (.NET)
-dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory .ai-flow/cache/
+# C# (.NET) - Output to terminal, parse summary
+dotnet test --verbosity quiet 2>&1
 ```
+
+**Cache Strategy:**
+
+- **Save to file:** Only JSON/XML formats that are parseable and structured
+- **Terminal output:** Plain text results - parse on the fly, don't save
+- **Why:** Avoids creating large, unparseable .txt files that consume tokens unnecessarily
 
 **Parse results:**
 
 - Total tests executed
 - Tests passed / failed
-- Test coverage percentage
+- Test coverage percentage (from coverage file if available)
 - Failed test details (name, error, file)
+
+**Parsing Strategy:**
+
+- **JSON/XML available**: Read from cached file, extract structured data
+- **Plain text only**: Parse terminal output directly using regex patterns:
+  - Look for patterns like "X tests, Y passed, Z failed"
+  - Extract coverage percentage from output
+  - Capture failed test names and files
+- **Store parsed summary**: Always save to `status.json`, regardless of cache format
 
 **Handle failures:**
 
@@ -246,6 +261,12 @@ dotnet format --verify-no-changes --report .ai-flow/cache/lint-results.json
 - Group by rule/category
 - Top 5 most frequent issues
 
+**Parsing Strategy:**
+
+- **JSON available**: Read from cached file `.ai-flow/cache/lint-results.json`
+- **Plain text only**: Parse terminal output for error/warning counts
+- **Store summary**: Always save aggregated metrics to `status.json`
+
 **Update status.json:**
 
 ```json
@@ -270,36 +291,48 @@ dotnet format --verify-no-changes --report .ai-flow/cache/lint-results.json
 **Run type checker:**
 
 ```bash
-# JavaScript/TypeScript
-tsc --noEmit --pretty false > .ai-flow/cache/type-results.txt 2>&1
+# JavaScript/TypeScript - Output to terminal, parse summary
+tsc --noEmit --pretty false 2>&1
 
-# Python (mypy)
+# Python (mypy) - JSON output preferred
 mypy src/ --json-report .ai-flow/cache/
 
-# Go (built-in)
+# Go (built-in) - Output to terminal
 go build -o /dev/null ./... 2>&1
 
-# Java (javac - usually via build tool)
-mvn compile -q > .ai-flow/cache/type-results.txt 2>&1
+# Java (javac - usually via build tool) - Output to terminal
+mvn compile -q 2>&1
 
-# Ruby (Sorbet)
-srb tc --lsp-disable-diagnostics > .ai-flow/cache/type-results.txt 2>&1
+# Ruby (Sorbet) - Output to terminal
+srb tc --lsp-disable-diagnostics 2>&1
 
-# PHP (Psalm)
+# PHP (Psalm) - JSON output preferred
 psalm --output-format=json > .ai-flow/cache/type-results.json
 
-# Rust (cargo check)
+# Rust (cargo check) - JSON output preferred
 cargo check --message-format=json > .ai-flow/cache/type-results.json 2>&1
 
-# C# (dotnet build)
-dotnet build --no-incremental > .ai-flow/cache/type-results.txt 2>&1
+# C# (dotnet build) - Output to terminal
+dotnet build --no-incremental --verbosity quiet 2>&1
 ```
+
+**Cache Strategy:**
+
+- **Save to file:** Only JSON formats that provide structured error data
+- **Terminal output:** Plain text results - parse immediately, extract error count
+- **Why:** Type errors are typically few and specific; full output not needed in cache
 
 **Parse results:**
 
 - Type errors count
-- Error locations
-- Error categories
+- Error locations (if available in structured format)
+- Error categories (if available)
+
+**Parsing Strategy:**
+
+- **JSON available**: Read from `.ai-flow/cache/type-results.json` for detailed error data
+- **Plain text only**: Parse terminal output for error count (e.g., "Found 5 errors")
+- **Store summary**: Always save error count and pass/fail status to `status.json`
 
 **Update status.json:**
 
@@ -658,28 +691,29 @@ stmt.executeQuery();
 ### Test Execution Errors
 
 - **Command not found**: Skip tests, note in report as "Not configured"
-- **Tests fail**: Continue workflow, include failures in report
-- **Timeout**: Stop after 5 minutes, report partial results
-- **Parse error**: Show raw output, continue workflow
+- **Tests fail**: Continue workflow, include failures in report with parsed summary
+- **Timeout**: Stop after 5 minutes, report partial results from what was captured
+- **Parse error**: If JSON/XML unavailable, parse terminal output for summary metrics
 
 ### Linting Errors
 
 - **Command not found**: Skip linting, note in report
-- **Configuration error**: Show error, continue workflow
-- **Parse error**: Show raw output, continue
+- **Configuration error**: Show error summary, continue workflow
+- **Parse error**: Extract key metrics from terminal output (error count, warning count)
 
 ### Type Check Errors
 
 - **Command not found**: Skip, note in report
-- **Configuration error**: Show error, continue
+- **Configuration error**: Show error summary, continue
+- **Parse error**: Extract error count from terminal output
 
 ### File System Errors
 
-- **Cannot create report directory**: Use temp directory
-- **Cannot read status.json**: Create new one
-- **Cannot write status.json**: Show error, continue
+- **Cannot create cache directory**: Continue without caching (parse from terminal output directly)
+- **Cannot read status.json**: Create new one with empty structure
+- **Cannot write status.json**: Show error, provide results in terminal only
 
-**General rule:** Always complete full workflow. Partial results better than no results.
+**General rule:** Always complete full workflow. Parsed summaries are sufficient; full output caching is optional and only done for structured formats (JSON/XML).
 
 ---
 
