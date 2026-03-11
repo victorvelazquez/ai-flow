@@ -156,6 +156,7 @@ Agregar 10 campos más de calidad/volumen:
 ### ¿Qué períodos soporta?
 
 **Los 3 esenciales:**
+
 - **Día** → Stand-ups diarios (~$0.003)
 - **Semana** → Sprint reviews (~$0.012)
 - **Mes** → 1-on-1s con manager (~$0.023)
@@ -165,37 +166,44 @@ Agregar 10 campos más de calidad/volumen:
 **Solo 2 (simple y práctico):**
 
 **1. RÁPIDO** - Para lectura rápida (3-4 líneas):
+
 ```
 📊 ESTA SEMANA
 ---
 ✅ 8 tareas (32 SP)
-⏱️  28h 30min  
+⏱️  28h 30min
 📈 1.12 SP/hora
 ```
 
 **2. DETALLADO** - Para compartir con manager (1-2 páginas):
+
 ```markdown
 # 📊 Reporte Semanal
 
 ## Productividad
+
 • 8 tareas (32 SP) en 28h 30min
 • Velocidad: 1.12 SP/hora
 
-## Distribución  
+## Distribución
+
 • 5 Features (20 SP)
 • 2 Fixes (8 SP)
 • 1 Refactor (4 SP)
 
 ## Áreas
+
 • API - 5 tareas
 • Backend - 3 tareas
 
 ## Tareas
+
 1. Organizations API (11 SP, 16h)
 2. User Import (8 SP, 2h 15m)
-...
+   ...
 
 ## Análisis
+
 Velocidad estable. Balance adecuado.
 ```
 
@@ -203,16 +211,16 @@ Velocidad estable. Balance adecuado.
 
 ## 📋 Comparativa de Capacidades
 
-| ¿Qué muestra? | Actual (10 campos) | Con 5 campos nuevos |
-| --- | --- | --- |
-| Tiempo total trabajado | ✅ | ✅ |
-| Story Points | ✅ | ✅ |
-| Número de tareas | ✅ | ✅ |
-| **Quién trabajó** | ❌ | ✅ |
-| **Qué hizo (legible)** | ❌ | ✅ |
-| **Complejidad** | ❌ | ✅ |
-| **Áreas de trabajo** | ❌ | ✅ |
-| **Velocidad por área** | ❌ | ✅ |
+| ¿Qué muestra?          | Actual (10 campos) | Con 5 campos nuevos |
+| ---------------------- | ------------------ | ------------------- |
+| Tiempo total trabajado | ✅                 | ✅                  |
+| Story Points           | ✅                 | ✅                  |
+| Número de tareas       | ✅                 | ✅                  |
+| **Quién trabajó**      | ❌                 | ✅                  |
+| **Qué hizo (legible)** | ❌                 | ✅                  |
+| **Complejidad**        | ❌                 | ✅                  |
+| **Áreas de trabajo**   | ❌                 | ✅                  |
+| **Velocidad por área** | ❌                 | ✅                  |
 
 **En resumen:** Sin los 5 campos nuevos, solo ves números sin contexto. Con ellos, entiendes QUÉ, QUIÉN, CÓMO y DÓNDE.
 
@@ -423,7 +431,7 @@ Output → Reporte en markdown
 
 ```
 📊 RESUMEN - 10 Mar 2026
-━━━━━━━━━━━━━━━━━━━━━━━
+---
 ✅ 2 tareas (8 SP)
 ⏱️  5h 30min
 📈 1.45 SP/h
@@ -482,7 +490,7 @@ Dom 10  ░░░░░░░░░░░░░░ 0h 00m  (Fin de semana)
 📊 COMPARATIVA MENSUAL
 
 Métrica      Feb 2026    Mar 2026    Δ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 Tareas         23          12       -48%
 SP             89          53       -40%
 Tiempo         74h         43h      -42%
@@ -555,9 +563,9 @@ Opción [1-5]: 2
    └─ ✅ Completado en 2.3s (costo: $0.012)
 
 📄 Reporte generado:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 [Aquí va el reporte completo en markdown]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 
 💾 ¿Guardar en archivo?
   [S]í - Guardar en .ai-flow/reports/weekly-2026-03-10.md
@@ -721,20 +729,20 @@ fi
 ╚══════════════════════════════════════════════════════════════╝
 
 📊 RESUMEN GENERAL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 ✅ Tareas completadas:        12
 ⏱️  Tiempo total:             42h 35min
 ⚡ Story Points:              53 SP
 📈 Velocidad promedio:        1.24 SP/hora
 
 📋 DISTRIBUCIÓN POR TIPO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 Features:    8 tareas  (35 SP, 28h 15min)  ████████░░
 Fixes:       3 tareas  (12 SP,  8h 45min)  ███░░░░░░░
 Refactors:   1 tarea   ( 6 SP,  5h 35min)  ██░░░░░░░░
 
 📝 TAREAS COMPLETADAS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 1. [Feature] Organizations API Sync           11 SP  16h 56min  ✅
    └─ Branch: feature/org-api-sync
 
@@ -757,7 +765,7 @@ Refactors:   1 tarea   ( 6 SP,  5h 35min)  ██░░░░░░░░
 
 ```
 Mes         Tareas  SP    Tiempo    Velocity  Δ vs anterior
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 Ene 2026      18    67    56h 30m    1.19     -
 Feb 2026      23    89    74h 15m    1.20     ↑ 0.8%
 Mar 2026      12    53    42h 35m    1.24     ↑ 3.3%
@@ -794,7 +802,7 @@ Jue 07/03  ███████████████░ 7h 30min  • Critic
 
 ```
 Complejidad    Tareas    SP Total    Tiempo Prom    % Total
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 SIMPLE            4         8 SP       45min         17%
 MEDIUM           12        35 SP       92min         52%
 COMPLEX           7        46 SP      278min         31%
@@ -1333,7 +1341,7 @@ echo "📊 Backup guardado en: analytics.jsonl.bak"
 
 
 LEYENDA:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+---
 📊 Datos:     analytics.jsonl (mejorado con 5 campos nuevos)
 🔧 Proceso:   Script bash + jq (filtrado y cálculos)
 🤖 IA:        Claude 3.5 Sonnet (análisis + insights)
@@ -1472,3 +1480,4 @@ Este plan define una mejora incremental y práctica al sistema de analytics de A
 ---
 
 **Documento vivo** - Se actualizará conforme se implementen las fases y se descubran nuevos requisitos.
+
