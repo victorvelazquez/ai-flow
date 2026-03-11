@@ -507,6 +507,11 @@ async function setupSlashCommands(
   const spinner = ora('Setting up slash commands...').start();
   try {
     const promptSources: Array<{ dir: string; prefix?: string }> = [];
+
+    // Add shared commands first (universal for all project types)
+    promptSources.push({ dir: 'shared' });
+
+    // Add project-specific commands
     if (projectType === 'backend') promptSources.push({ dir: 'backend' });
     else if (projectType === 'frontend') promptSources.push({ dir: 'frontend' });
     else if (projectType === 'fullstack') {
@@ -526,6 +531,15 @@ async function setupSlashCommands(
         const isInternalPhase = file.match(/^flow-build-phase-\d+.*\.md$/);
         const isInternalWork = file.match(/^flow-work-.+\.md$/);
         const isInternalCheck = file.match(/^flow-check-.+\.md$/);
+
+        // For shared directory: only copy main commands (flow-*), not templates/guidelines
+        if (dir === 'shared') {
+          const isMainCommand = file.startsWith('flow-');
+          return (
+            isMarkdown && isMainCommand && !isInternalPhase && !isInternalWork && !isInternalCheck
+          );
+        }
+
         return isMarkdown && !isInternalPhase && !isInternalWork && !isInternalCheck;
       });
 
