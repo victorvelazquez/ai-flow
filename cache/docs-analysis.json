@@ -1,22 +1,22 @@
 {
-  "version": "2.8.1",
+  "version": "2.8.2",
   "files": {
     "prompts/": "2026-02-04T18:17:54.1209389Z",
     "package.json": "2026-03-10T10:57:18.5672676Z",
     "templates/": "2026-03-10T10:55:53.0318824Z",
     "CONTRIBUTING.md": "2026-03-10T10:55:04.1474276Z",
     "src/cli.ts": "2026-03-07T22:35:16.1172489Z",
-    "GETTING-STARTED.md": "2026-03-10T11:04:38.7411452Z",
+    "GETTING-STARTED.md": "2026-03-11T03:10:00.0000000Z",
     "README.md": "2026-03-10T11:04:20.9539090Z"
   },
-  "timestamp": "2026-03-10T11:04:53.8255308Z",
+  "timestamp": "2026-03-11T03:10:00.0000000Z",
   "lastAnalysis": {
     "mobile_prompts": 25,
-    "gaps_found": 3,
+    "gaps_found": 1,
     "backend_templates": 14,
     "mobile_templates": 13,
     "changelog_updated": false,
-    "gaps_fixed": 3,
+    "gaps_fixed": 1,
     "frontend_prompts": 25,
     "version_updated": true,
     "total_prompts": 98,
