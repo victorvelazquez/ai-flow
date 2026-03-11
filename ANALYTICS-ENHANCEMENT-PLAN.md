@@ -167,7 +167,7 @@ Agregar 10 campos más de calidad/volumen:
 **1. RÁPIDO** - Para lectura rápida (3-4 líneas):
 ```
 📊 ESTA SEMANA
-━━━━━━━━━━━━━━━━━━━━━━━
+---
 ✅ 8 tareas (32 SP)
 ⏱️  28h 30min  
 📈 1.12 SP/hora
