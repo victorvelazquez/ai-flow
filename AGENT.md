@@ -3,7 +3,9 @@
 > Universal AI Assistant Configuration
 >
 > This file provides context for ALL AI development tools (Claude, Copilot, Cursor, Gemini, etc.) when working with the ai-flow project.
+
 ---
+
 ## 📋 About This Project
 
 **Project Name:** AI Flow
@@ -33,6 +35,7 @@
 - Current Phase: Active development (v2.1.3)
 
 ---
+
 ## 🏗️ Documentation Architecture
 
 This project follows **AI-assisted development** with comprehensive documentation.
@@ -73,6 +76,7 @@ This project follows **AI-assisted development** with comprehensive documentatio
    - Main CLI implementation
 
 ---
+
 ## 🎯 Project Structure
 
 ```
@@ -103,7 +107,9 @@ ai-flow/
 ├── .cursorrules               # Cursor-specific rules
 └── AGENT.md                   # This file
 ```
+
 ---
+
 ## 🎯 Critical Rules
 
 ### ❌ NEVER
@@ -125,6 +131,7 @@ ai-flow/
 - Use `chalk` for consistent terminal logging
 
 ---
+
 ## 🏗️ Architecture
 
 ### CLI Architecture
@@ -133,6 +140,7 @@ ai-flow/
 
 **Path Resolution (ESM):**
 Uses `fileURLToPath` and `import.meta.url` for cross-platform compliance:
+
 ```typescript
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -141,6 +149,7 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 
 **Workflow Integration:**
 Development specific tasks are automated via Antigravity workflows in `.agent/workflows/`:
+
 - `/flow1-commit` - Conventional Commits
 - `/flow2-check` - Pre-PR Quality Check
 - `/flow3-docs` - Documentation Sync
@@ -155,11 +164,13 @@ Development specific tasks are automated via Antigravity workflows in `.agent/wo
 - `gemini` → `.gemini/commands/`
 
 ---
+
 ## 🚀 Development Workflow
 
 ### Common Commands
 
 **Development:**
+
 ```bash
 npm run dev -- init .          # Run in dev mode (tsx)
 npm run build                  # Build to dist/
@@ -179,5 +190,6 @@ Use Conventional Commits:
 **Scopes:** `cli`, `templates`, `prompts`, `readme`, `config`
 
 ---
-**Last Updated:** 2025-12-19
-**Version:** 2.8.2
+
+**Last Updated:** 2026-03-10
+**Version:** 2.9.0
