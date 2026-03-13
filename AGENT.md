@@ -191,5 +191,5 @@ Use Conventional Commits:
 
 ---
 
-**Last Updated:** 2026-03-10
-**Version:** 2.9.0
+**Last Updated:** 2026-03-13
+**Version:** 2.9.1

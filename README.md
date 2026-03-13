@@ -140,7 +140,7 @@ Or using uv (Python tool manager):
 uv tool install ai-flow-dev
 ```
 
-## **Current version:** 2.9.0
+## **Current version:** 2.9.1
 
 ## 🚀 Quick Start
 
