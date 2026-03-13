@@ -265,7 +265,7 @@ After initialization, use these slash commands in your AI tool:
 
 > **Note:** Command prefix may vary by AI tool. Examples use `/flow-` (GitHub Copilot), but Claude may use `/` alone, Cursor may use `@`, etc. Check your tool's documentation.
 
-**Backend Projects:** 25 prompts (/flow-build with phases 0-10, /flow-work, /flow-check, /flow-commit, /flow-finish, /flow-docs-sync, /flow-release, /flow-report)  
+**Backend Projects:** 24 prompts (flow-build.md with phases 0-10, flow-work.md and variants, flow-check.md and variants, flow-commit.md, flow-finish.md, flow-docs-sync.md, flow-release.md)  
 **Frontend Projects:** 26 prompts (same structure tailored for frontend apps)  
 **Mobile Projects:** 26 prompts (same structure tailored for mobile apps)  
 **Desktop Projects:** 25 prompts (same structure tailored for desktop apps)  
@@ -395,19 +395,19 @@ AI Flow organizes your project with clear separation of concerns:
 
 ## 🎯 Generated Documentation
 
-**Backend** (14 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 9 technical docs/specs.
+**Backend** (17 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, pr-description.md, work.md, plus 8 docs (ARCHITECTURE.md, API.md, DATABASE.md, DEVELOPMENT.md, DEPLOYMENT.md, ERRORS.md, SECURITY.md, TESTING.md) and 2 specs (API_DESIGN.md, DATA_MODEL.md).
 
 **Frontend** (15 files): AGENT.md, ai-instructions.md, project-brief.md, plus 12 technical docs/specs.
 
 **Mobile** (13 files): AGENT.md, ai-instructions.md, project-brief.md, plus 10 technical docs/specs.
 
-**Desktop** (14 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, plus 9 technical docs/specs.
+**Desktop** (6 files): AGENT.md, ai-instructions.md, copilot-instructions.md, project-brief.md, README.md, .clauderules, .cursorrules (NetBeans/Eclipse Java projects).
 
 **Fullstack** (30+ files): Combined Backend + Frontend documentation structures.
 
-**Slash Commands/Prompts** (102 total):
+**Slash Commands/Prompts** (98 total):
 
-- Backend: 25 prompts (/flow-build with phases 0-10, /flow-work variants, /flow-check, /flow-commit, /flow-finish, /flow-docs-sync, /flow-release, /flow-report)
+- Backend: 24 prompts (flow-build.md with phases 0-10, flow-work.md and variants, flow-check.md and variants, flow-commit.md, flow-finish.md, flow-docs-sync.md, flow-release.md)
 - Frontend: 26 prompts (same structure tailored for frontend + /flow-work-api + /flow-finish + /flow-release + /flow-report)
 - Mobile: 26 prompts (same structure tailored for mobile apps + /flow-work-api + /flow-finish + /flow-release + /flow-report)
 - Desktop: 25 prompts (same structure tailored for desktop apps + /flow-finish + /flow-release + /flow-report)

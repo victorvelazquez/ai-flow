@@ -774,7 +774,7 @@ Read the structured summary from `/tmp/ai-context-summary.md` (400-600 words) an
 **AI Prompt:**
 
 ```markdown
-Genera dos descripciones profesionales (PR y Jira) usando el TEMPLATE OFICIAL en `.ai-flow/templates/pr-description.template.md`.
+Generate two professional descriptions (PR in **ENGLISH**, Jira in **SPANISH**) using the OFFICIAL TEMPLATE in `.ai-flow/templates/pr-description.template.md`.
 
 <context-summary>
 $(cat /tmp/ai-context-summary.md)
@@ -813,7 +813,7 @@ TESTS_PASSED=$TESTS_PASSED
 TESTS_TOTAL=$TESTS_TOTAL
 TESTS_NEW=$TESTS_NEW
 COVERAGE=$COVERAGE
-DOCS_STATUS=$([ -n "$(git diff --name-only main..HEAD | grep '\.md$')" ] && echo "✅ Actualizada" || echo "⚠️ Revisar")
+DOCS_STATUS=$([ -n "$(git diff --name-only main..HEAD | grep '\.md$')" ] && echo "✅ Updated" || echo "⚠️ Review needed")
 
 ## Code Metrics
 
@@ -825,7 +825,7 @@ LINES_DELETED=$LINES_DELETED
 ## Breaking Changes
 
 HAS_BREAKING_CHANGES=$HAS_BREAKING_CHANGES
-BREAKING_CHANGES_STATUS=$([ "$HAS_BREAKING_CHANGES" = "true" ] && echo "⚠️ SÍ (ver abajo)" || echo "✅ No")
+BREAKING_CHANGES_STATUS=$([ "$HAS_BREAKING_CHANGES" = "true" ] && echo "⚠️ YES (see below)" || echo "✅ No")
 BREAKING_CHANGES_LIST=$([ "$HAS_BREAKING_CHANGES" = "true" ] && echo "$COMMIT_BREAKING" || echo "")
 MIGRATION_GUIDE=$([ "$HAS_BREAKING_CHANGES" = "true" ] && echo "[TODO: Usuario debe completar guía de migración]" || echo "")
 
@@ -898,38 +898,43 @@ OBSERVABILITY=[Analiza qué logging/monitoring se agregó o debe considerarse:
 </template-variables>
 
 <instructions>
-**Lee el template en `.ai-flow/templates/pr-description.template.md`** y genera DOS descripciones siguiendo EXACTAMENTE esa estructura:
+**Read the template in `.ai-flow/templates/pr-description.template.md`** and generate TWO descriptions following EXACTLY that structure:
 
-1. **PR Description (GitHub/GitLab/Bitbucket) - TÉCNICO, COMPLETO:**
-   - Usa TODAS las secciones del template
-   - Renderiza variables con valores reales
-   - Audiencia: Desarrolladores y Reviewers
-   - Enfoque: "Cómo se implementó" (detalles técnicos)
-   - Incluye secciones condicionales SOLO si aplican:
-     - Breaking Changes Details (si HAS_BREAKING_CHANGES=true)
-     - Deployment Notes (si SHOW_DEPLOYMENT_NOTES=true)
-     - Screenshots (si HAS_UI_CHANGES=true)
-   - Genera TEST_STEPS específicos del contexto (no genéricos)
+1. **PR Description (GitHub/GitLab/Bitbucket) - TECHNICAL, COMPLETE, IN ENGLISH:**
+   - Use ALL sections from the template
+   - Render variables with real values
+   - Audience: Developers and Reviewers
+   - Focus: "How it was implemented" (technical details)
+   - **LANGUAGE: English (all text, headers, descriptions)**
+   - Include conditional sections ONLY if applicable:
+     - Breaking Changes Details (if HAS_BREAKING_CHANGES=true)
+     - Deployment Notes (if SHOW_DEPLOYMENT_NOTES=true)
+     - Screenshots (if HAS_UI_CHANGES=true)
+   - Generate context-specific TEST_STEPS (not generic)
 
-2. **Jira Comment (Task Update) - BUSINESS-ORIENTED, COMPACTO:**
-   - Audiencia: QA, PM, Stakeholders + Devs
-   - Enfoque: "Qué se logró y cómo probarlo" (resultado de negocio)
-   - Máximo 20-25 líneas (escaneable en 30 segundos)
-   - BUSINESS_SUMMARY es lo MÁS IMPORTANTE: debe explicar el valor sin términos técnicos
-   - TEST_STEPS deben ser actionables para QA (no requieren conocimiento de código)
-   - DEPLOYMENT_NOTES_COMPACT solo si es crítico (1 línea máximo)
-   - QA_NOTES solo si hay algo no obvio que QA debe saber
+2. **Jira Comment (Task Update) - BUSINESS-ORIENTED, COMPACT, IN SPANISH:**
+   - Audience: QA, PM, Stakeholders + Devs
+   - Focus: "What was achieved and how to test it" (business outcome)
+   - Maximum 20-25 lines (scannable in 30 seconds)
+   - **LANGUAGE: Spanish (all text, headers, descriptions)**
+   - BUSINESS_SUMMARY is MOST IMPORTANT: must explain value without technical jargon
+   - TEST_STEPS must be actionable for QA (no code knowledge required)
+   - DEPLOYMENT_NOTES_COMPACT only if critical (1 line max)
+   - QA_NOTES only if there's something non-obvious QA should know
 
-**Reglas Importantes:**
+**Important Rules:**
 
-- Usa lenguaje profesional pero claro (nivel senior engineer)
-- Sé específico con cambios técnicos (usa nombres reales de archivos/módulos)
-- Usa los commit links ya formateados en $COMMIT_HASHES_SUMMARY
-- Genera TEST_STEPS específicos del tipo de cambio (no pasos genéricos)
-- Si MIGRATION_GUIDE está vacío y hay breaking changes, recomienda al usuario completarlo
-- Escapa caracteres especiales correctamente para Markdown válido
-- Usa separadores `---` (no `━━━━` o caracteres Unicode)
-- Si NEW_DEPENDENCIES está vacío pero HAS_NEW_DEPS=true, detecta del diff
+- Use professional but clear language (senior engineer level)
+- Be specific with technical changes (use real file/module names)
+- Use commit links already formatted in $COMMIT_HASHES_SUMMARY
+- Generate context-specific TEST_STEPS (not generic steps)
+- If MIGRATION_GUIDE is empty and there are breaking changes, recommend user to complete it
+- Escape special characters correctly for valid Markdown
+- Use `---` separators (not `━━━━` or Unicode characters)
+- If NEW_DEPENDENCIES is empty but HAS_NEW_DEPS=true, detect from diff
+- **PR Description: 100% English**
+- **Jira Comment: 100% Spanish**
+- **NO SIGNATURES**: Do not include "Generated by AI Flow" or similar footers
 
 **Output Format:**
 
@@ -947,40 +952,40 @@ IMPORTANTE: Responde directamente con este formato EXACTO usando 5 BACKTICKS (m�
 
 ---
 
-## 🎯 Tipo de Cambio
+## 🎯 Change Type
 
-- [{{IS_FEATURE}}] ✨ Feature (nueva funcionalidad)
-- [{{IS_FIX}}] 🐛 Fix (corrección de bug)
-- [{{IS_REFACTOR}}] ♻️ Refactor (sin cambio funcional)
-- [{{IS_DOCS}}] 📝 Docs (solo documentación)
-- [{{IS_PERF}}] ⚡ Performance (mejora)
-- [{{IS_TEST}}] 🧪 Test (agregar/mejorar tests)
+- [{{IS_FEATURE}}] ✨ Feature (new functionality)
+- [{{IS_FIX}}] 🐛 Fix (bug fix)
+- [{{IS_REFACTOR}}] ♻️ Refactor (no functional change)
+- [{{IS_DOCS}}] 📝 Docs (documentation only)
+- [{{IS_PERF}}] ⚡ Performance (improvement)
+- [{{IS_TEST}}] 🧪 Test (add/improve tests)
 
-## 🎯 Área de Impacto
+## 🎯 Impact Area
 
 **{{IMPACT_AREA}}**
 
-## 💡 Contexto
+## 💡 Context
 
 {{CONTEXT}}
 
 {{RELATED_ISSUES}}
 
-## ✅ Solución Implementada
+## ✅ Implemented Solution
 
 {{SOLUTION}}
 
-## 🔧 Cambios Principales
+## 🔧 Main Changes
 
 {{MAIN_CHANGES}}
 
-## 🧪 Cómo Probar
+## 🧪 How to Test
 
 {{TEST_STEPS}}
 
 {{SCREENSHOTS_SECTION}}
 
-## � Security Impact
+## 🔒 Security Impact
 
 {{SECURITY_IMPACT}}
 
@@ -992,33 +997,33 @@ IMPORTANTE: Responde directamente con este formato EXACTO usando 5 BACKTICKS (m�
 
 {{OBSERVABILITY}}
 
-## �📊 Validación
+## 📊 Validation
 
-| Aspecto     | Resultado                                                        |
-| ----------- | ---------------------------------------------------------------- |
-| 🧪 Tests    | {{TESTS_PASSED}}/{{TESTS_TOTAL}} passing (+{{TESTS_NEW}} nuevos) |
-| 📈 Coverage | {{COVERAGE}}%                                                    |
-| 🔍 Lint     | ✅ Sin errores                                                   |
-| 📝 Docs     | {{DOCS_STATUS}}                                                  |
+| Aspect      | Result                                                        |
+| ----------- | ------------------------------------------------------------- |
+| 🧪 Tests    | {{TESTS_PASSED}}/{{TESTS_TOTAL}} passing (+{{TESTS_NEW}} new) |
+| 📈 Coverage | {{COVERAGE}}%                                                 |
+| 🔍 Lint     | ✅ No errors                                                  |
+| 📝 Docs     | {{DOCS_STATUS}}                                               |
 
-## 📈 Métricas
+## 📈 Metrics
 
-| Métrica             | Valor                                                                    |
-| ------------------- | ------------------------------------------------------------------------ |
-| 💾 Commits          | {{TOTAL_COMMITS}} ([ver commits]({{COMMIT_HASHES_SUMMARY}}))             |
-| 📁 Archivos         | {{FILES_COUNT}} modificados (+{{LINES_ADDED}}/-{{LINES_DELETED}} líneas) |
-| ⚠️ Breaking Changes | {{BREAKING_CHANGES_STATUS}}                                              |
-| ⏱️ Duración         | {{DURATION}} ({{STORY_POINTS}} SP)                                       |
+| Metric              | Value                                                                |
+| ------------------- | -------------------------------------------------------------------- |
+| 💾 Commits          | {{TOTAL_COMMITS}} ([view commits]({{COMMIT_HASHES_SUMMARY}}))        |
+| 📁 Files            | {{FILES_COUNT}} modified (+{{LINES_ADDED}}/-{{LINES_DELETED}} lines) |
+| ⚠️ Breaking Changes | {{BREAKING_CHANGES_STATUS}}                                          |
+| ⏱️ Duration         | {{DURATION}} ({{STORY_POINTS}} SP)                                   |
 
 {{BREAKING_CHANGES_DETAILS}}
 
 {{DEPLOYMENT_NOTES}}
 
-## 📦 Dependencias
+## 📦 Dependencies
 
 {{DEPENDENCIES_SECTION}}
 
-## 🔗 Referencias
+## 🔗 References
 
 - **Commits:** {{COMMIT_HASHES_SUMMARY}}
 - **Platform:** {{PLATFORM}}
@@ -1026,17 +1031,14 @@ IMPORTANTE: Responde directamente con este formato EXACTO usando 5 BACKTICKS (m�
 
 ## ✅ Reviewer Checklist
 
-- [ ] El código sigue los estándares del proyecto
-- [ ] La lógica es clara y está bien documentada
-- [ ] Los tests cubren casos críticos y edge cases
-- [ ] No hay riesgos de seguridad o performance
-- [ ] La documentación está actualizada
-- [ ] Los cambios no introducen breaking changes no documentados
-- [ ] El PR es del tamaño adecuado (no demasiado grande)
+- [ ] Code follows project standards
+- [ ] Logic is clear and well documented
+- [ ] Tests cover critical and edge cases
+- [ ] No security or performance risks
+- [ ] Documentation is up to date
+- [ ] No undocumented breaking changes
+- [ ] PR size is appropriate (not too large)
 
----
-
-**Generated by AI Flow**
 \`\`\`\`\`
 
 ---
@@ -1099,9 +1101,6 @@ IMPORTANTE: Responde directamente con este formato EXACTO usando 5 BACKTICKS (m�
 
 💡 _Después de crear el PR, reemplaza `[PEGAR_LINK_AQUI]` con el link real._
 
----
-
-_Generado automáticamente por AI Flow • Platform: {{PLATFORM}}_
 \`\`\`\`\`
 
 ---
